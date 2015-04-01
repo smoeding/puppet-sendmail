@@ -1,6 +1,6 @@
 # = Class: sendmail::trusteduser::create
 #
-# Create the trusted-users file.
+# Create the Sendmail trusted-users file.
 #
 # == Parameters:
 #

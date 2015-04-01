@@ -28,7 +28,7 @@
 #
 define sendmail::trusteduser (
   $user   = $name,
-  $ensure = present
+  $ensure = present,
 ) {
   include ::sendmail::params
   include ::sendmail::trusteduser::create

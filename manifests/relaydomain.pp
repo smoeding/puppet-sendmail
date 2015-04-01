@@ -28,7 +28,7 @@
 #
 define sendmail::relaydomain (
   $domain = $name,
-  $ensure = present
+  $ensure = present,
 ) {
   include ::sendmail::params
   include ::sendmail::relaydomain::create

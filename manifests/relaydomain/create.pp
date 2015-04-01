@@ -1,6 +1,6 @@
 # = Class: sendmail::relaydomain::create
 #
-# Create the relay-domains file.
+# Create the Sendmail relay-domains file.
 #
 # == Parameters:
 #
