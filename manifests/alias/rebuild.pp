@@ -20,7 +20,5 @@ class sendmail::alias::rebuild {
 
   exec { "${::sendmail::params::sendmail_binary} -bi":
     refreshonly => true,
-    path        => '/sbin:/bin:/usr/sbin:/usr/bin',
-    provider    => 'posix',
   }
 }

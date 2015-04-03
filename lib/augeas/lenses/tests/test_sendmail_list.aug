@@ -11,7 +11,7 @@ let t1 = "example.org
 "
 
 test Sendmail_List.lns get t1 =
-     { "example.org" }
+     { "key" = "example.org" }
 
 
 (* Test 2 *)
@@ -21,9 +21,9 @@ example.com
 "
 
 test Sendmail_List.lns get t2 =
-     { "example.org" }
+     { "key" = "example.org" }
      {}
-     { "example.com" }
+     { "key" = "example.com" }
 
 
 (* Test 3 *)
@@ -33,9 +33,9 @@ example.com
 "
 
 test Sendmail_List.lns get t3 =
-     { "example.org" }
+     { "key" = "example.org" }
      { "#comment" = "A comment" }
-     { "example.com" }
+     { "key" = "example.com" }
 
 
 (* Test 4 *)
@@ -45,7 +45,7 @@ example.com
 
 test Sendmail_List.lns get t4 =
      { "#comment" = "A comment" }
-     { "example.com" }
+     { "key" = "example.com" }
 
 
 (* Test 5 *)
@@ -54,5 +54,5 @@ let t5 = "example.com
 "
 
 test Sendmail_List.lns get t5 =
-     { "example.com" }
+     { "key" = "example.com" }
      { "#comment" = "A comment" }

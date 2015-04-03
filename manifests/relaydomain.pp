@@ -33,17 +33,20 @@ define sendmail::relaydomain (
   include ::sendmail::params
   include ::sendmail::relaydomain::create
 
-  # The Augeas command 'rm' removes a node and the command 'clear' sets a node
-  # to NULL (creating it if needed).
-  $command = $ensure ? {
-    absent  => 'rm',
-    default => 'clear',
+  if ($ensure == absent) {
+    augeas { "/etc/mail/relay-domains-${domain}":
+      lens    => 'Sendmail_List.lns',
+      incl    => '/etc/mail/relay-domains',
+      changes => "rm key[ . = '${domain}']",
+      require => Class['::sendmail::relaydomain::create'],
+    }
   }
-
-  augeas { "/etc/mail/relay-domains-${domain}":
-    lens    => 'Sendmail_List.lns',
-    incl    => '/etc/mail/relay-domains',
-    changes => "${command} ${domain}",
-    require => Class['::sendmail::relaydomain::create'],
+  else {
+    augeas { "/etc/mail/relay-domains-${domain}":
+      lens    => 'Sendmail_List.lns',
+      incl    => '/etc/mail/relay-domains',
+      changes => "set key[ . = '${domain}'] '${domain}'",
+      require => Class['::sendmail::relaydomain::create'],
+    }
   }
 }

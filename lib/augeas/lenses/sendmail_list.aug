@@ -37,7 +37,7 @@ let comment = Util.comment
 let key_re = /[a-zA-Z0-9.:@-]+/
 
 (* View: keyval *)
-let keyval = [ key key_re . eol ]
+let keyval = [ label "key" .store key_re . eol ]
 
 (************************************************************************
  * Group:                       LENS & FILTER

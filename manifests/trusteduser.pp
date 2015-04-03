@@ -33,17 +33,20 @@ define sendmail::trusteduser (
   include ::sendmail::params
   include ::sendmail::trusteduser::create
 
-  # The Augeas command 'rm' removes a node and the command 'clear' sets a node
-  # to NULL (creating it if needed).
-  $command = $ensure ? {
-    absent  => 'rm',
-    default => 'clear',
+  if ($ensure == absent) {
+    augeas { "/etc/mail/trusted-users-${user}":
+      lens    => 'Sendmail_List.lns',
+      incl    => '/etc/mail/trusted-users',
+      changes => "rm key[ . = '${user}']",
+      require => Class['::sendmail::trusteduser::create'],
+    }
   }
-
-  augeas { "/etc/mail/trusted-users-${user}":
-    lens    => 'Sendmail_List.lns',
-    incl    => '/etc/mail/trusted-users',
-    changes => "${command} ${user}",
-    require => Class['::sendmail::trusteduser::create'],
+  else {
+    augeas { "/etc/mail/trusted-users-${user}":
+      lens    => 'Sendmail_List.lns',
+      incl    => '/etc/mail/trusted-users',
+      changes => "set key[ . = ${user}'] '${user}'",
+      require => Class['::sendmail::trusteduser::create'],
+    }
   }
 }

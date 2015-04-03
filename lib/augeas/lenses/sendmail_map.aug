@@ -43,10 +43,8 @@ let key_re = /[a-zA-Z0-9@.:_=\/+-]+/
 let val_re = /[^ \t\n](.*[^ \t\n])?/
 
 (* View: keyval *)
-let keyval = [ seq "key" .
-               [ label "key" . store key_re ] . del_ws_tab .
-               [ label "value" . store val_re ] .
-               eol ]
+let keyval = [ label "key" . store key_re . del_ws_tab .
+               [ label "value" . store val_re ] . eol ]
 
 (************************************************************************
  * Group:                       LENS & FILTER
