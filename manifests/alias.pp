@@ -27,13 +27,13 @@ define sendmail::alias (
   $ensure = present,
 ) {
   include ::sendmail::params
-  include ::sendmail::alias::create
-  include ::sendmail::alias::rebuild
+  include ::sendmail::files::aliases
+  include ::sendmail::files::newaliases
 
   mailalias { $name:
     ensure    => $ensure,
     recipient => $recipient,
-    notify    => Class['::sendmail::alias::rebuild'],
-    require   => Class['::sendmail::alias::create'],
+    notify    => Class['::sendmail::files::newaliases'],
+    require   => Class['::sendmail::files::aliases'],
   }
 }

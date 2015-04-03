@@ -1,6 +1,6 @@
-# = Class: sendmail::alias::rebuild
+# = Class: sendmail::files::newaliases
 #
-# Rebuild the Sendmail alias file.
+# Rebuild the Sendmail aliases file.
 #
 # == Parameters:
 #
@@ -12,10 +12,10 @@
 #
 # == Sample Usage:
 #
-#   class { 'sendmail::alias::rebuild': }
+#   class { 'sendmail::files::newaliases': }
 #
 #
-class sendmail::alias::rebuild {
+class sendmail::files::newaliases {
   include ::sendmail::params
 
   exec { "${::sendmail::params::sendmail_binary} -bi":

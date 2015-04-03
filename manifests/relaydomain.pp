@@ -31,7 +31,7 @@ define sendmail::relaydomain (
   $ensure = 'present',
 ) {
   include ::sendmail::params
-  include ::sendmail::relaydomain::create
+  include ::sendmail::files::relaydomains
 
   $changes = $ensure ? {
     'present' => "set key[. = '${domain}'] '${domain}'",
@@ -42,6 +42,6 @@ define sendmail::relaydomain (
     lens    => 'Sendmail_List.lns',
     incl    => '/etc/mail/relay-domains',
     changes => $changes,
-    require => Class['::sendmail::relaydomain::create'],
+    require => Class['::sendmail::files::relaydomains'],
   }
 }

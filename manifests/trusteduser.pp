@@ -31,7 +31,7 @@ define sendmail::trusteduser (
   $ensure = 'present',
 ) {
   include ::sendmail::params
-  include ::sendmail::trusteduser::create
+  include ::sendmail::files::trustedusers
 
   $changes = $ensure ? {
     'present' => "set key[. = ${user}'] '${user}'",
@@ -42,6 +42,6 @@ define sendmail::trusteduser (
     lens    => 'Sendmail_List.lns',
     incl    => '/etc/mail/trusted-users',
     changes => $changes,
-    require => Class['::sendmail::trusteduser::create'],
+    require => Class['::sendmail::files::trustedusers'],
   }
 }
