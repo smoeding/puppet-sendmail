@@ -28,25 +28,20 @@
 #
 define sendmail::trusteduser (
   $user   = $name,
-  $ensure = present,
+  $ensure = 'present',
 ) {
   include ::sendmail::params
   include ::sendmail::trusteduser::create
 
-  if ($ensure == absent) {
-    augeas { "/etc/mail/trusted-users-${user}":
-      lens    => 'Sendmail_List.lns',
-      incl    => '/etc/mail/trusted-users',
-      changes => "rm key[ . = '${user}']",
-      require => Class['::sendmail::trusteduser::create'],
-    }
+  $changes = $ensure ? {
+    'present' => "set key[. = ${user}'] '${user}'",
+    'absent'  => "rm key[. = '${user}']",
   }
-  else {
-    augeas { "/etc/mail/trusted-users-${user}":
-      lens    => 'Sendmail_List.lns',
-      incl    => '/etc/mail/trusted-users',
-      changes => "set key[ . = ${user}'] '${user}'",
-      require => Class['::sendmail::trusteduser::create'],
-    }
+
+  augeas { "/etc/mail/trusted-users-${user}":
+    lens    => 'Sendmail_List.lns',
+    incl    => '/etc/mail/trusted-users',
+    changes => $changes,
+    require => Class['::sendmail::trusteduser::create'],
   }
 }

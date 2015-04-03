@@ -28,25 +28,20 @@
 #
 define sendmail::relaydomain (
   $domain = $name,
-  $ensure = present,
+  $ensure = 'present',
 ) {
   include ::sendmail::params
   include ::sendmail::relaydomain::create
 
-  if ($ensure == absent) {
-    augeas { "/etc/mail/relay-domains-${domain}":
-      lens    => 'Sendmail_List.lns',
-      incl    => '/etc/mail/relay-domains',
-      changes => "rm key[ . = '${domain}']",
-      require => Class['::sendmail::relaydomain::create'],
-    }
+  $changes = $ensure ? {
+    'present' => "set key[. = '${domain}'] '${domain}'",
+    'absent'  => "rm key[. = '${domain}']",
   }
-  else {
-    augeas { "/etc/mail/relay-domains-${domain}":
-      lens    => 'Sendmail_List.lns',
-      incl    => '/etc/mail/relay-domains',
-      changes => "set key[ . = '${domain}'] '${domain}'",
-      require => Class['::sendmail::relaydomain::create'],
-    }
+
+  augeas { "/etc/mail/relay-domains-${domain}":
+    lens    => 'Sendmail_List.lns',
+    incl    => '/etc/mail/relay-domains',
+    changes => $changes,
+    require => Class['::sendmail::relaydomain::create'],
   }
 }
