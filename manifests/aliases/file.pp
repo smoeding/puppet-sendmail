@@ -1,4 +1,4 @@
-# = Class: sendmail::files::aliases
+# = Class: sendmail::aliases::file
 #
 # Create the Sendmail aliases file.
 #
@@ -12,10 +12,10 @@
 #
 # == Sample Usage:
 #
-#   class { 'sendmail::files::aliases': }
+#   class { 'sendmail::aliases::file': }
 #
 #
-class sendmail::files::aliases {
+class sendmail::aliases::file {
   include ::sendmail::params
 
   file { '/etc/aliases':
