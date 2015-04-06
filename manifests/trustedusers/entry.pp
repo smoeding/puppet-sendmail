@@ -1,4 +1,4 @@
-# = Define: sendmail::trusteduser
+# = Define: sendmail::trustedusers::entry
 #
 # Create or remove a user entry in the trusted-users file.
 #
@@ -17,24 +17,24 @@
 #
 # == Sample Usage:
 #
-#   sendmail::trusteduser { 'fred':
+#   sendmail::trustedusers::entry { 'fred':
 #     ensure => present,
 #   }
 #
-#   sendmail::trusteduser { 'barney':
+#   sendmail::trustedusers::entry { 'barney':
 #     ensure => absent,
 #   }
 #
 #
-define sendmail::trusteduser (
+define sendmail::trustedusers::entry (
   $user   = $name,
   $ensure = 'present',
 ) {
   include ::sendmail::params
-  include ::sendmail::files::trustedusers
+  include ::sendmail::trustedusers::file
 
   $changes = $ensure ? {
-    'present' => "set key[. = ${user}'] '${user}'",
+    'present' => "set key[. = '${user}'] '${user}'",
     'absent'  => "rm key[. = '${user}']",
   }
 
@@ -42,6 +42,6 @@ define sendmail::trusteduser (
     lens    => 'Sendmail_List.lns',
     incl    => '/etc/mail/trusted-users',
     changes => $changes,
-    require => Class['::sendmail::files::trustedusers'],
+    require => Class['::sendmail::trustedusers::file'],
   }
 }

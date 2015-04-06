@@ -1,4 +1,4 @@
-# = Class: sendmail::files::trustedusers
+# = Class: sendmail::trustedusers::file
 #
 # Create the Sendmail trusted-users file.
 #
@@ -12,10 +12,10 @@
 #
 # == Sample Usage:
 #
-#   class { 'sendmail::files::trustedusers': }
+#   class { 'sendmail::trustedusers::file': }
 #
 #
-class sendmail::files::trustedusers {
+class sendmail::trustedusers::file {
   include ::sendmail::params
 
   file { '/etc/mail/trusted-users':
