@@ -5,7 +5,7 @@
 # == Parameters:
 #
 # [*entries*]
-#   A hash that will be used to create sendmail::alieses::entry resources.
+#   A hash that will be used to create sendmail::aliases::entry resources.
 #   This class can be used to create aliases defined in hiera. The hiera
 #   hash should look like this:
 #
