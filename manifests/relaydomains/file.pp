@@ -1,4 +1,4 @@
-# = Class: sendmail::files::relaydomains
+# = Class: sendmail::relaydomains::file
 #
 # Create the Sendmail relay-domains file.
 #
@@ -12,10 +12,10 @@
 #
 # == Sample Usage:
 #
-#   class { 'sendmail::files::relaydomains': }
+#   class { 'sendmail::relaydomains::file': }
 #
 #
-class sendmail::files::relaydomains {
+class sendmail::relaydomains::file {
   include ::sendmail::params
 
   file { '/etc/mail/relay-domains':
