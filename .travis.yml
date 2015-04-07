@@ -1,6 +1,6 @@
 language: ruby
 gemfile: .gemfile
-script: "rake spec"
+script: "rake lint spec"
 rvm:
   - 1.9.3
   - 2.0.0
