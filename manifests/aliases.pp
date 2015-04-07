@@ -1,13 +1,14 @@
 # = Class: sendmail::aliases
 #
-# Create entries in the Sendmail alias file.
+# Create entries in the Sendmail aliases file.
 #
 # == Parameters:
 #
 # [*entries*]
-#   A hash that will be used to create sendmail::aliases::entry resources.
-#   This class can be used to create aliases defined in hiera. The hiera
-#   hash should look like this:
+#   A hash that will be used to create sendmail::aliases::entry
+#   resources.
+#   This class can be used to create aliases defined in hiera.
+#   The hiera hash should look like this:
 #
 #   sendmail::aliases::entries:
 #     'fred':

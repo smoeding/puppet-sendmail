@@ -5,9 +5,10 @@
 # == Parameters:
 #
 # [*entries*]
-#   A hash that will be used to create sendmail::relaydomains::entry resources.
-#   This class can be used to create trusted users defined in hiera. The hiera
-#   hash should look like this:
+#   A hash that will be used to create sendmail::relaydomains::entry
+#   resources.
+#   This class can be used to create relay-domains entries defined in hiera.
+#   The hiera hash should look like this:
 #
 #   sendmail::relaydomains::entries:
 #     'example.org': {}
