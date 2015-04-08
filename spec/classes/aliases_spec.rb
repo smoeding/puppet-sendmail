@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'sendmail::aliases', :type => 'class' do
+describe 'sendmail::aliases' do
 
   context "On a Debian OS when adding a single alias" do
     let(:title) { 'aliases' }
