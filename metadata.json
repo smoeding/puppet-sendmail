@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "author": "stm",
   "summary": "Install and manage the Sendmail MTA.",
-  "license": "BSD 2-clause",
+  "license": "BSD-2-Clause",
   "source": "git@github.com:smoeding/puppet-sendmail.git",
   "project_page": "https://github.com/smoeding/puppet-sendmail",
   "issues_url": "https://github.com/smoeding/puppet-sendmail/issues",

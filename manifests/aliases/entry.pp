@@ -23,12 +23,16 @@
 #
 #
 define sendmail::aliases::entry (
-  $recipient,
-  $ensure = present,
+  $recipient = undef,
+  $ensure    = present,
 ) {
   include ::sendmail::params
   include ::sendmail::aliases::file
   include ::sendmail::aliases::newaliases
+
+  if ($ensure == present and empty($recipient)) {
+    fail("recipient must be set when creating an alias")
+  }
 
   mailalias { $name:
     ensure    => $ensure,
