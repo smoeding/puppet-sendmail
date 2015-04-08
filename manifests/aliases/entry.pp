@@ -31,7 +31,7 @@ define sendmail::aliases::entry (
   include ::sendmail::aliases::newaliases
 
   if ($ensure == present and empty($recipient)) {
-    fail("recipient must be set when creating an alias")
+    fail('recipient must be set when creating an alias')
   }
 
   mailalias { $name:
