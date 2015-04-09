@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe 'sendmail::relaydomains::file' do
+describe 'sendmail::localhostnames::file' do
   context 'On Debian' do
-    let(:title) { 'relaydomains' }
+    let(:title) { 'localhostnames' }
 
     let :facts do
       { :osfamily => 'Debian' }
     end
 
     it do
-      should contain_file('/etc/mail/relay-domains').with({
+      should contain_file('/etc/mail/local-host-names').with({
         'ensure' => 'file',
         'owner'  => 'root',
         'group'  => 'smmsp',

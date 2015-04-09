@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'sendmail::trustedusers::file' do
   context 'On Debian' do
-    let(:title) { 'aliases' }
+    let(:title) { 'trustedusers' }
 
     let :facts do
       { :osfamily => 'Debian' }
