@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe 'sendmail::aliases' do
-  let(:title) { 'aliases' }
+describe 'sendmail::trustedusers' do
+  let(:title) { 'trustedusers' }
 
   let :facts do
     { :osfamily => 'Debian' }
@@ -9,10 +9,10 @@ describe 'sendmail::aliases' do
 
   context 'On Debian with valid parameter hash' do
     let(:params) do
-      { :entries => { 'fred' => { 'recipient' => 'fred@example.org' } } }
+      { :entries => { 'fred' => {} } }
     end
 
-    it { should contain_sendmail__aliases__entry('fred') }
+    it { should contain_sendmail__trustedusers__entry('fred') }
   end
 
   context 'On Debian with empty parameter hash' do

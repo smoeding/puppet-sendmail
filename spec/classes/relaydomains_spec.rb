@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe 'sendmail::aliases' do
-  let(:title) { 'aliases' }
+describe 'sendmail::relaydomains' do
+  let(:title) { 'relaydomains' }
 
   let :facts do
     { :osfamily => 'Debian' }
@@ -9,10 +9,10 @@ describe 'sendmail::aliases' do
 
   context 'On Debian with valid parameter hash' do
     let(:params) do
-      { :entries => { 'fred' => { 'recipient' => 'fred@example.org' } } }
+      { :entries => { 'example.org' => {} } }
     end
 
-    it { should contain_sendmail__aliases__entry('fred') }
+    it { should contain_sendmail__relaydomains__entry('example.org') }
   end
 
   context 'On Debian with empty parameter hash' do
@@ -27,7 +27,7 @@ describe 'sendmail::aliases' do
 
   context 'On Debian with wrong parameter type' do
     let(:params) do
-      { :entries => "fred" }
+      { :entries => "example.org" }
     end
 
     it do
