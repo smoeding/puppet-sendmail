@@ -37,13 +37,13 @@ let comment = Util.comment
 let key_re = /[a-zA-Z0-9.:@-]+/
 
 (* View: keyval *)
-let keyval = [ label "key" .store key_re . eol ]
+let keyval = [ label "key" . store key_re . eol ]
 
 (************************************************************************
  * Group:                       LENS & FILTER
  ************************************************************************)
 
-let lns    = ( comment | empty | keyval )*
+let lns    = ( empty | comment | keyval )*
 
 let filter = incl "/etc/mail/relay-domains"
            . incl "/etc/mail/trusted-users"
