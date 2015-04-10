@@ -5,7 +5,7 @@ describe 'sendmail::trustedusers::file' do
     let(:title) { 'trustedusers' }
 
     let :facts do
-      { :osfamily => 'Debian' }
+      { :operatingsystem => 'Debian' }
     end
 
     it do

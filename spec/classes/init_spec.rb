@@ -4,7 +4,7 @@ describe 'sendmail' do
 
   context 'On Debian with no package name specified' do
     let :facts do
-      { :osfamily => 'Debian' }
+      { :operatingsystem => 'Debian' }
     end
 
     it { should contain_class('sendmail') }
@@ -12,7 +12,7 @@ describe 'sendmail' do
 
   context 'On RedHat with no package name specified' do
     let :facts do
-      { :osfamily => 'RedHat' }
+      { :operatingsystem => 'RedHat' }
     end
 
     it { should contain_class('sendmail') }

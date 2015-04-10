@@ -5,7 +5,7 @@ describe 'sendmail::relaydomains::file' do
     let(:title) { 'relaydomains' }
 
     let :facts do
-      { :osfamily => 'Debian' }
+      { :operatingsystem => 'Debian' }
     end
 
     it do

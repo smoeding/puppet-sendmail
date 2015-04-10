@@ -4,7 +4,7 @@ describe 'sendmail::localhostnames' do
   let(:title) { 'localhostnames' }
 
   let :facts do
-    { :osfamily => 'Debian' }
+    { :operatingsystem => 'Debian' }
   end
 
   context 'On Debian with valid parameter hash' do

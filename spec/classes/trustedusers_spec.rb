@@ -4,7 +4,7 @@ describe 'sendmail::trustedusers' do
   let(:title) { 'trustedusers' }
 
   let :facts do
-    { :osfamily => 'Debian' }
+    { :operatingsystem => 'Debian' }
   end
 
   context 'On Debian with valid parameter hash' do

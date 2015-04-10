@@ -6,7 +6,7 @@ describe 'sendmail::aliases::file' do
     let(:title) { 'aliases' }
 
     let :facts do
-      { :osfamily => 'Debian' }
+      { :operatingsystem => 'Debian' }
     end
 
     it do

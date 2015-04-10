@@ -4,7 +4,7 @@ describe 'sendmail::aliases' do
   let(:title) { 'aliases' }
 
   let :facts do
-    { :osfamily => 'Debian' }
+    { :operatingsystem => 'Debian' }
   end
 
   context 'On Debian with valid parameter hash' do

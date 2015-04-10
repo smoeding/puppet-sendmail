@@ -8,7 +8,7 @@ describe 'sendmail::aliases::entry' do
   end
 
   let(:facts) do
-    { 'osfamily' => 'Debian' }
+    { 'operatingsystem' => 'Debian' }
   end
 
   it do

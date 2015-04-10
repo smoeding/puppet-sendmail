@@ -5,7 +5,7 @@ describe 'sendmail::localhostnames::file' do
     let(:title) { 'localhostnames' }
 
     let :facts do
-      { :osfamily => 'Debian' }
+      { :operatingsystem => 'Debian' }
     end
 
     it do
