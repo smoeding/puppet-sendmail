@@ -11,9 +11,9 @@ describe 'sendmail::trustedusers::file' do
     it do
       should contain_file('/etc/mail/trusted-users').with({
         'ensure' => 'file',
-        'owner'  => 'smmta',
+        'owner'  => 'root',
         'group'  => 'smmsp',
-        'mode'   => '0640',
+        'mode'   => '0644',
       })
     end
   end

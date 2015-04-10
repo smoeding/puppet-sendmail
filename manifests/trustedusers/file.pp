@@ -20,8 +20,8 @@ class sendmail::trustedusers::file {
 
   file { '/etc/mail/trusted-users':
     ensure => file,
-    owner  => 'smmta',
+    owner  => 'root',
     group  => 'smmsp',
-    mode   => '0640',
+    mode   => '0644',
   }
 }
