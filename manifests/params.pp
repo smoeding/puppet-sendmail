@@ -21,7 +21,7 @@ class sendmail::params {
   $mail_settings_dir = '/etc/mail'
 
   # File locations
-  $sendmail_alias_file          = "/etc/access"
+  $sendmail_alias_file          = '/etc/aliases'
   $sendmail_access_file         = "${mail_settings_dir}/access"
   $sendmail_bitdomain_file      = "${mail_settings_dir}/bitdomain"
   $sendmail_domaintable_file    = "${mail_settings_dir}/domaintable"
@@ -34,16 +34,15 @@ class sendmail::params {
   $sendmail_uudomain_file       = "${mail_settings_dir}/uudomain"
   $sendmail_virtusertable_file  = "${mail_settings_dir}/virtusertable"
 
-  $package_ensure    = present
-  $package_name      = 'sendmail'
+  $sendmail_sendmail_mc_file    = "${mail_settings_dir}/sendmail.mc"
+  $sendmail_submit_mc_file      = "${mail_settings_dir}/submit.mc"
 
-  $service_enable    = true
-  $service_ensure    = running
+  $package_name      = 'sendmail'
   $service_name      = 'sendmail'
 
   $sendmail_binary   = '/usr/sbin/sendmail'
 
-  $configure_command = 'make -C /etc/mail'
+  $configure_command = 'make -C /etc/mail all'
 
   $sendmail_smarthost      = $::domain
   $sendmail_masquerade_as  = $::domain
@@ -51,7 +50,11 @@ class sendmail::params {
   case $::operatingsystem {
 
     'Debian': {
-      $package_support  = [ 'sendmail-cf', 'm4', 'make', 'bsd-mailx', ]
+      $auxiliary_packages = [ 'bsd-mailx', ]
+
+      # Unfortunately the /etc/init.d/sendmail script does
+      # not provide a useful status exit code on wheezy.
+      $service_hasstatus = false
 
       $sendmail_user    = 'smmta'
       $sendmail_group   = 'smmsp'
@@ -61,7 +64,9 @@ class sendmail::params {
     }
 
     'Redhat': {
-      $package_support  = [ 'sendmail-cf', 'm4', 'make', 'cyrus-sasl', 'mailx', ]
+      $auxiliary_packages = [ 'sendmail-cf', 'm4', 'make', 'cyrus-sasl', 'mailx', ]
+
+      $service_hasstatus = true
 
       $sendmail_ostype  = 'linux'
       $sendmail_include = '/usr/share/sendmail-cf/m4/cf.m4'

@@ -7,7 +7,12 @@ describe 'sendmail' do
       { :operatingsystem => 'Debian' }
     end
 
-    it { should contain_class('sendmail') }
+    it {
+      should contain_class('sendmail')
+      should contain_class('sendmail::package')
+      should contain_class('sendmail::service') \
+              .that_requires('Class[sendmail::package]')
+    }
   end
 
   context 'On RedHat with no package name specified' do
@@ -15,6 +20,11 @@ describe 'sendmail' do
       { :operatingsystem => 'RedHat' }
     end
 
-    it { should contain_class('sendmail') }
+    it {
+      should contain_class('sendmail')
+      should contain_class('sendmail::package')
+      should contain_class('sendmail::service') \
+              .that_requires('Class[sendmail::package]')
+    }
   end
 end
