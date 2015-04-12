@@ -18,10 +18,10 @@
 class sendmail::relaydomains::file {
   include ::sendmail::params
 
-  file { '/etc/mail/relay-domains':
+  file { $::sendmail::params::relaydomains_file:
     ensure => file,
     owner  => 'root',
-    group  => 'smmsp',
+    group  => $::sendmail::params::sendmail_group,
     mode   => '0644',
   }
 }

@@ -38,9 +38,9 @@ define sendmail::relaydomains::entry (
     'absent'  => "rm key[. = '${domain}']",
   }
 
-  augeas { "/etc/mail/relay-domains-${domain}":
+  augeas { "${::sendmail::params::relaydomains_file}-${domain}":
     lens    => 'Sendmail_List.lns',
-    incl    => '/etc/mail/relay-domains',
+    incl    => $::sendmail::params::relaydomains_file,
     changes => $changes,
     require => Class['::sendmail::relaydomains::file'],
   }

@@ -18,10 +18,10 @@
 class sendmail::trustedusers::file {
   include ::sendmail::params
 
-  file { '/etc/mail/trusted-users':
+  file { $::sendmail::params::trustedusers_file:
     ensure => file,
     owner  => 'root',
-    group  => 'smmsp',
+    group  => $::sendmail::params::sendmail_group,
     mode   => '0644',
   }
 }

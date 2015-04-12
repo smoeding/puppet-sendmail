@@ -18,10 +18,10 @@
 class sendmail::localhostnames::file {
   include ::sendmail::params
 
-  file { '/etc/mail/local-host-names':
+  file { $::sendmail::params::localhostnames_file:
     ensure => file,
     owner  => 'root',
-    group  => 'smmsp',
+    group  => $::sendmail::params::sendmail_group,
     mode   => '0644',
   }
 }

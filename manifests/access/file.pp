@@ -18,10 +18,10 @@
 class sendmail::access::file {
   include ::sendmail::params
 
-  file { '/etc/mail/access':
+  file { $::sendmail::params::access_file:
     ensure => file,
     owner  => 'smmta',
-    group  => 'smmsp',
+    group  => $::sendmail::params::sendmail_group,
     mode   => '0640',
   }
 }

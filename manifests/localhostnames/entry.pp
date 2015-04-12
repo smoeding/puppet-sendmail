@@ -38,9 +38,9 @@ define sendmail::localhostnames::entry (
     'absent'  => "rm key[. = '${domain}']",
   }
 
-  augeas { "/etc/mail/local-host-names-${domain}":
+  augeas { "${::sendmail::params::localhostnames_file}-${domain}":
     lens    => 'Sendmail_List.lns',
-    incl    => '/etc/mail/local-host-names',
+    incl    => $::sendmail::params::localhostnames_file,
     changes => $changes,
     require => Class['::sendmail::localhostnames::file'],
   }

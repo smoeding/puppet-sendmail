@@ -21,28 +21,28 @@ class sendmail::params {
   $mail_settings_dir = '/etc/mail'
 
   # File locations
-  $sendmail_alias_file          = '/etc/aliases'
-  $sendmail_access_file         = "${mail_settings_dir}/access"
-  $sendmail_bitdomain_file      = "${mail_settings_dir}/bitdomain"
-  $sendmail_domaintable_file    = "${mail_settings_dir}/domaintable"
-  $sendmail_genericstable_file  = "${mail_settings_dir}/genericstable"
-  $sendmail_localhostnames_file = "${mail_settings_dir}/local-host-names"
-  $sendmail_mailertable_file    = "${mail_settings_dir}/mailertable"
-  $sendmail_relaydomains_file   = "${mail_settings_dir}/relay-domains"
-  $sendmail_trustedusers_file   = "${mail_settings_dir}/trusted-users"
-  $sendmail_userdb_file         = "${mail_settings_dir}/userdb"
-  $sendmail_uudomain_file       = "${mail_settings_dir}/uudomain"
-  $sendmail_virtusertable_file  = "${mail_settings_dir}/virtusertable"
+  $alias_file          = '/etc/aliases'
+  $access_file         = "${mail_settings_dir}/access"
+  $bitdomain_file      = "${mail_settings_dir}/bitdomain"
+  $domaintable_file    = "${mail_settings_dir}/domaintable"
+  $genericstable_file  = "${mail_settings_dir}/genericstable"
+  $localhostnames_file = "${mail_settings_dir}/local-host-names"
+  $mailertable_file    = "${mail_settings_dir}/mailertable"
+  $relaydomains_file   = "${mail_settings_dir}/relay-domains"
+  $trustedusers_file   = "${mail_settings_dir}/trusted-users"
+  $userdb_file         = "${mail_settings_dir}/userdb"
+  $uudomain_file       = "${mail_settings_dir}/uudomain"
+  $virtusertable_file  = "${mail_settings_dir}/virtusertable"
 
-  $sendmail_sendmail_mc_file    = "${mail_settings_dir}/sendmail.mc"
-  $sendmail_submit_mc_file      = "${mail_settings_dir}/submit.mc"
+  $sendmail_mc_file    = "${mail_settings_dir}/sendmail.mc"
+  $submit_mc_file      = "${mail_settings_dir}/submit.mc"
 
   $package_name      = 'sendmail'
   $service_name      = 'sendmail'
 
   $sendmail_binary   = '/usr/sbin/sendmail'
 
-  $configure_command = 'make -C /etc/mail all'
+  $configure_command = "make -C ${mail_settings_dir} all"
 
   $sendmail_smarthost      = $::domain
   $sendmail_masquerade_as  = $::domain

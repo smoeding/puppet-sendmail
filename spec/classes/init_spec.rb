@@ -27,4 +27,14 @@ describe 'sendmail' do
               .that_requires('Class[sendmail::package]')
     }
   end
+
+  context 'On an unsupported operating system' do
+    let :facts do
+      { :operatingsystem => 'VAX/VMS' }
+    end
+
+    it {
+      expect { should compile }.to raise_error(/Unsupported operatingsystem/)
+    }
+  end
 end

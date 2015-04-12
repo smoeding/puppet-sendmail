@@ -38,9 +38,9 @@ define sendmail::trustedusers::entry (
     'absent'  => "rm key[. = '${user}']",
   }
 
-  augeas { "/etc/mail/trusted-users-${user}":
+  augeas { "${::sendmail::params::trustedusers_file}-${user}":
     lens    => 'Sendmail_List.lns',
-    incl    => '/etc/mail/trusted-users',
+    incl    => $::sendmail::params::trustedusers_file,
     changes => $changes,
     require => Class['::sendmail::trustedusers::file'],
   }

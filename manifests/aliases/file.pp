@@ -18,7 +18,7 @@
 class sendmail::aliases::file {
   include ::sendmail::params
 
-  file { '/etc/aliases':
+  file { $::sendmail::params::alias_file:
     ensure => file,
     owner  => 'root',
     group  => 'root',
