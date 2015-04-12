@@ -24,5 +24,6 @@ class sendmail::makeall {
     refreshonly => true,
     path        => '/bin:/sbin:/usr/bin:/usr/sbin',
     require     => Class['::sendmail::package'],
+    before      => Class['::sendmail::service'],
   }
 }
