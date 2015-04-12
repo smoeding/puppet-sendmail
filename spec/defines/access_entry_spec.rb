@@ -13,7 +13,8 @@ describe 'sendmail::access::entry' do
 
   it do
     should contain_augeas('/etc/mail/access-example.com') \
-            .that_requires('Class[sendmail::access::file]')
+            .that_requires('Class[sendmail::access::file]') \
+            .that_notifies('Class[sendmail::makeall]')
   end
 
   context 'Missing value' do

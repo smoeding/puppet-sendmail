@@ -33,6 +33,7 @@ define sendmail::access::entry (
   $ensure = present,
 ) {
   include ::sendmail::params
+  include ::sendmail::makeall
   include ::sendmail::access::file
 
   if ($ensure == present and empty($value)) {
@@ -52,5 +53,6 @@ define sendmail::access::entry (
     incl    => $::sendmail::params::access_file,
     changes => $changes,
     require => Class['::sendmail::access::file'],
+    notify  => Class['::sendmail::makeall'],
   }
 }
