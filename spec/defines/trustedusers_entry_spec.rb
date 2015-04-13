@@ -5,7 +5,7 @@ describe 'sendmail::trustedusers::entry' do
 
   context 'On Debian' do
     let(:facts) do
-      { 'operatingsystem' => 'Debian' }
+      { :operatingsystem => 'Debian' }
     end
 
     it do

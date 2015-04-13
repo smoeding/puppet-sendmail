@@ -8,7 +8,7 @@ describe 'sendmail::access::entry' do
   end
 
   let(:facts) do
-    { 'operatingsystem' => 'Debian' }
+    { :operatingsystem => 'Debian' }
   end
 
   it do
