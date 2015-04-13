@@ -3,9 +3,13 @@ require 'spec_helper'
 describe 'sendmail::define' do
   let(:title) { 'foobar' }
 
+  # :id and :osfamily facts are needed for concat module
   let(:facts) do
-    { 'operatingsystem' => 'Debian',
-      'concat_basedir' => '/tmp'
+    {
+      :id              => 'stm',
+      :osfamily        => 'Debian',
+      :operatingsystem => 'Debian',
+      :concat_basedir  => '/tmp',
     }
   end
 
