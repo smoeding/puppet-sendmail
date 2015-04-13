@@ -17,6 +17,7 @@ describe 'sendmail::define' do
     it do
       should contain_concat__fragment('sendmail_mc-define-foobar') \
               .with_content(/^define\(`foobar', `'\)dnl$/) \
+              .with_order('20') \
               .that_notifies('Class[sendmail::makeall]')
     end
   end
@@ -29,6 +30,7 @@ describe 'sendmail::define' do
     it do
       should contain_concat__fragment('sendmail_mc-define-foobar') \
               .with_content(/^define\(`foobar', `foo'\)dnl$/) \
+              .with_order('20') \
               .that_notifies('Class[sendmail::makeall]')
     end
   end
@@ -41,6 +43,7 @@ describe 'sendmail::define' do
     it do
       should contain_concat__fragment('sendmail_mc-define-foobar') \
               .with_content(/^define\(`baz', `foo'\)dnl$/) \
+              .with_order('20') \
               .that_notifies('Class[sendmail::makeall]')
     end
   end
@@ -53,6 +56,7 @@ describe 'sendmail::define' do
     it do
       should contain_concat__fragment('sendmail_mc-define-foobar') \
               .with_content(/^define\(`foobar', `foo'\)dnl$/) \
+              .with_order('20') \
               .that_notifies('Class[sendmail::makeall]')
     end
   end
@@ -65,6 +69,7 @@ describe 'sendmail::define' do
     it do
       should contain_concat__fragment('sendmail_mc-define-foobar') \
               .with_content(/^define\(`foobar', foo\)dnl$/) \
+              .with_order('20') \
               .that_notifies('Class[sendmail::makeall]')
     end
   end
@@ -77,8 +82,8 @@ describe 'sendmail::define' do
     it do
       should contain_concat__fragment('sendmail_mc-define-foobar') \
               .with_content(/^define\(`foobar', `'\)dnl$/) \
+              .with_order('20') \
               .that_notifies('Class[sendmail::makeall]')
     end
   end
-
 end

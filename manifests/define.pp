@@ -1,6 +1,6 @@
-# = Define: define
+# = Define: sendmail::define
 #
-# Manage define
+# Add m4 macro defines to the sendmail.mc file.
 #
 # == Parameters:
 #
