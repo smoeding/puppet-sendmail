@@ -1,0 +1,62 @@
+# = Define: define
+#
+# Manage define
+#
+# == Parameters:
+#
+# [*macro_name*]
+#   The name of the macro that will be defined. This will be the first
+#   argument of the m4 define builtin.
+#   **Note**: The macro name should not be quoted as it will always be
+#   quoted in the template.
+#
+# [*expansion*]
+#   The expansion defined for the macro.
+#
+# [*use_quotes*]
+#   A boolean that indicates if the expansion should be quoted (using
+#   m4 quotes). If this argument is 'true', then the expansion will be
+#   enclosed in ` and ' symbols in the generated output file.
+#   **Note**: The name of the defined macro will always be quoted.
+#   Valid options: 'true' or 'false'. Default value: 'true'.
+#
+# == Requires:
+#
+# Nothing.
+#
+# == Sample Usage:
+#
+#   sendmail::define { 'confFOO':
+#     expansion  => 'foo',
+#   }
+#
+#   sendmail::define { 'confBAR':
+#     expansion  => 'foo',
+#     use_quotes => false,
+#   }
+#
+#
+define sendmail::define (
+  $macro_name = $title,
+  $expansion  = undef,
+  $use_quotes = true,
+) {
+  include ::sendmail::makeall
+
+  validate_bool($use_quotes)
+
+  # Add quotes to the expansion if needed
+  $exp_arg = $use_quotes ? {
+    true  => "`${expansion}'",
+    false => $expansion,
+  }
+
+  $args = [ "`${macro_name}'", $exp_arg ]
+
+  concat::fragment { "sendmail_mc-define-${title}":
+    target  => 'sendmail.mc',
+    order   => '20',
+    content => inline_template("define(<%= @args.join(', ') -%>)dnl\n"),
+    notify  => Class['::sendmail::makeall'],
+  }
+}
