@@ -1,4 +1,4 @@
-# = Class: sendmail::mc::versionid
+# = Define: sendmail::mc::versionid
 #
 # Add the VERSIONID macro to the sendmail.mc file.
 #
@@ -18,7 +18,9 @@
 #   }
 #
 #
-class sendmail::mc::versionid ($versionid) {
+define sendmail::mc::versionid (
+  $versionid = $title,
+) {
   include ::sendmail::makeall
 
   concat::fragment { 'sendmail_mc-versionid':
