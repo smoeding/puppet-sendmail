@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'sendmail::define' do
+describe 'sendmail::mc::define' do
   let(:title) { 'foobar' }
 
   # :id and :osfamily facts are needed for concat module

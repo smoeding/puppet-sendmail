@@ -1,10 +1,11 @@
-# = Class: sendmail::versionid
+# = Class: sendmail::mc::versionid
 #
 # Add the VERSIONID macro to the sendmail.mc file.
 #
 # == Parameters:
 #
 # [*versionid*]
+#   The identifier to add to the sendmail.mc file.
 #
 # == Requires:
 #
@@ -12,12 +13,12 @@
 #
 # == Sample Usage:
 #
-#   class { 'sendmail::versionid':
+#   class { 'sendmail::mc::versionid':
 #     versionid => 'generic',
 #   }
 #
 #
-class sendmail::versionid ($versionid) {
+class sendmail::mc::versionid ($versionid) {
   include ::sendmail::makeall
 
   concat::fragment { 'sendmail_mc-versionid':

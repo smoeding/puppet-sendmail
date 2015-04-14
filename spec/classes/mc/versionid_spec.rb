@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'sendmail::versionid' do
+describe 'sendmail::mc::versionid' do
   let(:title) { 'versionid' }
 
   let(:params) do

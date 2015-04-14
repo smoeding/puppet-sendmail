@@ -1,4 +1,4 @@
-# = Define: sendmail::define
+# = Define: sendmail::mc::define
 #
 # Add m4 macro defines to the sendmail.mc file.
 #
@@ -26,17 +26,17 @@
 #
 # == Sample Usage:
 #
-#   sendmail::define { 'confFOO':
+#   sendmail::mc::define { 'confFOO':
 #     expansion  => 'foo',
 #   }
 #
-#   sendmail::define { 'confBAR':
+#   sendmail::mc::define { 'confBAR':
 #     expansion  => 'foo',
 #     use_quotes => false,
 #   }
 #
 #
-define sendmail::define (
+define sendmail::mc::define (
   $macro_name = $title,
   $expansion  = undef,
   $use_quotes = true,
@@ -51,12 +51,12 @@ define sendmail::define (
     false => $expansion,
   }
 
-  $args = [ "`${macro_name}'", $exp_arg ]
+  $arr = [ "`${macro_name}'", $exp_arg ]
 
   concat::fragment { "sendmail_mc-define-${title}":
     target  => 'sendmail.mc',
     order   => '20',
-    content => inline_template("define(<%= @args.join(', ') -%>)dnl\n"),
+    content => inline_template("define(<%= @arr.join(', ') -%>)dnl\n"),
     notify  => Class['::sendmail::makeall'],
   }
 }
