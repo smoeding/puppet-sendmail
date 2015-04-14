@@ -5,7 +5,7 @@
 # == Parameters:
 #
 # [*versionid*]
-#   The identifier to add to the sendmail.mc file.
+#   The identifier (a string) to set in the sendmail.mc file.
 #
 # == Requires:
 #
@@ -13,9 +13,7 @@
 #
 # == Sample Usage:
 #
-#   class { 'sendmail::mc::versionid':
-#     versionid => 'generic',
-#   }
+#   sendmail::mc::versionid { 'generic': }
 #
 #
 define sendmail::mc::versionid (
