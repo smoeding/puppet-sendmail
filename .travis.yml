@@ -1,13 +1,12 @@
+---
 language: ruby
-gemfile: .gemfile
-bundler_args: --without system_tests
-script: "bundle exec rake validate && bundle exec rake lint && bundle exec rake spec SPEC_OPTS='--format documentation'"
-branches:
-  only:
-    - master
-notifications:
-  on_success: change
-  on_failure: change
+sudo: false
+rvm:
+  - 1.9.3
+  - 2.0.0
+env:
+  - PUPPET_GEM_VERSION="~> 3.0"
+  - PUPPET_GEM_VERSION="~> 3.5.0"
 matrix:
   fast_finish: true
   include:
@@ -16,6 +15,15 @@ matrix:
   - rvm: 2.0.0
     env: PUPPET_GEM_VERSION="~> 3.0"
   - rvm: 1.9.3
-    env: PUPPET_GEM_VERSION="~> 3.5.0" STRICT_VARIABLES="yes"
+    env: PUPPET_GEM_VERSION="~> 3.5.0"
   - rvm: 2.0.0
-    env: PUPPET_GEM_VERSION="~> 3.5.0" STRICT_VARIABLES="yes"
+    env: PUPPET_GEM_VERSION="~> 3.5.0"
+gemfile: .gemfile
+bundler_args: --without system_tests
+script:
+  - "bundle exec rake validate"
+  - "bundle exec rake lint"
+  - "bundle exec rake spec SPEC_OPTS='--format documentation'"
+notifications:
+  on_success: change
+  on_failure: change
