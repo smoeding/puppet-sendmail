@@ -29,11 +29,11 @@ Sendmail is a powerful mail transfer agent, and this modules provides an easy wa
 
 * The module installs the operating system package to run the Sendmail MTA and possibly some other modules to support it (make, m4, ...)
 * In a default installation almost all the manged files are in the `/etc/mail` directory. A notably exception is the `/etc/aliases` file.
-* The module may generate a new `/etc/mail/sendmail.mc` which is the source for `/etc/mail/sendmail.cf`. This file is the main Sendmail configuration file and it affects where Sendmail will send mails to and accept mail from. *WARNING*: Make sure to understand and test everything in these files before putting it in production.
+* The module may generate a new `/etc/mail/sendmail.mc` which is the source for `/etc/mail/sendmail.cf`. This file is the main Sendmail configuration file and it affects where Sendmail will send mails to and accept mail from. **WARNING**: Make sure to understand and test everything in these files before putting it in production.
 
 ### Setup Requirements
 
-The sendmail module brings additional Augeas lenses so `pluginsync` must be enabled. It also need the Puppetlanb modules `stdlib`and `concat`.
+The sendmail module brings additional Augeas lenses so `pluginsync` must be enabled. It also needs the Puppetlabs modules `stdlib`and `concat`.
 
 ### Beginning with sendmail
 
