@@ -5,9 +5,9 @@
 # == Parameters:
 #
 # [*entries*]
-#   A hash that will be used to create sendmail::trustedusers::entry
+#   A hash that will be used to create sendmail::access::entry
 #   resources.
-#   This class can be used to create trusted-users defined in hiera.
+#   This class can be used to create access entries defined in hiera.
 #   The hiera hash should look like this:
 #
 #   sendmail::access::entries:

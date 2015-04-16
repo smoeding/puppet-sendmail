@@ -4,9 +4,11 @@ sudo: false
 rvm:
   - 1.9.3
   - 2.0.0
+  - 2.1.6
 env:
   - PUPPET_GEM_VERSION="~> 3.0"
   - PUPPET_GEM_VERSION="~> 3.5.0"
+  - PUPPET_GEM_VERSION="~> 4.0"
 matrix:
   fast_finish: true
   include:
@@ -18,6 +20,10 @@ matrix:
     env: PUPPET_GEM_VERSION="~> 3.5.0"
   - rvm: 2.0.0
     env: PUPPET_GEM_VERSION="~> 3.5.0"
+  - rvm: 2.1.6
+    env: PUPPET_GEM_VERSION="~> 3.5.0"
+  - rvm: 2.1.6
+    env: PUPPET_GEM_VERSION="~> 4.0"
 gemfile: .gemfile
 bundler_args: --without system_tests
 script:

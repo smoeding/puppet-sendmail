@@ -23,11 +23,13 @@ class sendmail::params {
   # File locations
   $alias_file          = '/etc/aliases'
   $access_file         = "${mail_settings_dir}/access"
+  $authinfo_file       = "${mail_settings_dir}/authinfo"
   $bitdomain_file      = "${mail_settings_dir}/bitdomain"
   $domaintable_file    = "${mail_settings_dir}/domaintable"
   $genericstable_file  = "${mail_settings_dir}/genericstable"
   $localhostnames_file = "${mail_settings_dir}/local-host-names"
   $mailertable_file    = "${mail_settings_dir}/mailertable"
+  $msp_authinfo_file   = "${mail_settings_dir}/msp-authinfo"
   $relaydomains_file   = "${mail_settings_dir}/relay-domains"
   $trustedusers_file   = "${mail_settings_dir}/trusted-users"
   $userdb_file         = "${mail_settings_dir}/userdb"
