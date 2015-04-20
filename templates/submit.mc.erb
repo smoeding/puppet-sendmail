@@ -1,0 +1,33 @@
+divert(0)dnl
+#
+# This file is managed by Puppet
+#
+define(`_USE_ETC_MAIL_')dnl
+define(`confCF_VERSION', `Submit')dnl
+define(`confDONT_INIT_GROUPS', `True')dnl
+<% case @operatingsystem -%>
+<% when 'Debian' -%>
+include(`/usr/share/sendmail/cf/m4/cf.m4')dnl
+OSTYPE(`debian')dnl
+DOMAIN(`debian-msp')dnl
+<% end -%>
+<% if @masquerade_as -%>
+dnl #
+dnl #---------------------------------------------------------------------
+dnl # Masquerading information
+MASQUERADE_AS(`<%= @masquerade_as -%>')dnl
+FEATURE(`masquerade_envelope')dnl
+dnl #---------------------------------------------------------------------
+<% end -%>
+dnl #
+dnl #---------------------------------------------------------------------
+dnl # The real reason we're here: the FEATURE(msp)
+dnl # NOTE WELL:  MSA (587) should have M=Ea, so we need to use stock 25
+dnl #---------------------------------------------------------------------
+FEATURE(`msp', `<%= @msp_host -%>', `<%= @msp_port -%>')dnl
+dnl #
+dnl #---------------------------------------------------------------------
+dnl # Some minor cleanup from FEATURE(msp)
+dnl #---------------------------------------------------------------------
+dnl #
+dnl #---------------------------------------------------------------------
