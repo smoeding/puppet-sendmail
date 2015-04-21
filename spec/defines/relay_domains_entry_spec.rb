@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'sendmail::relaydomains::entry' do
+describe 'sendmail::relay_domains::entry' do
   let(:title) { 'example.org' }
 
   context 'On Debian' do
@@ -8,9 +8,9 @@ describe 'sendmail::relaydomains::entry' do
       { :operatingsystem => 'Debian' }
     end
 
-    it do
+    it {
       should contain_augeas('/etc/mail/relay-domains-example.org') \
-              .that_requires('Class[sendmail::relaydomains::file]')
-    end
+              .that_requires('Class[sendmail::relay_domains::file]')
+    }
   end
 end

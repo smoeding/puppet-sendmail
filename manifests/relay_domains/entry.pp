@@ -1,4 +1,4 @@
-# = Define: sendmail::relaydomains::entry
+# = Define: sendmail::relay_domains::entry
 #
 # Create or remove a domain entry in the relay-domains file.
 #
@@ -17,31 +17,31 @@
 #
 # == Sample Usage:
 #
-#   sendmail::relaydomains::entry { 'example.com':
+#   sendmail::relay_domains::entry { 'example.com':
 #     ensure => present,
 #   }
 #
-#   sendmail::relaydomains::entry { 'example.org':
+#   sendmail::relay_domains::entry { 'example.org':
 #     ensure => absent,
 #   }
 #
 #
-define sendmail::relaydomains::entry (
+define sendmail::relay_domains::entry (
   $domain = $name,
   $ensure = 'present',
 ) {
   include ::sendmail::params
-  include ::sendmail::relaydomains::file
+  include ::sendmail::relay_domains::file
 
   $changes = $ensure ? {
     'present' => "set key[. = '${domain}'] '${domain}'",
     'absent'  => "rm key[. = '${domain}']",
   }
 
-  augeas { "${::sendmail::params::relaydomains_file}-${domain}":
+  augeas { "${::sendmail::params::relay_domains_file}-${domain}":
     lens    => 'Sendmail_List.lns',
-    incl    => $::sendmail::params::relaydomains_file,
+    incl    => $::sendmail::params::relay_domains_file,
     changes => $changes,
-    require => Class['::sendmail::relaydomains::file'],
+    require => Class['::sendmail::relay_domains::file'],
   }
 }

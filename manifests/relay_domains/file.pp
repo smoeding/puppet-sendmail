@@ -1,4 +1,4 @@
-# = Class: sendmail::relaydomains::file
+# = Class: sendmail::relay_domains::file
 #
 # Create the Sendmail relay-domains file.
 #
@@ -12,13 +12,13 @@
 #
 # == Sample Usage:
 #
-#   class { 'sendmail::relaydomains::file': }
+#   class { 'sendmail::relay_domains::file': }
 #
 #
-class sendmail::relaydomains::file {
+class sendmail::relay_domains::file {
   include ::sendmail::params
 
-  file { $::sendmail::params::relaydomains_file:
+  file { $::sendmail::params::relay_domains_file:
     ensure => file,
     owner  => 'root',
     group  => $::sendmail::params::sendmail_group,

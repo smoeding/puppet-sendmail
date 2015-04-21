@@ -30,7 +30,7 @@ class sendmail::params {
   $local_host_names_file = "${mail_settings_dir}/local-host-names"
   $mailertable_file      = "${mail_settings_dir}/mailertable"
   $msp_authinfo_file     = "${mail_settings_dir}/msp-authinfo"
-  $relaydomains_file     = "${mail_settings_dir}/relay-domains"
+  $relay_domains_file    = "${mail_settings_dir}/relay-domains"
   $trustedusers_file     = "${mail_settings_dir}/trusted-users"
   $userdb_file           = "${mail_settings_dir}/userdb"
   $uudomain_file         = "${mail_settings_dir}/uudomain"
