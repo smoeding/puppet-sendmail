@@ -21,23 +21,23 @@ class sendmail::params {
   $mail_settings_dir = '/etc/mail'
 
   # File locations
-  $alias_file          = '/etc/aliases'
-  $access_file         = "${mail_settings_dir}/access"
-  $authinfo_file       = "${mail_settings_dir}/authinfo"
-  $bitdomain_file      = "${mail_settings_dir}/bitdomain"
-  $domaintable_file    = "${mail_settings_dir}/domaintable"
-  $genericstable_file  = "${mail_settings_dir}/genericstable"
-  $localhostnames_file = "${mail_settings_dir}/local-host-names"
-  $mailertable_file    = "${mail_settings_dir}/mailertable"
-  $msp_authinfo_file   = "${mail_settings_dir}/msp-authinfo"
-  $relaydomains_file   = "${mail_settings_dir}/relay-domains"
-  $trustedusers_file   = "${mail_settings_dir}/trusted-users"
-  $userdb_file         = "${mail_settings_dir}/userdb"
-  $uudomain_file       = "${mail_settings_dir}/uudomain"
-  $virtusertable_file  = "${mail_settings_dir}/virtusertable"
+  $alias_file            = '/etc/aliases'
+  $access_file           = "${mail_settings_dir}/access"
+  $authinfo_file         = "${mail_settings_dir}/authinfo"
+  $bitdomain_file        = "${mail_settings_dir}/bitdomain"
+  $domaintable_file      = "${mail_settings_dir}/domaintable"
+  $genericstable_file    = "${mail_settings_dir}/genericstable"
+  $local_host_names_file = "${mail_settings_dir}/local-host-names"
+  $mailertable_file      = "${mail_settings_dir}/mailertable"
+  $msp_authinfo_file     = "${mail_settings_dir}/msp-authinfo"
+  $relaydomains_file     = "${mail_settings_dir}/relay-domains"
+  $trustedusers_file     = "${mail_settings_dir}/trusted-users"
+  $userdb_file           = "${mail_settings_dir}/userdb"
+  $uudomain_file         = "${mail_settings_dir}/uudomain"
+  $virtusertable_file    = "${mail_settings_dir}/virtusertable"
 
-  $sendmail_mc_file    = "${mail_settings_dir}/sendmail.mc"
-  $submit_mc_file      = "${mail_settings_dir}/submit.mc"
+  $sendmail_mc_file      = "${mail_settings_dir}/sendmail.mc"
+  $submit_mc_file        = "${mail_settings_dir}/submit.mc"
 
   $package_name      = 'sendmail'
   $service_name      = 'sendmail'

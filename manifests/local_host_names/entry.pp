@@ -1,4 +1,4 @@
-# = Define: sendmail::localhostnames::entry
+# = Define: sendmail::local_host_names::entry
 #
 # Create or remove a domain entry in the local-host-names file.
 #
@@ -17,31 +17,31 @@
 #
 # == Sample Usage:
 #
-#   sendmail::localhostnames::entry { 'example.com':
+#   sendmail::local_host_names::entry { 'example.com':
 #     ensure => present,
 #   }
 #
-#   sendmail::localhostnames::entry { 'example.org':
+#   sendmail::local_host_names::entry { 'example.org':
 #     ensure => absent,
 #   }
 #
 #
-define sendmail::localhostnames::entry (
+define sendmail::local_host_names::entry (
   $domain = $name,
   $ensure = 'present',
 ) {
   include ::sendmail::params
-  include ::sendmail::localhostnames::file
+  include ::sendmail::local_host_names::file
 
   $changes = $ensure ? {
     'present' => "set key[. = '${domain}'] '${domain}'",
     'absent'  => "rm key[. = '${domain}']",
   }
 
-  augeas { "${::sendmail::params::localhostnames_file}-${domain}":
+  augeas { "${::sendmail::params::local_host_names_file}-${domain}":
     lens    => 'Sendmail_List.lns',
-    incl    => $::sendmail::params::localhostnames_file,
+    incl    => $::sendmail::params::local_host_names_file,
     changes => $changes,
-    require => Class['::sendmail::localhostnames::file'],
+    require => Class['::sendmail::local_host_names::file'],
   }
 }

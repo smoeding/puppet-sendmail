@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe 'sendmail::localhostnames' do
-  let(:title) { 'localhostnames' }
+describe 'sendmail::local_host_names' do
+  let(:title) { 'local_host_names' }
 
-  let :facts do
+  let(:facts) do
     { :operatingsystem => 'Debian' }
   end
 
@@ -12,7 +12,7 @@ describe 'sendmail::localhostnames' do
       { :entries => { 'localhost' => {} } }
     end
 
-    it { should contain_sendmail__localhostnames__entry('localhost') }
+    it { should contain_sendmail__local_host_names__entry('localhost') }
   end
 
   context 'On Debian with empty parameter hash' do
@@ -20,9 +20,9 @@ describe 'sendmail::localhostnames' do
       { :entries => { } }
     end
 
-    it do
+    it {
       expect { should compile }
-    end
+    }
   end
 
   context 'On Debian with wrong parameter type' do
@@ -30,8 +30,8 @@ describe 'sendmail::localhostnames' do
       { :entries => "localhost" }
     end
 
-    it do
+    it {
       expect { should compile }.to raise_error(/is not a Hash/)
-    end
+    }
   end
 end

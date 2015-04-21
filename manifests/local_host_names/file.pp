@@ -1,4 +1,4 @@
-# = Class: sendmail::localhostnames::file
+# = Class: sendmail::local_host_names::file
 #
 # Create the Sendmail local-host-names file.
 #
@@ -12,13 +12,13 @@
 #
 # == Sample Usage:
 #
-#   class { 'sendmail::localhostnames::file': }
+#   class { 'sendmail::local_host_names::file': }
 #
 #
-class sendmail::localhostnames::file {
+class sendmail::local_host_names::file {
   include ::sendmail::params
 
-  file { $::sendmail::params::localhostnames_file:
+  file { $::sendmail::params::local_host_names_file:
     ensure => file,
     owner  => 'root',
     group  => $::sendmail::params::sendmail_group,

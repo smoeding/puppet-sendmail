@@ -1,20 +1,20 @@
 require 'spec_helper'
 
-describe 'sendmail::localhostnames::file' do
+describe 'sendmail::local_host_names::file' do
   context 'On Debian' do
-    let(:title) { 'localhostnames' }
+    let(:title) { 'local_host_names' }
 
-    let :facts do
+    let(:facts) do
       { :operatingsystem => 'Debian' }
     end
 
-    it do
+    it {
       should contain_file('/etc/mail/local-host-names').with({
         'ensure' => 'file',
         'owner'  => 'root',
         'group'  => 'smmsp',
         'mode'   => '0644',
       })
-    end
+    }
   end
 end
