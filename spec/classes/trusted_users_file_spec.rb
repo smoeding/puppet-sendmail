@@ -1,20 +1,20 @@
 require 'spec_helper'
 
-describe 'sendmail::trustedusers::file' do
+describe 'sendmail::trusted_users::file' do
   context 'On Debian' do
-    let(:title) { 'trustedusers' }
+    let(:title) { 'trusted_users' }
 
-    let :facts do
+    let(:facts) do
       { :operatingsystem => 'Debian' }
     end
 
-    it do
+    it {
       should contain_file('/etc/mail/trusted-users').with({
         'ensure' => 'file',
         'owner'  => 'root',
         'group'  => 'smmsp',
         'mode'   => '0644',
       })
-    end
+    }
   end
 end

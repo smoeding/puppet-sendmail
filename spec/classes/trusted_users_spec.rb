@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe 'sendmail::trustedusers' do
-  let(:title) { 'trustedusers' }
+describe 'sendmail::trusted_users' do
+  let(:title) { 'trusted_users' }
 
-  let :facts do
+  let(:facts) do
     { :operatingsystem => 'Debian' }
   end
 
@@ -12,7 +12,7 @@ describe 'sendmail::trustedusers' do
       { :entries => { 'fred' => {} } }
     end
 
-    it { should contain_sendmail__trustedusers__entry('fred') }
+    it { should contain_sendmail__trusted_users__entry('fred') }
   end
 
   context 'On Debian with empty parameter hash' do
@@ -20,9 +20,9 @@ describe 'sendmail::trustedusers' do
       { :entries => { } }
     end
 
-    it do
+    it {
       expect { should compile }
-    end
+    }
   end
 
   context 'On Debian with wrong parameter type' do
@@ -30,8 +30,8 @@ describe 'sendmail::trustedusers' do
       { :entries => "fred" }
     end
 
-    it do
+    it {
       expect { should compile }.to raise_error(/is not a Hash/)
-    end
+    }
   end
 end
