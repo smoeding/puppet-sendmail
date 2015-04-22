@@ -18,7 +18,8 @@
 class sendmail::aliases::newaliases {
   include ::sendmail::params
 
-  exec { "${::sendmail::params::sendmail_binary} -bi":
+  exec { 'sendmail::aliases::newaliases':
+    command     => "${::sendmail::params::sendmail_binary} -bi",
     refreshonly => true,
   }
 }
