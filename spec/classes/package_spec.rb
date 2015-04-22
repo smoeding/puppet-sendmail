@@ -1,19 +1,20 @@
 require 'spec_helper'
 
 describe 'sendmail::package' do
-  let(:title) { 'sendmail' }
-
-  let(:facts) do
-    { :operatingsystem => 'Debian' }
-  end
 
   context 'On Debian with defaults' do
-    it {
-      should contain_package('sendmail').with_ensure('present')
-    }
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
+    it { should contain_package('sendmail').with_ensure('present') }
   end
 
   context 'On Debian with package_ensure => latest' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :package_ensure => 'latest' }
     end
@@ -22,6 +23,10 @@ describe 'sendmail::package' do
   end
 
   context 'On Debian with package_manage => false' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :package_manage => false }
     end
@@ -30,6 +35,10 @@ describe 'sendmail::package' do
   end
 
   context 'On Debian with auxiliary_packages defined' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :auxiliary_packages => [ 'foo', 'bar' ] }
     end

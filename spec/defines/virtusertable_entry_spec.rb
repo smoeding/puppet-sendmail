@@ -11,19 +11,19 @@ describe 'sendmail::virtusertable::entry' do
     { :operatingsystem => 'Debian' }
   end
 
-  it do
+  it {
     should contain_augeas('/etc/mail/virtusertable-info@example.com') \
             .that_requires('Class[sendmail::virtusertable::file]') \
             .that_notifies('Class[sendmail::makeall]')
-  end
+  }
 
   context 'Missing value' do
     let(:params) { { :ensure => 'present' } }
 
-    it do
+    it {
       expect {
         should compile
       }.to raise_error(/value must be set when creating an virtusertable entry/)
-    end
+    }
   end
 end

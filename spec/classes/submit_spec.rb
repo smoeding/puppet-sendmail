@@ -1,13 +1,12 @@
 require 'spec_helper'
 
 describe 'sendmail::submit' do
-  let(:title) { 'submit' }
-
-  let(:facts) do
-    { :operatingsystem => 'Debian' }
-  end
 
   context 'On Debian with default parameters' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     it {
       should contain_file('/etc/mail/submit.mc').with(
                'ensure' => 'file',
@@ -22,6 +21,10 @@ describe 'sendmail::submit' do
   end
 
   context 'On Debian with msp_host => relay.example.org' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :msp_host => 'relay.example.org' }
     end
@@ -33,6 +36,10 @@ describe 'sendmail::submit' do
   end
 
   context 'On Debian with msp_port => 25' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :msp_port => '25' }
     end
@@ -44,6 +51,10 @@ describe 'sendmail::submit' do
   end
 
   context 'On Debian with masquerade_as => example.org' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :masquerade_as => 'example.org' }
     end

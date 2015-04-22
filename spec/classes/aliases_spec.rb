@@ -1,13 +1,12 @@
 require 'spec_helper'
 
 describe 'sendmail::aliases' do
-  let(:title) { 'aliases' }
-
-  let(:facts) do
-    { :operatingsystem => 'Debian' }
-  end
 
   context 'On Debian with valid parameter hash' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :entries => { 'fred' => { 'recipient' => 'fred@example.org' } } }
     end
@@ -16,22 +15,26 @@ describe 'sendmail::aliases' do
   end
 
   context 'On Debian with empty parameter hash' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :entries => { } }
     end
 
-    it do
-      expect { should compile }
-    end
+    it { expect { should compile } }
   end
 
   context 'On Debian with wrong parameter type' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :entries => "fred" }
     end
 
-    it do
-      expect { should compile }.to raise_error(/is not a Hash/)
-    end
+    it { expect { should compile }.to raise_error(/is not a Hash/) }
   end
 end

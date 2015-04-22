@@ -1,23 +1,26 @@
 require 'spec_helper'
 
 describe 'sendmail::service' do
-  let(:title) { 'sendmail' }
-
-  let(:facts) do
-    { :operatingsystem => 'Debian' }
-  end
 
   context 'On Debian with defaults' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     it {
       should contain_service('sendmail').with(
-        'ensure' => 'running',
-        'name'   => 'sendmail',
-        'enable' => 'true'
-      )
+               'ensure' => 'running',
+               'name'   => 'sendmail',
+               'enable' => 'true'
+             )
     }
   end
 
   context 'On Debian with service_manage => false' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :service_manage => false }
     end
@@ -26,6 +29,10 @@ describe 'sendmail::service' do
   end
 
   context 'On Debian with service_ensure => stopped' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :service_ensure => 'stopped' }
     end
@@ -34,6 +41,10 @@ describe 'sendmail::service' do
   end
 
   context 'On Debian with service_ensure => running' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :service_ensure => 'running' }
     end
@@ -42,6 +53,10 @@ describe 'sendmail::service' do
   end
 
   context 'On Debian with service_ensure => true' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :service_ensure => true }
     end
@@ -50,6 +65,10 @@ describe 'sendmail::service' do
   end
 
   context 'On Debian with service_ensure => false' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :service_ensure => false }
     end
@@ -58,6 +77,10 @@ describe 'sendmail::service' do
   end
 
   context 'On Debian with service_enable => true' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :service_enable => true }
     end
@@ -66,6 +89,10 @@ describe 'sendmail::service' do
   end
 
   context 'On Debian with service_enable => false' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :service_enable => false }
     end
@@ -74,6 +101,10 @@ describe 'sendmail::service' do
   end
 
   context 'On Debian with service_name set' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :service_name => 'sendmoremail' }
     end

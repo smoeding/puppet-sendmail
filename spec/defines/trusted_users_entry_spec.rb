@@ -8,9 +8,9 @@ describe 'sendmail::trusted_users::entry' do
       { :operatingsystem => 'Debian' }
     end
 
-    it do
+    it {
       should contain_augeas('/etc/mail/trusted-users-fred') \
               .that_requires('Class[sendmail::trusted_users::file]')
-    end
+    }
   end
 end

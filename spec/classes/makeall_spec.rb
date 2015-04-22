@@ -1,14 +1,17 @@
 require 'spec_helper'
 
 describe 'sendmail::makeall' do
-  let(:title) { 'makeall' }
 
-  let(:facts) do
-    { :operatingsystem => 'Debian' }
+  [ 'Debian', 'RedHat' ].each do |operatingsystem|
+    context "On #{operatingsystem}" do
+      let(:facts) do
+        { :operatingsystem => operatingsystem }
+      end
+
+      it {
+        should contain_exec('sendmail::makeall') \
+                .that_requires('Class[sendmail::package]')
+      }
+    end
   end
-
-  it {
-    should contain_exec('sendmail::makeall') \
-            .that_requires('Class[sendmail::package]')
-  }
 end

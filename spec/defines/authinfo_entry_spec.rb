@@ -11,19 +11,19 @@ describe 'sendmail::authinfo::entry' do
     { :operatingsystem => 'Debian' }
   end
 
-  it do
+  it {
     should contain_augeas('/etc/mail/authinfo-example.com') \
             .that_requires('Class[sendmail::authinfo::file]') \
             .that_notifies('Class[sendmail::makeall]')
-  end
+  }
 
   context 'Missing value' do
     let(:params) { { :ensure => 'present' } }
 
-    it do
+    it {
       expect {
         should compile
       }.to raise_error(/value must be set when creating an authinfo entry/)
-    end
+    }
   end
 end

@@ -1,13 +1,12 @@
 require 'spec_helper'
 
 describe 'sendmail::relay_domains' do
-  let(:title) { 'relay_domains' }
-
-  let(:facts) do
-    { :operatingsystem => 'Debian' }
-  end
 
   context 'On Debian with valid parameter hash' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :entries => { 'example.org' => {} } }
     end
@@ -16,22 +15,26 @@ describe 'sendmail::relay_domains' do
   end
 
   context 'On Debian with empty parameter hash' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :entries => { } }
     end
 
-    it {
-      expect { should compile }
-    }
+    it { expect { should compile } }
   end
 
   context 'On Debian with wrong parameter type' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :entries => "example.org" }
     end
 
-    it {
-      expect { should compile }.to raise_error(/is not a Hash/)
-    }
+    it { expect { should compile }.to raise_error(/is not a Hash/) }
   end
 end

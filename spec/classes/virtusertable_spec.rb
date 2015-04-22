@@ -1,13 +1,12 @@
 require 'spec_helper'
 
 describe 'sendmail::virtusertable' do
-  let(:title) { 'virtusertable' }
-
-  let(:facts) do
-    { :operatingsystem => 'Debian' }
-  end
 
   context 'On Debian with valid parameter hash' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :entries => { 'info@example.com' => { 'value' => 'fred' } } }
     end
@@ -16,22 +15,26 @@ describe 'sendmail::virtusertable' do
   end
 
   context 'On Debian with empty parameter hash' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :entries => { } }
     end
 
-    it do
-      expect { should compile }
-    end
+    it { expect { should compile } }
   end
 
   context 'On Debian with wrong parameter type' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
     let(:params) do
       { :entries => "example.com" }
     end
 
-    it do
-      expect { should compile }.to raise_error(/is not a Hash/)
-    end
+    it { expect { should compile }.to raise_error(/is not a Hash/) }
   end
 end

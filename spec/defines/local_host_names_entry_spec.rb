@@ -8,9 +8,9 @@ describe 'sendmail::local_host_names::entry' do
       { :operatingsystem => 'Debian' }
     end
 
-    it do
+    it {
       should contain_augeas('/etc/mail/local-host-names-localhost') \
               .that_requires('Class[sendmail::local_host_names::file]')
-    end
+    }
   end
 end
