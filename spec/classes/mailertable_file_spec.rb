@@ -5,7 +5,7 @@ describe 'sendmail::mailertable::file' do
   context 'On Debian' do
     let(:title) { 'mailertable' }
 
-    let :facts do
+    let(:facts) do
       { :operatingsystem => 'Debian' }
     end
 

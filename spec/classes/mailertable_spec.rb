@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'sendmail::mailertable' do
   let(:title) { 'mailertable' }
 
-  let :facts do
+  let(:facts) do
     { :operatingsystem => 'Debian' }
   end
 

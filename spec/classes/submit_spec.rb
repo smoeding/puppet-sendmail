@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'sendmail::submit' do
   let(:title) { 'submit' }
 
-  let :facts do
+  let(:facts) do
     { :operatingsystem => 'Debian' }
   end
 

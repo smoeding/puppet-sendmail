@@ -5,7 +5,7 @@ describe 'sendmail::genericstable::file' do
   context 'On Debian' do
     let(:title) { 'genericstable' }
 
-    let :facts do
+    let(:facts) do
       { :operatingsystem => 'Debian' }
     end
 

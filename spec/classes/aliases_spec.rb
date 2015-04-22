@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'sendmail::aliases' do
   let(:title) { 'aliases' }
 
-  let :facts do
+  let(:facts) do
     { :operatingsystem => 'Debian' }
   end
 

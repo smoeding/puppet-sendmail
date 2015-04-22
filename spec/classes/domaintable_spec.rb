@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'sendmail::domaintable' do
   let(:title) { 'domaintable' }
 
-  let :facts do
+  let(:facts) do
     { :operatingsystem => 'Debian' }
   end
 

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'sendmail::relay_domains' do
   let(:title) { 'relay_domains' }
 
-  let :facts do
+  let(:facts) do
     { :operatingsystem => 'Debian' }
   end
 

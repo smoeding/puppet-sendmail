@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'sendmail::authinfo' do
   let(:title) { 'authinfo' }
 
-  let :facts do
+  let(:facts) do
     { :operatingsystem => 'Debian' }
   end
 

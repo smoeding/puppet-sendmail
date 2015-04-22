@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'sendmail::makeall' do
   let(:title) { 'makeall' }
 
-  let :facts do
+  let(:facts) do
     { :operatingsystem => 'Debian' }
   end
 

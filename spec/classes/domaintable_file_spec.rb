@@ -5,7 +5,7 @@ describe 'sendmail::domaintable::file' do
   context 'On Debian' do
     let(:title) { 'domaintable' }
 
-    let :facts do
+    let(:facts) do
       { :operatingsystem => 'Debian' }
     end
 

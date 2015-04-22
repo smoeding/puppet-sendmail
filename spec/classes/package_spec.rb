@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'sendmail::package' do
   let(:title) { 'sendmail' }
 
-  let :facts do
+  let(:facts) do
     { :operatingsystem => 'Debian' }
   end
 

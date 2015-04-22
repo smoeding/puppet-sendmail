@@ -5,7 +5,7 @@ describe 'sendmail::userdb::file' do
   context 'On Debian' do
     let(:title) { 'userdb' }
 
-    let :facts do
+    let(:facts) do
       { :operatingsystem => 'Debian' }
     end
 

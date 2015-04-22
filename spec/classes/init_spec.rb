@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'sendmail' do
 
   context 'On Debian with no package name specified' do
-    let :facts do
+    let(:facts) do
       { :operatingsystem => 'Debian' }
     end
 
@@ -16,7 +16,7 @@ describe 'sendmail' do
   end
 
   context 'On RedHat with no package name specified' do
-    let :facts do
+    let(:facts) do
       { :operatingsystem => 'RedHat' }
     end
 
@@ -29,7 +29,7 @@ describe 'sendmail' do
   end
 
   context 'On an unsupported operating system' do
-    let :facts do
+    let(:facts) do
       { :operatingsystem => 'VAX/VMS' }
     end
 

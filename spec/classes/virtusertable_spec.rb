@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'sendmail::virtusertable' do
   let(:title) { 'virtusertable' }
 
-  let :facts do
+  let(:facts) do
     { :operatingsystem => 'Debian' }
   end
 

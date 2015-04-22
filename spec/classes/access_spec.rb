@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'sendmail::access' do
   let(:title) { 'access' }
 
-  let :facts do
+  let(:facts) do
     { :operatingsystem => 'Debian' }
   end
 

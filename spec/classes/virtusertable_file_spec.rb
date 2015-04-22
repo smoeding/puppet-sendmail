@@ -5,7 +5,7 @@ describe 'sendmail::virtusertable::file' do
   context 'On Debian' do
     let(:title) { 'virtusertable' }
 
-    let :facts do
+    let(:facts) do
       { :operatingsystem => 'Debian' }
     end
 

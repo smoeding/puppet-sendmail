@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'sendmail::userdb' do
   let(:title) { 'userdb' }
 
-  let :facts do
+  let(:facts) do
     { :operatingsystem => 'Debian' }
   end
 

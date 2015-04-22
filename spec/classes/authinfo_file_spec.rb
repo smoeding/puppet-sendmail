@@ -5,7 +5,7 @@ describe 'sendmail::authinfo::file' do
   context 'On Debian' do
     let(:title) { 'authinfo' }
 
-    let :facts do
+    let(:facts) do
       { :operatingsystem => 'Debian' }
     end
 
