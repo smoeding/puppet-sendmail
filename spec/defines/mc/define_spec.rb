@@ -14,12 +14,12 @@ describe 'sendmail::mc::define' do
   end
 
   context 'with no argument' do
-    it do
+    it {
       should contain_concat__fragment('sendmail_mc-define-foobar') \
               .with_content(/^define\(`foobar', `'\)dnl$/) \
-              .with_order('20') \
+              .with_order('10') \
               .that_notifies('Class[sendmail::makeall]')
-    end
+    }
   end
 
   context 'with one argument' do
@@ -27,12 +27,12 @@ describe 'sendmail::mc::define' do
       { :expansion => 'foo' }
     end
 
-    it do
+    it {
       should contain_concat__fragment('sendmail_mc-define-foobar') \
               .with_content(/^define\(`foobar', `foo'\)dnl$/) \
-              .with_order('20') \
+              .with_order('10') \
               .that_notifies('Class[sendmail::makeall]')
-    end
+    }
   end
 
   context 'with one argument and explicit macro_name' do
@@ -40,12 +40,12 @@ describe 'sendmail::mc::define' do
       { :expansion => 'foo', :macro_name => 'baz' }
     end
 
-    it do
+    it {
       should contain_concat__fragment('sendmail_mc-define-foobar') \
               .with_content(/^define\(`baz', `foo'\)dnl$/) \
-              .with_order('20') \
+              .with_order('10') \
               .that_notifies('Class[sendmail::makeall]')
-    end
+    }
   end
 
   context 'with one argument and use_quotes => true' do
@@ -53,12 +53,12 @@ describe 'sendmail::mc::define' do
       { :expansion => 'foo', :use_quotes => true }
     end
 
-    it do
+    it {
       should contain_concat__fragment('sendmail_mc-define-foobar') \
               .with_content(/^define\(`foobar', `foo'\)dnl$/) \
-              .with_order('20') \
+              .with_order('10') \
               .that_notifies('Class[sendmail::makeall]')
-    end
+    }
   end
 
   context 'with one argument and use_quotes => false' do
@@ -66,12 +66,12 @@ describe 'sendmail::mc::define' do
       { :expansion => 'foo', :use_quotes => false }
     end
 
-    it do
+    it {
       should contain_concat__fragment('sendmail_mc-define-foobar') \
               .with_content(/^define\(`foobar', foo\)dnl$/) \
-              .with_order('20') \
+              .with_order('10') \
               .that_notifies('Class[sendmail::makeall]')
-    end
+    }
   end
 
   context 'with one empty argument' do
@@ -79,11 +79,11 @@ describe 'sendmail::mc::define' do
       { :expansion => '' }
     end
 
-    it do
+    it {
       should contain_concat__fragment('sendmail_mc-define-foobar') \
               .with_content(/^define\(`foobar', `'\)dnl$/) \
-              .with_order('20') \
+              .with_order('10') \
               .that_notifies('Class[sendmail::makeall]')
-    end
+    }
   end
 end

@@ -13,10 +13,10 @@ describe 'sendmail::mc::ostype' do
     }
   end
 
-  it do
+  it {
     should contain_concat__fragment('sendmail_mc-ostype-foonly') \
             .with_content(/^OSTYPE\(`foonly'\)dnl$/) \
-            .with_order('12') \
+            .with_order('05') \
             .that_notifies('Class[sendmail::makeall]')
-  end
+  }
 end

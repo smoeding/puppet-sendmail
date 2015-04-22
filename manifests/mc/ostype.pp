@@ -25,7 +25,7 @@ define sendmail::mc::ostype (
 
   concat::fragment { "sendmail_mc-ostype-${ostype}":
     target  => 'sendmail.mc',
-    order   => '12',
+    order   => '05',
     content => inline_template("OSTYPE(`<%= @ostype -%>')dnl\n"),
     notify  => Class['::sendmail::makeall'],
   }

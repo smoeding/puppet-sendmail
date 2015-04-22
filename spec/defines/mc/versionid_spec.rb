@@ -17,10 +17,10 @@ describe 'sendmail::mc::versionid' do
     }
   end
 
-  it do
+  it {
     should contain_concat__fragment('sendmail_mc-versionid') \
             .with_content(/^VERSIONID\(`foobar'\)dnl$/) \
-            .with_order('10') \
+            .with_order('01') \
             .that_notifies('Class[sendmail::makeall]')
-  end
+  }
 end
