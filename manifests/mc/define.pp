@@ -59,4 +59,7 @@ define sendmail::mc::define (
     content => inline_template("define(<%= @arr.join(', ') -%>)dnl\n"),
     notify  => Class['::sendmail::makeall'],
   }
+
+  # Also add the section header
+  include ::sendmail::mc::define_section
 }
