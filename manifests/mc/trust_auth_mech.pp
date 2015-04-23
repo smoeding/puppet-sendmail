@@ -30,7 +30,7 @@ define sendmail::mc::trust_auth_mech (
     $mech = strip($trust_auth_mech)
   }
 
-  concat::fragment { "sendmail_mc-trust_auth_mech":
+  concat::fragment { 'sendmail_mc-trust_auth_mech':
     target  => 'sendmail.mc',
     order   => '75',
     content => inline_template("TRUST_AUTH_MECH(`<%= @mech -%>')dnl\n"),
