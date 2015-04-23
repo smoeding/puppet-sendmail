@@ -36,4 +36,7 @@ define sendmail::mc::trust_auth_mech (
     content => inline_template("TRUST_AUTH_MECH(`<%= @mech -%>')dnl\n"),
     notify  => Class['::sendmail::makeall'],
   }
+
+  # Also add the section header
+  include ::sendmail::mc::macro_section
 }

@@ -128,4 +128,7 @@ define sendmail::mc::daemon_options (
     content => inline_template("DAEMON_OPTIONS(`${opts}')dnl\n"),
     notify  => Class['::sendmail::makeall'],
   }
+
+  # Also add the section header
+  include ::sendmail::mc::macro_section
 }
