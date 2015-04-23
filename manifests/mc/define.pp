@@ -55,7 +55,7 @@ define sendmail::mc::define (
 
   concat::fragment { "sendmail_mc-define-${title}":
     target  => 'sendmail.mc',
-    order   => '10',
+    order   => '12',
     content => inline_template("define(<%= @arr.join(', ') -%>)dnl\n"),
     notify  => Class['::sendmail::makeall'],
   }
