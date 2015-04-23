@@ -1,0 +1,24 @@
+divert(0)dnl
+#
+# This file is managed by Puppet
+#
+define(`_USE_ETC_MAIL_')dnl
+define(`confCF_VERSION', `Submit')dnl
+define(`confDONT_INIT_GROUPS', `True')dnl
+dnl #
+<% case @operatingsystem -%>
+<% when 'Debian' -%>
+include(`/usr/share/sendmail/cf/m4/cf.m4')dnl
+OSTYPE(`debian')dnl
+DOMAIN(`debian-msp')dnl
+<% end -%>
+dnl #
+<% if @masquerade_as -%>
+dnl # Masquerading
+MASQUERADE_AS(`<%= @masquerade_as -%>')dnl
+FEATURE(`masquerade_envelope')dnl
+dnl #
+<% end -%>
+dnl # Feature MSP
+FEATURE(`msp', `<%= @msp_host -%>', `<%= @msp_port -%>')dnl
+dnl #

@@ -47,7 +47,7 @@ class sendmail::submit (
     owner   => 'root',
     group   => $sendmail::params::sendmail_group,
     mode    => '0644',
-    content => template('sendmail/submit.mc.erb'),
+    content => template('sendmail/submit.m4.erb'),
     notify  => [ Class['::sendmail::makeall'], Class['::sendmail::service'], ],
   }
 }
