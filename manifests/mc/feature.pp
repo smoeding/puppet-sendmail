@@ -60,8 +60,11 @@ define sendmail::mc::feature (
 
   concat::fragment { "sendmail_mc-feature-${title}":
     target  => 'sendmail.mc',
-    order   => '30',
+    order   => '32',
     content => inline_template("FEATURE(<%= @arr.join(', ') -%>)dnl\n"),
     notify  => Class['::sendmail::makeall'],
   }
+
+  # Also add the section header
+  include ::sendmail::mc::feature_section
 }

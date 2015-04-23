@@ -17,7 +17,7 @@ describe 'sendmail::mc::feature' do
     it {
       should contain_concat__fragment('sendmail_mc-feature-foobar') \
               .with_content(/^FEATURE\(`foobar'\)dnl$/) \
-              .with_order('30') \
+              .with_order('32') \
               .that_notifies('Class[sendmail::makeall]')
     }
   end
@@ -30,7 +30,7 @@ describe 'sendmail::mc::feature' do
     it {
       should contain_concat__fragment('sendmail_mc-feature-foobar') \
               .with_content(/^FEATURE\(`foobar', `foo'\)dnl$/) \
-              .with_order('30') \
+              .with_order('32') \
               .that_notifies('Class[sendmail::makeall]')
     }
   end
@@ -43,7 +43,7 @@ describe 'sendmail::mc::feature' do
     it {
       should contain_concat__fragment('sendmail_mc-feature-foobar') \
               .with_content(/^FEATURE\(`foobar', `foo', `bar'\)dnl$/) \
-              .with_order('30') \
+              .with_order('32') \
               .that_notifies('Class[sendmail::makeall]')
     }
   end
@@ -56,7 +56,7 @@ describe 'sendmail::mc::feature' do
     it {
       should contain_concat__fragment('sendmail_mc-feature-foobar') \
               .with_content(/^FEATURE\(`baz', `foo'\)dnl$/) \
-              .with_order('30') \
+              .with_order('32') \
               .that_notifies('Class[sendmail::makeall]')
     }
   end
@@ -69,7 +69,7 @@ describe 'sendmail::mc::feature' do
     it {
       should contain_concat__fragment('sendmail_mc-feature-foobar') \
               .with_content(/^FEATURE\(`foobar', `foo'\)dnl$/) \
-              .with_order('30') \
+              .with_order('32') \
               .that_notifies('Class[sendmail::makeall]')
     }
   end
@@ -82,7 +82,7 @@ describe 'sendmail::mc::feature' do
     it {
       should contain_concat__fragment('sendmail_mc-feature-foobar') \
               .with_content(/^FEATURE\(`foobar', foo\)dnl$/) \
-              .with_order('30') \
+              .with_order('32') \
               .that_notifies('Class[sendmail::makeall]')
     }
   end
@@ -95,7 +95,7 @@ describe 'sendmail::mc::feature' do
     it {
       should contain_concat__fragment('sendmail_mc-feature-foobar') \
               .with_content(/^FEATURE\(`foobar', `'\)dnl$/) \
-              .with_order('30') \
+              .with_order('32') \
               .that_notifies('Class[sendmail::makeall]')
     }
   end
