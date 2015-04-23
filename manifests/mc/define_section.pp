@@ -1,6 +1,6 @@
 # = Class: sendmail::mc::define_section
 #
-# Add a section header in front of the define statements to sendmail.mc
+# Add a section header above the define statements
 #
 # == Parameters:
 #
