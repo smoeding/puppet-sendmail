@@ -24,7 +24,7 @@ define sendmail::mc::mailer (
 
   # Some mailers must be defined before others according to the Bat Book
   $order = $title ? {
-    'smtp'     => '80',
+    'smtp'     => '81',
     'local'    => '85',
     'procmail' => '87',
     'uucp'     => '87',
@@ -42,4 +42,7 @@ define sendmail::mc::mailer (
     content => inline_template("MAILER(`<%= @mailer -%>')dnl\n"),
     notify  => Class['::sendmail::makeall'],
   }
+
+  # Also add the section header
+  include ::sendmail::mc::mailer_section
 }

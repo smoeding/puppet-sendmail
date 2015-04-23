@@ -18,7 +18,7 @@ describe 'sendmail::mc::mailer' do
     it {
       should contain_concat__fragment('sendmail_mc-mailer-smtp') \
               .with_content(/^MAILER\(`smtp'\)dnl$/) \
-              .with_order('80') \
+              .with_order('81') \
               .that_notifies('Class[sendmail::makeall]')
     }
   end
