@@ -33,7 +33,7 @@ Sendmail is a powerful mail transfer agent, and this modules provides an easy wa
 
 ### Setup Requirements
 
-The sendmail module brings additional Augeas lenses so `pluginsync` must be enabled. It also needs the Puppetlabs modules `stdlib`and `concat`.
+The sendmail module brings additional Augeas lenses so `pluginsync` must be enabled. It also requires the Puppetlabs modules `stdlib` and `concat`.
 
 ### Beginning with sendmail
 
@@ -53,16 +53,26 @@ TBD...
 
 ## Reference
 
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+### Classes
+
+#### Public Classes
+
+#### Private Classes
+
+### Defined Types
+
+### Templates
+
+### Augeas lenses
 
 ## Limitations
 
-The sendmail package is developed and tested on Debian (Wheezy). More supported operating systems are planned in future releases.
+The sendmail package is developed and tested on Debian 7 (Wheezy). More supported operating systems are planned in future releases.
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
+Sendmail is a powerful tool with many configuration options. The module includes configuration options I considered useful or needed for my own environment.
+
+You may open Github issues for this module if you need additional configuration file options currently not available.
+
+Feel free to send pull requests for new features.
