@@ -6,7 +6,7 @@
 #
 # [*ostype*]
 #   The type of operating system as a string. The value is used to add
-#   the 'OSTYPE' macro to the generated senmail.mc file. This will
+#   the 'OSTYPE' macro to the generated sendmail.mc file. This will
 #   include the m4 file with operating system specific settings.
 #
 # == Requires:
