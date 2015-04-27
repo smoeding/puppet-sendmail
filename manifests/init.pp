@@ -45,6 +45,8 @@
 #
 #
 class sendmail (
+  $manage_sendmail_mc = true,
+  $manage_submit_mc   = true,
   $auxiliary_packages = $::sendmail::params::auxiliary_packages,
   $package_ensure     = 'present',
   $package_manage     = true,
@@ -54,6 +56,9 @@ class sendmail (
   $service_ensure     = 'running',
 ) inherits ::sendmail::params {
 
+  validate_bool($manage_sendmail_mc)
+  validate_bool($manage_submit_mc)
+
   anchor { '::sendmail::begin': }
 
   class { '::sendmail::package':
@@ -61,6 +66,10 @@ class sendmail (
     package_ensure     => $package_ensure,
     package_manage     => $package_manage,
     require            => Anchor['::sendmail::begin'],
+  }
+
+  if ($manage_sendmail_mc) {
+    include ::sendmail::mc
   }
 
   class { '::sendmail::service':

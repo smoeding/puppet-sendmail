@@ -15,15 +15,24 @@
 #   class { '::sendmail::mc': }
 #
 #
-class sendmail::mc {
+class sendmail::mc (
+  $sendmail_domain    = 'generic',
+  $smart_host         = undef,
+  $enable_ipv4_daemon = true,
+  $enable_ipv6_daemon = true,
+) inherits ::sendmail::params {
 
-  include ::sendmail::params
+  include ::sendmail::makeall
+
+  validate_bool($enable_ipv4_daemon)
+  validate_bool($enable_ipv6_daemon)
 
   # Order of fragments
   # -------------------------
   # 00    # file header
   # 01    VERSIONID
   # 05    OSTYPE
+  # 07    DOMAIN
   # 10    # define header
   # 12    define
   # 30    # FEATURE header
@@ -36,7 +45,7 @@ class sendmail::mc {
   # 81-89 MAILER
 
   concat { 'sendmail.mc':
-    ensure => 'present',
+    ensure => present,
     path   => '/tmp/sendmail.mc',
     owner  => 'root',
     group  => $::sendmail::params::sendmail_group,
@@ -50,5 +59,27 @@ class sendmail::mc {
     notify  => Class['::sendmail::makeall'],
   }
 
+  ::sendmail::mc::domain { $sendmail_domain: }
 
+  if ($smart_host != undef) {
+    ::sendmail::mc::define { 'SMART_HOST':
+      expansion => $smart_host,
+    }
+  }
+
+  if ($enable_ipv4_daemon) {
+    ::sendmail::mc::daemon_options { 'IPv4':
+      family => 'inet',
+    }
+  }
+
+  if ($enable_ipv6_daemon) {
+    ::sendmail::mc::daemon_options { 'IPv6':
+      family => 'inet6',
+      modify => 'O',
+    }
+  }
+
+  ::sendmail::mc::mailer { 'local': }
+  ::sendmail::mc::mailer { 'smtp': }
 }
