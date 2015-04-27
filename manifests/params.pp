@@ -58,11 +58,8 @@ class sendmail::params {
       # not provide a useful status exit code on wheezy.
       $service_hasstatus = false
 
-      $sendmail_user    = 'smmta'
-      $sendmail_group   = 'smmsp'
-
-      $sendmail_ostype  = 'linux'
-      $sendmail_include = '/usr/share/sendmail/cf/m4/cf.m4'
+      $sendmail_user  = 'smmta'
+      $sendmail_group = 'smmsp'
     }
 
     'Redhat': {
@@ -70,8 +67,12 @@ class sendmail::params {
 
       $service_hasstatus = true
 
-      $sendmail_ostype  = 'linux'
-      $sendmail_include = '/usr/share/sendmail-cf/m4/cf.m4'
+    }
+
+    'FreeBSD': {
+      $auxiliary_packages = []
+      $sendmail_user  = 'root'
+      $sendmail_group = 'wheel'
     }
 
     default: {
