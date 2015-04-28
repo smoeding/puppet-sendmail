@@ -2,22 +2,110 @@ require 'spec_helper'
 
 describe 'sendmail' do
 
-  [ 'Debian', 'Redhat' ].each do |operatingsystem|
-    context 'On #{operatingsystem} with defaults' do
-      let(:facts) do
-        { :operatingsystem => operatingsystem }
-      end
-
-      it {
-        should contain_class('sendmail')
-        should contain_class('sendmail::package')
-        should contain_class('sendmail::service') \
-                .that_requires('Class[sendmail::package]')
+  context 'On Debian with defaults' do
+    let(:facts) do
+      {
+        :id              => 'stm',
+        :osfamily        => 'Debian',
+        :operatingsystem => 'Debian',
+        :concat_basedir  => '/tmp',
       }
     end
+
+    it {
+      should contain_class('sendmail')
+      should contain_class('sendmail::package') \
+              .that_comes_before('Anchor[sendmail::config]')
+      should contain_class('sendmail::mc')
+      should contain_class('sendmail::submit')
+      should contain_class('sendmail::service') \
+              .that_requires('Anchor[sendmail::config]')
+    }
   end
 
-  context 'On an unsupported operating system' do
+  context 'On Debian with manage_sendmail_mc => true' do
+    let(:facts) do
+      {
+        :id              => 'stm',
+        :osfamily        => 'Debian',
+        :operatingsystem => 'Debian',
+        :concat_basedir  => '/tmp',
+      }
+    end
+
+    let(:params) do
+      { :manage_sendmail_mc => true }
+    end
+
+    it {
+      should contain_class('sendmail::mc') \
+              .that_comes_before('Anchor[sendmail::config]') \
+              .that_requires('Class[sendmail::package]') \
+              .that_notifies('Class[sendmail::service]')
+    }
+  end
+
+  context 'On Debian with manage_sendmail_mc => false' do
+    let(:facts) do
+      {
+        :id              => 'stm',
+        :osfamily        => 'Debian',
+        :operatingsystem => 'Debian',
+        :concat_basedir  => '/tmp',
+      }
+    end
+
+    let(:params) do
+      { :manage_sendmail_mc => false }
+    end
+
+    it {
+      should_not contain_class('sendmail::mc')
+    }
+  end
+
+  context 'On Debian with manage_submit_mc => true' do
+    let(:facts) do
+      {
+        :id              => 'stm',
+        :osfamily        => 'Debian',
+        :operatingsystem => 'Debian',
+        :concat_basedir  => '/tmp',
+      }
+    end
+
+    let(:params) do
+      { :manage_submit_mc => true }
+    end
+
+    it {
+      should contain_class('sendmail::submit') \
+              .that_comes_before('Anchor[sendmail::config]') \
+              .that_requires('Class[sendmail::package]') \
+              .that_notifies('Class[sendmail::service]')
+    }
+  end
+
+  context 'On Debian with manage_submit_mc => false' do
+    let(:facts) do
+      {
+        :id              => 'stm',
+        :osfamily        => 'Debian',
+        :operatingsystem => 'Debian',
+        :concat_basedir  => '/tmp',
+      }
+    end
+
+    let(:params) do
+      { :manage_submit_mc => false }
+    end
+
+    it {
+      should_not contain_class('sendmail::submit')
+    }
+  end
+
+  context 'On unsupported operating system' do
     let(:facts) do
       { :operatingsystem => 'VAX/VMS' }
     end

@@ -59,27 +59,42 @@ class sendmail (
   validate_bool($manage_sendmail_mc)
   validate_bool($manage_submit_mc)
 
-  anchor { '::sendmail::begin': }
+  anchor { 'sendmail::begin': }
 
   class { '::sendmail::package':
     auxiliary_packages => $auxiliary_packages,
     package_ensure     => $package_ensure,
     package_manage     => $package_manage,
-    require            => Anchor['::sendmail::begin'],
+    before             => Anchor['sendmail::config'],
+    require            => Anchor['sendmail::begin'],
   }
 
   if ($manage_sendmail_mc) {
-    include ::sendmail::mc
+    class { '::sendmail::mc':
+      before  => Anchor['sendmail::config'],
+      require => Class['::sendmail::package'],
+      notify  => Class['::sendmail::service'],
+    }
   }
+
+  if ($manage_submit_mc) {
+    class { '::sendmail::submit':
+      before  => Anchor['sendmail::config'],
+      require => Class['::sendmail::package'],
+      notify  => Class['::sendmail::service'],
+    }
+  }
+
+  anchor { 'sendmail::config': }
 
   class { '::sendmail::service':
     service_name   => $service_name,
     service_enable => $service_enable,
     service_manage => $service_manage,
     service_ensure => $service_ensure,
-    require        => Class['::sendmail::package'],
-    before         => Anchor['::sendmail::end'],
+    require        => Anchor['sendmail::config'],
+    before         => Anchor['sendmail::end'],
   }
 
-  anchor { '::sendmail::end': }
+  anchor { 'sendmail::end': }
 }

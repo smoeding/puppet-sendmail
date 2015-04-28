@@ -13,25 +13,22 @@ describe 'sendmail::submit' do
                'owner'  => 'root',
                'group'  => 'smmsp',
                'mode'   => '0644') \
-              .that_notifies('Class[sendmail::makeall]') \
-              .that_notifies('Class[sendmail::service]') \
               .with_content(/^FEATURE\(`msp', `\[127.0.0.1\]', `MSA'\)dnl$/)
-
     }
   end
 
-  context 'On Debian with msp_host => relay.example.org' do
+  context 'On Debian with msp_host => localhost' do
     let(:facts) do
       { :operatingsystem => 'Debian' }
     end
 
     let(:params) do
-      { :msp_host => 'relay.example.org' }
+      { :msp_host => 'localhost' }
     end
 
     it {
       should contain_file('/etc/mail/submit.mc') \
-              .with_content(/^FEATURE\(`msp', `relay.example.org', `MSA'\)dnl$/)
+              .with_content(/^FEATURE\(`msp', `localhost', `MSA'\)dnl$/)
     }
   end
 

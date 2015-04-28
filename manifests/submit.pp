@@ -37,9 +37,6 @@ class sendmail::submit (
   $masquerade_as = undef,
 ) inherits sendmail::params {
 
-  include ::sendmail::makeall
-  include ::sendmail::service
-
   validate_re($msp_port, [ '^[0-9]+$', '^MSA$' ])
 
   file { $::sendmail::params::submit_mc_file:
@@ -48,6 +45,7 @@ class sendmail::submit (
     group   => $sendmail::params::sendmail_group,
     mode    => '0644',
     content => template('sendmail/submit.m4.erb'),
-    notify  => [ Class['::sendmail::makeall'], Class['::sendmail::service'], ],
+    require => Anchor['::sendmail::config'],
+    notify => [ Class['::sendmail::makeall'], Class['::sendmail::service'], ],
   }
 }
