@@ -45,7 +45,6 @@ class sendmail::submit (
     group   => $sendmail::params::sendmail_group,
     mode    => '0644',
     content => template('sendmail/submit.m4.erb'),
-    require => Anchor['::sendmail::config'],
-    notify => [ Class['::sendmail::makeall'], Class['::sendmail::service'], ],
+    notify  => [ Class['::sendmail::makeall'], Class['::sendmail::service'], ],
   }
 }
