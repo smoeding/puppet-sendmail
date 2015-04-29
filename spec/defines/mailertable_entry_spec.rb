@@ -3,12 +3,12 @@ require 'spec_helper'
 describe 'sendmail::mailertable::entry' do
   let(:title) { '.example.com' }
 
-  let(:params) do
-    { :value => 'smtp:relay.example.com' }
-  end
-
   let(:facts) do
     { :operatingsystem => 'Debian' }
+  end
+
+  let(:params) do
+    { :value => 'smtp:relay.example.com' }
   end
 
   it {
@@ -18,7 +18,9 @@ describe 'sendmail::mailertable::entry' do
   }
 
   context 'Missing value' do
-    let(:params) { { :ensure => 'present' } }
+    let(:params) do
+      { :ensure => 'present' }
+    end
 
     it {
       expect {

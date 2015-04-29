@@ -3,12 +3,12 @@ require 'spec_helper'
 describe 'sendmail::genericstable::entry' do
   let(:title) { 'user@example.com' }
 
-  let(:params) do
-    { :value => 'user@example.org' }
-  end
-
   let(:facts) do
     { :operatingsystem => 'Debian' }
+  end
+
+  let(:params) do
+    { :value => 'user@example.org' }
   end
 
   it {
@@ -18,7 +18,9 @@ describe 'sendmail::genericstable::entry' do
   }
 
   context 'Missing value' do
-    let(:params) { { :ensure => 'present' } }
+    let(:params) do
+      { :ensure => 'present' }
+    end
 
     it {
       expect {

@@ -20,7 +20,9 @@ describe 'sendmail::access::entry' do
   end
 
   context 'without value' do
-    let(:params) { { :ensure => 'present' } }
+    let(:params) do
+      { :ensure => 'present' }
+    end
 
     it {
       expect {

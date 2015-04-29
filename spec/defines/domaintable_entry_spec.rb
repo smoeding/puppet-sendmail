@@ -3,12 +3,12 @@ require 'spec_helper'
 describe 'sendmail::domaintable::entry' do
   let(:title) { 'example.com' }
 
-  let(:params) do
-    { :value => 'example.org' }
-  end
-
   let(:facts) do
     { :operatingsystem => 'Debian' }
+  end
+
+  let(:params) do
+    { :value => 'example.org' }
   end
 
   it {
@@ -18,7 +18,9 @@ describe 'sendmail::domaintable::entry' do
   }
 
   context 'Missing value' do
-    let(:params) { { :ensure => 'present' } }
+    let(:params) do
+      { :ensure => 'present' }
+    end
 
     it {
       expect {

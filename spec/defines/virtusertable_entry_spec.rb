@@ -3,12 +3,12 @@ require 'spec_helper'
 describe 'sendmail::virtusertable::entry' do
   let(:title) { 'info@example.com' }
 
-  let(:params) do
-    { :value => 'fred' }
-  end
-
   let(:facts) do
     { :operatingsystem => 'Debian' }
+  end
+
+  let(:params) do
+    { :value => 'fred' }
   end
 
   it {
@@ -18,7 +18,9 @@ describe 'sendmail::virtusertable::entry' do
   }
 
   context 'Missing value' do
-    let(:params) { { :ensure => 'present' } }
+    let(:params) do
+      { :ensure => 'present' }
+    end
 
     it {
       expect {

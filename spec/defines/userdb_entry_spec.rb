@@ -3,12 +3,12 @@ require 'spec_helper'
 describe 'sendmail::userdb::entry' do
   let(:title) { 'fred:maildrop' }
 
-  let(:params) do
-    { :value => 'fred@example.org' }
-  end
-
   let(:facts) do
     { :operatingsystem => 'Debian' }
+  end
+
+  let(:params) do
+    { :value => 'fred@example.org' }
   end
 
   it {
@@ -18,7 +18,9 @@ describe 'sendmail::userdb::entry' do
   }
 
   context 'Missing value' do
-    let(:params) { { :ensure => 'present' } }
+    let(:params) do
+      { :ensure => 'present' }
+    end
 
     it {
       expect {

@@ -18,7 +18,9 @@ describe 'sendmail::aliases::entry' do
   }
 
   context 'Create alias' do
-    let(:params) { { :recipient => 'fred@example.org' } }
+    let(:params) do
+      { :recipient => 'fred@example.org' }
+    end
 
     it {
       should contain_mailalias('fred').with(
@@ -29,7 +31,9 @@ describe 'sendmail::aliases::entry' do
   end
 
   context 'Remove alias' do
-    let(:params) { { :ensure => 'absent' } }
+    let(:params) do
+      { :ensure => 'absent' }
+    end
 
     it {
       should contain_mailalias('fred').with_ensure('absent')
@@ -37,7 +41,9 @@ describe 'sendmail::aliases::entry' do
   end
 
   context 'Missing recipient' do
-    let(:params) { { :ensure => 'present' } }
+    let(:params) do
+      { :ensure => 'present' }
+    end
 
     it {
       expect {

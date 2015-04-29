@@ -3,12 +3,12 @@ require 'spec_helper'
 describe 'sendmail::authinfo::entry' do
   let(:title) { 'example.com' }
 
-  let(:params) do
-    { :value => 'REJECT' }
-  end
-
   let(:facts) do
     { :operatingsystem => 'Debian' }
+  end
+
+  let(:params) do
+    { :value => 'REJECT' }
   end
 
   it {
@@ -18,7 +18,9 @@ describe 'sendmail::authinfo::entry' do
   }
 
   context 'Missing value' do
-    let(:params) { { :ensure => 'present' } }
+    let(:params) do
+      { :ensure => 'present' }
+    end
 
     it {
       expect {
