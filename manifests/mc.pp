@@ -5,16 +5,39 @@
 # == Parameters:
 #
 # [*sendmail_domain*]
+#   The name of the m4 file that holds common data for a domain. This is an
+#   optional configuration item. It may be used by large sites to gather
+#   shared data into one file. Some Linux distributions (e.g. Debian) use
+#   this setting to provide defaults for certain features.
+#   Default value: operating system specific.
 #
 # [*smart_host*]
+#   Servers that are behind a firewall may not be able to deliver mail
+#   directly to the outside world. In this case the host may need to forward
+#   the mail to the gateway machine defined by this parameter. All nonlocal
+#   mail is forwarded to this gateway.
+#   Default value: none.
 #
 # [*log_level*]
+#   The loglevel for the sendmail process.
+#   Valid options: a numeric value. Default value: none.
 #
 # [*dont_probe_interfaces*]
+#   Sendmail normally probes all network interfaces to get the hostnames that
+#   the server may have. These hostnames are then considered local. This
+#   option can be used to prevent the reverse lookup of the network addresses.
+#   If this option is set to 'localhost' then all network interfaces except
+#   for the loopback interface is probed.
+#   Valid options: the strings 'true', 'false' or 'localhost'.
+#   Default value: none.
 #
 # [*enable_ipv4_daemon*]
+#   Should the host accept mail on all IPv4 network adresses.
+#   Valid options: 'true' or 'false'. Default value: 'true'.
 #
 # [*enable_ipv6_daemon*]
+#   Should the host accept mail on all IPv6 network adresses.
+#   Valid options: 'true' or 'false'. Default value: 'true'.
 #
 # == Requires:
 #
@@ -82,6 +105,7 @@ class sendmail::mc (
   }
 
   if ($log_level != undef) {
+    validate_re($log_level, '^[0-9]+$')
     ::sendmail::mc::define { 'confLOG_LEVEL':
       expansion => $log_level,
     }
