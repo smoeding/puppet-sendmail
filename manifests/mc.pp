@@ -4,6 +4,10 @@
 #
 # == Parameters:
 #
+# [*sendmail_ostype*]
+#   The value for the OSTYPE macro in the sendmail.mc file.
+#   Default value: operating system specific.
+#
 # [*sendmail_mc_domain*]
 #   The name of the m4 file that holds common data for a domain. This is an
 #   optional configuration item. It may be used by large sites to gather
@@ -49,6 +53,7 @@
 #
 #
 class sendmail::mc (
+  $sendmail_ostype       = $::sendmail::params::sendmail_ostype,
   $sendmail_mc_domain    = $::sendmail::params::sendmail_mc_domain,
   $smart_host            = undef,
   $log_level             = undef,
@@ -92,6 +97,10 @@ class sendmail::mc (
     order   => '00',
     content => template('sendmail/header.m4.erb'),
     notify  => Class['::sendmail::makeall'],
+  }
+
+  if ($sendmail_ostype != undef) {
+    ::sendmail::mc::ostype { $sendmail_ostype: }
   }
 
   if ($sendmail_mc_domain != undef) {

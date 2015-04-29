@@ -61,6 +61,7 @@ class sendmail::params {
       $sendmail_user  = 'smmta'
       $sendmail_group = 'smmsp'
 
+      $sendmail_ostype    = 'debian'
       $sendmail_mc_domain = 'debian-mta'
       $submit_mc_domain   = 'debian-msp'
     }
@@ -70,12 +71,19 @@ class sendmail::params {
 
       $service_hasstatus = true
 
+      $sendmail_ostype    = undef
+      $sendmail_mc_domain = undef
+      $submit_mc_domain   = undef
     }
 
     'FreeBSD': {
       $auxiliary_packages = []
       $sendmail_user  = 'root'
       $sendmail_group = 'wheel'
+
+      $sendmail_ostype    = 'freebsd6'
+      $sendmail_mc_domain = undef
+      $submit_mc_domain   = undef
     }
 
     default: {

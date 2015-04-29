@@ -27,6 +27,7 @@ describe 'sendmail::mc' do
                'order'   => '00'
              ).that_notifies('Class[sendmail::makeall]')
 
+      should contain_sendmail__mc__ostype('debian')
       should contain_sendmail__mc__domain('debian-mta')
 
       should_not contain_sendmail__mc__define('SMART_HOST')
@@ -38,6 +39,16 @@ describe 'sendmail::mc' do
 
       should contain_sendmail__mc__mailer('local')
       should contain_sendmail__mc__mailer('smtp')
+    }
+  end
+
+  context 'with sendmail_ostype => foonix' do
+    let(:params) do
+      { :sendmail_ostype => 'foonix' }
+    end
+
+    it {
+      should contain_sendmail__mc__ostype('foonix')
     }
   end
 
