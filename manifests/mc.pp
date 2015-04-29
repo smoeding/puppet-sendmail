@@ -4,7 +4,7 @@
 #
 # == Parameters:
 #
-# [*sendmail_domain*]
+# [*sendmail_mc_domain*]
 #   The name of the m4 file that holds common data for a domain. This is an
 #   optional configuration item. It may be used by large sites to gather
 #   shared data into one file. Some Linux distributions (e.g. Debian) use
@@ -49,7 +49,7 @@
 #
 #
 class sendmail::mc (
-  $sendmail_domain       = 'generic',
+  $sendmail_mc_domain    = $::sendmail::params::sendmail_mc_domain,
   $smart_host            = undef,
   $log_level             = undef,
   $dont_probe_interfaces = undef,
@@ -94,8 +94,8 @@ class sendmail::mc (
     notify  => Class['::sendmail::makeall'],
   }
 
-  if ($sendmail_domain != undef) {
-    ::sendmail::mc::domain { $sendmail_domain: }
+  if ($sendmail_mc_domain != undef) {
+    ::sendmail::mc::domain { $sendmail_mc_domain: }
   }
 
   if ($smart_host != undef) {

@@ -27,7 +27,7 @@ describe 'sendmail::mc' do
                'order'   => '00'
              ).that_notifies('Class[sendmail::makeall]')
 
-      should contain_sendmail__mc__domain('generic')
+      should contain_sendmail__mc__domain('debian-mta')
 
       should_not contain_sendmail__mc__define('SMART_HOST')
       should_not contain_sendmail__mc__define('confLOG_LEVEL')
@@ -41,9 +41,9 @@ describe 'sendmail::mc' do
     }
   end
 
-  context 'with sendmail_domain => foobar' do
+  context 'with sendmail_mc_domain => foobar' do
     let(:params) do
-      { :sendmail_domain => 'foobar' }
+      { :sendmail_mc_domain => 'foobar' }
     end
 
     it {

@@ -60,6 +60,9 @@ class sendmail::params {
 
       $sendmail_user  = 'smmta'
       $sendmail_group = 'smmsp'
+
+      $sendmail_mc_domain = 'debian-mta'
+      $submit_mc_domain   = 'debian-msp'
     }
 
     'Redhat': {
