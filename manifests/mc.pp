@@ -4,7 +4,7 @@
 #
 # == Parameters:
 #
-# [*sendmail_ostype*]
+# [*ostype*]
 #   The value for the OSTYPE macro in the sendmail.mc file.
 #   Default value: operating system specific.
 #
@@ -53,7 +53,7 @@
 #
 #
 class sendmail::mc (
-  $sendmail_ostype       = $::sendmail::params::sendmail_ostype,
+  $ostype                = $::sendmail::params::ostype,
   $sendmail_mc_domain    = $::sendmail::params::sendmail_mc_domain,
   $smart_host            = undef,
   $log_level             = undef,
@@ -100,8 +100,8 @@ class sendmail::mc (
     notify  => Class['::sendmail::makeall'],
   }
 
-  if ($sendmail_ostype != undef) {
-    ::sendmail::mc::ostype { $sendmail_ostype: }
+  if ($ostype != undef) {
+    ::sendmail::mc::ostype { $ostype: }
   }
 
   if ($sendmail_mc_domain != undef) {

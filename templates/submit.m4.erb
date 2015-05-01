@@ -17,8 +17,8 @@ define(`__OSTYPE__',`')dnl dirty hack to keep proto.m4 from complaining
 define(`confBIND_OPTS', `WorkAroundBrokenAAAA')dnl
 dnl #
 <% end -%>
-<% if @sendmail_ostype -%>
-OSTYPE(`<%= @sendmail_ostype -%>')dnl
+<% if @ostype -%>
+OSTYPE(`<%= @ostype -%>')dnl
 <% end -%>
 <% if @submit_mc_domain -%>
 DOMAIN(`<%= @submit_mc_domain -%>')dnl

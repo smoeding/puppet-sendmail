@@ -4,7 +4,7 @@
 #
 # == Parameters:
 #
-# [*sendmail_ostype*]
+# [*ostype*]
 #   The value for the OSTYPE macro in the submit.mc file.
 #   Default value: operating system specific.
 #
@@ -43,7 +43,7 @@
 #
 #
 class sendmail::submit (
-  $sendmail_ostype  = $::sendmail::params::sendmail_ostype,
+  $ostype           = $::sendmail::params::ostype,
   $submit_mc_domain = $::sendmail::params::submit_mc_domain,
   $msp_host         = '[127.0.0.1]',
   $msp_port         = 'MSA',

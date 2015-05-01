@@ -43,9 +43,9 @@ describe 'sendmail::mc' do
     }
   end
 
-  context 'with sendmail_ostype => foonix' do
+  context 'with ostype => foonix' do
     let(:params) do
-      { :sendmail_ostype => 'foonix' }
+      { :ostype => 'foonix' }
     end
 
     it {
