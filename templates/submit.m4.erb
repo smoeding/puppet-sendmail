@@ -7,12 +7,21 @@ divert(0)dnl
 define(`_USE_ETC_MAIL_')dnl
 define(`confCF_VERSION', `Submit')dnl
 define(`confDONT_INIT_GROUPS', `True')dnl
-dnl #
 <% case @operatingsystem -%>
 <% when 'Debian' -%>
+dnl #
 include(`/usr/share/sendmail/cf/m4/cf.m4')dnl
-OSTYPE(`debian')dnl
-DOMAIN(`debian-msp')dnl
+dnl #
+<% when 'FreeBSD' -%>
+define(`__OSTYPE__',`')dnl dirty hack to keep proto.m4 from complaining
+define(`confBIND_OPTS', `WorkAroundBrokenAAAA')dnl
+dnl #
+<% end -%>
+<% if @sendmail_ostype -%>
+OSTYPE(`<%= @sendmail_ostype -%>')dnl
+<% end -%>
+<% if @submit_mc_domain -%>
+DOMAIN(`<%= @submit_mc_domain -%>')dnl
 <% end -%>
 dnl #
 <% if @masquerade_as -%>
