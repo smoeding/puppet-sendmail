@@ -57,6 +57,7 @@ class sendmail::mc (
   $sendmail_mc_domain    = $::sendmail::params::sendmail_mc_domain,
   $smart_host            = undef,
   $log_level             = undef,
+  $max_message_size      = undef,
   $dont_probe_interfaces = undef,
   $enable_ipv4_daemon    = true,
   $enable_ipv6_daemon    = true,
@@ -114,9 +115,16 @@ class sendmail::mc (
   }
 
   if ($log_level != undef) {
-    validate_re($log_level, '^[0-9]+$')
+    validate_re($log_level, '^\d+$', 'log_level must be numeric')
     ::sendmail::mc::define { 'confLOG_LEVEL':
       expansion => $log_level,
+    }
+  }
+
+  if ($max_message_size != undef) {
+    validate_re($max_message_size, '^\d+$', 'max_message_size must be numeric')
+    ::sendmail::mc::define{ 'confMAX_MESSAGE_SIZE':
+      expansion => $max_message_size,
     }
   }
 

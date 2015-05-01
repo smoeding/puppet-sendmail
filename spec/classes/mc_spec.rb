@@ -32,6 +32,7 @@ describe 'sendmail::mc' do
 
       should_not contain_sendmail__mc__define('SMART_HOST')
       should_not contain_sendmail__mc__define('confLOG_LEVEL')
+      should_not contain_sendmail__mc__define('confMAX_MESSAGE_SIZE')
       should_not contain_sendmail__mc__define('confDONT_PROBE_INTERFACES')
 
       should contain_sendmail__mc__daemon_options('MTA-v4').with_family('inet')
@@ -84,6 +85,34 @@ describe 'sendmail::mc' do
                'expansion' => '7',
              )
     }
+  end
+
+  context 'with log_level => foo' do
+    let(:params) do
+      { :log_level => 'foo' }
+    end
+
+    it { expect { should compile }.to raise_error(/must be numeric/) }
+  end
+
+  context 'with max_message_size => 42' do
+    let(:params) do
+      { :max_message_size => 42 }
+    end
+
+    it {
+      should contain_sendmail__mc__define('confMAX_MESSAGE_SIZE').with(
+               'expansion' => '42',
+             )
+    }
+  end
+
+  context 'with max_message_size => foo' do
+    let(:params) do
+      { :max_message_size => 'foo' }
+    end
+
+    it { expect { should compile }.to raise_error(/must be numeric/) }
   end
 
   context 'with dont_probe_interfaces => foo' do

@@ -21,7 +21,7 @@ Install and manage the sendmail MTA.
 
 ## Module Description
 
-Sendmail is a powerful mail transfer agent, and this modules provides an easy way to manage entries in various Sendmail configuration files (e.g. `/etc/mail/access` and `/etc/mail/mailertable`). A future version will address the main sendmail configuration file in `/etc/mail/sendmail.mc`.
+Sendmail is a powerful mail transfer agent, and this modules provides an easy way to manage the main Sendmail configuration files `/etc/mail/sendmail.mc` and `/etc/mail/submit.mc`. It also manages entries in various Sendmail database files (e.g. `/etc/mail/access` and `/etc/mail/mailertable`).
 
 ## Setup
 
