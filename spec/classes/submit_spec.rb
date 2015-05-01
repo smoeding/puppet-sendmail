@@ -47,6 +47,18 @@ describe 'sendmail::submit' do
     }
   end
 
+  context 'On Debian with msp_port => foo' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
+    let(:params) do
+      { :msp_port => 'foo' }
+    end
+
+    it { expect { should compile }.to raise_error(/must be a numeric/) }
+  end
+
   context 'On Debian with masquerade_as => example.org' do
     let(:facts) do
       { :operatingsystem => 'Debian' }

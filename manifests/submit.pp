@@ -37,7 +37,7 @@ class sendmail::submit (
   $masquerade_as = undef,
 ) inherits sendmail::params {
 
-  validate_re($msp_port, [ '^[0-9]+$', '^MSA$' ])
+  validate_re($msp_port, [ '^[0-9]+$', '^MSA$' ], 'msp_port must be a numeric port number or the literal "MSA"')
 
   file { $::sendmail::params::submit_mc_file:
     ensure  => file,
