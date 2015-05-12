@@ -18,7 +18,7 @@ describe 'sendmail::mc::trust_auth_mech' do
     it {
       should contain_concat__fragment('sendmail_mc-trust_auth_mech') \
             .with_content(/^TRUST_AUTH_MECH\(`foo'\)dnl$/) \
-            .with_order('75') \
+            .with_order('45') \
             .that_notifies('Class[sendmail::makeall]')
 
     }

@@ -28,7 +28,7 @@ describe 'sendmail::mc::local_config' do
     it {
       should contain_concat__fragment('sendmail_mc-local_config') \
               .with_source('foo') \
-              .with_order('99') \
+              .with_order('81') \
               .that_notifies('Class[sendmail::makeall]')
 
       should contain_class('sendmail::mc::local_config_section')
@@ -43,7 +43,7 @@ describe 'sendmail::mc::local_config' do
     it {
       should contain_concat__fragment('sendmail_mc-local_config') \
               .with_content('foo') \
-              .with_order('99') \
+              .with_order('81') \
               .that_notifies('Class[sendmail::makeall]')
 
       should contain_class('sendmail::mc::local_config_section')

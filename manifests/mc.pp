@@ -76,14 +76,21 @@ class sendmail::mc (
   # 07    DOMAIN
   # 10    # define header
   # 12    define
-  # 30    # FEATURE header
-  # 32    FEATURE
-  # 40    # macro header
-  # 58    MODIFY_MAILER_FLAGS
-  # 60    DAEMON_OPTIONS
-  # 75    TRUST_AUTH_MECH
-  # 80    # MAILER header
-  # 81-89 MAILER
+  # 20    # FEATURE header
+  # 22    FEATURE
+  # 30    # macro header
+  # 38    MODIFY_MAILER_FLAGS
+  # 40    DAEMON_OPTIONS
+  # 45    TRUST_AUTH_MECH
+  #       STARTTLS
+  #       DNSBL
+  #       Milter
+  # 60    # MAILER header
+  # 61-69 MAILER
+  # 80    LOCAL_CONFIG header
+  # 81    LOCAL_CONFIG
+  #       LOCAL_RULE_*
+  #       LOCAL_RULESETS
 
   concat { 'sendmail.mc':
     ensure => present,

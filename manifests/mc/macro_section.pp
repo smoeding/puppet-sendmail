@@ -20,7 +20,7 @@ class sendmail::mc::macro_section {
 
   concat::fragment { 'sendmail_mc-macro_header':
     target  => 'sendmail.mc',
-    order   => '40',
+    order   => '30',
     content => inline_template("dnl #\ndnl # Macros\ndnl #\n"),
     notify  => Class['::sendmail::makeall'],
   }

@@ -60,7 +60,7 @@ define sendmail::mc::feature (
 
   concat::fragment { "sendmail_mc-feature-${title}":
     target  => 'sendmail.mc',
-    order   => '32',
+    order   => '22',
     content => inline_template("FEATURE(<%= @arr.join(', ') -%>)dnl\n"),
     notify  => Class['::sendmail::makeall'],
   }

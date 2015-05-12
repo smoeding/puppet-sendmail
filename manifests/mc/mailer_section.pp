@@ -20,7 +20,7 @@ class sendmail::mc::mailer_section {
 
   concat::fragment { 'sendmail_mc-mailer_header':
     target  => 'sendmail.mc',
-    order   => '80',
+    order   => '60',
     content => inline_template("dnl #\ndnl # Mailer\ndnl #\n"),
     notify  => Class['::sendmail::makeall'],
   }

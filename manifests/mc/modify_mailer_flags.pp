@@ -48,7 +48,7 @@ define sendmail::mc::modify_mailer_flags (
 
   concat::fragment { "sendmail_mc-modify_mailer_flags-${title}":
     target  => 'sendmail.mc',
-    order   => '58',
+    order   => '38',
     content => inline_template("MODIFY_MAILER_FLAGS(<%= @arr.join(', ') -%>)dnl\n"),
     notify  => Class['::sendmail::makeall'],
   }

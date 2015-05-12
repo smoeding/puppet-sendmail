@@ -20,7 +20,7 @@ class sendmail::mc::feature_section {
 
   concat::fragment { 'sendmail_mc-feature_header':
     target  => 'sendmail.mc',
-    order   => '30',
+    order   => '20',
     content => inline_template("dnl #\ndnl # Features\ndnl #\n"),
     notify  => Class['::sendmail::makeall'],
   }

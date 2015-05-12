@@ -34,7 +34,7 @@ define sendmail::mc::local_config (
 
   concat::fragment { 'sendmail_mc-local_config':
     target  => 'sendmail.mc',
-    order   => '99',
+    order   => '81',
     content => $content,
     source  => $source,
     notify  => Class['::sendmail::makeall'],

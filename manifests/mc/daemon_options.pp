@@ -124,7 +124,7 @@ define sendmail::mc::daemon_options (
 
   concat::fragment { "sendmail_mc-daemon_options-${title}":
     target  => 'sendmail.mc',
-    order   => '60',
+    order   => '40',
     content => inline_template("DAEMON_OPTIONS(`${opts}')dnl\n"),
     notify  => Class['::sendmail::makeall'],
   }

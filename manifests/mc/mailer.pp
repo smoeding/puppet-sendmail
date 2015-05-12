@@ -24,16 +24,16 @@ define sendmail::mc::mailer (
 
   # Some mailers must be defined before others according to the Bat Book
   $order = $title ? {
-    'smtp'     => '81',
-    'local'    => '85',
-    'procmail' => '87',
-    'uucp'     => '87',
-    'cyrus'    => '88',
-    'cyrusv2'  => '88',
-    'phquery'  => '88',
-    'pop'      => '88',
-    'usenet'   => '88',
-    default    => '89',
+    'smtp'     => '61',
+    'local'    => '65',
+    'procmail' => '67',
+    'uucp'     => '67',
+    'cyrus'    => '68',
+    'cyrusv2'  => '68',
+    'phquery'  => '68',
+    'pop'      => '68',
+    'usenet'   => '68',
+    default    => '69',
   }
 
   concat::fragment { "sendmail_mc-mailer-${mailer}":
