@@ -2,16 +2,6 @@ require 'spec_helper'
 
 describe 'sendmail::mc::mailer' do
 
-  # :id and :osfamily facts are needed for concat module
-  let(:facts) do
-    {
-      :id              => 'stm',
-      :osfamily        => 'Debian',
-      :operatingsystem => 'Debian',
-      :concat_basedir  => '/tmp',
-    }
-  end
-
   context 'with mailer smtp' do
     let(:title) { 'smtp' }
 

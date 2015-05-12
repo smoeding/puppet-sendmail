@@ -3,16 +3,6 @@ require 'spec_helper'
 describe 'sendmail::mc::daemon_options' do
   let(:title) { 'foo' }
 
-  # :id and :osfamily facts are needed for concat module
-  let(:facts) do
-    {
-      :id              => 'stm',
-      :osfamily        => 'Debian',
-      :operatingsystem => 'Debian',
-      :concat_basedir  => '/tmp',
-    }
-  end
-
   context 'with default arguments' do
     it {
       should contain_concat__fragment('sendmail_mc-daemon_options-foo') \

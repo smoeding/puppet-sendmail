@@ -3,16 +3,6 @@ require 'spec_helper'
 describe 'sendmail::mc::feature' do
   let(:title) { 'foobar' }
 
-  # :id and :osfamily facts are needed for concat module
-  let(:facts) do
-    {
-      :id              => 'stm',
-      :osfamily        => 'Debian',
-      :operatingsystem => 'Debian',
-      :concat_basedir  => '/tmp',
-    }
-  end
-
   context 'with no argument' do
     it {
       should contain_concat__fragment('sendmail_mc-feature-foobar') \

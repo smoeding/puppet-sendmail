@@ -3,16 +3,6 @@ require 'spec_helper'
 describe 'sendmail::mc::modify_mailer_flags' do
   let(:title) { 'foobar' }
 
-  # :id and :osfamily facts are needed for concat module
-  let(:facts) do
-    {
-      :id              => 'stm',
-      :osfamily        => 'Debian',
-      :operatingsystem => 'Debian',
-      :concat_basedir  => '/tmp',
-    }
-  end
-
   context 'with one argument' do
     let(:params) do
       { :flags => 'foo' }

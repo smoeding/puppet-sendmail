@@ -2,16 +2,6 @@ require 'spec_helper'
 
 describe 'sendmail::mc::trust_auth_mech' do
 
-  # :id and :osfamily facts are needed for concat module
-  let(:facts) do
-    {
-      :id              => 'stm',
-      :osfamily        => 'Debian',
-      :operatingsystem => 'Debian',
-      :concat_basedir  => '/tmp',
-    }
-  end
-
   context 'trust_auth_mech with resource title only' do
     let(:title) { 'foo' }
 

@@ -2,16 +2,6 @@ require 'spec_helper'
 
 describe 'sendmail::mc' do
 
-    # :id and :osfamily facts are needed for concat module
-  let(:facts) do
-    {
-      :id              => 'stm',
-      :osfamily        => 'Debian',
-      :operatingsystem => 'Debian',
-      :concat_basedir  => '/tmp',
-    }
-  end
-
   context 'with no arguments' do
     it {
       should contain_concat('sendmail.mc').with(

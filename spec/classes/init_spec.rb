@@ -3,15 +3,6 @@ require 'spec_helper'
 describe 'sendmail' do
 
   context 'On Debian with defaults' do
-    let(:facts) do
-      {
-        :id              => 'stm',
-        :osfamily        => 'Debian',
-        :operatingsystem => 'Debian',
-        :concat_basedir  => '/tmp',
-      }
-    end
-
     it {
       should contain_class('sendmail')
       should contain_class('sendmail::package') \
@@ -24,15 +15,6 @@ describe 'sendmail' do
   end
 
   context 'On Debian with manage_sendmail_mc => true' do
-    let(:facts) do
-      {
-        :id              => 'stm',
-        :osfamily        => 'Debian',
-        :operatingsystem => 'Debian',
-        :concat_basedir  => '/tmp',
-      }
-    end
-
     let(:params) do
       { :manage_sendmail_mc => true }
     end
@@ -46,15 +28,6 @@ describe 'sendmail' do
   end
 
   context 'On Debian with manage_sendmail_mc => false' do
-    let(:facts) do
-      {
-        :id              => 'stm',
-        :osfamily        => 'Debian',
-        :operatingsystem => 'Debian',
-        :concat_basedir  => '/tmp',
-      }
-    end
-
     let(:params) do
       { :manage_sendmail_mc => false }
     end
@@ -65,15 +38,6 @@ describe 'sendmail' do
   end
 
   context 'On Debian with manage_submit_mc => true' do
-    let(:facts) do
-      {
-        :id              => 'stm',
-        :osfamily        => 'Debian',
-        :operatingsystem => 'Debian',
-        :concat_basedir  => '/tmp',
-      }
-    end
-
     let(:params) do
       { :manage_submit_mc => true }
     end
@@ -87,15 +51,6 @@ describe 'sendmail' do
   end
 
   context 'On Debian with manage_submit_mc => false' do
-    let(:facts) do
-      {
-        :id              => 'stm',
-        :osfamily        => 'Debian',
-        :operatingsystem => 'Debian',
-        :concat_basedir  => '/tmp',
-      }
-    end
-
     let(:params) do
       { :manage_submit_mc => false }
     end

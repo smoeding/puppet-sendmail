@@ -3,16 +3,6 @@ require 'spec_helper'
 describe 'sendmail::mc::local_config' do
   let(:title) { 'local_config' }
 
-  # :id and :osfamily facts are needed for concat module
-  let(:facts) do
-    {
-      :id              => 'stm',
-      :osfamily        => 'Debian',
-      :operatingsystem => 'Debian',
-      :concat_basedir  => '/tmp',
-    }
-  end
-
   context 'without source or content' do
     it {
       expect { subject.call }.to raise_error(Puppet::Error, /needs either of/)
