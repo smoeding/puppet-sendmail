@@ -82,7 +82,7 @@ class sendmail::mc (
   # 38    MODIFY_MAILER_FLAGS
   # 40    DAEMON_OPTIONS
   # 45    TRUST_AUTH_MECH
-  #       STARTTLS
+  # 47    STARTTLS
   # 50    # DNSBL header
   # 51    DNSBL features
   #       Milter

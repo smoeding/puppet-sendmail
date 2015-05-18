@@ -1,0 +1,36 @@
+dnl #
+dnl # TLS
+dnl #
+<% case @operatingsystem -%>
+<% when 'Debian' -%>
+include(`<%= @mail_settings_dir -%>/tls/starttls.m4')dnl
+dnl #
+<% end -%>
+<% if @ca_cert_file -%>
+define(`confCACERT', `<%= @ca_cert_file -%>')dnl
+<% end -%>
+<% if @ca_cert_path -%>
+define(`confCACERT_PATH', `<%= @ca_cert_path -%>')dnl
+<% end -%>
+<% if @server_cert_file -%>
+define(`confSERVER_CERT', `<%= @server_cert_file -%>')dnl
+<% end -%>
+<% if @server_key_file -%>
+define(`confSERVER_KEY', `<%= @server_key_file -%>')dnl
+<% end -%>
+<% if @client_cert_file -%>
+define(`confCLIENT_CERT', `<%= @client_cert_file -%>')dnl
+<% end -%>
+<% if @client_key_file -%>
+define(`confCLIENT_KEY', `<%= @client_key_file -%>')dnl
+<% end -%>
+<% if @dh_params -%>
+define(`confDH_PARAMETERS', `<%= @dh_params -%>')dnl
+<% end -%>
+<% if @crl_file -%>
+define(`confCRL', `<%= @crl_file -%>')dnl
+<% end -%>
+<% if @tls_srv_options -%>
+define(`confTLS_SRV_OPTIONS', `<%= @tls_srv_options -%>')dnl
+<% end -%>
+dnl #
