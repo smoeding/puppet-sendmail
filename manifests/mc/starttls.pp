@@ -93,20 +93,38 @@ define sendmail::mc::starttls (
     notify  => Class['::sendmail::makeall'],
   }
 
-  # FIXME: Use LOCAL_CONFIG only for sendmail < 8.15.1
-  if $cipher_list {
-    sendmail::mc::local_config { 'CipherList':
-      content => "O CipherList=${cipher_list}",
+  if versioncmp($::sendmail_version, '8.15.1') < 0 {
+    if $cipher_list {
+      sendmail::mc::local_config { 'CipherList':
+        content => "O CipherList=${cipher_list}",
+      }
+    }
+    if $server_ssl_options {
+      sendmail::mc::local_config { 'ServerSSLOptions':
+        content => "O ServerSSLOptions=${server_ssl_options}",
+      }
+    }
+    if $client_ssl_options {
+      sendmail::mc::local_config { 'ClientSSLOptions':
+        content => "O ClientSSLOptions=${client_ssl_options}",
+      }
     }
   }
-  if $server_ssl_options {
-    sendmail::mc::local_config { 'ServerSSLOptions':
-      content => "O ServerSSLOptions=${server_ssl_options}",
+  else {
+    if $cipher_list {
+      sendmail::mc::define { 'confCIPHER_LIST':
+        expansion => $cipher_list,
+      }
     }
-  }
-  if $client_ssl_options {
-    sendmail::mc::local_config { 'ClientSSLOptions':
-      content => "O ClientSSLOptions=${client_ssl_options}",
+    if $server_ssl_options {
+      sendmail::mc::define { 'confSERVER_SSL_OPTIONS':
+        expansion => $server_ssl_options,
+      }
+    }
+    if $client_ssl_options {
+      sendmail::mc::define { 'confCLIENT_SSL_OPTIONS':
+        expansion => $client_ssl_options,
+      }
     }
   }
 }

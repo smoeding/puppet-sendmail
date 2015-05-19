@@ -113,7 +113,11 @@ describe 'sendmail::mc::starttls' do
     }
   end
 
-  context 'with cipher_list => foo' do
+  context 'for sendmail 8.14 with cipher_list => foo' do
+    let(:facts) do
+      { :sendmail_version => '8.14.1' }
+    end
+
     let(:params) do
       { :cipher_list => 'foo' }
     end
@@ -124,7 +128,26 @@ describe 'sendmail::mc::starttls' do
     }
   end
 
-  context 'with server_ssl_options => foo' do
+  context 'for sendmail 8.15 with cipher_list => foo' do
+    let(:facts) do
+      { :sendmail_version => '8.15.1' }
+    end
+
+    let(:params) do
+      { :cipher_list => 'foo' }
+    end
+
+    it {
+      should contain_sendmail__mc__define('confCIPHER_LIST') \
+              .with_expansion(/^foo$/)
+    }
+  end
+
+  context 'for sendmail 8.14 with server_ssl_options => foo' do
+    let(:facts) do
+      { :sendmail_version => '8.14.1' }
+    end
+
     let(:params) do
       { :server_ssl_options => 'foo' }
     end
@@ -135,7 +158,26 @@ describe 'sendmail::mc::starttls' do
     }
   end
 
-  context 'with client_ssl_options => foo' do
+  context 'for sendmail 8.15 with server_ssl_options => foo' do
+    let(:facts) do
+      { :sendmail_version => '8.15.1' }
+    end
+
+    let(:params) do
+      { :server_ssl_options => 'foo' }
+    end
+
+    it {
+      should contain_sendmail__mc__define('confSERVER_SSL_OPTIONS') \
+              .with_expansion(/^foo$/)
+    }
+  end
+
+  context 'for sendmail 8.14 with client_ssl_options => foo' do
+    let(:facts) do
+      { :sendmail_version => '8.14.1' }
+    end
+
     let(:params) do
       { :client_ssl_options => 'foo' }
     end
@@ -143,6 +185,21 @@ describe 'sendmail::mc::starttls' do
     it {
       should contain_sendmail__mc__local_config('ClientSSLOptions') \
               .with_content(/^O ClientSSLOptions=foo$/)
+    }
+  end
+
+  context 'for sendmail 8.15 with client_ssl_options => foo' do
+    let(:facts) do
+      { :sendmail_version => '8.15.1' }
+    end
+
+    let(:params) do
+      { :client_ssl_options => 'foo' }
+    end
+
+    it {
+      should contain_sendmail__mc__define('confCLIENT_SSL_OPTIONS') \
+              .with_expansion(/^foo$/)
     }
   end
 end
