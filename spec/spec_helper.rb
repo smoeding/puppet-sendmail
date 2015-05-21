@@ -6,6 +6,6 @@ RSpec.configure do |c|
     :id              => 'stm',
     :osfamily        => 'Debian',
     :operatingsystem => 'Debian',
-    :concat_basedir  => '/tmp',
+    :concat_basedir  => '/var/tmp',
   }
 end
