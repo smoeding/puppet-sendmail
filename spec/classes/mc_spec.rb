@@ -87,7 +87,7 @@ describe 'sendmail::mc' do
 
   context 'with max_message_size => 42' do
     let(:params) do
-      { :max_message_size => 42 }
+      { :max_message_size => '42' }
     end
 
     it {
