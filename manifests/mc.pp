@@ -43,6 +43,10 @@
 #   Should the host accept mail on all IPv6 network adresses.
 #   Valid options: 'true' or 'false'. Default value: 'true'.
 #
+# [*mailers*]
+#   An array of mailers to add to the configuration.
+#   Default value: [ 'smtp', 'local' ]
+#
 # == Requires:
 #
 # Nothing.
@@ -61,6 +65,7 @@ class sendmail::mc (
   $dont_probe_interfaces = undef,
   $enable_ipv4_daemon    = true,
   $enable_ipv6_daemon    = true,
+  $mailers                = $::sendmail::params::mailers,
 ) inherits ::sendmail::params {
 
   include ::sendmail::makeall
@@ -79,6 +84,7 @@ class sendmail::mc (
   # 20    # FEATURE header
   # 22    FEATURE
   # 30    # macro header
+  # 31    MASQUERADE_AS
   # 38    MODIFY_MAILER_FLAGS
   # 40    DAEMON_OPTIONS
   # 45    TRUST_AUTH_MECH
@@ -154,6 +160,24 @@ class sendmail::mc (
     }
   }
 
-  ::sendmail::mc::mailer { 'local': }
-  ::sendmail::mc::mailer { 'smtp': }
+  if ($mailers) {
+    # Do a transformation from an array to JSON to a hash.
+    # This would be easier in Puppet 4 where $mailers.each is available.
+
+    # Turn every string into a JSON attribute-value pair
+    $json_single  = regsubst($mailers, '^(.*)$', '"\1": {}')
+
+    # Concatenate all attribute-value pairs
+    $json_all     = join($json_single, ', ')
+
+    # Make the object complete
+    $json         = "{ ${json_all} }"
+
+    # Convert into a Puppet hash
+    $mailers_hash = parsejson($json)
+
+    if !empty($mailers_hash) {
+      create_resources('::sendmail::mc::mailer', $mailers_hash)
+    }
+  }
 }

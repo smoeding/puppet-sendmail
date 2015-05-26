@@ -46,8 +46,7 @@ class sendmail::params {
 
   $configure_command = "make -C ${mail_settings_dir} all"
 
-  $sendmail_smarthost      = $::domain
-  $sendmail_masquerade_as  = $::domain
+  $mailers = [ 'smtp', 'local' ]
 
   case $::operatingsystem {
 

@@ -156,4 +156,16 @@ describe 'sendmail::mc' do
       should_not contain_sendmail__mc__daemon_options('MTA-v6')
     }
   end
+
+  context "with mailers => [ 'foo' ]" do
+    let(:params) do
+      { :mailers => [ 'foo' ] }
+    end
+
+    it {
+      should contain_sendmail__mc__mailer('foo')
+      should_not contain_sendmail__mc__mailer('local')
+      should_not contain_sendmail__mc__mailer('smtp')
+    }
+  end
 end
