@@ -4,3 +4,10 @@ divert(0)dnl
 #
 # Host: <%= @fqdn %>
 #
+define(`_USE_ETC_MAIL_')dnl
+<% case @operatingsystem -%>
+<% when 'Debian' -%>
+dnl #
+include(`/usr/share/sendmail/cf/m4/cf.m4')dnl
+dnl #
+<% end -%>
