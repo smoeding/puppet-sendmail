@@ -96,17 +96,17 @@ define sendmail::mc::starttls (
   if versioncmp($::sendmail_version, '8.15.1') < 0 {
     if $cipher_list {
       sendmail::mc::local_config { 'CipherList':
-        content => "O CipherList=${cipher_list}",
+        content => "O CipherList=${cipher_list}\n",
       }
     }
     if $server_ssl_options {
       sendmail::mc::local_config { 'ServerSSLOptions':
-        content => "O ServerSSLOptions=${server_ssl_options}",
+        content => "O ServerSSLOptions=${server_ssl_options}\n",
       }
     }
     if $client_ssl_options {
       sendmail::mc::local_config { 'ClientSSLOptions':
-        content => "O ClientSSLOptions=${client_ssl_options}",
+        content => "O ClientSSLOptions=${client_ssl_options}\n",
       }
     }
   }
