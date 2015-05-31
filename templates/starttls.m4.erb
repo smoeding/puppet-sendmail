@@ -3,7 +3,7 @@ dnl # TLS
 dnl #
 <% case @operatingsystem -%>
 <% when 'Debian' -%>
-include(`<%= @mail_settings_dir -%>/tls/starttls.m4')dnl
+include(`/etc/mail/tls/starttls.m4')dnl
 dnl #
 <% end -%>
 <% if @ca_cert_file -%>
