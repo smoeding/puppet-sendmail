@@ -32,7 +32,7 @@ define sendmail::mc::local_config (
     fail('sendmail::mc::local_config needs either of content or source')
   }
 
-  concat::fragment { 'sendmail_mc-local_config':
+  concat::fragment { "sendmail_mc-local_config-${title}":
     target  => 'sendmail.mc',
     order   => '81',
     content => $content,
