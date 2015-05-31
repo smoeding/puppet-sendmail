@@ -91,7 +91,8 @@ class sendmail::mc (
   # 47    STARTTLS
   # 50    # DNSBL header
   # 51    DNSBL features
-  #       Milter
+  # 55    # Milter header
+  # 56    Milter
   # 60    # MAILER header
   # 61-69 MAILER
   # 80    LOCAL_CONFIG header
@@ -137,7 +138,7 @@ class sendmail::mc (
 
   if ($max_message_size != undef) {
     validate_re($max_message_size, '^\d+$', 'max_message_size must be numeric')
-    ::sendmail::mc::define{ 'confMAX_MESSAGE_SIZE':
+    ::sendmail::mc::define { 'confMAX_MESSAGE_SIZE':
       expansion => $max_message_size,
     }
   }
@@ -147,15 +148,18 @@ class sendmail::mc (
       expansion => $dont_probe_interfaces,
     }
   }
+
   if ($enable_ipv4_daemon) {
     ::sendmail::mc::daemon_options { 'MTA-v4':
       family => 'inet',
+      port   => 'smtp',
     }
   }
 
   if ($enable_ipv6_daemon) {
     ::sendmail::mc::daemon_options { 'MTA-v6':
       family => 'inet6',
+      port   => 'smtp',
       modify => 'O',
     }
   }
