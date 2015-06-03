@@ -34,10 +34,10 @@ class sendmail::nullclient (
     dont_probe_interfaces => true,
     enable_ipv4_daemon    => false,
     enable_ipv6_daemon    => false,
-    mailers               => undef,
+    mailers               => [],
   }
 
   ::sendmail::mc::feature { 'nullclient':
-    args => any2array($mail_hub),
+    args => [ $mail_hub ],
   }
 }
