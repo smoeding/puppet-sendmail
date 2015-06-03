@@ -20,11 +20,11 @@
 #   directly to the outside world. In this case the host may need to forward
 #   the mail to the gateway machine defined by this parameter. All nonlocal
 #   mail is forwarded to this gateway.
-#   Default value: none.
+#   Default value: undef.
 #
 # [*log_level*]
 #   The loglevel for the sendmail process.
-#   Valid options: a numeric value. Default value: none.
+#   Valid options: a numeric value. Default value: undef.
 #
 # [*dont_probe_interfaces*]
 #   Sendmail normally probes all network interfaces to get the hostnames that
@@ -33,7 +33,7 @@
 #   If this option is set to 'localhost' then all network interfaces except
 #   for the loopback interface is probed.
 #   Valid options: the strings 'true', 'false' or 'localhost'.
-#   Default value: none.
+#   Default value: undef.
 #
 # [*enable_ipv4_daemon*]
 #   Should the host accept mail on all IPv4 network adresses.
