@@ -9,9 +9,10 @@ describe 'sendmail::service' do
 
     it {
       should contain_service('sendmail').with(
-               'ensure' => 'running',
-               'name'   => 'sendmail',
-               'enable' => 'true'
+               'ensure'    => 'running',
+               'name'      => 'sendmail',
+               'enable'    => 'true',
+               'hasstatus' => 'false',
              )
     }
   end
@@ -110,5 +111,29 @@ describe 'sendmail::service' do
     end
 
     it { should contain_service('sendmail').with_name('sendmoremail') }
+  end
+
+  context 'On Debian with service_hasstatus => true' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
+    let(:params) do
+      { :service_hasstatus => 'true' }
+    end
+
+    it { should contain_service('sendmail').with_hasstatus('true') }
+  end
+
+  context 'On Debian with service_hasstatus => false' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
+    let(:params) do
+      { :service_hasstatus => 'false' }
+    end
+
+    it { should contain_service('sendmail').with_hasstatus('false') }
   end
 end

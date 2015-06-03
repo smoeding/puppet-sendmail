@@ -19,6 +19,11 @@
 #   Configure whether the Sendmail service should be running.
 #   Valid options: 'running' or 'stopped'. Default value: 'running'.
 #
+# [*service_hasstatus*]
+#   Define whether the service type can rely on a functional status.
+#   Valid options: 'true' or 'false'. Default value depends on
+#   the operating system and release.
+#
 # == Requires:
 #
 # Nothing.
@@ -30,10 +35,11 @@
 #
 #
 class sendmail::service (
-  $service_name   = $::sendmail::params::service_name,
-  $service_enable = true,
-  $service_manage = true,
-  $service_ensure = 'running',
+  $service_name      = $::sendmail::params::service_name,
+  $service_enable    = true,
+  $service_manage    = true,
+  $service_ensure    = 'running',
+  $service_hasstatus = $::sendmail::params::service_hasstatus,
 ) inherits ::sendmail::params {
 
   validate_bool($service_enable)
@@ -56,7 +62,7 @@ class sendmail::service (
       ensure    => $_service_ensure,
       name      => $service_name,
       enable    => $service_enable,
-      hasstatus => $::sendmail::params::service_hasstatus,
+      hasstatus => $service_hasstatus,
     }
   }
 }
