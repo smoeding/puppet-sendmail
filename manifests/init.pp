@@ -32,6 +32,10 @@
 #   Should the host accept mail on all IPv6 network adresses.
 #   Valid options: 'true' or 'false'. Default value: 'true'.
 #
+# [*mailers*]
+#   An array of mailers to add to the configuration.
+#   Default value: [ 'smtp', 'local' ]
+#
 # [*auxiliary_packages*]
 #   Additional packages that will be installed by the Sendmail module.
 #   Valid options: array of strings.
@@ -83,6 +87,7 @@ class sendmail (
   $dont_probe_interfaces = undef,
   $enable_ipv4_daemon    = true,
   $enable_ipv6_daemon    = true,
+  $mailers               = $::sendmail::params::mailers,
   $manage_sendmail_mc    = true,
   $manage_submit_mc      = true,
   $auxiliary_packages    = $::sendmail::params::auxiliary_packages,
@@ -115,6 +120,7 @@ class sendmail (
       dont_probe_interfaces => $dont_probe_interfaces,
       enable_ipv4_daemon    => $enable_ipv4_daemon,
       enable_ipv6_daemon    => $enable_ipv6_daemon,
+      mailers               => $mailers,
       before                => Anchor['sendmail::config'],
       require               => Class['::sendmail::package'],
       notify                => Class['::sendmail::service'],
