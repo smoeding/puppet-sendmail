@@ -164,7 +164,7 @@ class sendmail::mc (
     }
   }
 
-  if ($mailers and !empty($mailers) {
+  if ($mailers and !empty($mailers)) {
     # Do a transformation from an array to JSON to a hash.
     # This would be easier in Puppet 4 where $mailers.each is available.
 
