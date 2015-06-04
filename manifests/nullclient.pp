@@ -29,12 +29,19 @@ class sendmail::nullclient (
 ) {
 
   class { '::sendmail':
-    smart_host            => undef,
     log_level             => $log_level,
     dont_probe_interfaces => true,
     enable_ipv4_daemon    => false,
     enable_ipv6_daemon    => false,
     mailers               => [],
+  }
+
+  ::sendmail::mc::feature { 'no_default_msa': }
+
+  ::sendmail::mc::daemon_options { 'MTA':
+    family => 'inet',
+    addr   => '127.0.0.1',
+    port   => '587',
   }
 
   ::sendmail::mc::feature { 'nullclient':
