@@ -4,16 +4,10 @@
 #
 # == Parameters:
 #
-# [*entries*]
-#   A hash that will be used to create sendmail::local_host_names::entry
-#   resources.
-#   This class can be used to set local-host-names defined in hiera.
-#   The hiera hash should look like this:
-#
-#   sendmail::local_host_names::entries:
-#     'example.org': {}
-#     'www.example.org':
-#       ensure: 'absent'
+# [*local_host_names*]
+#   An array of host names that will be written into the local host names
+#   file. Leading or trailing whitespace is ignored. Empty entries are also
+#   ignored. Default value: []
 #
 # == Requires:
 #
@@ -21,16 +15,23 @@
 #
 # == Sample Usage:
 #
-#   include ::sendmail::local_host_names
+#   class { '::sendmail::local_host_names:
+#     local_host_names => [ 'example.org', 'mail.example.org', ],
+#   }
 #
 #
 class sendmail::local_host_names (
-  $entries = {},
+  $local_host_names = [],
 ) {
+  include ::sendmail::params
 
-  if !empty($entries) {
-    validate_hash($entries)
+  validate_array($local_host_names)
 
-    create_resources('sendmail::local_host_names::entry', $entries)
+  file { $::sendmail::params::local_host_names_file:
+    ensure  => file,
+    owner   => 'root',
+    group   => $::sendmail::params::sendmail_group,
+    mode    => '0644',
+    content => inline_template('<%= @local_host_names.reject{ |x| x.to_s.strip.empty? }.sort.map{ |x| "#{x}\n"}.join %>'),
   }
 }

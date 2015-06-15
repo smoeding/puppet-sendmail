@@ -36,6 +36,10 @@
 #   An array of mailers to add to the configuration.
 #   Default value: [ 'smtp', 'local' ]
 #
+# [*local_host_names*]
+#   An array of hostnames that Sendmail considers for a local delivery.
+#   Default values: [ $::fqdn ]
+#
 # [*auxiliary_packages*]
 #   Additional packages that will be installed by the Sendmail module.
 #   Valid options: array of strings.
@@ -88,6 +92,7 @@ class sendmail (
   $enable_ipv4_daemon    = true,
   $enable_ipv6_daemon    = true,
   $mailers               = $::sendmail::params::mailers,
+  $local_host_names      = [ $::fqdn ],
   $manage_sendmail_mc    = true,
   $manage_submit_mc      = true,
   $auxiliary_packages    = $::sendmail::params::auxiliary_packages,
@@ -111,6 +116,10 @@ class sendmail (
     package_manage     => $package_manage,
     before             => Anchor['sendmail::config'],
     require            => Anchor['sendmail::begin'],
+  }
+
+  class { '::sendmail::local_host_names':
+    local_host_names => $local_host_names,
   }
 
   if ($manage_sendmail_mc) {

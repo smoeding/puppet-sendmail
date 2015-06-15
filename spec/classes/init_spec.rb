@@ -7,6 +7,7 @@ describe 'sendmail' do
       should contain_class('sendmail')
       should contain_class('sendmail::package') \
               .that_comes_before('Anchor[sendmail::config]')
+      should contain_class('sendmail::local_host_names')
       should contain_class('sendmail::mc')
       should contain_class('sendmail::submit')
       should contain_class('sendmail::service') \
