@@ -4,8 +4,8 @@
 #
 Facter.add(:sendmail_version) do
   setcode do
-    command = 'sendmail -d0.4 -ODontProbeInterfaces=true -bv root'
-    version = Facter::Util::Resolution.exec(command)
+    command = 'sendmail -d0.4 -ODontProbeInterfaces=true -bv root 2>/dev/null'
+    version = Facter::Core::Execution.execute(command, { :on_fail => nil })
     if version =~ /^Version ([0-9.]+)$/
       $1
     else
