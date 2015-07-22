@@ -8,10 +8,21 @@ describe 'sendmail' do
       should contain_class('sendmail::package') \
               .that_comes_before('Anchor[sendmail::config]')
       should contain_class('sendmail::local_host_names')
+      should contain_class('sendmail::access')
       should contain_class('sendmail::mc')
       should contain_class('sendmail::submit')
       should contain_class('sendmail::service') \
               .that_requires('Anchor[sendmail::config]')
+    }
+  end
+
+  context 'On Debian with enable_access_db => false' do
+    let(:params) do
+      { :enable_access_db => false }
+    end
+
+    it {
+      should_not contain_class('sendmail::access')
     }
   end
 

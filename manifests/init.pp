@@ -32,6 +32,11 @@
 #   Should the host accept mail on all IPv6 network adresses.
 #   Valid options: 'true' or 'false'. Default value: 'true'.
 #
+# [*enable_access_db*]
+#   Automatically manage the access database file. This parameter only
+#   manages the file and not the content.
+#   Valid options: 'true' or 'false'. Default value: 'true'.
+#
 # [*mailers*]
 #   An array of mailers to add to the configuration.
 #   Default value: [ 'smtp', 'local' ]
@@ -91,6 +96,7 @@ class sendmail (
   $dont_probe_interfaces = undef,
   $enable_ipv4_daemon    = true,
   $enable_ipv6_daemon    = true,
+  $enable_access_db      = true,
   $mailers               = $::sendmail::params::mailers,
   $local_host_names      = [ $::fqdn ],
   $manage_sendmail_mc    = true,
@@ -105,6 +111,7 @@ class sendmail (
   $service_hasstatus     = $::sendmail::params::service_hasstatus,
 ) inherits ::sendmail::params {
 
+  validate_bool($enable_access_db)
   validate_bool($manage_sendmail_mc)
   validate_bool($manage_submit_mc)
 
@@ -120,6 +127,10 @@ class sendmail (
 
   class { '::sendmail::local_host_names':
     local_host_names => $local_host_names,
+  }
+
+  if ($enable_access_db) {
+    include ::sendmail::access
   }
 
   if ($manage_sendmail_mc) {

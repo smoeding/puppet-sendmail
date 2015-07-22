@@ -11,7 +11,8 @@ describe 'sendmail::nullclient' do
       should contain_class('sendmail').with(
                'dont_probe_interfaces' => true,
                'enable_ipv4_daemon'    => false,
-               'enable_ipv6_daemon'    => false)
+               'enable_ipv6_daemon'    => false,
+               'enable_access_db'      => false)
 
       should contain_sendmail__mc__feature('nullclient') \
               .with_args([ 'example.com' ])
