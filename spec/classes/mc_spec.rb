@@ -6,7 +6,7 @@ describe 'sendmail::mc' do
     it {
       should contain_concat('sendmail.mc').with(
                'ensure' => 'present',
-               'path'   => '/tmp/sendmail.mc',
+               'path'   => '/etc/mail/sendmail.mc',
                'owner'  => 'root',
                'group'  => 'smmsp',
                'mode'   => '0644',

@@ -102,7 +102,7 @@ class sendmail::mc (
 
   concat { 'sendmail.mc':
     ensure => present,
-    path   => '/tmp/sendmail.mc',
+    path   => $::sendmail::params::sendmail_mc_file,
     owner  => 'root',
     group  => $::sendmail::params::sendmail_group,
     mode   => '0644',
