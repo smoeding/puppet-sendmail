@@ -89,4 +89,31 @@ describe 'sendmail::mc::feature' do
               .that_notifies('Class[sendmail::makeall]')
     }
   end
+
+  context 'with feature conncontrol' do
+    let(:title) { 'conncontrol' }
+
+    it {
+      should contain_concat__fragment('sendmail_mc-feature-conncontrol') \
+              .with_order('28')
+    }
+  end
+
+  context 'with feature ratecontrol' do
+    let(:title) { 'ratecontrol' }
+
+    it {
+      should contain_concat__fragment('sendmail_mc-feature-ratecontrol') \
+              .with_order('28')
+    }
+  end
+
+  context 'with feature nullclient' do
+    let(:title) { 'nullclient' }
+
+    it {
+      should contain_concat__fragment('sendmail_mc-feature-nullclient') \
+              .with_order('29')
+    }
+  end
 end

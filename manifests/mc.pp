@@ -83,6 +83,8 @@ class sendmail::mc (
   # 12    define
   # 20    # FEATURE header
   # 22    FEATURE
+  # 28    FEATURE conncontrol, ratecontrol
+  # 29    FEATURE nullclient
   # 30    # macro header
   # 31    MASQUERADE_AS
   # 38    MODIFY_MAILER_FLAGS

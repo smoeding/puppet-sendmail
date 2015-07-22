@@ -58,9 +58,16 @@ define sendmail::mc::feature (
 
   $arr = concat([ "`${feature_name}'" ], $exp_arg)
 
+  $order = $feature_name ? {
+    'conncontrol' => '28',
+    'ratecontrol' => '28',
+    'nullclient'  => '29',
+    default       => '22',
+  }
+
   concat::fragment { "sendmail_mc-feature-${title}":
     target  => 'sendmail.mc',
-    order   => '22',
+    order   => $order,
     content => inline_template("FEATURE(<%= @arr.join(', ') -%>)dnl\n"),
     notify  => Class['::sendmail::makeall'],
   }
