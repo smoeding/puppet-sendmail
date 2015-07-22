@@ -91,6 +91,17 @@ describe 'sendmail::mc::starttls' do
     }
   end
 
+  context 'with dh_params => 2048' do
+    let(:params) do
+      { :dh_params => '2048' }
+    end
+
+    it {
+      should contain_concat__fragment('sendmail_mc-starttls') \
+              .with_content(/^define\(`confDH_PARAMETERS', `2048'\)dnl/)
+    }
+  end
+
   context 'with dh_params => /foo' do
     let(:params) do
       { :dh_params => '/foo' }

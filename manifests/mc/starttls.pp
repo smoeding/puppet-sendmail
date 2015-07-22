@@ -27,7 +27,7 @@
 #
 # [*dh_params*]
 #   The DH parameters used for encryption. This can be one of the numbers
-#   '512' or '1024' or a filename with generated parameters.
+#   '512', '1024', '2048' or a filename with generated parameters.
 #
 # [*cipher_list*]
 #   Set the available ciphers for encrypted conections.
@@ -79,7 +79,7 @@ define sendmail::mc::starttls (
   if $crl_file         { validate_absolute_path($crl_file) }
 
   if $dh_params {
-    validate_re($dh_params, ['^512$', '^1024$', '^/.+'])
+    validate_re($dh_params, ['^512$', '^1024$', '^2048$', '^/.+'])
   }
 
   if $tls_srv_options {
