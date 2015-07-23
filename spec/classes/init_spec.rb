@@ -8,6 +8,7 @@ describe 'sendmail' do
       should contain_class('sendmail::package') \
               .that_comes_before('Anchor[sendmail::config]')
       should contain_class('sendmail::local_host_names')
+      should contain_class('sendmail::relay_domains')
       should contain_class('sendmail::access')
       should contain_class('sendmail::mc')
       should contain_class('sendmail::submit')
@@ -23,6 +24,30 @@ describe 'sendmail' do
 
     it {
       should_not contain_class('sendmail::access')
+    }
+  end
+
+  context 'On Debian with local_host_names => www.example.net' do
+    let(:params) do
+      { :local_host_names => [ 'www.example.net' ] }
+    end
+
+    it {
+      should contain_class('sendmail::local_host_names').with(
+               'local_host_names' => [ 'www.example.net' ],
+             )
+    }
+  end
+
+  context 'On Debian with relay_domains => example.net' do
+    let(:params) do
+      { :relay_domains => [ 'example.net' ] }
+    end
+
+    it {
+      should contain_class('sendmail::relay_domains').with(
+               'relay_domains' => [ 'example.net' ],
+             )
     }
   end
 

@@ -2,39 +2,57 @@ require 'spec_helper'
 
 describe 'sendmail::relay_domains' do
 
-  context 'On Debian with valid parameter hash' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
-    let(:params) do
-      { :entries => { 'example.org' => {} } }
-    end
-
-    it { should contain_sendmail__relay_domains__entry('example.org') }
+  context 'with default parameter' do
+    it {
+      should contain_file('/etc/mail/relay-domains').with(
+               'ensure'  => 'file',
+               'owner'   => 'root',
+               'group'   => 'smmsp',
+               'mode'    => '0644',
+               'content' => '',
+             )
+    }
   end
 
-  context 'On Debian with empty parameter hash' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with string parameter type' do
     let(:params) do
-      { :entries => { } }
+      { :relay_domains => "example.org" }
     end
 
-    it { expect { should compile } }
+    it { expect { should compile }.to raise_error(/is not an Array/) }
   end
 
-  context 'On Debian with wrong parameter type' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with empty parameter' do
     let(:params) do
-      { :entries => "example.org" }
+      { :relay_domains => [] }
     end
 
-    it { expect { should compile }.to raise_error(/is not a Hash/) }
+    it {
+      should contain_file('/etc/mail/relay-domains')
+    }
+  end
+
+  context 'with single element array' do
+    let(:params) do
+      { :relay_domains => [ 'foo' ] }
+    end
+
+    it {
+      should contain_file('/etc/mail/relay-domains').with(
+               'content' => "foo\n",
+             )
+    }
+  end
+
+  context 'with multiple element array' do
+    let(:params) do
+      { :relay_domains => [ 'foo', 'bar', 'baz' ] }
+    end
+
+    it {
+      should contain_file('/etc/mail/relay-domains').with(
+               'content' => "bar\nbaz\nfoo\n",
+             )
+    }
   end
 end

@@ -45,6 +45,11 @@
 #   An array of hostnames that Sendmail considers for a local delivery.
 #   Default values: [ $::fqdn ]
 #
+# [*relay_domains*]
+#   An array of domains that Sendmail accepts as relay target. This
+#   setting is required for secondary MX setups.
+#   Default value: []
+#
 # [*auxiliary_packages*]
 #   Additional packages that will be installed by the Sendmail module.
 #   Valid options: array of strings.
@@ -99,6 +104,7 @@ class sendmail (
   $enable_access_db      = true,
   $mailers               = $::sendmail::params::mailers,
   $local_host_names      = [ $::fqdn ],
+  $relay_domains         = [],
   $manage_sendmail_mc    = true,
   $manage_submit_mc      = true,
   $auxiliary_packages    = $::sendmail::params::auxiliary_packages,
@@ -127,6 +133,10 @@ class sendmail (
 
   class { '::sendmail::local_host_names':
     local_host_names => $local_host_names,
+  }
+
+  class { '::sendmail::relay_domains':
+    relay_domains => $relay_domains,
   }
 
   if ($enable_access_db) {
