@@ -76,4 +76,15 @@ describe 'sendmail::mc::define' do
               .that_notifies('Class[sendmail::makeall]')
     }
   end
+
+  context 'with ldap related argument' do
+    let(:title) { 'confLDAP_FOO' }
+
+    it {
+      should contain_concat__fragment('sendmail_mc-define-confLDAP_FOO') \
+              .with_content(/^define\(`confLDAP_FOO', `'\)dnl$/) \
+              .with_order('12') \
+              .that_notifies('Class[sendmail::makeall]')
+    }
+  end
 end

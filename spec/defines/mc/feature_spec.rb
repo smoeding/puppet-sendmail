@@ -90,6 +90,15 @@ describe 'sendmail::mc::feature' do
     }
   end
 
+  context 'with feature ldap_routing' do
+    let(:title) { 'ldap_routing' }
+
+    it {
+      should contain_concat__fragment('sendmail_mc-feature-ldap_routing') \
+              .with_order('19')
+    }
+  end
+
   context 'with feature conncontrol' do
     let(:title) { 'conncontrol' }
 

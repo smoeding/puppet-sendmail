@@ -81,6 +81,8 @@ class sendmail::mc (
   # 07    DOMAIN
   # 10    # define header
   # 12    define
+  # 18    # LDAP header
+  # 19    LDAP config
   # 20    # FEATURE header
   # 22    FEATURE
   # 28    FEATURE conncontrol, ratecontrol

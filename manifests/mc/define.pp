@@ -53,6 +53,10 @@ define sendmail::mc::define (
 
   $arr = [ "`${macro_name}'", $exp_arg ]
 
+  $order = $macro_name ? {
+    /^confLDAP/ => '19',
+    default     => '12',
+  }
   concat::fragment { "sendmail_mc-define-${title}":
     target  => 'sendmail.mc',
     order   => '12',

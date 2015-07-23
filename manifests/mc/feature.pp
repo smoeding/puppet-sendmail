@@ -59,10 +59,11 @@ define sendmail::mc::feature (
   $arr = concat([ "`${feature_name}'" ], $exp_arg)
 
   $order = $feature_name ? {
-    'conncontrol' => '28',
-    'ratecontrol' => '28',
-    'nullclient'  => '29',
-    default       => '22',
+    'ldap_routing' => '19',
+    'conncontrol'  => '28',
+    'ratecontrol'  => '28',
+    'nullclient'   => '29',
+    default        => '22',
   }
 
   concat::fragment { "sendmail_mc-feature-${title}":
