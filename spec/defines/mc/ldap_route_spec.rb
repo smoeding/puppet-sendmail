@@ -10,6 +10,7 @@ describe 'sendmail::mc::ldaproute_domain' do
               .with_content(/^LDAPROUTE_DOMAIN\(`example.net'\)dnl$/) \
               .with_order('19') \
               .that_notifies('Class[sendmail::makeall]')
+      should contain_class('sendmail::mc::ldap_section')
     }
   end
 end

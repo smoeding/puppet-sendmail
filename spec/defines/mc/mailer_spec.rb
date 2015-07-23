@@ -10,6 +10,7 @@ describe 'sendmail::mc::mailer' do
               .with_content(/^MAILER\(`smtp'\)dnl$/) \
               .with_order('61') \
               .that_notifies('Class[sendmail::makeall]')
+      should contain_class('sendmail::mc::mailer_section')
     }
   end
 
@@ -21,6 +22,7 @@ describe 'sendmail::mc::mailer' do
               .with_content(/^MAILER\(`local'\)dnl$/) \
               .with_order('65') \
               .that_notifies('Class[sendmail::makeall]')
+      should contain_class('sendmail::mc::mailer_section')
     }
   end
 
@@ -32,6 +34,7 @@ describe 'sendmail::mc::mailer' do
               .with_content(/^MAILER\(`foobar'\)dnl$/) \
               .with_order('69') \
               .that_notifies('Class[sendmail::makeall]')
+      should contain_class('sendmail::mc::mailer_section')
     }
   end
 end

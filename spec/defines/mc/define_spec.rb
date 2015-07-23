@@ -9,6 +9,7 @@ describe 'sendmail::mc::define' do
               .with_content(/^define\(`foobar', `'\)dnl$/) \
               .with_order('12') \
               .that_notifies('Class[sendmail::makeall]')
+      should contain_class('sendmail::mc::define_section')
     }
   end
 
@@ -22,6 +23,7 @@ describe 'sendmail::mc::define' do
               .with_content(/^define\(`foobar', `foo'\)dnl$/) \
               .with_order('12') \
               .that_notifies('Class[sendmail::makeall]')
+      should contain_class('sendmail::mc::define_section')
     }
   end
 
@@ -35,6 +37,7 @@ describe 'sendmail::mc::define' do
               .with_content(/^define\(`baz', `foo'\)dnl$/) \
               .with_order('12') \
               .that_notifies('Class[sendmail::makeall]')
+      should contain_class('sendmail::mc::define_section')
     }
   end
 
@@ -48,6 +51,7 @@ describe 'sendmail::mc::define' do
               .with_content(/^define\(`foobar', `foo'\)dnl$/) \
               .with_order('12') \
               .that_notifies('Class[sendmail::makeall]')
+      should contain_class('sendmail::mc::define_section')
     }
   end
 
@@ -61,6 +65,7 @@ describe 'sendmail::mc::define' do
               .with_content(/^define\(`foobar', foo\)dnl$/) \
               .with_order('12') \
               .that_notifies('Class[sendmail::makeall]')
+      should contain_class('sendmail::mc::define_section')
     }
   end
 
@@ -74,6 +79,7 @@ describe 'sendmail::mc::define' do
               .with_content(/^define\(`foobar', `'\)dnl$/) \
               .with_order('12') \
               .that_notifies('Class[sendmail::makeall]')
+      should contain_class('sendmail::mc::define_section')
     }
   end
 
@@ -85,6 +91,7 @@ describe 'sendmail::mc::define' do
               .with_content(/^define\(`confLDAP_FOO', `'\)dnl$/) \
               .with_order('12') \
               .that_notifies('Class[sendmail::makeall]')
+      should contain_class('sendmail::mc::define_section')
     }
   end
 end
