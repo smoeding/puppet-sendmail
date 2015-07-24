@@ -8,6 +8,7 @@ describe 'sendmail::package' do
     end
 
     it { should contain_package('sendmail').with_ensure('present') }
+    it { should contain_package('bsd-mailx').with_ensure('present') }
   end
 
   context 'On Debian with package_ensure => latest' do
@@ -20,6 +21,7 @@ describe 'sendmail::package' do
     end
 
     it { should contain_package('sendmail').with_ensure('latest') }
+    it { should contain_package('bsd-mailx').with_ensure('present') }
   end
 
   context 'On Debian with package_manage => false' do

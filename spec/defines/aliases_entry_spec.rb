@@ -12,6 +12,9 @@ describe 'sendmail::aliases::entry' do
   end
 
   it {
+    should contain_class('sendmail::params')
+    should contain_class('sendmail::aliases::file')
+    should contain_class('sendmail::aliases::newaliases')
     should contain_mailalias('fred') \
             .that_requires('Class[sendmail::aliases::file]') \
             .that_notifies('Class[sendmail::aliases::newaliases]')

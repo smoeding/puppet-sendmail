@@ -12,6 +12,9 @@ describe 'sendmail::authinfo::entry' do
   end
 
   it {
+    should contain_class('sendmail::params')
+    should contain_class('sendmail::makeall')
+    should contain_class('sendmail::authinfo::file')
     should contain_augeas('/etc/mail/authinfo-example.com') \
             .that_requires('Class[sendmail::authinfo::file]') \
             .that_notifies('Class[sendmail::makeall]')

@@ -12,6 +12,9 @@ describe 'sendmail::genericstable::entry' do
   end
 
   it {
+    should contain_class('sendmail::params')
+    should contain_class('sendmail::makeall')
+    should contain_class('sendmail::genericstable::file')
     should contain_augeas('/etc/mail/genericstable-user@example.com') \
             .that_requires('Class[sendmail::genericstable::file]') \
             .that_notifies('Class[sendmail::makeall]')
