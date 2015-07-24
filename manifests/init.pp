@@ -50,6 +50,40 @@
 #   setting is required for secondary MX setups.
 #   Default value: []
 #
+# [*ca_cert_file*]
+#   The filename of the SSL CA certificate.
+#
+# [*ca_cert_path*]
+#   The directory where SSL CA certificates are kept.
+#
+# [*server_cert_file*]
+#   The filename of the SSL server certificate for inbound connections.
+#
+# [*server_key_file*]
+#   The filename of the SSL server key for inbound connections.
+#
+# [*client_cert_file*]
+#   The filename of the SSL client certificate for outbound connections.
+#
+# [*client_key_file*]
+#   The filename of the SSL client key for outbound connections.
+#
+# [*crl_file*]
+#   The filename with a list of revoked certificates.
+#
+# [*dh_params*]
+#   The DH parameters used for encryption. This can be one of the numbers
+#   '512', '1024', '2048' or a filename with generated parameters.
+#
+# [*cipher_list*]
+#   Set the available ciphers for encrypted conections.
+#
+# [*server_ssl_options*]
+#   Configure the SSL connection flags for inbound connections.
+#
+# [*client_ssl_options*]
+#   Configure the SSL connection flags for outbound connections.
+#
 # [*auxiliary_packages*]
 #   Additional packages that will be installed by the Sendmail module.
 #   Valid options: array of strings.
@@ -105,6 +139,18 @@ class sendmail (
   $mailers               = $::sendmail::params::mailers,
   $local_host_names      = [ $::fqdn ],
   $relay_domains         = [],
+  $ca_cert_file          = undef,
+  $ca_cert_path          = undef,
+  $server_cert_file      = undef,
+  $server_key_file       = undef,
+  $client_cert_file      = undef,
+  $client_key_file       = undef,
+  $crl_file              = undef,
+  $dh_params             = undef,
+  $tls_srv_options       = undef,
+  $cipher_list           = undef,
+  $server_ssl_options    = undef,
+  $client_ssl_options    = undef,
   $manage_sendmail_mc    = true,
   $manage_submit_mc      = true,
   $auxiliary_packages    = $::sendmail::params::auxiliary_packages,
@@ -154,6 +200,30 @@ class sendmail (
       before                => Anchor['sendmail::config'],
       require               => Class['::sendmail::package'],
       notify                => Class['::sendmail::service'],
+    }
+
+    # Include STARTTLS settings if any of the options is defined
+    $tls_opts = [
+      $ca_cert_file, $ca_cert_path, $server_cert_file, $server_key_file,
+      $client_cert_file, $client_key_file, $crl_file, $tls_srv_options,
+      $cipher_list, $server_ssl_options, $client_ssl_options, $dh_params,
+    ]
+
+    if (count($tls_opts) > 0) {
+      sendmail::mc::starttls { 'starttls':
+        ca_cert_file       => $ca_cert_file,
+        ca_cert_path       => $ca_cert_path,
+        server_cert_file   => $server_cert_file,
+        server_key_file    => $server_key_file,
+        client_cert_file   => $client_cert_file,
+        client_key_file    => $client_key_file,
+        crl_file           => $crl_file,
+        dh_params          => $dh_params,
+        tls_srv_options    => $tls_srv_options,
+        cipher_list        => $cipher_list,
+        server_ssl_options => $server_ssl_options,
+        client_ssl_options => $client_ssl_options,
+      }
     }
   }
 
