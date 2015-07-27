@@ -17,6 +17,7 @@ describe 'sendmail' do
 
       should contain_class('sendmail::local_host_names')
       should contain_class('sendmail::relay_domains')
+      should contain_class('sendmail::trusted_users')
       should contain_class('sendmail::access')
       should contain_class('sendmail::mc')
       should contain_class('sendmail::submit')
@@ -59,6 +60,18 @@ describe 'sendmail' do
     it {
       should contain_class('sendmail::relay_domains').with(
                'relay_domains' => [ 'example.net' ],
+             )
+    }
+  end
+
+  context 'On Debian with trusted_users => fred' do
+    let(:params) do
+      { :trusted_users => [ 'fred' ] }
+    end
+
+    it {
+      should contain_class('sendmail::trusted_users').with(
+               'trusted_users' => [ 'fred' ],
              )
     }
   end

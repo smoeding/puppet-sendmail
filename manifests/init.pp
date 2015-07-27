@@ -139,6 +139,7 @@ class sendmail (
   $mailers               = $::sendmail::params::mailers,
   $local_host_names      = [ $::fqdn ],
   $relay_domains         = [],
+  $trusted_users         = [],
   $ca_cert_file          = undef,
   $ca_cert_path          = undef,
   $server_cert_file      = undef,
@@ -183,6 +184,10 @@ class sendmail (
 
   class { '::sendmail::relay_domains':
     relay_domains => $relay_domains,
+  }
+
+  class { '::sendmail::trusted_users':
+    trusted_users => $trusted_users,
   }
 
   if ($enable_access_db) {
