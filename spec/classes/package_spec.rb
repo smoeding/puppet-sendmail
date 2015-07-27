@@ -7,11 +7,28 @@ describe 'sendmail::package' do
       { :operatingsystem => 'Debian' }
     end
 
-    it { should contain_package('sendmail').with_ensure('present') }
-    it { should contain_package('bsd-mailx').with_ensure('present') }
+    it {
+      should contain_package('sendmail')
+      should contain_package('bsd-mailx')
+    }
   end
 
-  context 'On Debian with package_ensure => latest' do
+  context 'On Rehat with defaults' do
+    let(:facts) do
+      { :operatingsystem => 'Redhat' }
+    end
+
+    it {
+      should contain_package('sendmail')
+      should contain_package('sendmail-cf')
+      should contain_package('cyrus-sasl')
+      should contain_package('m4')
+      should contain_package('mailx')
+      should contain_package('make')
+    }
+  end
+
+  context 'with package_ensure => latest' do
     let(:facts) do
       { :operatingsystem => 'Debian' }
     end
@@ -20,11 +37,12 @@ describe 'sendmail::package' do
       { :package_ensure => 'latest' }
     end
 
-    it { should contain_package('sendmail').with_ensure('latest') }
-    it { should contain_package('bsd-mailx').with_ensure('present') }
+    it {
+      should contain_package('sendmail').with_ensure('latest')
+    }
   end
 
-  context 'On Debian with package_manage => false' do
+  context 'with package_manage => false' do
     let(:facts) do
       { :operatingsystem => 'Debian' }
     end
@@ -36,7 +54,7 @@ describe 'sendmail::package' do
     it { should_not contain_package('sendmail') }
   end
 
-  context 'On Debian with auxiliary_packages defined' do
+  context 'with auxiliary_packages defined' do
     let(:facts) do
       { :operatingsystem => 'Debian' }
     end
