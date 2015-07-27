@@ -2,39 +2,57 @@ require 'spec_helper'
 
 describe 'sendmail::trusted_users' do
 
-  context 'On Debian with valid parameter hash' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
-    let(:params) do
-      { :entries => { 'fred' => {} } }
-    end
-
-    it { should contain_sendmail__trusted_users__entry('fred') }
+  context 'with default parameter' do
+    it {
+      should contain_file('/etc/mail/trusted-users').with(
+               'ensure'  => 'file',
+               'owner'   => 'root',
+               'group'   => 'smmsp',
+               'mode'    => '0644',
+               'content' => '',
+             )
+    }
   end
 
-  context 'On Debian with empty parameter hash' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with string parameter type' do
     let(:params) do
-      { :entries => { } }
+      { :trusted_users => "root" }
     end
 
-    it { expect { should compile } }
+    it { expect { should compile }.to raise_error(/is not an Array/) }
   end
 
-  context 'On Debian with wrong parameter type' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with empty parameter' do
     let(:params) do
-      { :entries => "fred" }
+      { :trusted_users => [] }
     end
 
-    it { expect { should compile }.to raise_error(/is not a Hash/) }
+    it {
+      should contain_file('/etc/mail/trusted-users')
+    }
+  end
+
+  context 'with single element array' do
+    let(:params) do
+      { :trusted_users => [ 'foo' ] }
+    end
+
+    it {
+      should contain_file('/etc/mail/trusted-users').with(
+               'content' => "foo\n",
+             )
+    }
+  end
+
+  context 'with multiple element array' do
+    let(:params) do
+      { :trusted_users => [ 'foo', 'bar', 'baz' ] }
+    end
+
+    it {
+      should contain_file('/etc/mail/trusted-users').with(
+               'content' => "bar\nbaz\nfoo\n",
+             )
+    }
   end
 end
