@@ -37,8 +37,14 @@
 #   Connection timeout
 #   Default value: undefined (using the Sendmail default 5min)
 #
-# [*filter_name*]
-#   The name of the filter to create.
+# [*order*]
+#   A string used to determine the order of the mail filters in the
+#   configuration file. This also defines the order in which the filters
+#   are called.
+#   Default value: '00'
+#
+# [*milter_name*]
+#   The name of the milter to create.
 #
 # == Requires:
 #
@@ -65,7 +71,8 @@ define sendmail::mc::milter (
   $receive_timeout = undef,
   $eom_timeout     = undef,
   $connect_timeout = undef,
-  $filter_name     = $title,
+  $order           = '00',
+  $milter_name     = $title,
 ) {
 
   include ::sendmail::makeall
@@ -89,7 +96,7 @@ define sendmail::mc::milter (
   #
   # Flags parameter
   #
-  if $flags != undef {
+  if $flags {
     validate_re($flags, [ '^R$', '^T$', '^4$' ])
 
     $opt_flags = $flags
@@ -101,10 +108,18 @@ define sendmail::mc::milter (
   #
   # Timout parameter
   #
-  validate_re($send_timeout, '^[0-9]+(s|m)?$')
-  validate_re($receive_timeout, '^[0-9]+(s|m)?$')
-  validate_re($eom_timeout, '^[0-9]+(s|m)?$')
-  validate_re($connect_timeout, '^[0-9]+(s|m)?$')
+  if $send_timeout {
+    validate_re($send_timeout, '^[0-9]+(s|m)?$')
+  }
+  if $receive_timeout {
+    validate_re($receive_timeout, '^[0-9]+(s|m)?$')
+  }
+  if $eom_timeout {
+    validate_re($eom_timeout, '^[0-9]+(s|m)?$')
+  }
+  if $connect_timeout {
+    validate_re($connect_timeout, '^[0-9]+(s|m)?$')
+  }
 
   $timeouts = delete_undef_values({
       'S' => $send_timeout,
@@ -113,7 +128,12 @@ define sendmail::mc::milter (
       'C' => $connect_timeout,
   })
 
-  $opt_timeouts = join(join_keys_to_values($timeouts, ':'), '; ')
+  if count($timeouts) > 0 {
+    $opt_timeouts = join(join_keys_to_values($timeouts, ':'), '; ')
+  }
+  else {
+    $opt_timeouts = undef
+  }
 
   #
   # Put everything together
@@ -126,10 +146,10 @@ define sendmail::mc::milter (
 
   $opts = join(join_keys_to_values($opts_all, '='), ', ')
 
-  concat::fragment { "sendmail_mc-milter-${filter_name}":
+  concat::fragment { "sendmail_mc-milter-${milter_name}":
     target  => 'sendmail.mc',
-    order   => '56',
-    content => inline_template("MAIL_FILTER(`${filter_name}', `${opts}')dnl\n"),
+    order   => "56-${order}",
+    content => inline_template("INPUT_MAIL_FILTER(`${milter_name}', `${opts}')dnl\n"),
     notify  => Class['::sendmail::makeall'],
   }
 
