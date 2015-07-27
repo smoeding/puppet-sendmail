@@ -57,9 +57,10 @@ define sendmail::mc::define (
     /^confLDAP/ => '19',
     default     => '12',
   }
+
   concat::fragment { "sendmail_mc-define-${title}":
     target  => 'sendmail.mc',
-    order   => '12',
+    order   => $order,
     content => inline_template("define(<%= @arr.join(', ') -%>)dnl\n"),
     notify  => Class['::sendmail::makeall'],
   }
