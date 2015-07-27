@@ -30,7 +30,7 @@ define sendmail::mc::include (
 ) {
  include ::sendmail::makeall
 
- validate_absulute_path($filename)
+ validate_absolute_path($filename)
 
  concat::fragment { "sendmail_mc-include-${title}":
    target  => 'sendmail.mc',
