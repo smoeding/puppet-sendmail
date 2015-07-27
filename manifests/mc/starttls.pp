@@ -83,7 +83,7 @@ define sendmail::mc::starttls (
   }
 
   if $tls_srv_options {
-    validate_re($tls_srv_options, '^V$')
+    validate_re($tls_srv_options, [ '^V$', '^$', ])
   }
 
   concat::fragment { 'sendmail_mc-starttls':
