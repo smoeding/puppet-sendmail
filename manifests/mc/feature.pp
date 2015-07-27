@@ -51,8 +51,8 @@ define sendmail::mc::feature (
   validate_bool($use_quotes)
 
   # Add quotes to the args if needed
-  $exp_arg = ($use_quotes and !empty($args)) ? {
-    true  => regsubst($args, '^(.*)$', "`\1'"),
+  $exp_arg = $use_quotes ? {
+    true  => suffix(prefix($args, '`'), '\''),
     false => $args,
   }
 
