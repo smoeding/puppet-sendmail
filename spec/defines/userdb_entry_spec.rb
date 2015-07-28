@@ -3,10 +3,6 @@ require 'spec_helper'
 describe 'sendmail::userdb::entry' do
   let(:title) { 'fred:maildrop' }
 
-  let(:facts) do
-    { :operatingsystem => 'Debian' }
-  end
-
   let(:params) do
     { :value => 'fred@example.org' }
   end

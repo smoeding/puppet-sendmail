@@ -2,23 +2,15 @@ require 'spec_helper'
 
 describe 'sendmail::userdb' do
 
-  context 'On Debian with valid parameter hash' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with valid parameter hash' do
     let(:params) do
-      { :entries => { 'user:maildrop' => { 'value' => 'fred@example.com' } } }
+      { :entries => { 'fred:maildrop' => { 'value' => 'fred@example.com' } } }
     end
 
-    it { should contain_sendmail__userdb__entry('user:maildrop') }
+    it { should contain_sendmail__userdb__entry('fred:maildrop') }
   end
 
-  context 'On Debian with empty parameter hash' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with empty parameter hash' do
     let(:params) do
       { :entries => { } }
     end
@@ -26,11 +18,7 @@ describe 'sendmail::userdb' do
     it { expect { should compile } }
   end
 
-  context 'On Debian with wrong parameter type' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with wrong parameter type' do
     let(:params) do
       { :entries => "example.com" }
     end
