@@ -3,10 +3,6 @@ require 'spec_helper'
 describe 'sendmail::authinfo::entry' do
   let(:title) { 'example.com' }
 
-  let(:facts) do
-    { :operatingsystem => 'Debian' }
-  end
-
   let(:params) do
     { :value => 'REJECT' }
   end

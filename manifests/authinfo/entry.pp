@@ -54,7 +54,7 @@ define sendmail::authinfo::entry (
     'absent'  => "rm key[ . = '${key}']",
   }
 
-  augeas { "${::sendmail::params::authinfo_file}-${name}":
+  augeas { "${::sendmail::params::authinfo_file}-${title}":
     lens    => 'Sendmail_Map.lns',
     incl    => $::sendmail::params::authinfo_file,
     changes => $changes,

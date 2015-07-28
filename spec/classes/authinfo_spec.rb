@@ -2,23 +2,15 @@ require 'spec_helper'
 
 describe 'sendmail::authinfo' do
 
-  context 'On Debian with valid parameter hash' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with valid parameter hash' do
     let(:params) do
-      { :entries => { 'AuthInfo:example.com' => { 'value' => '"U=auth" "P=secret"' } } }
+      { :entries => { 'example.com' => { 'value' => '"U=auth" "P=secret"' } } }
     end
 
-    it { should contain_sendmail__authinfo__entry('AuthInfo:example.com') }
+    it { should contain_sendmail__authinfo__entry('example.com') }
   end
 
-  context 'On Debian with empty parameter hash' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with empty parameter hash' do
     let(:params) do
       { :entries => { } }
     end
@@ -26,11 +18,7 @@ describe 'sendmail::authinfo' do
     it { expect { should compile } }
   end
 
-  context 'On Debian with wrong parameter type' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with wrong parameter type' do
     let(:params) do
       { :entries => "example.com" }
     end
