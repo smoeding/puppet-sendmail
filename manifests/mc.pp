@@ -15,6 +15,12 @@
 #   this setting to provide defaults for certain features.
 #   Default value: operating system specific.
 #
+# [*cf_version*]
+#   The configuration version string for Sendmail. This string will be
+#   appended to the Sendmail version in the HELO message. If unset, no
+#   configuration version will be used.
+#   Default value: undef.
+#
 # [*smart_host*]
 #   Servers that are behind a firewall may not be able to deliver mail
 #   directly to the outside world. In this case the host may need to forward
@@ -64,6 +70,7 @@
 class sendmail::mc (
   $ostype                = $::sendmail::params::ostype,
   $sendmail_mc_domain    = $::sendmail::params::sendmail_mc_domain,
+  $cf_version            = undef,
   $smart_host            = undef,
   $log_level             = undef,
   $max_message_size      = undef,
@@ -123,6 +130,12 @@ class sendmail::mc (
     order   => '00',
     content => template('sendmail/header.m4.erb'),
     notify  => Class['::sendmail::makeall'],
+  }
+
+  if ($cf_version != undef) {
+    ::sendmail::mc::define { 'confCF_VERSION':
+      expansion => $cf_version,
+    }
   }
 
   if ($ostype != undef) {

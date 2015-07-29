@@ -21,6 +21,7 @@ describe 'sendmail::mc' do
       should contain_sendmail__mc__domain('debian-mta')
 
       should_not contain_sendmail__mc__define('SMART_HOST')
+      should_not contain_sendmail__mc__define('confCF_VERSION')
       should_not contain_sendmail__mc__define('confLOG_LEVEL')
       should_not contain_sendmail__mc__define('confMAX_MESSAGE_SIZE')
       should_not contain_sendmail__mc__define('confDONT_PROBE_INTERFACES')
@@ -190,6 +191,18 @@ describe 'sendmail::mc' do
     it {
       should contain_sendmail__mc__trust_auth_mech('trust_auth_mech').with(
                'trust_auth_mech' => [ 'PLAIN', 'LOGIN' ]
+             )
+    }
+  end
+
+  context 'with cf_version => 1.2-3' do
+    let(:params) do
+      { :cf_version => '1.2-3' }
+    end
+
+    it {
+      should contain_sendmail__mc__define('confCF_VERSION').with(
+               'expansion' => '1.2-3',
              )
     }
   end

@@ -4,6 +4,12 @@
 #
 # == Parameters:
 #
+# [*cf_version*]
+#   The configuration version string for Sendmail. This string will be
+#   appended to the Sendmail version in the HELO message. If unset, no
+#   configuration version will be used.
+#   Default value: undef.
+#
 # [*smart_host*]
 #   Servers that are behind a firewall may not be able to deliver mail
 #   directly to the outside world. In this case the host may need to forward
@@ -140,6 +146,7 @@
 #
 #
 class sendmail (
+  $cf_version            = undef,
   $smart_host            = undef,
   $log_level             = undef,
   $dont_probe_interfaces = undef,
@@ -210,6 +217,7 @@ class sendmail (
 
   if ($manage_sendmail_mc) {
     class { '::sendmail::mc':
+      cf_version            => $cf_version,
       smart_host            => $smart_host,
       log_level             => $log_level,
       dont_probe_interfaces => $dont_probe_interfaces,

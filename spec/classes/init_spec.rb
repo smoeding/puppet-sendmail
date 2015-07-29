@@ -30,7 +30,7 @@ describe 'sendmail' do
     }
   end
 
-  context 'On Debian with enable_access_db => false' do
+  context 'with enable_access_db => false' do
     let(:params) do
       { :enable_access_db => false }
     end
@@ -40,7 +40,7 @@ describe 'sendmail' do
     }
   end
 
-  context 'On Debian with local_host_names => www.example.net' do
+  context 'with local_host_names => www.example.net' do
     let(:params) do
       { :local_host_names => [ 'www.example.net' ] }
     end
@@ -52,7 +52,7 @@ describe 'sendmail' do
     }
   end
 
-  context 'On Debian with relay_domains => example.net' do
+  context 'with relay_domains => example.net' do
     let(:params) do
       { :relay_domains => [ 'example.net' ] }
     end
@@ -64,7 +64,7 @@ describe 'sendmail' do
     }
   end
 
-  context 'On Debian with trusted_users => fred' do
+  context 'with trusted_users => fred' do
     let(:params) do
       { :trusted_users => [ 'fred' ] }
     end
@@ -100,7 +100,19 @@ describe 'sendmail' do
     }
   end
 
-  context 'On Debian with manage_sendmail_mc => true' do
+  context 'with cf_version => 1.2-3' do
+    let(:params) do
+      { :cf_version => '1.2-3' }
+    end
+
+    it {
+      should contain_class('sendmail::mc').with(
+               'cf_version' => '1.2-3',
+             )
+    }
+  end
+
+  context 'with manage_sendmail_mc => true' do
     let(:params) do
       { :manage_sendmail_mc => true }
     end
@@ -113,7 +125,7 @@ describe 'sendmail' do
     }
   end
 
-  context 'On Debian with manage_sendmail_mc => false' do
+  context 'with manage_sendmail_mc => false' do
     let(:params) do
       { :manage_sendmail_mc => false }
     end
@@ -124,7 +136,7 @@ describe 'sendmail' do
     }
   end
 
-  context 'On Debian with manage_submit_mc => true' do
+  context 'with manage_submit_mc => true' do
     let(:params) do
       { :manage_submit_mc => true }
     end
@@ -137,7 +149,7 @@ describe 'sendmail' do
     }
   end
 
-  context 'On Debian with manage_submit_mc => false' do
+  context 'with manage_submit_mc => false' do
     let(:params) do
       { :manage_submit_mc => false }
     end
@@ -147,7 +159,7 @@ describe 'sendmail' do
     }
   end
 
-  context 'On Debian with cipher_list defined' do
+  context 'with cipher_list defined' do
     let(:params) do
       { :manage_sendmail_mc => true, :cipher_list => 'foo' }
     end
