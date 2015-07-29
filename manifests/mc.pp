@@ -47,6 +47,11 @@
 #   An array of mailers to add to the configuration.
 #   Default value: [ 'smtp', 'local' ]
 #
+# [*trust_auth_mech*]
+#   The value of the TRUST_AUTH_MECH macro to set. If this is a string it
+#   is used as-is. For an array the value will be concatenated into a
+#   string. Default value: undef
+#
 # == Requires:
 #
 # Nothing.
@@ -65,7 +70,8 @@ class sendmail::mc (
   $dont_probe_interfaces = undef,
   $enable_ipv4_daemon    = true,
   $enable_ipv6_daemon    = true,
-  $mailers                = $::sendmail::params::mailers,
+  $mailers               = $::sendmail::params::mailers,
+  $trust_auth_mech       = undef,
 ) inherits ::sendmail::params {
 
   include ::sendmail::makeall
@@ -186,6 +192,12 @@ class sendmail::mc (
 
     if !empty($mailers_hash) {
       create_resources('::sendmail::mc::mailer', $mailers_hash)
+    }
+  }
+
+  if $trust_auth_mech {
+    ::sendmail::mc::trust_auth_mech { 'trust_auth_mech':
+      trust_auth_mech => $trust_auth_mech,
     }
   }
 }

@@ -76,6 +76,30 @@ describe 'sendmail' do
     }
   end
 
+  context 'with trust_auth_mech => PLAIN' do
+    let(:params) do
+      { :trust_auth_mech => 'PLAIN' }
+    end
+
+    it {
+      should contain_class('sendmail::mc').with(
+               'trust_auth_mech' => 'PLAIN',
+             )
+    }
+  end
+
+  context 'with trust_auth_mech => [ PLAIN, LOGIN ]' do
+    let(:params) do
+      { :trust_auth_mech => [ 'PLAIN', 'LOGIN' ] }
+    end
+
+    it {
+      should contain_class('sendmail::mc').with(
+               'trust_auth_mech' => [ 'PLAIN', 'LOGIN' ],
+             )
+    }
+  end
+
   context 'On Debian with manage_sendmail_mc => true' do
     let(:params) do
       { :manage_sendmail_mc => true }

@@ -24,6 +24,7 @@ describe 'sendmail::mc' do
       should_not contain_sendmail__mc__define('confLOG_LEVEL')
       should_not contain_sendmail__mc__define('confMAX_MESSAGE_SIZE')
       should_not contain_sendmail__mc__define('confDONT_PROBE_INTERFACES')
+      should_not contain_sendmail__mc__trust_auth_mech('trust_auth_mech')
 
       should contain_sendmail__mc__daemon_options('MTA-v4').with_family('inet')
       should contain_sendmail__mc__daemon_options('MTA-v6').with_family('inet6')
@@ -33,13 +34,13 @@ describe 'sendmail::mc' do
     }
   end
 
-  context 'with ostype => foonix' do
+  context 'with ostype => debian' do
     let(:params) do
-      { :ostype => 'foonix' }
+      { :ostype => 'debian' }
     end
 
     it {
-      should contain_sendmail__mc__ostype('foonix')
+      should contain_sendmail__mc__ostype('debian')
     }
   end
 
@@ -157,15 +158,39 @@ describe 'sendmail::mc' do
     }
   end
 
-  context "with mailers => [ 'foo' ]" do
+  context "with mailers => [ 'foobar' ]" do
     let(:params) do
-      { :mailers => [ 'foo' ] }
+      { :mailers => [ 'foobar' ] }
     end
 
     it {
-      should contain_sendmail__mc__mailer('foo')
+      should contain_sendmail__mc__mailer('foobar')
       should_not contain_sendmail__mc__mailer('local')
       should_not contain_sendmail__mc__mailer('smtp')
+    }
+  end
+
+  context 'with trust_auth_mech => PLAIN' do
+    let(:params) do
+      { :trust_auth_mech => 'PLAIN' }
+    end
+
+    it {
+      should contain_sendmail__mc__trust_auth_mech('trust_auth_mech').with(
+               'trust_auth_mech' => 'PLAIN'
+             )
+    }
+  end
+
+  context 'with trust_auth_mech => [ PLAIN, LOGIN ]' do
+    let(:params) do
+      { :trust_auth_mech => [ 'PLAIN', 'LOGIN' ] }
+    end
+
+    it {
+      should contain_sendmail__mc__trust_auth_mech('trust_auth_mech').with(
+               'trust_auth_mech' => [ 'PLAIN', 'LOGIN' ]
+             )
     }
   end
 end

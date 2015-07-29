@@ -50,6 +50,16 @@
 #   setting is required for secondary MX setups.
 #   Default value: []
 #
+# [*trusted_users*]
+#   An array of user names that will be written into the trusted users file.
+#   Leading or trailing whitespace is ignored. Empty entries are also
+#   ignored. Default value: []
+#
+# [*trust_auth_mech*]
+#   The value of the TRUST_AUTH_MECH macro to set. If this is a string it
+#   is used as-is. For an array the value will be concatenated into a
+#   string. Default value: undef
+#
 # [*ca_cert_file*]
 #   The filename of the SSL CA certificate.
 #
@@ -140,6 +150,7 @@ class sendmail (
   $local_host_names      = [ $::fqdn ],
   $relay_domains         = [],
   $trusted_users         = [],
+  $trust_auth_mech       = undef,
   $ca_cert_file          = undef,
   $ca_cert_path          = undef,
   $server_cert_file      = undef,
@@ -180,14 +191,17 @@ class sendmail (
 
   class { '::sendmail::local_host_names':
     local_host_names => $local_host_names,
+    require          => Class['sendmail::package'],
   }
 
   class { '::sendmail::relay_domains':
     relay_domains => $relay_domains,
+    require       => Class['sendmail::package'],
   }
 
   class { '::sendmail::trusted_users':
     trusted_users => $trusted_users,
+    require       => Class['sendmail::package'],
   }
 
   if ($enable_access_db) {
@@ -202,6 +216,7 @@ class sendmail (
       enable_ipv4_daemon    => $enable_ipv4_daemon,
       enable_ipv6_daemon    => $enable_ipv6_daemon,
       mailers               => $mailers,
+      trust_auth_mech       => $trust_auth_mech,
       before                => Anchor['sendmail::config'],
       require               => Class['::sendmail::package'],
       notify                => Class['::sendmail::service'],
