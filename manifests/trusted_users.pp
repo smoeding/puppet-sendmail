@@ -33,5 +33,6 @@ class sendmail::trusted_users (
     group   => $::sendmail::params::sendmail_group,
     mode    => '0644',
     content => inline_template('<%= @trusted_users.reject{ |x| x.to_s.strip.empty? }.sort.map{ |x| "#{x}\n"}.join %>'),
+    notify  => Class['::sendmail::service'],
   }
 }

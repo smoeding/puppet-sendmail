@@ -33,5 +33,6 @@ class sendmail::local_host_names (
     group   => $::sendmail::params::sendmail_group,
     mode    => '0644',
     content => inline_template('<%= @local_host_names.reject{ |x| x.to_s.strip.empty? }.sort.map{ |x| "#{x}\n"}.join %>'),
+    notify  => Class['::sendmail::service'],
   }
 }
