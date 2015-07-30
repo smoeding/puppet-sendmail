@@ -38,6 +38,11 @@
 #   Should the host accept mail on all IPv6 network adresses.
 #   Valid options: 'true' or 'false'. Default value: 'true'.
 #
+# [*enable_aliases*]
+#   Automaticall manage the aliases file. This parameter only manages the
+#   file and not the content.
+#   Valid options: 'true' or 'false'. Default value: 'true'.
+#
 # [*enable_access_db*]
 #   Automatically manage the access database file. This parameter only
 #   manages the file and not the content.
@@ -152,6 +157,7 @@ class sendmail (
   $dont_probe_interfaces = undef,
   $enable_ipv4_daemon    = true,
   $enable_ipv6_daemon    = true,
+  $enable_aliases        = true,
   $enable_access_db      = true,
   $mailers               = $::sendmail::params::mailers,
   $local_host_names      = [ $::fqdn ],
@@ -209,6 +215,10 @@ class sendmail (
   class { '::sendmail::trusted_users':
     trusted_users => $trusted_users,
     require       => Class['sendmail::package'],
+  }
+
+  if ($enable_aliases) {
+    include ::sendmail::aliases
   }
 
   if ($enable_access_db) {
