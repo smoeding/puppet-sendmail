@@ -135,6 +135,30 @@ describe 'sendmail' do
     }
   end
 
+  context 'with msp_host => localhost' do
+    let(:params) do
+      { :msp_host => 'localhost' }
+    end
+
+    it {
+      should contain_class('sendmail::submit').with(
+               'msp_host' => 'localhost',
+             )
+    }
+  end
+
+  context 'with msp_port => 25' do
+    let(:params) do
+      { :msp_port => '25' }
+    end
+
+    it {
+      should contain_class('sendmail::submit').with(
+               'msp_port' => '25',
+             )
+    }
+  end
+
   context 'with manage_sendmail_mc => true' do
     let(:params) do
       { :manage_sendmail_mc => true }

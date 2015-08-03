@@ -111,6 +111,18 @@
 #   file.
 #   Default value: undef.
 #
+# [*msp_host*]
+#   The host where the message submission program should deliver to. This
+#   can be a hostname or IP address. To prevent MX lookups for the host,
+#   put it in square brackets (e.g., [hostname]). Delivery to the local
+#   host would therefore use either [127.0.0.1] for IPv4 or [IPv6:::1]
+#   for IPv6.
+#
+# [*msp_port*]
+#   The port used for the message submission program. Can be a port number
+#   (e.g., 25) or the literal 'MSA' for delivery to the message submission
+#   agent on port 587.
+#
 # [*auxiliary_packages*]
 #   Additional packages that will be installed by the Sendmail module.
 #   Valid options: array of strings.
@@ -183,6 +195,8 @@ class sendmail (
   $client_ssl_options    = undef,
   $cf_version            = undef,
   $version_id            = undef,
+  $msp_host              = '[127.0.0.1]',
+  $msp_port              = 'MSA',
   $manage_sendmail_mc    = true,
   $manage_submit_mc      = true,
   $auxiliary_packages    = $::sendmail::params::auxiliary_packages,
@@ -275,9 +289,11 @@ class sendmail (
 
   if ($manage_submit_mc) {
     class { '::sendmail::submit':
-      before  => Anchor['sendmail::config'],
-      require => Class['::sendmail::package'],
-      notify  => Class['::sendmail::service'],
+      msp_host => $msp_host,
+      msp_port => $msp_port,
+      before   => Anchor['sendmail::config'],
+      require  => Class['::sendmail::package'],
+      notify   => Class['::sendmail::service'],
     }
   }
 
