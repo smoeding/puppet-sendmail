@@ -206,4 +206,14 @@ describe 'sendmail::mc' do
              )
     }
   end
+
+  context 'with version_id => foo' do
+    let(:params) do
+      { :version_id => 'foo' }
+    end
+
+    it {
+      should contain_sendmail__mc__versionid('foo')
+    }
+  end
 end

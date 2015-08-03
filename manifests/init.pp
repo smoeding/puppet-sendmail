@@ -4,12 +4,6 @@
 #
 # == Parameters:
 #
-# [*cf_version*]
-#   The configuration version string for Sendmail. This string will be
-#   appended to the Sendmail version in the HELO message. If unset, no
-#   configuration version will be used.
-#   Default value: undef.
-#
 # [*smart_host*]
 #   Servers that are behind a firewall may not be able to deliver mail
 #   directly to the outside world. In this case the host may need to forward
@@ -105,6 +99,18 @@
 # [*client_ssl_options*]
 #   Configure the SSL connection flags for outbound connections.
 #
+# [*cf_version*]
+#   The configuration version string for Sendmail. This string will be
+#   appended to the Sendmail version in the HELO message. If unset, no
+#   configuration version will be used.
+#   Default value: undef.
+#
+# [*version_id*]
+#   The version id string included in the sendmail.mc file. This has no
+#   practical meaning other than having a used defined identifier in the
+#   file.
+#   Default value: undef.
+#
 # [*auxiliary_packages*]
 #   Additional packages that will be installed by the Sendmail module.
 #   Valid options: array of strings.
@@ -151,7 +157,6 @@
 #
 #
 class sendmail (
-  $cf_version            = undef,
   $smart_host            = undef,
   $log_level             = undef,
   $dont_probe_interfaces = undef,
@@ -176,6 +181,8 @@ class sendmail (
   $cipher_list           = undef,
   $server_ssl_options    = undef,
   $client_ssl_options    = undef,
+  $cf_version            = undef,
+  $version_id            = undef,
   $manage_sendmail_mc    = true,
   $manage_submit_mc      = true,
   $auxiliary_packages    = $::sendmail::params::auxiliary_packages,
@@ -235,6 +242,7 @@ class sendmail (
       enable_ipv6_daemon    => $enable_ipv6_daemon,
       mailers               => $mailers,
       trust_auth_mech       => $trust_auth_mech,
+      version_id            => $version_id,
       before                => Anchor['sendmail::config'],
       require               => Class['::sendmail::package'],
       notify                => Class['::sendmail::service'],

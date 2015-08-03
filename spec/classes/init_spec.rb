@@ -123,6 +123,18 @@ describe 'sendmail' do
     }
   end
 
+  context 'with version_id => foo' do
+    let(:params) do
+      { :version_id => 'foo' }
+    end
+
+    it {
+      should contain_class('sendmail::mc').with(
+               'version_id' => 'foo',
+             )
+    }
+  end
+
   context 'with manage_sendmail_mc => true' do
     let(:params) do
       { :manage_sendmail_mc => true }

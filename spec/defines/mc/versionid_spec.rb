@@ -1,16 +1,27 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::versionid' do
-  let(:title) { 'versionid' }
+  let(:title) { 'foo' }
 
-  let(:params) do
-    { :versionid => 'foobar' }
+  context 'with title only' do
+    it {
+      should contain_concat__fragment('sendmail_mc-versionid') \
+              .with_content(/^VERSIONID\(`foo'\)dnl$/) \
+              .with_order('01') \
+              .that_notifies('Class[sendmail::makeall]')
+    }
   end
 
-  it {
-    should contain_concat__fragment('sendmail_mc-versionid') \
-            .with_content(/^VERSIONID\(`foobar'\)dnl$/) \
-            .with_order('01') \
-            .that_notifies('Class[sendmail::makeall]')
-  }
+  context 'with versionid => foo' do
+    let(:params) do
+      { :versionid => 'bar' }
+    end
+
+    it {
+      should contain_concat__fragment('sendmail_mc-versionid') \
+              .with_content(/^VERSIONID\(`bar'\)dnl$/) \
+              .with_order('01') \
+              .that_notifies('Class[sendmail::makeall]')
+    }
+  end
 end

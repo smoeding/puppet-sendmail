@@ -58,6 +58,12 @@
 #   is used as-is. For an array the value will be concatenated into a
 #   string. Default value: undef
 #
+# [*version_id*]
+#   The version id string included in the sendmail.mc file. This has no
+#   practical meaning other than having a used defined identifier in the
+#   file.
+#   Default value: undef.
+#
 # == Requires:
 #
 # Nothing.
@@ -79,6 +85,7 @@ class sendmail::mc (
   $enable_ipv6_daemon    = true,
   $mailers               = $::sendmail::params::mailers,
   $trust_auth_mech       = undef,
+  $version_id            = undef,
 ) inherits ::sendmail::params {
 
   include ::sendmail::makeall
@@ -136,6 +143,10 @@ class sendmail::mc (
     ::sendmail::mc::define { 'confCF_VERSION':
       expansion => $cf_version,
     }
+  }
+
+  if ($version_id != undef) {
+    ::sendmail::mc::versionid { $version_id: }
   }
 
   if ($ostype != undef) {
