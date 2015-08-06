@@ -41,6 +41,23 @@ describe 'sendmail' do
     }
   end
 
+  context 'with aliases => ' do
+    let(:params) do
+      {
+        :enable_aliases => true,
+        :aliases => { 'fred' => { 'recipient' => 'barney@example.org' } }
+      }
+    end
+
+    it {
+      should contain_class('sendmail::aliases').with(
+               'entries' => {
+                 'fred' => { 'recipient' => 'barney@example.org' }
+               }
+             )
+    }
+  end
+
   context 'with enable_access_db => false' do
     let(:params) do
       { :enable_access_db => false }

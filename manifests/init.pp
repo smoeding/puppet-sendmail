@@ -37,6 +37,10 @@
 #   file and not the content.
 #   Valid options: 'true' or 'false'. Default value: 'true'.
 #
+# [*aliases*]
+#   A hash that will be used to create sendmail::aliases::entry
+#   resources. Default value: {}
+#
 # [*enable_access_db*]
 #   Automatically manage the access database file. This parameter only
 #   manages the file and not the content.
@@ -175,6 +179,7 @@ class sendmail (
   $enable_ipv4_daemon    = true,
   $enable_ipv6_daemon    = true,
   $enable_aliases        = true,
+  $aliases               = {},
   $enable_access_db      = true,
   $mailers               = $::sendmail::params::mailers,
   $local_host_names      = [ $::fqdn ],
@@ -239,7 +244,9 @@ class sendmail (
   }
 
   if ($enable_aliases) {
-    include ::sendmail::aliases
+    class { '::sendmail::aliases':
+      entries => $aliases,
+    }
   }
 
   if ($enable_access_db) {
