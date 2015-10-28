@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe 'sendmail::authinfo::file' do
 
+  it { should contain_class('sendmail::authinfo::file') }
+
   context 'On Debian' do
     let(:facts) do
       { :operatingsystem => 'Debian' }

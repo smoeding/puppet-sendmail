@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe 'sendmail::mc::ldap_section' do
 
+  it { should contain_class('sendmail::mc::ldap_section') }
+
   context 'with no arguments' do
     it {
       should contain_concat__fragment('sendmail_mc-ldap_header') \

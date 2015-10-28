@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe 'sendmail::mc::enhdnsbl_section' do
 
+  it { should contain_class('sendmail::mc::enhdnsbl_section') }
+
   context 'with no arguments' do
     it {
       should contain_concat__fragment('sendmail_mc-enhdnsbl_header') \

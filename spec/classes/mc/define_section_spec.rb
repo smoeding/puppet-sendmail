@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe 'sendmail::mc::define_section' do
 
+  it { should contain_class('sendmail::mc::define_section') }
+
   context 'with no arguments' do
     it {
       should contain_concat__fragment('sendmail_mc-define_header') \

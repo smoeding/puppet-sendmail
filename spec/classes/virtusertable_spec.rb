@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe 'sendmail::virtusertable' do
 
+  it { should contain_class('sendmail::virtusertable') }
+
   context 'On Debian with valid parameter hash' do
     let(:facts) do
       { :operatingsystem => 'Debian' }

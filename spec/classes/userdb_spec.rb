@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe 'sendmail::userdb' do
 
+  it { should contain_class('sendmail::userdb') }
+
   context 'with valid parameter hash' do
     let(:params) do
       { :entries => { 'fred:maildrop' => { 'value' => 'fred@example.com' } } }

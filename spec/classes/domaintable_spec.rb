@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe 'sendmail::domaintable' do
 
+  it { should contain_class('sendmail::domaintable') }
+
   context 'On Debian with valid parameter hash' do
     let(:facts) do
       { :operatingsystem => 'Debian' }

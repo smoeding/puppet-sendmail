@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe 'sendmail::domaintable::file' do
 
+  it { should contain_class('sendmail::domaintable::file') }
+
   context 'On Debian' do
     let(:facts) do
       { :operatingsystem => 'Debian' }

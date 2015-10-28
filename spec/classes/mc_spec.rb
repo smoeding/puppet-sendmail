@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe 'sendmail::mc' do
 
+  it { should contain_class('sendmail::mc') }
+
   context 'with no arguments' do
     it {
       should contain_concat('sendmail.mc').with(

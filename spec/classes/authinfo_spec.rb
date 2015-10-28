@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe 'sendmail::authinfo' do
 
+  it { should contain_class('sendmail::authinfo') }
+
   context 'with valid parameter hash' do
     let(:params) do
       { :entries => { 'example.com' => { 'value' => '"U=auth" "P=secret"' } } }

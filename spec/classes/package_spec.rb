@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe 'sendmail::package' do
 
+  it { should contain_class('sendmail::package') }
+
   context 'On Debian with defaults' do
     let(:facts) do
       { :operatingsystem => 'Debian' }

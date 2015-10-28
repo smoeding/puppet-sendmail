@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe 'sendmail::trusted_users' do
 
+  it { should contain_class('sendmail::trusted_users') }
+
   context 'with default parameter' do
     it {
       should contain_file('/etc/mail/trusted-users').with(

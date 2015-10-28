@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe 'sendmail::aliases' do
 
+  it { should contain_class('sendmail::aliases') }
+
   context 'On Debian with valid parameter hash' do
     let(:facts) do
       { :operatingsystem => 'Debian' }

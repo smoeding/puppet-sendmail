@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe 'sendmail::relay_domains' do
 
+  it { should contain_class('sendmail::relay_domains') }
+
   context 'with default parameter' do
     it {
       should contain_file('/etc/mail/relay-domains').with(

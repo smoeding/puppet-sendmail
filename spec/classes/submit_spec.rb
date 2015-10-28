@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe 'sendmail::submit' do
 
+  it { should contain_class('sendmail::submit') }
+
   context 'On Debian with default parameters' do
     let(:facts) do
       { :operatingsystem => 'Debian' }

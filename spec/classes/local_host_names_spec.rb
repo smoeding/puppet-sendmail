@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe 'sendmail::local_host_names' do
 
+  it { should contain_class('sendmail::local_host_names') }
+
   context 'with default parameter' do
     it {
       should contain_file('/etc/mail/local-host-names').with(

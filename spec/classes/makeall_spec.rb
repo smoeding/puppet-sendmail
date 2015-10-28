@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe 'sendmail::makeall' do
 
+  it { should contain_class('sendmail::makeall') }
+
   [ 'Debian', 'RedHat' ].each do |operatingsystem|
     context "On #{operatingsystem}" do
       let(:facts) do
