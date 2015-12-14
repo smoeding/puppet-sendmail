@@ -1,6 +1,6 @@
 # = Class: sendmail
 #
-# Manage the sendmail MTA.
+# Manage the Sendmail MTA.
 #
 # == Parameters:
 #
