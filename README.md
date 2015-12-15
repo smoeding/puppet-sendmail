@@ -168,7 +168,7 @@ class { '::sendmail':
   - [Define: sendmail::mailertable::entry](#define-sendmailmailertableentry)
   - [Define: sendmail::relay_domains::entry](#define-sendmailrelay_domainsentry)
   - [Define: sendmail::trusted_users::entry](#define-sendmailtrusted_usersentry)
-  - [Define: sendmail::userdb::entry](#define-sendmail-userdbentry)
+  - [Define: sendmail::userdb::entry](#define-sendmailuserdbentry)
   - [Define: sendmail::virtusertable::entry](#define-sendmailvirtusertableentry)
   - [Define: sendmail::mc::daemon_options](#define-sendmailmcdaemon_options)
   - [Define: sendmail::mc::define](#define-sendmailmcdefine)
@@ -183,7 +183,7 @@ class { '::sendmail':
   - [Define: sendmail::mc::trust_auth_mech](#define-sendmailmctrust_auth_mech)
   - [Define: sendmail::mc::versionid](#define-sendmailmcversionid)
 - [**Augeas Lenses**](#augeas-lenses)
-  - [Augeas Lens: sendmail_map](#augeas-lens-sendmailmap)
+  - [Augeas Lens: sendmail_map](#augeas-lens-sendmail__map)
 - [**Templates**](#templates)
 
 ### Public Classes
