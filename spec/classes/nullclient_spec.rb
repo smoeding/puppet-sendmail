@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'sendmail::nullclient' do
 
-  context 'On Debian with mail_hub => example.com' do
+  context 'with mail_hub => example.com' do
     let(:params) do
       { :mail_hub => 'example.com' }
     end
