@@ -29,7 +29,9 @@ Sendmail is a powerful mail transfer agent, and this modules provides an easy wa
 
 * The module installs the operating system package to run the Sendmail MTA and possibly some other modules to support it (make, m4, ...)
 * In a default installation almost all the managed files are in the `/etc/mail` directory. A notably exception is the `/etc/aliases` file.
-* The module may generate a new `/etc/mail/sendmail.mc` which is the source for `/etc/mail/sendmail.cf`. This file is the main Sendmail configuration file and it affects how Sendmail operates. **WARNING**: Make sure to understand and test everything in these files before putting it in production. You are responsible to deploy a safe mailer configuration.
+* The module may generate a new `/etc/mail/sendmail.mc` which is the source for `/etc/mail/sendmail.cf`. This file is the main Sendmail configuration file and it affects how Sendmail operates.
+
+**WARNING**: Make sure to understand and test everything in these files before putting it in production. You are responsible to deploy a safe mailer configuration.
 
 ### Setup Requirements
 
@@ -64,7 +66,7 @@ class { '::sendmail':
 }
 ```
 
-Note that these settings also disable the automatic generation of the `sendmail.cf` and `submit.cf` files.
+**Note**: These settings also disable the automatic generation of the `sendmail.cf` and `submit.cf` files. You will have to do that yourself if you change one of the files.
 
 ### I am behind a firewall and need to forward outgoing mail to a relay host
 
@@ -106,7 +108,7 @@ class { '::sendmail':
   enable_ipv6_daemon => false,
 }
 
-::sendmail::mc::daemon_options { 'MTA-v4':
+sendmail::mc::daemon_options { 'MTA-v4':
   addr   => '127.0.0.1',
   family => 'inet',
   port   => 'smtp',
@@ -115,74 +117,74 @@ class { '::sendmail':
 
 ### Transport layer encryption (TLS) is a must in my setup
 
+The Sendmail class has a comprehensive set of TLS related parameters. The following configuration creates a simple TLS enabled setup. Remember to adjust the pathnames to your setup.
+
+```puppet
+class { '::sendmail':
+  ca_cert_file     => '/etc/mail/tls/CA.pem',
+  server_cert_file => '/etc/mail/tls/server.pem',
+  server_key_file  => '/etc/mail/tls/server.key',
+  client_cert_file => '/etc/mail/tls/client.pem',
+  client_key_file  => '/etc/mail/tls/client.key',
+  dh_params        => '2048',
+}
+```
+
+**Note**: The Sendmail module does not manage any certificates or keys.
+
 ## Reference
 
 - [**Public Classes**](#public-classes)
-	- [Class: sendmail](#class-sendmail)
-	- [Class: sendmail::access](#sendmail-access)
-	- [Class: sendmail::aliases](#sendmail-aliases)
-	- [Class: sendmail::authinfo](#sendmail-authinfo)
-	- [Class: sendmail::domaintable](#sendmail-domaintable)
-	- [Class: sendmail::genericstable](#sendmail-genericstable)
-	- [Class: sendmail::local_host_names](#sendmail-local_host_names)
-	- [Class: sendmail::mailertable](#sendmail-mailertable)
-	- [Class: sendmail::mc](#sendmail-mc)
-	- [Class: sendmail::parameterfile](#sendmail-parameterfile)
-	- [Class: sendmail::relay_domains](#sendmail-relay_domains)
-	- [Class: sendmail::submit](#sendmail-submit)
-	- [Class: sendmail::trusted_users](#sendmail-trusted_users)
-	- [Class: sendmail::userdb](#sendmail-userdb)
-	- [Class: sendmail::virtusertable](#sendmail-virtusertable)
+  - [Class: sendmail](#class-sendmail)
+  - [Class: sendmail::access](#class-sendmail-access)
+  - [Class: sendmail::aliases](#class-sendmail-aliases)
+  - [Class: sendmail::authinfo](#class-sendmail-authinfo)
+  - [Class: sendmail::domaintable](#class-sendmail-domaintable)
+  - [Class: sendmail::genericstable](#class-sendmail-genericstable)
+  - [Class: sendmail::local_host_names](#class-sendmail-local_host_names)
+  - [Class: sendmail::mailertable](#class-sendmail-mailertable)
+  - [Class: sendmail::mc](#class-sendmail-mc)
+  - [Class: sendmail::parameterfile](#class-sendmail-parameterfile)
+  - [Class: sendmail::relay_domains](#class-sendmail-relay_domains)
+  - [Class: sendmail::submit](#class-sendmail-submit)
+  - [Class: sendmail::trusted_users](#class-sendmail-trusted_users)
+  - [Class: sendmail::userdb](#class-sendmail-userdb)
+  - [Class: sendmail::virtusertable](#class-sendmail-virtusertable)
 - [**Private Classes**](#private-classes)
-	- [Class: sendmail::access::file](#sendmail-access-file)
-	- [Class: sendmail::aliases::file](#sendmail-aliases-file)
-	- [Class: sendmail::aliases::newaliases](#sendmail-aliases-newaliases)
-	- [Class: sendmail::authinfo::file](#sendmail-authinfo-file)
-	- [Class: sendmail::domaintable::file](#sendmail-domaintable-file)
-	- [Class: sendmail::genericstable::file](#sendmail-genericstable-file)
-	- [Class: sendmail::local_host_names::file](#sendmail-local_host_names-file)
-	- [Class: sendmail::mailertable::file](#sendmail-mailertable-file)
-	- [Class: sendmail::makeall](#sendmail-makeall)
-	- [Class: sendmail::mc::define_section](#sendmail-mc-define_section)
-	- [Class: sendmail::mc::enhdnsbl_section](#sendmail-mc-enhdnsbl_section)
-	- [Class: sendmail::mc::feature_section](#sendmail-mc-feature_section)
-	- [Class: sendmail::mc::local_config_section](#sendmail-mc-local_config_section)
-	- [Class: sendmail::mc::macro_section](#sendmail-mc-macro_section)
-	- [Class: sendmail::mc::mailer_section](#sendmail-mc-mailer_section)
-	- [Class: sendmail::package](#sendmail-package)
-	- [Class: sendmail::params](#sendmail-params)
-	- [Class: sendmail::relay_domains::file](#sendmail-relay_domains-file)
-	- [Class: sendmail::service](#sendmail-service)
-	- [Class: sendmail::trusted_users::file](#sendmail-trusted_users-file)
-	- [Class: sendmail::userdb::file](#sendmail-userdb-file)
-	- [Class: sendmail::virtusertable::file](#sendmail-virtusertable-file)
-- [**Defined Types**](#defined-types)
-	- [Define: sendmail::access::entry](#sendmail-access-entry)
-	- [Define: sendmail::aliases::entry](#sendmail-aliases-entry)
-	- [Define: sendmail::authinfo::entry](#sendmail-authinfo-entry)
-	- [Define: sendmail::domaintable::entry](#sendmail-domaintable-entry)
-	- [Define: sendmail::genericstable::entry](#sendmail-genericstable-entry)
-	- [Define: sendmail::local_host_names::entry](#sendmail-local_host_names-entry)
-	- [Define: sendmail::mailertable::entry](#sendmail-mailertable-entry)
-	- [Define: sendmail::mc::daemon_options](#sendmail-mc-daemon_options)
-	- [Define: sendmail::mc::define](#sendmail-mc-define)
-	- [Define: sendmail::mc::domain](#sendmail-mc-domain)
-	- [Define: sendmail::mc::enhdnsbl](#sendmail-mc-enhdnsbl)
-	- [Define: sendmail::mc::feature](#sendmail-mc-feature)
-	- [Define: sendmail::mc::local_config](#sendmail-mc-local_config)
-	- [Define: sendmail::mc::mailer](#sendmail-mc-mailer)
-	- [Define: sendmail::mc::modify_mailer_flags](#sendmail-mc-modify_mailer_flags)
-	- [Define: sendmail::mc::ostype](#sendmail-mc-ostype)
-	- [Define: sendmail::mc::starttls](#sendmail-mc-starttls)
-	- [Define: sendmail::mc::trust_auth_mech](#sendmail-mc-trust_auth_mech)
-	- [Define: sendmail::mc::versionid](#sendmail-mc-versionid)
-	- [Define: sendmail::relay_domains::entry](#sendmail-relay_domains-entry)
-	- [Define: sendmail::trusted_users::entry](#sendmail-trusted_users-entry)
-	- [Define: sendmail::userdb::entry](#sendmail-userdb-entry)
-	- [Define: sendmail::virtusertable::entry](#sendmail-virtusertable-entry)
+  - [Class: sendmail::aliases::newaliases](#class-sendmail-aliases-newaliases)
+  - [Class: sendmail::makeall](#class-sendmail-makeall)
+  - [Class: sendmail::package](#class-sendmail-package)
+  - [Class: sendmail::params](#class-sendmail-params)
+  - [Class: sendmail::service](#class-sendmail-service)
+  - [Classes: sendmail::*::file](#class-sendmail-*-file)
+  - [Classes: sendmail::mc::*_section](#class-sendmail-mc-*_section)
+- [**Public Defined Types**](#public-defined-types)
+  - [Define: sendmail::access::entry](#define-sendmail-access-entry)
+  - [Define: sendmail::aliases::entry](#define-sendmail-aliases-entry)
+  - [Define: sendmail::authinfo::entry](#define-sendmail-authinfo-entry)
+  - [Define: sendmail::domaintable::entry](#define-sendmail-domaintable-entry)
+  - [Define: sendmail::genericstable::entry](#define-sendmail-genericstable-entry)
+  - [Define: sendmail::local_host_names::entry](#define-sendmail-local_host_names-entry)
+  - [Define: sendmail::mailertable::entry](#define-sendmail-mailertable-entry)
+  - [Define: sendmail::relay_domains::entry](#define-sendmail-relay_domains-entry)
+  - [Define: sendmail::trusted_users::entry](#define-sendmail-trusted_users-entry)
+  - [Define: sendmail::userdb::entry](#define-sendmail-userdb-entry)
+  - [Define: sendmail::virtusertable::entry](#define-sendmail-virtusertable-entry)
+  - [Define: sendmail::mc::daemon_options](#define-sendmail-mc-daemon_options)
+  - [Define: sendmail::mc::define](#define-sendmail-mc-define)
+  - [Define: sendmail::mc::domain](#define-sendmail-mc-domain)
+  - [Define: sendmail::mc::enhdnsbl](#define-sendmail-mc-enhdnsbl)
+  - [Define: sendmail::mc::feature](#define-sendmail-mc-feature)
+  - [Define: sendmail::mc::local_config](#define-sendmail-mc-local_config)
+  - [Define: sendmail::mc::mailer](#define-sendmail-mc-mailer)
+  - [Define: sendmail::mc::modify_mailer_flags](#define-sendmail-mc-modify_mailer_flags)
+  - [Define: sendmail::mc::ostype](#define-sendmail-mc-ostype)
+  - [Define: sendmail::mc::starttls](#define-sendmail-mc-starttls)
+  - [Define: sendmail::mc::trust_auth_mech](#define-sendmail-mc-trust_auth_mech)
+  - [Define: sendmail::mc::versionid](#define-sendmail-mc-versionid)
+- [**Augeas Lenses**](#augeas-lenses)
+  - [Augeas Lens: sendmail_map](#lens: sendmail_map)
 - [**Templates**](#templates)
-- [**Augeas Lenses](#augeas-lenses)
-	- [Augeas Lens: `sendmail_map](#lens: sendmail_map)
 
 ### Public Classes
 
@@ -190,7 +192,7 @@ class { '::sendmail':
 
 Performs the basic setup and installation of Sendmail on the system.
 
-**Parameters within `sendmail`:**
+**Parameters for the `sendmail` class:**
 
 ##### `smart_host`
 
@@ -202,7 +204,7 @@ The loglevel for the sendmail process. Valid options: a numeric value. Default v
 
 ##### `dont_probe_interfaces`
 
-Sendmail normally probes all network interfaces to get the hostnames that the server may have. These hostnames are then considered local. This option can be used to prevent the reverse lookup of the network addresses. If this option is set to `localhost` then all network interfaces except for the loopback interface is probed. Valid options: the strings `true`, `false` or `localhost`. Default value: undef.
+Sendmail normally probes all network interfaces to get all hostnames that the server may have. These hostnames are then considered local. This option can be used to prevent the reverse lookup of the network addresses. If this option is set to `localhost` then all network interfaces except for the loopback interface is probed. Valid options: the strings `true`, `false` or `localhost`. Default value: undef.
 
 ##### `enable_ipv4_daemon`
 
@@ -230,7 +232,7 @@ An array of mailers to add to the configuration. Default value: `[ 'smtp', 'loca
 
 ##### `local_host_names`
 
-An array of hostnames that Sendmail considers for a local delivery. Default values: `[ $::fqdn ]`
+An array of hostnames that Sendmail recognizes for local delivery. Default values: `[ $::fqdn ]`
 
 ##### `relay_domains`
 
@@ -294,7 +296,7 @@ The configuration version string for Sendmail. This string will be appended to t
 
 ##### `version_id`
 
-The version id string included in the sendmail.mc file. This has no practical meaning other than having a used defined identifier in the file. Default value: undef.
+The version id string included in the `sendmail.mc` file. This has no practical meaning other than having a user defined identifier in the file. Default value: undef.
 
 ##### `msp_host`
 
@@ -336,7 +338,6 @@ Configure whether the Sendmail service should be running. Valid options: `runnin
 
 Define whether the service type can rely on a working init script status. Valid options: `true` or `false`. Default value depends on the operating system and release.
 
-
 #### Class: `sendmail::access`
 #### Class: `sendmail::aliases`
 #### Class: `sendmail::authinfo`
@@ -345,11 +346,8 @@ Define whether the service type can rely on a working init script status. Valid 
 #### Class: `sendmail::local_host_names`
 #### Class: `sendmail::mailertable`
 #### Class: `sendmail::mc`
-#### Class: `sendmail::package`
 #### Class: `sendmail::parameterfile`
-#### Class: `sendmail::params`
 #### Class: `sendmail::relay_domains`
-#### Class: `sendmail::service`
 #### Class: `sendmail::submit`
 #### Class: `sendmail::trusted_users`
 #### Class: `sendmail::userdb`
@@ -357,35 +355,70 @@ Define whether the service type can rely on a working init script status. Valid 
 
 ### Private Classes
 
-#### Class: `sendmail::access::file`
-#### Class: `sendmail::aliases::file`
 #### Class: `sendmail::aliases::newaliases`
-#### Class: `sendmail::authinfo::file`
-#### Class: `sendmail::domaintable::file`
-#### Class: `sendmail::genericstable::file`
-#### Class: `sendmail::local_host_names::file`
-#### Class: `sendmail::mailertable::file`
-#### Class: `sendmail::makeall`
-#### Class: `sendmail::mc::define_section`
-#### Class: `sendmail::mc::enhdnsbl_section`
-#### Class: `sendmail::mc::feature_section`
-#### Class: `sendmail::mc::local_config_section`
-#### Class: `sendmail::mc::macro_section`
-#### Class: `sendmail::mc::mailer_section`
-#### Class: `sendmail::relay_domains::file`
-#### Class: `sendmail::trusted_users::file`
-#### Class: `sendmail::userdb::file`
-#### Class: `sendmail::virtusertable::file`
 
-### Defined Types
+Triggers the rebuild of the alias database after modifying an entry in the aliases file.
+
+#### Class: `sendmail::makeall`
+
+Triggers the rebuild of various Sendmail files. This includes conversion of `sendmail.mc` into `sendmail.cf` and generation of the Sendmail database map files.
+
+#### Class: `sendmail::package`
+
+Installs the necessary Sendmail packages.
+
+#### Class: `sendmail::params`
+
+The parameter class that contains operating specific values.
+
+#### Class: `sendmail::service`
+
+Manages the Sendmail service.
+
+#### Classes: `sendmail::*::file`
+
+These classes manage the various Sendmail database files and ensure correct owner, group and permissions.
+
+#### Classes: `sendmail::mc::*_section`
+
+These classes are included by some of the `sendmail::mc::*` defined types to create a suitable section header in the generated `sendmail.mc` file. The sole purpose is to improve the readability of the file.
+
+### Public Defined Types
 
 #### Define: `sendmail::access::entry`
+
+Create entries in the Sendmail access db file. The type has an internal dependency to rebuild the database file.
+
+**Parameters for the `sendmail::access::entry` type:**
+
+##### `value`
+
+The value for the given key. For the access map this is typically something like `OK`, `REJECT` or `DISCARD`.
+
+##### `key`
+
+The key used by Sendmail for the lookup. This could for example be a domain name. Default is the resource title.
+
+##### `ensure`
+
+Used to create or remove the access db entry. Default: `present`
+
+```puppet
+sendmail::access::entry { 'example.com':
+  value => 'RELAY',
+}
+```
+
 #### Define: `sendmail::aliases::entry`
 #### Define: `sendmail::authinfo::entry`
 #### Define: `sendmail::domaintable::entry`
 #### Define: `sendmail::genericstable::entry`
 #### Define: `sendmail::local_host_names::entry`
 #### Define: `sendmail::mailertable::entry`
+#### Define: `sendmail::relay_domains::entry`
+#### Define: `sendmail::trusted_users::entry`
+#### Define: `sendmail::userdb::entry`
+#### Define: `sendmail::virtusertable::entry`
 #### Define: `sendmail::mc::daemon_options`
 #### Define: `sendmail::mc::define`
 #### Define: `sendmail::mc::domain`
@@ -398,20 +431,16 @@ Define whether the service type can rely on a working init script status. Valid 
 #### Define: `sendmail::mc::starttls`
 #### Define: `sendmail::mc::trust_auth_mech`
 #### Define: `sendmail::mc::versionid`
-#### Define: `sendmail::relay_domains::entry`
-#### Define: `sendmail::trusted_users::entry`
-#### Define: `sendmail::userdb::entry`
-#### Define: `sendmail::virtusertable::entry`
-
-### Templates
-
-The Sendmail module uses templates to build the `sendmail.mc` and `submit.mc` files. These are not meant for user configuration.
 
 ### Augeas Lenses
 
 #### Augeas Lens: `sendmail_map`
 
 The Sendmail module contains the Augeas lens `sendmail_map`. This lens has been built to easily manage entries in various Sendmail files (e.g. `mailertable`, `access_db`, ...). The lens is used by the provided module classes and so there should not be any need to call this lens directly.
+
+### Templates
+
+The Sendmail module uses templates to build the `sendmail.mc` and `submit.mc` files. These are not meant for user configuration.
 
 ## Limitations
 
