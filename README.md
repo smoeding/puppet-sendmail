@@ -183,7 +183,7 @@ class { '::sendmail':
   - [Define: sendmail::mc::trust_auth_mech](#define-sendmailmctrust_auth_mech)
   - [Define: sendmail::mc::versionid](#define-sendmailmcversionid)
 - [**Augeas Lenses**](#augeas-lenses)
-  - [Augeas Lens: sendmail_map](#augeas-lens-sendmail__map)
+  - [Augeas Lens: sendmail_map](#augeas-lens-sendmail_map)
 - [**Templates**](#templates)
 
 ### Public Classes
