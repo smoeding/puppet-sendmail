@@ -10,7 +10,7 @@ describe 'sendmail::mc::local_config' do
   end
 
 
-  context 'local_config with source only' do
+  context 'with source only' do
     let(:params) do
       { :source => 'foo' }
     end
@@ -25,7 +25,7 @@ describe 'sendmail::mc::local_config' do
     }
   end
 
-  context 'local_config with content only' do
+  context 'with content only' do
     let(:params) do
       { :content => 'foo' }
     end
@@ -40,13 +40,64 @@ describe 'sendmail::mc::local_config' do
     }
   end
 
-  context 'local_config with source and content' do
+  context 'with source and content' do
     let(:params) do
       { :source => 'foo', :content => 'foo' }
     end
 
     it {
       expect { subject.call }.to raise_error(Puppet::Error, /cannot have both/)
+    }
+  end
+
+  context 'for CipherList' do
+    let(:title) { 'CipherList' }
+
+    let(:params) do
+      { :content => 'foo' }
+    end
+
+    it {
+      should contain_concat__fragment('sendmail_mc-local_config-CipherList') \
+              .with_content('foo') \
+              .with_order('81') \
+              .that_notifies('Class[sendmail::makeall]')
+
+      should contain_class('sendmail::mc::local_config_section')
+    }
+  end
+
+  context 'for ClientSSLOptions' do
+    let(:title) { 'ClientSSLOptions' }
+
+    let(:params) do
+      { :content => 'foo' }
+    end
+
+    it {
+      should contain_concat__fragment('sendmail_mc-local_config-ClientSSLOptions') \
+              .with_content('foo') \
+              .with_order('81') \
+              .that_notifies('Class[sendmail::makeall]')
+
+      should contain_class('sendmail::mc::local_config_section')
+    }
+  end
+
+  context 'for ServerSSLOptions' do
+    let(:title) { 'ServerSSLOptions' }
+
+    let(:params) do
+      { :content => 'foo' }
+    end
+
+    it {
+      should contain_concat__fragment('sendmail_mc-local_config-ServerSSLOptions') \
+              .with_content('foo') \
+              .with_order('81') \
+              .that_notifies('Class[sendmail::makeall]')
+
+      should contain_class('sendmail::mc::local_config_section')
     }
   end
 end
