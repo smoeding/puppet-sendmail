@@ -102,6 +102,7 @@ describe 'sendmail::mc::feature' do
 
     it {
       should contain_concat__fragment('sendmail_mc-feature-ldap_routing') \
+              .with_content(/^FEATURE\(`ldap_routing'\)dnl$/) \
               .with_order('19')
       should contain_class('sendmail::mc::feature_section')
     }
@@ -112,6 +113,7 @@ describe 'sendmail::mc::feature' do
 
     it {
       should contain_concat__fragment('sendmail_mc-feature-conncontrol') \
+              .with_content(/^FEATURE\(`conncontrol'\)dnl$/) \
               .with_order('28')
       should contain_class('sendmail::mc::feature_section')
     }
@@ -122,6 +124,7 @@ describe 'sendmail::mc::feature' do
 
     it {
       should contain_concat__fragment('sendmail_mc-feature-ratecontrol') \
+              .with_content(/^FEATURE\(`ratecontrol'\)dnl$/) \
               .with_order('28')
       should contain_class('sendmail::mc::feature_section')
     }
@@ -132,7 +135,19 @@ describe 'sendmail::mc::feature' do
 
     it {
       should contain_concat__fragment('sendmail_mc-feature-nullclient') \
+              .with_content(/^FEATURE\(`nullclient'\)dnl$/) \
               .with_order('29')
+      should contain_class('sendmail::mc::feature_section')
+    }
+  end
+
+  context 'with feature no_default_msa' do
+    let(:title) { 'no_default_msa' }
+
+    it {
+      should contain_concat__fragment('sendmail_mc-feature-no_default_msa') \
+              .with_content(/^FEATURE\(`no_default_msa'\)dnl$/) \
+              .with_order('22')
       should contain_class('sendmail::mc::feature_section')
     }
   end
