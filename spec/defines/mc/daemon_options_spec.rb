@@ -1,41 +1,45 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::daemon_options' do
-  let(:title) { 'foo' }
+  let(:title) { 'MTA' }
 
   context 'with default arguments' do
     it {
       should contain_class('sendmail::mc::macro_section')
-      should contain_concat__fragment('sendmail_mc-daemon_options-foo') \
-              .with_content(/^DAEMON_OPTIONS\(`Name=foo'\)dnl$/) \
+      should contain_concat__fragment('sendmail_mc-daemon_options-MTA') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MTA'\)dnl$/) \
               .with_order('40') \
               .that_notifies('Class[sendmail::makeall]')
     }
   end
 
   context 'with argument family => inet' do
+    let(:title) { 'MTA-v4' }
+
     let(:params) do
       { :family => 'inet' }
     end
 
     it {
       should contain_class('sendmail::mc::macro_section')
-      should contain_concat__fragment('sendmail_mc-daemon_options-foo') \
-              .with_content(/^DAEMON_OPTIONS\(`Name=foo, Family=inet'\)dnl$/) \
+      should contain_concat__fragment('sendmail_mc-daemon_options-MTA-v4') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MTA-v4, Family=inet'\)dnl$/) \
               .with_order('40') \
               .that_notifies('Class[sendmail::makeall]')
     }
   end
 
   context 'with argument family => inet6' do
+    let(:title) { 'MTA-v6' }
+
     let(:params) do
       { :family => 'inet6' }
     end
 
     it {
       should contain_class('sendmail::mc::macro_section')
-      should contain_concat__fragment('sendmail_mc-daemon_options-foo') \
-              .with_content(/^DAEMON_OPTIONS\(`Name=foo, Family=inet6'\)dnl$/) \
+      should contain_concat__fragment('sendmail_mc-daemon_options-MTA-v6') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MTA-v6, Family=inet6'\)dnl$/) \
               .with_order('40') \
               .that_notifies('Class[sendmail::makeall]')
     }
@@ -60,8 +64,8 @@ describe 'sendmail::mc::daemon_options' do
 
     it {
       should contain_class('sendmail::mc::macro_section')
-      should contain_concat__fragment('sendmail_mc-daemon_options-foo') \
-              .with_content(/^DAEMON_OPTIONS\(`Name=foo, DeliveryMode=b'\)dnl$/) \
+      should contain_concat__fragment('sendmail_mc-daemon_options-MTA') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MTA, DeliveryMode=b'\)dnl$/) \
               .with_order('40') \
               .that_notifies('Class[sendmail::makeall]')
     }
@@ -74,8 +78,8 @@ describe 'sendmail::mc::daemon_options' do
 
     it {
       should contain_class('sendmail::mc::macro_section')
-      should contain_concat__fragment('sendmail_mc-daemon_options-foo') \
-              .with_content(/^DAEMON_OPTIONS\(`Name=foo, DeliveryMode=b'\)dnl$/) \
+      should contain_concat__fragment('sendmail_mc-daemon_options-MTA') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MTA, DeliveryMode=b'\)dnl$/) \
               .with_order('40') \
               .that_notifies('Class[sendmail::makeall]')
     }
@@ -88,8 +92,8 @@ describe 'sendmail::mc::daemon_options' do
 
     it {
       should contain_class('sendmail::mc::macro_section')
-      should contain_concat__fragment('sendmail_mc-daemon_options-foo') \
-              .with_content(/^DAEMON_OPTIONS\(`Name=foo, DeliveryMode=d'\)dnl$/) \
+      should contain_concat__fragment('sendmail_mc-daemon_options-MTA') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MTA, DeliveryMode=d'\)dnl$/) \
               .with_order('40') \
               .that_notifies('Class[sendmail::makeall]')
     }
@@ -102,8 +106,8 @@ describe 'sendmail::mc::daemon_options' do
 
     it {
       should contain_class('sendmail::mc::macro_section')
-      should contain_concat__fragment('sendmail_mc-daemon_options-foo') \
-              .with_content(/^DAEMON_OPTIONS\(`Name=foo, DeliveryMode=d'\)dnl$/) \
+      should contain_concat__fragment('sendmail_mc-daemon_options-MTA') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MTA, DeliveryMode=d'\)dnl$/) \
               .with_order('40') \
               .that_notifies('Class[sendmail::makeall]')
     }
@@ -116,8 +120,8 @@ describe 'sendmail::mc::daemon_options' do
 
     it {
       should contain_class('sendmail::mc::macro_section')
-      should contain_concat__fragment('sendmail_mc-daemon_options-foo') \
-              .with_content(/^DAEMON_OPTIONS\(`Name=foo, DeliveryMode=i'\)dnl$/) \
+      should contain_concat__fragment('sendmail_mc-daemon_options-MTA') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MTA, DeliveryMode=i'\)dnl$/) \
               .with_order('40') \
               .that_notifies('Class[sendmail::makeall]')
     }
@@ -130,8 +134,8 @@ describe 'sendmail::mc::daemon_options' do
 
     it {
       should contain_class('sendmail::mc::macro_section')
-      should contain_concat__fragment('sendmail_mc-daemon_options-foo') \
-              .with_content(/^DAEMON_OPTIONS\(`Name=foo, DeliveryMode=i'\)dnl$/) \
+      should contain_concat__fragment('sendmail_mc-daemon_options-MTA') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MTA, DeliveryMode=i'\)dnl$/) \
               .with_order('40') \
               .that_notifies('Class[sendmail::makeall]')
     }
@@ -144,8 +148,8 @@ describe 'sendmail::mc::daemon_options' do
 
     it {
       should contain_class('sendmail::mc::macro_section')
-      should contain_concat__fragment('sendmail_mc-daemon_options-foo') \
-              .with_content(/^DAEMON_OPTIONS\(`Name=foo, DeliveryMode=q'\)dnl$/) \
+      should contain_concat__fragment('sendmail_mc-daemon_options-MTA') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MTA, DeliveryMode=q'\)dnl$/) \
               .with_order('40') \
               .that_notifies('Class[sendmail::makeall]')
     }
@@ -158,8 +162,8 @@ describe 'sendmail::mc::daemon_options' do
 
     it {
       should contain_class('sendmail::mc::macro_section')
-      should contain_concat__fragment('sendmail_mc-daemon_options-foo') \
-              .with_content(/^DAEMON_OPTIONS\(`Name=foo, DeliveryMode=q'\)dnl$/) \
+      should contain_concat__fragment('sendmail_mc-daemon_options-MTA') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MTA, DeliveryMode=q'\)dnl$/) \
               .with_order('40') \
               .that_notifies('Class[sendmail::makeall]')
     }
@@ -172,8 +176,8 @@ describe 'sendmail::mc::daemon_options' do
 
     it {
       should contain_class('sendmail::mc::macro_section')
-      should contain_concat__fragment('sendmail_mc-daemon_options-foo') \
-              .with_content(/^DAEMON_OPTIONS\(`Name=foo, Addr=localhost'\)dnl$/) \
+      should contain_concat__fragment('sendmail_mc-daemon_options-MTA') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MTA, Addr=localhost'\)dnl$/) \
               .with_order('40') \
               .that_notifies('Class[sendmail::makeall]')
     }
@@ -186,8 +190,8 @@ describe 'sendmail::mc::daemon_options' do
 
     it {
       should contain_class('sendmail::mc::macro_section')
-      should contain_concat__fragment('sendmail_mc-daemon_options-foo') \
-              .with_content(/^DAEMON_OPTIONS\(`Name=foo, Port=smtp'\)dnl$/) \
+      should contain_concat__fragment('sendmail_mc-daemon_options-MTA') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MTA, Port=smtp'\)dnl$/) \
               .with_order('40') \
               .that_notifies('Class[sendmail::makeall]')
     }
@@ -200,8 +204,8 @@ describe 'sendmail::mc::daemon_options' do
 
     it {
       should contain_class('sendmail::mc::macro_section')
-      should contain_concat__fragment('sendmail_mc-daemon_options-foo') \
-              .with_content(/^DAEMON_OPTIONS\(`Name=foo, Port=25'\)dnl$/) \
+      should contain_concat__fragment('sendmail_mc-daemon_options-MTA') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MTA, Port=25'\)dnl$/) \
               .with_order('40') \
               .that_notifies('Class[sendmail::makeall]')
     }
@@ -214,8 +218,8 @@ describe 'sendmail::mc::daemon_options' do
 
     it {
       should contain_class('sendmail::mc::macro_section')
-      should contain_concat__fragment('sendmail_mc-daemon_options-foo') \
-              .with_content(/^DAEMON_OPTIONS\(`Name=foo, Family=inet, Port=25'\)dnl$/) \
+      should contain_concat__fragment('sendmail_mc-daemon_options-MTA') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MTA, Family=inet, Port=25'\)dnl$/) \
               .with_order('40') \
               .that_notifies('Class[sendmail::makeall]')
     }
