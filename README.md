@@ -215,7 +215,7 @@ Automaticall manage the aliases file. This parameter only manages the file and n
 
 ##### `aliases`
 
-A hash that will be used to create [`sendmail::aliases::entry`](#define-sendmailaliasesentry) resources. Default value: {}
+A hash that will be used to create [`sendmail::aliases::entry`](#define-sendmailaliasesentry) resources. Default value: `{}`
 
 ##### `enable_access_db`
 
@@ -348,7 +348,7 @@ Define whether the service type can rely on a working init script status. Valid 
 
 #### Class: `sendmail::aliases::newaliases`
 
-Triggers the rebuild of the alias database after modifying an entry in the aliases file.
+Trigger the rebuild of the alias database after modifying an entry in the aliases file. This class is notified automatically when an alias is managed using the [`sendmail::aliases::entry`](define-sendmailaliasesentry) defined type.
 
 #### Class: `sendmail::local_host_names`
 
