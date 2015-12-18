@@ -1,6 +1,6 @@
 # = Define: sendmail::virtusertable::entry
 #
-# Create entries in the Sendmail virtusertable db file.
+# Manage entries in the Sendmail virtusertable db file.
 #
 # == Parameters:
 #
@@ -10,11 +10,11 @@
 #
 # [*key*]
 #   The key used by Sendmail for the lookup. This is normally a mail address
-#   or a mail address without the user part.
+#   or a mail address without the user part. Default is the resource title.
 #
 # [*ensure*]
 #   Used to create or remove the virtusertable db entry.
-#   Default: present
+#   Valid options: 'present', 'absent'. Default: 'present'
 #
 # == Requires:
 #
@@ -33,14 +33,16 @@
 #
 define sendmail::virtusertable::entry (
   $value  = undef,
-  $key    = $name,
-  $ensure = present,
+  $key    = $title,
+  $ensure = 'present',
 ) {
   include ::sendmail::params
   include ::sendmail::makeall
   include ::sendmail::virtusertable::file
 
-  if ($ensure == present and empty($value)) {
+  validate_re($ensure, [ 'present', 'absent' ])
+
+  if ($ensure == 'present' and empty($value)) {
     fail('value must be set when creating an virtusertable entry')
   }
 
@@ -52,7 +54,7 @@ define sendmail::virtusertable::entry (
     'absent'  => "rm key[ . = '${key}']",
   }
 
-  augeas { "${::sendmail::params::virtusertable_file}-${name}":
+  augeas { "${::sendmail::params::virtusertable_file}-${title}":
     lens    => 'Sendmail_Map.lns',
     incl    => $::sendmail::params::virtusertable_file,
     changes => $changes,

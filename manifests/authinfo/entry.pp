@@ -20,7 +20,7 @@
 #
 # [*ensure*]
 #   Used to create or remove the authinfo db entry.
-#   Default: present
+#   Default: 'present'
 #
 # == Requires:
 #
@@ -35,14 +35,16 @@
 #
 define sendmail::authinfo::entry (
   $value  = undef,
-  $key    = $name,
-  $ensure = present,
+  $key    = $title,
+  $ensure = 'present',
 ) {
   include ::sendmail::params
   include ::sendmail::makeall
   include ::sendmail::authinfo::file
 
-  if ($ensure == present and empty($value)) {
+  validate_re($ensure, [ 'present', 'absent' ])
+
+  if ($ensure == 'present' and empty($value)) {
     fail('value must be set when creating an authinfo entry')
   }
 

@@ -57,7 +57,7 @@ The Sendmail module provides classes and defined types to individually manage ma
 
 ### I have a working config and like to keep it
 
-Disable the internal management of the sendmail configuration files by setting the parameters `manage_sendmail_mc` or `manage_submit_mc` to `false`:
+Disable the internal management of the sendmail configuration files by setting the parameters [`manage_sendmail_mc`](#manage_sendmail_mc) or [`manage_submit_mc`](#manage_submit_mc) to `false`:
 
 ```puppet
 class { '::sendmail':
@@ -70,7 +70,7 @@ class { '::sendmail':
 
 ### I am behind a firewall and need to forward outgoing mail to a relay host
 
-Use the `smart_host` parameter to set the host where all outgoing mail should be forwarded to.
+Use the [`smart_host`](#smart_host) parameter to set the host where all outgoing mail should be forwarded to.
 
 ```puppet
 class { '::sendmail':
@@ -80,7 +80,7 @@ class { '::sendmail':
 
 ### I want to define additional macros in my configuration
 
-Use the parameter `defines` to add a hash of additional settings to the `sendmail.mc` configuration file:
+Use the parameter [`defines`](#defines) to add a hash of additional settings to the `sendmail.mc` configuration file:
 
 ```puppet
 class { '::sendmail':
@@ -90,7 +90,7 @@ class { '::sendmail':
 
 ### I like to add more features to my configuration
 
-The parameter `features` takes a hash with additional features to be added:
+The parameter [`features`](#features) takes a hash with additional features to be added:
 
 ```puppet
 class { '::sendmail':
@@ -100,7 +100,7 @@ class { '::sendmail':
 
 ### I have a host that should not receive any mail
 
-You can use the `enable_ipv4_daemon` and `enable_ipv6_daemon` parameters to prevent Sendmail from listening on all available network interfaces. Use the `sendmail::mc::daemon_options` type to explicitly define the address to use.
+You can use the [`enable_ipv4_daemon`](#enable_ipv4_daemon) and [`enable_ipv6_daemon`](#enable_ipv6_daemon) parameters to prevent Sendmail from listening on all available network interfaces. Use the [`sendmail::mc::daemon_options`](#define-sendmailmcdaemon_options) type to explicitly define the address to use.
 
 ```puppet
 class { '::sendmail':
@@ -138,36 +138,31 @@ class { '::sendmail':
   - [Class: sendmail](#class-sendmail)
   - [Class: sendmail::access](#class-sendmailaccess)
   - [Class: sendmail::aliases](#class-sendmailaliases)
-  - [Class: sendmail::authinfo](#class-sendmailauthinfo)
   - [Class: sendmail::domaintable](#class-sendmaildomaintable)
   - [Class: sendmail::genericstable](#class-sendmailgenericstable)
-  - [Class: sendmail::local_host_names](#class-sendmaillocal_host_names)
   - [Class: sendmail::mailertable](#class-sendmailmailertable)
   - [Class: sendmail::mc](#class-sendmailmc)
   - [Class: sendmail::parameterfile](#class-sendmailparameterfile)
-  - [Class: sendmail::relay_domains](#class-sendmailrelay_domains)
   - [Class: sendmail::submit](#class-sendmailsubmit)
-  - [Class: sendmail::trusted_users](#class-sendmailtrusted_users)
   - [Class: sendmail::userdb](#class-sendmailuserdb)
   - [Class: sendmail::virtusertable](#class-sendmailvirtusertable)
 - [**Private Classes**](#private-classes)
   - [Class: sendmail::aliases::newaliases](#class-sendmailaliasesnewaliases)
+  - [Class: sendmail::local_host_names](#class-sendmaillocal_host_names)
   - [Class: sendmail::makeall](#class-sendmailmakeall)
   - [Class: sendmail::package](#class-sendmailpackage)
   - [Class: sendmail::params](#class-sendmailparams)
+  - [Class: sendmail::relay_domains](#class-sendmailrelay_domains)
   - [Class: sendmail::service](#class-sendmailservice)
+  - [Class: sendmail::trusted_users](#class-sendmailtrusted_users)
   - [Classes: sendmail::*::file](#classes-sendmailfile)
   - [Classes: sendmail::mc::*_section](#classes-sendmailmc_section)
 - [**Public Defined Types**](#public-defined-types)
   - [Define: sendmail::access::entry](#define-sendmailaccessentry)
   - [Define: sendmail::aliases::entry](#define-sendmailaliasesentry)
-  - [Define: sendmail::authinfo::entry](#define-sendmailauthinfoentry)
   - [Define: sendmail::domaintable::entry](#define-sendmaildomaintableentry)
   - [Define: sendmail::genericstable::entry](#define-sendmailgenericstableentry)
-  - [Define: sendmail::local_host_names::entry](#define-sendmaillocal_host_namesentry)
   - [Define: sendmail::mailertable::entry](#define-sendmailmailertableentry)
-  - [Define: sendmail::relay_domains::entry](#define-sendmailrelay_domainsentry)
-  - [Define: sendmail::trusted_users::entry](#define-sendmailtrusted_usersentry)
   - [Define: sendmail::userdb::entry](#define-sendmailuserdbentry)
   - [Define: sendmail::virtusertable::entry](#define-sendmailvirtusertableentry)
   - [Define: sendmail::mc::daemon_options](#define-sendmailmcdaemon_options)
@@ -220,7 +215,7 @@ Automaticall manage the aliases file. This parameter only manages the file and n
 
 ##### `aliases`
 
-A hash that will be used to create `sendmail::aliases::entry` resources. Default value: {}
+A hash that will be used to create [`sendmail::aliases::entry`](#define-sendmailaliasesentry) resources. Default value: {}
 
 ##### `enable_access_db`
 
@@ -340,16 +335,12 @@ Define whether the service type can rely on a working init script status. Valid 
 
 #### Class: `sendmail::access`
 #### Class: `sendmail::aliases`
-#### Class: `sendmail::authinfo`
 #### Class: `sendmail::domaintable`
 #### Class: `sendmail::genericstable`
-#### Class: `sendmail::local_host_names`
 #### Class: `sendmail::mailertable`
 #### Class: `sendmail::mc`
 #### Class: `sendmail::parameterfile`
-#### Class: `sendmail::relay_domains`
 #### Class: `sendmail::submit`
-#### Class: `sendmail::trusted_users`
 #### Class: `sendmail::userdb`
 #### Class: `sendmail::virtusertable`
 
@@ -358,6 +349,22 @@ Define whether the service type can rely on a working init script status. Valid 
 #### Class: `sendmail::aliases::newaliases`
 
 Triggers the rebuild of the alias database after modifying an entry in the aliases file.
+
+#### Class: `sendmail::local_host_names`
+
+Manage entries in the Sendmail local-host-names file. Do not declare this class directly. Use the [`local_host_names`](#local_host_names) parameter of the [`sendmail`](#class-sendmail) class instead.
+
+```puppet
+class { '::sendmail::local_host_names:
+  local_host_names => [ 'example.org', 'mail.example.org', ],
+}
+```
+
+**Parameters for the `sendmail::local_host_names` class:**
+
+##### `local_host_names`
+
+An array of host names that will be written into the local host names file. Leading or trailing whitespace is ignored. Empty entries are also ignored. Default value: `[]`
 
 #### Class: `sendmail::makeall`
 
@@ -371,9 +378,46 @@ Installs the necessary Sendmail packages.
 
 The parameter class that contains operating specific values.
 
+#### Class: `sendmail::relay_domains`
+
+Manage entries in the Sendmail relay-domains file. Do not declare this class directly. Use the [`relay_domains`](#relay_domains) parameter of the [`sendmail`](#class-sendmail) class instead.
+
+```puppet
+class { '::sendmail::relay_domains':
+  relay_domains => [ 'example.com', 'example.net', ],
+}
+```
+
+**Parameters for the `sendmail::relay_domains` class:**
+
+##### `relay_domains`
+
+An array of domain names that will be written into the relay domains file.
+Leading or trailing whitespace is ignored. Empty entries are also ignored.
+Default value: `[]`
+
 #### Class: `sendmail::service`
 
 Manages the Sendmail service.
+
+#### Class: `sendmail::trusted_users`
+
+Manage entries in the Sendmail trusted-users file. Do not declare this class
+directly. Use the [`trusted_users`](#trusted_users) parameter of the [`sendmail`](#class-sendmail) class instead.
+
+```puppet
+class { 'sendmail::trusted_users':
+  trusted_users => [ 'root', 'fred', ],
+}
+```
+
+**Parameters for the `sendmail::trusted_users` class:**
+
+##### `trusted_users`
+
+An array of user names that will be written into the trusted users file.
+Leading or trailing whitespace is ignored. Empty entries are also ignored.
+Default value: `[]`
 
 #### Classes: `sendmail::*::file`
 
@@ -387,21 +431,7 @@ These classes are included by some of the `sendmail::mc::*` defined types to cre
 
 #### Define: `sendmail::access::entry`
 
-Create entries in the Sendmail access db file. The type has an internal dependency to rebuild the database file.
-
-**Parameters for the `sendmail::access::entry` type:**
-
-##### `value`
-
-The value for the given key. For the access map this is typically something like `OK`, `REJECT` or `DISCARD`.
-
-##### `key`
-
-The key used by Sendmail for the lookup. This could for example be a domain name. Default is the resource title.
-
-##### `ensure`
-
-Used to create or remove the access db entry. Default: `present`
+Manage an entry in the Sendmail access db file. The type has an internal dependency to rebuild the database file.
 
 ```puppet
 sendmail::access::entry { 'example.com':
@@ -409,16 +439,191 @@ sendmail::access::entry { 'example.com':
 }
 ```
 
+**Parameters for the `sendmail::access::entry` type:**
+
+##### `key`
+
+The key used by Sendmail for the lookup. This could for example be a domain name. Default is the resource title.
+
+##### `value`
+
+The value for the given key. For the access map this is typically something like `OK`, `REJECT` or `DISCARD`.
+
+##### `ensure`
+
+Used to create or remove the access db entry. Valid options: `present`, `absent`. Default: `present`
+
 #### Define: `sendmail::aliases::entry`
-#### Define: `sendmail::authinfo::entry`
+
+Manage an entry in the Sendmail alias file. The type has an internal dependency to rebuild the aliases database file.
+
+```puppet
+sendmail::aliases::entry { 'fred':
+  recipient => 'barney@example.org',
+}
+```
+
+**Parameters for the `sendmail::aliases::entry` type:**
+
+##### `recipient`
+
+The recipient where the mail is redirected to.
+
+##### `ensure`
+
+Used to create or remove the alias entry. Valid options: `present`, `absent`. Default: `present`
+
 #### Define: `sendmail::domaintable::entry`
+
+Manage an entry in the Sendmail domaintable db file. The type has an internal
+dependency to rebuild the database file.
+
+```puppet
+sendmail::domaintable::entry { 'example.com':
+  value => 'example.org',
+}
+```
+
+**Parameters for the `sendmail::domaintable::entry` type:**
+
+##### `key`
+
+The key used by Sendmail for the lookup. This should normally be a domain name. Default is the resource title.
+
+##### `value`
+
+The value for the given key. For the domaintable map this is typically another domain name.
+
+##### `ensure`
+
+Used to create or remove the domaintable db entry. Valid options: `present`, `absent`. Default: `present`
+
 #### Define: `sendmail::genericstable::entry`
-#### Define: `sendmail::local_host_names::entry`
+
+Manage an entry in the Sendmail genericstable db file. The type has an internal dependency to rebuild the database file.
+
+```puppet
+sendmail::genericstable::entry { 'fred@example.com':
+  value => 'fred@example.org',
+}
+```
+
+```puppet
+sendmail::genericstable::entry { 'barney':
+  value => 'barney@example.org',
+}
+```
+
+**Parameters for the `sendmail::genericstable::entry` type:**
+
+##### `key`
+
+The key used by Sendmail for the lookup. This is normally a username or a user and domain name. Default is the resource title.
+
+##### `value`
+
+The value for the given key. For the genericstable map this is typically something like `user@example.org`.
+
+##### `ensure`
+
+Used to create or remove the genericstable db entry. Valid options: `present`, `absent`. Default: `present`
+
 #### Define: `sendmail::mailertable::entry`
-#### Define: `sendmail::relay_domains::entry`
-#### Define: `sendmail::trusted_users::entry`
+
+Manage an entry in the Sendmail mailertable db file. The type has an internal dependency to rebuild the database file.
+
+```puppet
+sendmail::mailertable::entry { '.example.com':
+  value => 'smtp:relay.example.com',
+}
+```
+
+```puppet
+sendmail::mailertable::entry { '.example.net':
+  value => 'error:5.7.0:550 mail is not accepted',
+}
+```
+
+**Parameters for the `sendmail::mailertable::entry` type:**
+
+##### `key`
+
+The key used by Sendmail for the lookup. This should either be a fully
+qualified host name or a domain name with a leading dot. Default is the
+resource title.
+
+##### `value`
+
+The value for the given key. For the mailertable map this is typically
+something like `smtp:hostname`. The error mailer can be used to configure
+specific errors for certain hosts.
+
+##### `ensure`
+
+Used to create or remove the mailertable db entry. Valid options: `present`,
+`absent`. Default: `present`
+
 #### Define: `sendmail::userdb::entry`
+
+Manage entries in the Sendmail userdb db file. The type has an internal dependency to rebuild the database file.
+
+```puppet
+sendmail::userdb::entry { 'fred:maildrop':
+  value => 'fred@example.org',
+}
+```
+
+**Parameters for the `sendmail::userdb::entry` type:**
+
+##### `key`
+
+The key used by Sendmail for the lookup. This normally is in the format
+`user:maildrop` or `user:mailname` where user is the a local username.
+Default is the resource title.
+
+##### `value`
+
+The value for the given key. For the userdb map this is typically a single
+mailaddress or a compound list of addresses separated by commas.
+
+##### `ensure`
+
+Used to create or remove the userdb db entry. Valid options: `present`,
+`absent`. Default: `present`
+
 #### Define: `sendmail::virtusertable::entry`
+
+Manage entries in the Sendmail virtusertable db file. The type has an internal dependency to rebuild the database file.
+
+```puppet
+sendmail::virtusertable::entry { 'info@example.com':
+  value => 'fred@example.com',
+}
+```
+
+```puppet
+sendmail::virtusertable::entry { '@example.org':
+  value => 'barney',
+}
+```
+
+**Parameters for the `sendmail::virtusertable::entry` type:**
+
+##### `key`
+
+The key used by Sendmail for the lookup. This is normally a mail address or a
+mail address without the user part. Default is the resource title.
+
+##### `value`
+
+The value for the given key. For the virtusertable map this is typically a
+local username or a remote mail address.
+
+##### `ensure`
+
+Used to create or remove the virtusertable db entry. Valid options:
+`present`, `absent`. Default: `present`
+
 #### Define: `sendmail::mc::daemon_options`
 #### Define: `sendmail::mc::define`
 #### Define: `sendmail::mc::domain`

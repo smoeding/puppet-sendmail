@@ -1,6 +1,6 @@
 # = Class: sendmail::trusted_users
 #
-# Create entries in the Sendmail trusted-users file.
+# Manage entries in the Sendmail trusted-users file.
 #
 # == Parameters:
 #

@@ -1,6 +1,6 @@
 # = Define: sendmail::access::entry
 #
-# Create entries in the Sendmail access db file.
+# Manage an entry in the Sendmail access db file.
 #
 # == Parameters:
 #
@@ -10,11 +10,11 @@
 #
 # [*key*]
 #   The key used by Sendmail for the lookup. This could for example be a
-#   domain name.
+#   domain name. Default is the resource title.
 #
 # [*ensure*]
 #   Used to create or remove the access db entry.
-#   Default: present
+#   Valid options: 'present', 'absent'. Default: 'present'
 #
 # == Requires:
 #
@@ -29,14 +29,16 @@
 #
 define sendmail::access::entry (
   $value  = undef,
-  $key    = $name,
-  $ensure = present,
+  $key    = $title,
+  $ensure = 'present',
 ) {
   include ::sendmail::params
   include ::sendmail::makeall
   include ::sendmail::access::file
 
-  if ($ensure == present and empty($value)) {
+  validate_re($ensure, [ 'present', 'absent' ])
+
+  if ($ensure == 'present' and empty($value)) {
     fail('value must be set when creating an access entry')
   }
 
@@ -48,7 +50,7 @@ define sendmail::access::entry (
     'absent'  => "rm key[ . = '${key}']",
   }
 
-  augeas { "${::sendmail::params::access_file}-${name}":
+  augeas { "${::sendmail::params::access_file}-${title}":
     lens    => 'Sendmail_Map.lns',
     incl    => $::sendmail::params::access_file,
     changes => $changes,

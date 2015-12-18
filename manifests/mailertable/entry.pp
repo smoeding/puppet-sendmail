@@ -1,21 +1,22 @@
 # = Define: sendmail::mailertable::entry
 #
-# Create entries in the Sendmail mailertable db file.
+# Manage an entry in the Sendmail mailertable db file.
 #
 # == Parameters:
 #
 # [*value*]
 #   The value for the given key. For the mailertable map this is typically
-#   something like smtp:hostname. The error mailer can be used to configure
+#   something like 'smtp:hostname'. The error mailer can be used to configure
 #   specific errors for certain hosts.
 #
 # [*key*]
 #   The key used by Sendmail for the lookup. This should either be a fully
-#   qualified host name or a domain name with a leading dot.
+#   qualified host name or a domain name with a leading dot. Default is the
+#   resource title.
 #
 # [*ensure*]
 #   Used to create or remove the mailertable db entry.
-#   Default: present
+#   Valid options: 'present', 'absent'. Default: 'present'
 #
 # == Requires:
 #
@@ -33,14 +34,16 @@
 #
 define sendmail::mailertable::entry (
   $value  = undef,
-  $key    = $name,
-  $ensure = present,
+  $key    = $title,
+  $ensure = 'present',
 ) {
   include ::sendmail::params
   include ::sendmail::makeall
   include ::sendmail::mailertable::file
 
-  if ($ensure == present and empty($value)) {
+  validate_re($ensure, [ 'present', 'absent' ])
+
+  if ($ensure == 'present' and empty($value)) {
     fail('value must be set when creating an mailertable entry')
   }
 
@@ -52,7 +55,7 @@ define sendmail::mailertable::entry (
     'absent'  => "rm key[ . = '${key}']",
   }
 
-  augeas { "${::sendmail::params::mailertable_file}-${name}":
+  augeas { "${::sendmail::params::mailertable_file}-${title}":
     lens    => 'Sendmail_Map.lns',
     incl    => $::sendmail::params::mailertable_file,
     changes => $changes,

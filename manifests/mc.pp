@@ -125,7 +125,7 @@ class sendmail::mc (
   #       LOCAL_RULESETS
 
   concat { 'sendmail.mc':
-    ensure => present,
+    ensure => 'present',
     path   => $::sendmail::params::sendmail_mc_file,
     owner  => 'root',
     group  => $::sendmail::params::sendmail_group,

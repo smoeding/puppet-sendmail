@@ -1,6 +1,6 @@
 # = Define: sendmail::aliases::entry
 #
-# Create entries in the Sendmail alias file.
+# Manage an entry in the Sendmail alias file.
 #
 # == Parameters:
 #
@@ -9,7 +9,7 @@
 #
 # [*ensure*]
 #   Used to create or remove the alias entry.
-#   Default: present
+#   Valid options: 'present', 'absent'. Default: 'present'
 #
 # == Requires:
 #
@@ -24,17 +24,19 @@
 #
 define sendmail::aliases::entry (
   $recipient = undef,
-  $ensure    = present,
+  $ensure    = 'present',
 ) {
   include ::sendmail::params
   include ::sendmail::aliases::file
   include ::sendmail::aliases::newaliases
 
-  if ($ensure == present and empty($recipient)) {
+  validate_re($ensure, [ 'present', 'absent' ])
+
+  if ($ensure == 'present' and empty($recipient)) {
     fail('recipient must be set when creating an alias')
   }
 
-  mailalias { $name:
+  mailalias { $title:
     ensure    => $ensure,
     recipient => $recipient,
     notify    => Class['::sendmail::aliases::newaliases'],

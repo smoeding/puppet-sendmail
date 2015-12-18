@@ -1,6 +1,6 @@
 # = Class: sendmail::local_host_names
 #
-# Create entries in the Sendmail local-host-names file.
+# Manage entries in the Sendmail local-host-names file.
 #
 # == Parameters:
 #

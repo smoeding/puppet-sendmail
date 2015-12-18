@@ -1,20 +1,20 @@
 # = Define: sendmail::genericstable::entry
 #
-# Create entries in the Sendmail genericstable db file.
+# Manage an entry in the Sendmail genericstable db file.
 #
 # == Parameters:
 #
 # [*value*]
 #   The value for the given key. For the genericstable map this is typically
-#   something like user@example.org.
+#   something like 'user@example.org'.
 #
 # [*key*]
 #   The key used by Sendmail for the lookup. This is normally a username or
-#   a user and domain name.
+#   a user and domain name. Default is the resource title.
 #
 # [*ensure*]
 #   Used to create or remove the genericstable db entry.
-#   Default: present
+#   Valid options: 'present', 'absent'. Default: 'present'
 #
 # == Requires:
 #
@@ -33,14 +33,16 @@
 #
 define sendmail::genericstable::entry (
   $value  = undef,
-  $key    = $name,
-  $ensure = present,
+  $key    = $title,
+  $ensure = 'present',
 ) {
   include ::sendmail::params
   include ::sendmail::makeall
   include ::sendmail::genericstable::file
 
-  if ($ensure == present and empty($value)) {
+  validate_re($ensure, [ 'present', 'absent' ])
+
+  if ($ensure == 'present' and empty($value)) {
     fail('value must be set when creating an genericstable entry')
   }
 
@@ -52,7 +54,7 @@ define sendmail::genericstable::entry (
     'absent'  => "rm key[ . = '${key}']",
   }
 
-  augeas { "${::sendmail::params::genericstable_file}-${name}":
+  augeas { "${::sendmail::params::genericstable_file}-${title}":
     lens    => 'Sendmail_Map.lns',
     incl    => $::sendmail::params::genericstable_file,
     changes => $changes,

@@ -218,6 +218,10 @@ class sendmail (
   validate_bool($manage_sendmail_mc)
   validate_bool($manage_submit_mc)
 
+  validate_array($local_host_names)
+  validate_array($relay_domains)
+  validate_array($trusted_users)
+
   anchor { 'sendmail::begin': }
 
   class { '::sendmail::package':
