@@ -35,14 +35,14 @@ Sendmail is a powerful mail transfer agent, and this modules provides an easy wa
 
 ### Setup Requirements
 
-The sendmail module uses a custom Augeas lense so `pluginsync` must be enabled. It also requires the Puppetlabs modules `stdlib` and `concat`.
+The sendmail module uses a custom Augeas lense so the Puppet configuration setting `pluginsync` must be enabled. It also requires the Puppetlabs modules `stdlib` and `concat`.
 
 ### Beginning with Sendmail
 
 Declare the Sendmail class to install and run Sendmail with the default parameters.
 
 ```puppet
-class { '::sendmail': }
+class { 'sendmail': }
 ```
 
 This installs the necessary packages and starts the Sendmail service. With this setup Sendmail will send messages to other hosts and also accept mail for the local host.
@@ -60,7 +60,7 @@ The Sendmail module provides classes and defined types to individually manage ma
 Disable the internal management of the sendmail configuration files by setting the parameters [`manage_sendmail_mc`](#manage_sendmail_mc) or [`manage_submit_mc`](#manage_submit_mc) to `false`:
 
 ```puppet
-class { '::sendmail':
+class { 'sendmail':
   manage_sendmail_mc => false,
   manage_submit_mc   => false,
 }
@@ -73,7 +73,7 @@ class { '::sendmail':
 Use the [`smart_host`](#smart_host) parameter to set the host where all outgoing mail should be forwarded to.
 
 ```puppet
-class { '::sendmail':
+class { 'sendmail':
   smart_host => 'relay.example.com',
 }
 ```
@@ -83,7 +83,7 @@ class { '::sendmail':
 Use the parameter [`defines`](#defines) to add a hash of additional settings to the `sendmail.mc` configuration file:
 
 ```puppet
-class { '::sendmail':
+class { 'sendmail':
   defines => {},
 }
 ```
@@ -93,17 +93,17 @@ class { '::sendmail':
 The parameter [`features`](#features) takes a hash with additional features to be added:
 
 ```puppet
-class { '::sendmail':
+class { 'sendmail':
   features => { 'access_db' },
 }
 ```
 
 ### I have a host that should not receive any mail
 
-You can use the [`enable_ipv4_daemon`](#enable_ipv4_daemon) and [`enable_ipv6_daemon`](#enable_ipv6_daemon) parameters to prevent Sendmail from listening on all available network interfaces. Use the [`sendmail::mc::daemon_options`](#define-sendmailmcdaemon_options) type to explicitly define the address to use.
+You can use the [`enable_ipv4_daemon`](#enable_ipv4_daemon) and [`enable_ipv6_daemon`](#enable_ipv6_daemon) parameters to prevent Sendmail from listening on all available network interfaces. Use the [`sendmail::mc::daemon_options`](#define-sendmailmcdaemon_options) defined type to explicitly define the addresses to use.
 
 ```puppet
-class { '::sendmail':
+class { 'sendmail':
   enable_ipv4_daemon => false,
   enable_ipv6_daemon => false,
 }
@@ -120,7 +120,7 @@ sendmail::mc::daemon_options { 'MTA-v4':
 The Sendmail class has a comprehensive set of TLS related parameters. The following configuration creates a simple TLS enabled setup. Remember to adjust the pathnames to your setup.
 
 ```puppet
-class { '::sendmail':
+class { 'sendmail':
   ca_cert_file     => '/etc/mail/tls/CA.pem',
   server_cert_file => '/etc/mail/tls/server.pem',
   server_key_file  => '/etc/mail/tls/server.key',
@@ -130,7 +130,7 @@ class { '::sendmail':
 }
 ```
 
-**Note**: The Sendmail module does not manage any certificates or keys.
+**Note**: The Sendmail module does not manage any x509 certificates or key files.
 
 ## Reference
 
@@ -355,7 +355,7 @@ Triggers the rebuild of the alias database after modifying an entry in the alias
 Manage entries in the Sendmail local-host-names file. Do not declare this class directly. Use the [`local_host_names`](#local_host_names) parameter of the [`sendmail`](#class-sendmail) class instead.
 
 ```puppet
-class { '::sendmail::local_host_names:
+class { 'sendmail::local_host_names:
   local_host_names => [ 'example.org', 'mail.example.org', ],
 }
 ```
@@ -383,7 +383,7 @@ The parameter class that contains operating specific values.
 Manage entries in the Sendmail relay-domains file. Do not declare this class directly. Use the [`relay_domains`](#relay_domains) parameter of the [`sendmail`](#class-sendmail) class instead.
 
 ```puppet
-class { '::sendmail::relay_domains':
+class { 'sendmail::relay_domains':
   relay_domains => [ 'example.com', 'example.net', ],
 }
 ```
