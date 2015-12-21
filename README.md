@@ -315,7 +315,7 @@ Manage the Sendmail aliases file. The class manages the file either as a single 
 The file is managed as a whole using the `source` or `content` parameters.
 
 ```puppet
-class { sendmail::aliases':
+class { 'sendmail::aliases':
   source => 'puppet:///modules/site/aliases',
 }
 ```
@@ -323,7 +323,7 @@ class { sendmail::aliases':
 The `entries` parameter is used to manage each entry separately. Preferable this is done with hiera using automatic parameter lookup.
 
 ```puppet
-class { sendmail::aliases': }
+class { 'sendmail::aliases': }
 ```
 
 **Parameters for the `sendmail::aliases` class:**
@@ -353,7 +353,7 @@ Manage the Sendmail access db file. The class manages the file either as a singl
 The file is managed as a whole using the `source` or `content` parameters.
 
 ```puppet
-class { sendmail::access':
+class { 'sendmail::access':
   source => 'puppet:///modules/site/access',
 }
 ```
@@ -361,7 +361,7 @@ class { sendmail::access':
 The `entries` parameter is used to manage each entry separately. Preferable this is done with hiera using automatic parameter lookup.
 
 ```puppet
-class { sendmail::access': }
+class { 'sendmail::access': }
 ```
 
 **Parameters for the `sendmail::access` class:**
@@ -393,7 +393,7 @@ Manage the Sendmail domaintable file. The class manages the file either as a sin
 The file is managed as a whole using the `source` or `content` parameters.
 
 ```puppet
-class { sendmail::domaintable':
+class { 'sendmail::domaintable':
   source => 'puppet:///modules/site/domaintable,
 }
 ```
@@ -401,7 +401,7 @@ class { sendmail::domaintable':
 The `entries` parameter is used to manage each entry separately. Preferable this is done with hiera using automatic parameter lookup.
 
 ```puppet
-class { sendmail::domaintable': }
+class { 'sendmail::domaintable': }
 ```
 
 **Parameters for the `sendmail::domaintable` class:**
@@ -433,7 +433,7 @@ Manage the Sendmail genericstable file. The class manages the file either as a s
 The file is managed as a whole using the `source` or `content` parameters.
 
 ```puppet
-class { sendmail::genericstable':
+class { 'sendmail::genericstable':
   source => 'puppet:///modules/site/genericstable',
 }
 ```
@@ -441,7 +441,7 @@ class { sendmail::genericstable':
 The `entries` parameter is used to manage each entry separately. Preferable this is done with hiera using automatic parameter lookup.
 
 ```puppet
-class { sendmail::genericstable': }
+class { 'sendmail::genericstable': }
 ```
 
 **Parameters for the `sendmail::genericstable` class:**
@@ -473,7 +473,7 @@ Manage the Sendmail mailertable file. The class manages the file either as a sin
 The file is managed as a whole using the `source` or `content` parameters.
 
 ```puppet
-class { sendmail::mailertable':
+class { 'sendmail::mailertable':
   source => 'puppet:///modules/site/mailertable',
 }
 ```
@@ -481,7 +481,7 @@ class { sendmail::mailertable':
 The `entries` parameter is used to manage each entry separately. Preferable this is done with hiera using automatic parameter lookup.
 
 ```puppet
-class { sendmail::mailertable': }
+class { 'sendmail::mailertable': }
 ```
 
 **Parameters for the `sendmail::mailertable` class:**
@@ -515,7 +515,7 @@ Manage the Sendmail userdb file. The class manages the file either as a single f
 The file is managed as a whole using the `source` or `content` parameters.
 
 ```puppet
-class { sendmail::userdb':
+class { 'sendmail::userdb':
   source => 'puppet:///modules/site/userdb',
 }
 ```
@@ -523,7 +523,7 @@ class { sendmail::userdb':
 The `entries` parameter is used to manage each entry separately. Preferable this is done with hiera using automatic parameter lookup.
 
 ```puppet
-class { sendmail::userdb': }
+class { 'sendmail::userdb': }
 ```
 
 **Parameters for the `sendmail::userdb` class:**
@@ -555,7 +555,7 @@ Manage the Sendmail virtusertable file. The class manages the file either as a s
 The file is managed as a whole using the `source` or `content` parameters.
 
 ```puppet
-class { sendmail::virtusertable':
+class { 'sendmail::virtusertable':
   source => 'puppet:///modules/site/virtusertable',
 }
 ```
@@ -563,7 +563,7 @@ class { sendmail::virtusertable':
 The `entries` parameter is used to manage each entry separately. Preferable this is done with hiera using automatic parameter lookup.
 
 ```puppet
-class { sendmail::virtusertable': }
+class { 'sendmail::virtusertable': }
 ```
 
 **Parameters for the `sendmail::virtusertable` class:**
