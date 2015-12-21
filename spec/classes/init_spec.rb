@@ -18,8 +18,6 @@ describe 'sendmail' do
       should contain_class('sendmail::local_host_names')
       should contain_class('sendmail::relay_domains')
       should contain_class('sendmail::trusted_users')
-      should contain_class('sendmail::aliases')
-      should contain_class('sendmail::access')
       should contain_class('sendmail::mc')
       should contain_class('sendmail::submit')
 
@@ -28,43 +26,6 @@ describe 'sendmail' do
               .that_comes_before('Anchor[sendmail::end]')
 
       should_not contain_sendmail__mc__starttls('starttls')
-    }
-  end
-
-  context 'with enable_aliases => false' do
-    let(:params) do
-      { :enable_aliases => false }
-    end
-
-    it {
-      should_not contain_class('sendmail::aliases')
-    }
-  end
-
-  context 'with aliases => ' do
-    let(:params) do
-      {
-        :enable_aliases => true,
-        :aliases => { 'fred' => { 'recipient' => 'barney@example.org' } }
-      }
-    end
-
-    it {
-      should contain_class('sendmail::aliases').with(
-               'entries' => {
-                 'fred' => { 'recipient' => 'barney@example.org' }
-               }
-             )
-    }
-  end
-
-  context 'with enable_access_db => false' do
-    let(:params) do
-      { :enable_access_db => false }
-    end
-
-    it {
-      should_not contain_class('sendmail::access')
     }
   end
 

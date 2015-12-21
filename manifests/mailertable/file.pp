@@ -1,10 +1,14 @@
 # = Class: sendmail::mailertable::file
 #
-# Create the Sendmail mailertable db file.
+# Manage the Sendmail mailertable db file.
 #
 # == Parameters:
 #
-# None.
+# [*content*]
+#   The content of the file resource.
+#
+# [*source*]
+#   The source of the file resource.
 #
 # == Requires:
 #
@@ -15,13 +19,20 @@
 #   class { 'sendmail::mailertable::file': }
 #
 #
-class sendmail::mailertable::file {
+class sendmail::mailertable::file (
+  $content = undef,
+  $source  = undef,
+) {
   include ::sendmail::params
+  include ::sendmail::makeall
 
   file { $::sendmail::params::mailertable_file:
-    ensure => file,
-    owner  => 'smmta',
-    group  => $::sendmail::params::sendmail_group,
-    mode   => '0644',
+    ensure  => file,
+    content => $content,
+    source  => $source,
+    owner   => 'smmta',
+    group   => $::sendmail::params::sendmail_group,
+    mode    => '0644',
+    notify  => Class['::sendmail::makeall'],
   }
 }

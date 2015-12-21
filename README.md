@@ -78,26 +78,6 @@ class { 'sendmail':
 }
 ```
 
-### I want to define additional macros in my configuration
-
-Use the parameter [`defines`](#defines) to add a hash of additional settings to the `sendmail.mc` configuration file:
-
-```puppet
-class { 'sendmail':
-  defines => {},
-}
-```
-
-### I like to add more features to my configuration
-
-The parameter [`features`](#features) takes a hash with additional features to be added:
-
-```puppet
-class { 'sendmail':
-  features => { 'access_db' },
-}
-```
-
 ### I have a host that should not receive any mail
 
 You can use the [`enable_ipv4_daemon`](#enable_ipv4_daemon) and [`enable_ipv6_daemon`](#enable_ipv6_daemon) parameters to prevent Sendmail from listening on all available network interfaces. Use the [`sendmail::mc::daemon_options`](#define-sendmailmcdaemon_options) defined type to explicitly define the addresses to use.
@@ -136,30 +116,29 @@ class { 'sendmail':
 
 - [**Public Classes**](#public-classes)
   - [Class: sendmail](#class-sendmail)
-  - [Class: sendmail::access](#class-sendmailaccess)
   - [Class: sendmail::aliases](#class-sendmailaliases)
+  - [Class: sendmail::access](#class-sendmailaccess)
   - [Class: sendmail::domaintable](#class-sendmaildomaintable)
   - [Class: sendmail::genericstable](#class-sendmailgenericstable)
   - [Class: sendmail::mailertable](#class-sendmailmailertable)
-  - [Class: sendmail::mc](#class-sendmailmc)
-  - [Class: sendmail::parameterfile](#class-sendmailparameterfile)
-  - [Class: sendmail::submit](#class-sendmailsubmit)
   - [Class: sendmail::userdb](#class-sendmailuserdb)
   - [Class: sendmail::virtusertable](#class-sendmailvirtusertable)
 - [**Private Classes**](#private-classes)
-  - [Class: sendmail::aliases::newaliases](#class-sendmailaliasesnewaliases)
+  - [Class: sendmail::mc](#class-sendmailmc)
+  - [Class: sendmail::submit](#class-sendmailsubmit)
   - [Class: sendmail::local_host_names](#class-sendmaillocal_host_names)
+  - [Class: sendmail::relay_domains](#class-sendmailrelay_domains)
+  - [Class: sendmail::trusted_users](#class-sendmailtrusted_users)
+  - [Class: sendmail::aliases::newaliases](#class-sendmailaliasesnewaliases)
   - [Class: sendmail::makeall](#class-sendmailmakeall)
   - [Class: sendmail::package](#class-sendmailpackage)
   - [Class: sendmail::params](#class-sendmailparams)
-  - [Class: sendmail::relay_domains](#class-sendmailrelay_domains)
   - [Class: sendmail::service](#class-sendmailservice)
-  - [Class: sendmail::trusted_users](#class-sendmailtrusted_users)
   - [Classes: sendmail::*::file](#classes-sendmailfile)
   - [Classes: sendmail::mc::*_section](#classes-sendmailmc_section)
 - [**Public Defined Types**](#public-defined-types)
-  - [Define: sendmail::access::entry](#define-sendmailaccessentry)
   - [Define: sendmail::aliases::entry](#define-sendmailaliasesentry)
+  - [Define: sendmail::access::entry](#define-sendmailaccessentry)
   - [Define: sendmail::domaintable::entry](#define-sendmaildomaintableentry)
   - [Define: sendmail::genericstable::entry](#define-sendmailgenericstableentry)
   - [Define: sendmail::mailertable::entry](#define-sendmailmailertableentry)
@@ -216,10 +195,6 @@ Automaticall manage the aliases file. This parameter only manages the file and n
 ##### `aliases`
 
 A hash that will be used to create [`sendmail::aliases::entry`](#define-sendmailaliasesentry) resources. Default value: `{}`
-
-##### `enable_access_db`
-
-Automatically manage the access database file. This parameter only manages the file and not the content. Valid options: `true` or `false`. Default value: `true`.
 
 ##### `mailers`
 
@@ -333,22 +308,295 @@ Configure whether the Sendmail service should be running. Valid options: `runnin
 
 Define whether the service type can rely on a working init script status. Valid options: `true` or `false`. Default value depends on the operating system and release.
 
-#### Class: `sendmail::access`
 #### Class: `sendmail::aliases`
+
+Manage the Sendmail aliases file. The class manages the file either as a single file resource or each entry in the file separately.
+
+The file is managed as a whole using the `source` or `content` parameters.
+
+```puppet
+class { sendmail::aliases':
+  source => 'puppet:///modules/site/aliases',
+}
+```
+
+The `entries` parameter is used to manage each entry separately. Preferable this is done with hiera using automatic parameter lookup.
+
+```puppet
+class { sendmail::aliases': }
+```
+
+**Parameters for the `sendmail::aliases` class:**
+
+##### `content`
+
+The desired contents of the aliases file. This allows managing the aliases file as a whole. Changes to the file automatically triggers a rebuild of the aliases database file. This attribute is mutually exclusive with `source`.
+
+##### `source`
+
+A source file for the aliases file. This allows managing the aliases file as a whole. Changes to the file automatically triggers a rebuild of the aliases database file. This attribute is mutually exclusive with `content`.
+
+##### `entries`
+
+A hash that will be used to create [`sendmail::aliases::entry`](#define-sendmailaliasesentry) resources. The class can be used to create aliases defined in hiera. The hiera hash should look like this:
+
+```yaml
+sendmail::aliases::entries:
+  'fred':
+	recipient: 'barney@example.org'
+```
+
+#### Class: `sendmail::access`
+
+Manage the Sendmail access db file. The class manages the file either as a single file resource or each entry in the file separately.
+
+The file is managed as a whole using the `source` or `content` parameters.
+
+```puppet
+class { sendmail::access':
+  source => 'puppet:///modules/site/access',
+}
+```
+
+The `entries` parameter is used to manage each entry separately. Preferable this is done with hiera using automatic parameter lookup.
+
+```puppet
+class { sendmail::access': }
+```
+
+**Parameters for the `sendmail::access` class:**
+
+##### `content`
+
+The desired contents of the access file. This allows managing the access file as a whole. Changes to the file automatically triggers a rebuild of the access database file. This attribute is mutually exclusive with `source`.
+
+##### `source`
+
+A source file for the access file. This allows managing the access file as a whole. Changes to the file automatically triggers a rebuild of the access database file. This attribute is mutually exclusive with `content`.
+
+##### `entries`
+
+A hash that will be used to create [`sendmail::access::entry`](#define-sendmailaccessentry) resources. The class can be used to create access entries defined in hiera. The hiera hash should look like this:
+
+```yaml
+sendmail::access::entries:
+  'example.com':
+	value: 'OK'
+  'example.org':
+	value: 'REJECT'
+```
+
 #### Class: `sendmail::domaintable`
+
+Manage the Sendmail domaintable file. The class manages the file either as a single file resource or each entry in the file separately.
+
+The file is managed as a whole using the `source` or `content` parameters.
+
+```puppet
+class { sendmail::domaintable':
+  source => 'puppet:///modules/site/domaintable,
+}
+```
+
+The `entries` parameter is used to manage each entry separately. Preferable this is done with hiera using automatic parameter lookup.
+
+```puppet
+class { sendmail::domaintable': }
+```
+
+**Parameters for the `sendmail::domaintable` class:**
+
+##### `content`
+
+The desired contents of the domaintable file. This allows managing the domaintable file as a whole. Changes to the file automatically triggers a rebuild of the domaintable database file. This attribute is mutually exclusive with `source`.
+
+##### `source`
+
+A source file for the domaintable file. This allows managing the domaintable file as a whole. Changes to the file automatically triggers a rebuild of the domaintable database file. This attribute is mutually exclusive with `content`.
+
+##### `entries`
+
+A hash that will be used to create [`sendmail::domaintable::entry`](#define-sendmaildomaintableentry) resources. This class can be used to create domaintable entries defined in hiera. The hiera hash should look like this:
+
+```yaml
+sendmail::domaintable::entries:
+  'example.com':
+	value: 'example.org'
+  'example.net':
+	value: 'example.org'
+```
+
 #### Class: `sendmail::genericstable`
+
+Manage the Sendmail genericstable file. The class manages the file either as a single file resource or each entry in the file separately.
+
+The file is managed as a whole using the `source` or `content` parameters.
+
+```puppet
+class { sendmail::genericstable':
+  source => 'puppet:///modules/site/genericstable',
+}
+```
+
+The `entries` parameter is used to manage each entry separately. Preferable this is done with hiera using automatic parameter lookup.
+
+```puppet
+class { sendmail::genericstable': }
+```
+
+**Parameters for the `sendmail::genericstable` class:**
+
+##### `content`
+
+The desired contents of the genericstable file. This allows managing the genericstable file as a whole. Changes to the file automatically triggers a rebuild of the genericstable database file. This attribute is mutually exclusive with `source`.
+
+##### `source`
+
+A source file for the genericstable file. This allows managing the genericstable file as a whole. Changes to the file automatically triggers a rebuild of the genericstable database file. This attribute is mutually exclusive with `content`.
+
+##### `entries`
+
+A hash that will be used to create [`sendmail::genericstable::entry`](#define-sendmailgenericstableentry) resources. This class can be used to create genericstable entries defined in hiera. The hiera hash should look like this:
+
+```yaml
+sendmail::genericstable::entries:
+  'fred@example.com':
+	value: 'fred@example.org'
+  'barney':
+	value: 'barney@example.org'
+```
+
 #### Class: `sendmail::mailertable`
-#### Class: `sendmail::mc`
-#### Class: `sendmail::parameterfile`
-#### Class: `sendmail::submit`
+
+Manage the Sendmail mailertable file. The class manages the file either as a single file resource or each entry in the file separately.
+
+The file is managed as a whole using the `source` or `content` parameters.
+
+```puppet
+class { sendmail::mailertable':
+  source => 'puppet:///modules/site/mailertable',
+}
+```
+
+The `entries` parameter is used to manage each entry separately. Preferable this is done with hiera using automatic parameter lookup.
+
+```puppet
+class { sendmail::mailertable': }
+```
+
+**Parameters for the `sendmail::mailertable` class:**
+
+##### `content`
+
+The desired contents of the mailertable file. This allows managing the mailertable file as a whole. Changes to the file automatically triggers a rebuild of the mailertable database file. This attribute is mutually exclusive with `source`.
+
+##### `source`
+
+A source file for the mailertable file. This allows managing the mailertable file as a whole. Changes to the file automatically triggers a rebuild of the mailertable database file. This attribute is mutually exclusive with `content`.
+
+##### `entries`
+
+A hash that will be used to create [`sendmail::mailertable::entry`](#define-sendmailmailertableentry) resources. This class can be used to create mailertable entries defined in hiera. The hiera hash should look like this:
+
+```yaml
+sendmail::mailertable::entries:
+  '.example.com':
+	value: 'smtp:relay.example.com'
+  'www.example.org':
+	value: 'relay:relay.example.com'
+  '.example.net':
+	value: 'error:5.7.0:550 mail is not accepted'
+```
+
 #### Class: `sendmail::userdb`
+
+Manage the Sendmail userdb file. The class manages the file either as a single file resource or each entry in the file separately.
+
+The file is managed as a whole using the `source` or `content` parameters.
+
+```puppet
+class { sendmail::userdb':
+  source => 'puppet:///modules/site/userdb',
+}
+```
+
+The `entries` parameter is used to manage each entry separately. Preferable this is done with hiera using automatic parameter lookup.
+
+```puppet
+class { sendmail::userdb': }
+```
+
+**Parameters for the `sendmail::userdb` class:**
+
+##### `content`
+
+The desired contents of the userdb file. This allows managing the userdb file as a whole. Changes to the file automatically triggers a rebuild of the userdb database file. This attribute is mutually exclusive with `source`.
+
+##### `source`
+
+A source file for the userdb file. This allows managing the userdb file as a whole. Changes to the file automatically triggers a rebuild of the userdb database file. This attribute is mutually exclusive with `content`.
+
+##### `entries`
+
+A hash that will be used to create [`sendmail::userdb::entry`](#define-sendmailuserdbentry) resources. This class can be used to create userdb entries defined in hiera. The hiera hash should look like this:
+
+```yaml
+sendmail::userdb::entries:
+  'fred:maildrop':
+	value: 'fred@example.org'
+  'barney:maildrop':
+	value: 'barney@example.org'
+```
+
 #### Class: `sendmail::virtusertable`
+
+Manage the Sendmail virtusertable file. The class manages the file either as a single file resource or each entry in the file separately.
+
+The file is managed as a whole using the `source` or `content` parameters.
+
+```puppet
+class { sendmail::virtusertable':
+  source => 'puppet:///modules/site/virtusertable',
+}
+```
+
+The `entries` parameter is used to manage each entry separately. Preferable this is done with hiera using automatic parameter lookup.
+
+```puppet
+class { sendmail::virtusertable': }
+```
+
+**Parameters for the `sendmail::virtusertable` class:**
+
+##### `content`
+
+The desired contents of the virtusertable file. This allows managing the virtusertable file as a whole. Changes to the file automatically triggers a rebuild of the virtusertable database file. This attribute is mutually exclusive with `source`.
+
+##### `source`
+
+A source file for the virtusertable file. This allows managing the virtusertable file as a whole. Changes to the file automatically triggers a rebuild of the virtusertable database file. This attribute is mutually exclusive with `content`.
+
+##### `entries`
+
+A hash that will be used to create [`sendmail::virtusertable::entry`](#define-sendmailvirtusertableentry) resources. This class can be used to create virtusertable entries defined in hiera. The hiera hash should look like this:
+
+```yaml
+sendmail::virtusertable::entries:
+  'info@example.com':
+	value: 'fred'
+  '@example.org':
+	value: 'barney'
+```
 
 ### Private Classes
 
-#### Class: `sendmail::aliases::newaliases`
+#### Class: `sendmail::mc`
 
-Trigger the rebuild of the alias database after modifying an entry in the aliases file. This class is notified automatically when an alias is managed using the [`sendmail::aliases::entry`](define-sendmailaliasesentry) defined type.
+Manage the `sendmail.mc` file. This class uses the `concat` module to create configuration fragments to assemble the final configuration file.
+
+#### Class: `sendmail::submit`
+
+Manage the `submit.mc` file that contains the configuration for the local message submission program.
 
 #### Class: `sendmail::local_host_names`
 
@@ -366,18 +614,6 @@ class { 'sendmail::local_host_names:
 
 An array of host names that will be written into the local host names file. Leading or trailing whitespace is ignored. Empty entries are also ignored. Default value: `[]`
 
-#### Class: `sendmail::makeall`
-
-Triggers the rebuild of various Sendmail files. This includes conversion of `sendmail.mc` into `sendmail.cf` and generation of the Sendmail database map files.
-
-#### Class: `sendmail::package`
-
-Installs the necessary Sendmail packages.
-
-#### Class: `sendmail::params`
-
-The parameter class that contains operating specific values.
-
 #### Class: `sendmail::relay_domains`
 
 Manage entries in the Sendmail relay-domains file. Do not declare this class directly. Use the [`relay_domains`](#relay_domains) parameter of the [`sendmail`](#class-sendmail) class instead.
@@ -392,18 +628,11 @@ class { 'sendmail::relay_domains':
 
 ##### `relay_domains`
 
-An array of domain names that will be written into the relay domains file.
-Leading or trailing whitespace is ignored. Empty entries are also ignored.
-Default value: `[]`
-
-#### Class: `sendmail::service`
-
-Manages the Sendmail service.
+An array of domain names that will be written into the relay domains file. Leading or trailing whitespace is ignored. Empty entries are also ignored. Default value: `[]`
 
 #### Class: `sendmail::trusted_users`
 
-Manage entries in the Sendmail trusted-users file. Do not declare this class
-directly. Use the [`trusted_users`](#trusted_users) parameter of the [`sendmail`](#class-sendmail) class instead.
+Manage entries in the Sendmail trusted-users file. Do not declare this class directly. Use the [`trusted_users`](#trusted_users) parameter of the [`sendmail`](#class-sendmail) class instead.
 
 ```puppet
 class { 'sendmail::trusted_users':
@@ -415,9 +644,27 @@ class { 'sendmail::trusted_users':
 
 ##### `trusted_users`
 
-An array of user names that will be written into the trusted users file.
-Leading or trailing whitespace is ignored. Empty entries are also ignored.
-Default value: `[]`
+An array of user names that will be written into the trusted users file. Leading or trailing whitespace is ignored. Empty entries are also ignored. Default value: `[]`
+
+#### Class: `sendmail::aliases::newaliases`
+
+Trigger the rebuild of the alias database after modifying an entry in the aliases file. This class is notified automatically when an alias is managed using the [`sendmail::aliases::entry`](define-sendmailaliasesentry) defined type.
+
+#### Class: `sendmail::makeall`
+
+Triggers the rebuild of various Sendmail files. This includes conversion of `sendmail.mc` into `sendmail.cf` and generation of the Sendmail database map files.
+
+#### Class: `sendmail::package`
+
+Installs the necessary Sendmail packages.
+
+#### Class: `sendmail::params`
+
+The parameter class that contains operating specific values.
+
+#### Class: `sendmail::service`
+
+Manages the Sendmail service.
 
 #### Classes: `sendmail::*::file`
 
@@ -428,6 +675,26 @@ These classes manage the various Sendmail database files and ensure correct owne
 These classes are included by some of the `sendmail::mc::*` defined types to create a suitable section header in the generated `sendmail.mc` file. The sole purpose is to improve the readability of the file.
 
 ### Public Defined Types
+
+#### Define: `sendmail::aliases::entry`
+
+Manage an entry in the Sendmail alias file. The type has an internal dependency to rebuild the aliases database file.
+
+```puppet
+sendmail::aliases::entry { 'fred':
+  recipient => 'barney@example.org',
+}
+```
+
+**Parameters for the `sendmail::aliases::entry` type:**
+
+##### `recipient`
+
+The recipient where the mail is redirected to.
+
+##### `ensure`
+
+Used to create or remove the alias entry. Valid options: `present`, `absent`. Default: `present`
 
 #### Define: `sendmail::access::entry`
 
@@ -453,30 +720,9 @@ The value for the given key. For the access map this is typically something like
 
 Used to create or remove the access db entry. Valid options: `present`, `absent`. Default: `present`
 
-#### Define: `sendmail::aliases::entry`
-
-Manage an entry in the Sendmail alias file. The type has an internal dependency to rebuild the aliases database file.
-
-```puppet
-sendmail::aliases::entry { 'fred':
-  recipient => 'barney@example.org',
-}
-```
-
-**Parameters for the `sendmail::aliases::entry` type:**
-
-##### `recipient`
-
-The recipient where the mail is redirected to.
-
-##### `ensure`
-
-Used to create or remove the alias entry. Valid options: `present`, `absent`. Default: `present`
-
 #### Define: `sendmail::domaintable::entry`
 
-Manage an entry in the Sendmail domaintable db file. The type has an internal
-dependency to rebuild the database file.
+Manage an entry in the Sendmail domaintable db file. The type has an internal dependency to rebuild the database file.
 
 ```puppet
 sendmail::domaintable::entry { 'example.com':
@@ -548,20 +794,15 @@ sendmail::mailertable::entry { '.example.net':
 
 ##### `key`
 
-The key used by Sendmail for the lookup. This should either be a fully
-qualified host name or a domain name with a leading dot. Default is the
-resource title.
+The key used by Sendmail for the lookup. This should either be a fully qualified host name or a domain name with a leading dot. Default is the resource title.
 
 ##### `value`
 
-The value for the given key. For the mailertable map this is typically
-something like `smtp:hostname`. The error mailer can be used to configure
-specific errors for certain hosts.
+The value for the given key. For the mailertable map this is typically something like `smtp:hostname`. The error mailer can be used to configure specific errors for certain hosts.
 
 ##### `ensure`
 
-Used to create or remove the mailertable db entry. Valid options: `present`,
-`absent`. Default: `present`
+Used to create or remove the mailertable db entry. Valid options: `present`, `absent`. Default: `present`
 
 #### Define: `sendmail::userdb::entry`
 
@@ -577,19 +818,15 @@ sendmail::userdb::entry { 'fred:maildrop':
 
 ##### `key`
 
-The key used by Sendmail for the lookup. This normally is in the format
-`user:maildrop` or `user:mailname` where user is the a local username.
-Default is the resource title.
+The key used by Sendmail for the lookup. This normally is in the format `user:maildrop` or `user:mailname` where user is the a local username. Default is the resource title.
 
 ##### `value`
 
-The value for the given key. For the userdb map this is typically a single
-mailaddress or a compound list of addresses separated by commas.
+The value for the given key. For the userdb map this is typically a single mailaddress or a compound list of addresses separated by commas.
 
 ##### `ensure`
 
-Used to create or remove the userdb db entry. Valid options: `present`,
-`absent`. Default: `present`
+Used to create or remove the userdb db entry. Valid options: `present`, `absent`. Default: `present`
 
 #### Define: `sendmail::virtusertable::entry`
 
@@ -611,18 +848,15 @@ sendmail::virtusertable::entry { '@example.org':
 
 ##### `key`
 
-The key used by Sendmail for the lookup. This is normally a mail address or a
-mail address without the user part. Default is the resource title.
+The key used by Sendmail for the lookup. This is normally a mail address or a mail address without the user part. Default is the resource title.
 
 ##### `value`
 
-The value for the given key. For the virtusertable map this is typically a
-local username or a remote mail address.
+The value for the given key. For the virtusertable map this is typically a local username or a remote mail address.
 
 ##### `ensure`
 
-Used to create or remove the virtusertable db entry. Valid options:
-`present`, `absent`. Default: `present`
+Used to create or remove the virtusertable db entry. Valid options: `present`, `absent`. Default: `present`
 
 #### Define: `sendmail::mc::daemon_options`
 #### Define: `sendmail::mc::define`
@@ -641,7 +875,7 @@ Used to create or remove the virtusertable db entry. Valid options:
 
 #### Augeas Lens: `sendmail_map`
 
-The Sendmail module contains the Augeas lens `sendmail_map`. This lens has been built to easily manage entries in various Sendmail files (e.g. `mailertable`, `access_db`, ...). The lens is used by the provided module classes and so there should not be any need to call this lens directly.
+The Sendmail module contains the Augeas lens `sendmail_map`. This lens has been built to easily manage entries in various Sendmail files (e.g. `mailertable`, `access`, ...). The lens is used by the provided module classes and so there should not be any need to call this lens directly.
 
 ### Templates
 

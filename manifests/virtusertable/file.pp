@@ -1,10 +1,14 @@
 # = Class: sendmail::virtusertable::file
 #
-# Create the Sendmail virtusertable db file.
+# Manage the Sendmail virtusertable db file.
 #
 # == Parameters:
 #
-# None.
+# [*content*]
+#   The content of the file resource.
+#
+# [*source*]
+#   The source of the file resource.
 #
 # == Requires:
 #
@@ -15,13 +19,20 @@
 #   class { 'sendmail::virtusertable::file': }
 #
 #
-class sendmail::virtusertable::file {
+class sendmail::virtusertable::file (
+  $content = undef,
+  $source  = undef,
+) {
   include ::sendmail::params
+  include ::sendmail::makeall
 
   file { $::sendmail::params::virtusertable_file:
-    ensure => file,
-    owner  => 'smmta',
-    group  => $::sendmail::params::sendmail_group,
-    mode   => '0640',
+    ensure  => file,
+    content => $content,
+    source  => $source,
+    owner   => 'smmta',
+    group   => $::sendmail::params::sendmail_group,
+    mode    => '0640',
+    notify  => Class['::sendmail::makeall'],
   }
 }

@@ -33,7 +33,6 @@ class sendmail::nullclient (
     dont_probe_interfaces => true,
     enable_ipv4_daemon    => false,
     enable_ipv6_daemon    => false,
-    enable_access_db      => false,
     mailers               => [],
   }
 
