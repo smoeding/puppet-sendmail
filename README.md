@@ -170,27 +170,27 @@ Performs the basic setup and installation of Sendmail on the system.
 
 ##### `smart_host`
 
-Servers that are behind a firewall may not be able to deliver mail directly to the outside world. In this case the host may need to forward the mail to the gateway machine defined by this parameter. All nonlocal mail is forwarded to this gateway. Default value: undef.
+Servers that are behind a firewall may not be able to deliver mail directly to the outside world. In this case the host may need to forward the mail to the gateway machine defined by this parameter. All nonlocal mail is forwarded to this gateway. Default value: `undef`
 
 ##### `log_level`
 
-The loglevel for the sendmail process. Valid options: a numeric value. Default value: undef.
+The loglevel for the sendmail process. Valid options: a numeric value. Default value: `undef`
 
 ##### `dont_probe_interfaces`
 
-Sendmail normally probes all network interfaces to get all hostnames that the server may have. These hostnames are then considered local. This option can be used to prevent the reverse lookup of the network addresses. If this option is set to `localhost` then all network interfaces except for the loopback interface is probed. Valid options: the strings `true`, `false` or `localhost`. Default value: undef.
+Sendmail normally probes all network interfaces to get all hostnames that the server may have. These hostnames are then considered local. This option can be used to prevent the reverse lookup of the network addresses. If this option is set to `localhost` then all network interfaces except for the loopback interface is probed. Valid options: the strings `true`, `false` or `localhost`. Default value: `undef`
 
 ##### `enable_ipv4_daemon`
 
-Should the host accept mail on all IPv4 network adresses. Valid options: `true` or `false`. Default value: `true`.
+Should the host accept mail on all IPv4 network adresses. Valid options: `true` or `false`. Default value: `true`
 
 ##### `enable_ipv6_daemon`
 
-Should the host accept mail on all IPv6 network adresses. Valid options: `true` or `false`. Default value: `true`.
+Should the host accept mail on all IPv6 network adresses. Valid options: `true` or `false`. Default value: `true`
 
 ##### `enable_aliases`
 
-Automaticall manage the aliases file. This parameter only manages the file and not the content. Valid options: `true` or `false`. Default value: `true`.
+Automaticall manage the aliases file. This parameter only manages the file and not the content. Valid options: `true` or `false`. Default value: `true`
 
 ##### `aliases`
 
@@ -214,7 +214,7 @@ An array of user names that will be written into the trusted users file. Leading
 
 ##### `trust_auth_mech`
 
-The value of trusted authentication mechanisms to set. If this is a string it is used as-is. For an array the value will be concatenated into a string. Default value: undef
+The value of trusted authentication mechanisms to set. If this is a string it is used as-is. For an array the value will be concatenated into a string. Default value: `undef`
 
 ##### `ca_cert_file`
 
@@ -250,7 +250,7 @@ The DH parameters used for encryption. This can be one of the numbers `512`, `10
 
 ##### `cipher_list`
 
-Set the available ciphers for encrypted conections.
+Set the available ciphers for encrypted connections.
 
 ##### `server_ssl_options`
 
@@ -262,19 +262,19 @@ Configure the SSL connection flags for outbound connections.
 
 ##### `cf_version`
 
-The configuration version string for Sendmail. This string will be appended to the Sendmail version in the HELO message. If unset, no configuration version will be used. Default value: undef.
+The configuration version string for Sendmail. This string will be appended to the Sendmail version in the HELO message. If unset, no configuration version will be used. Default value: `undef`
 
 ##### `version_id`
 
-The version id string included in the `sendmail.mc` file. This has no practical meaning other than having a user defined identifier in the file. Default value: undef.
+The version id string included in the `sendmail.mc` file. This has no practical meaning other than having a user defined identifier in the file. Default value: `undef`
 
 ##### `msp_host`
 
-The host where the message submission program should deliver to. This can be a hostname or IP address. To prevent MX lookups for the host, put it in square brackets (e.g., `[hostname]`). Delivery to the local host would therefore use either `[127.0.0.1]` for IPv4 or `[IPv6:::1]` for IPv6.
+The host where the message submission program should deliver to. This can be a hostname or IP address. To prevent MX lookups for the host, put it in square brackets (e.g., `[hostname]`). Delivery to the local host would therefore use either `[127.0.0.1]` for IPv4 or `[IPv6:::1]` for IPv6. Default value: `[127.0.0.1]`
 
 ##### `msp_port`
 
-The port used for the message submission program. Can be a port number (e.g., `25`) or the literal `MSA` for delivery to the message submission agent on port 587.
+The port used for the message submission program. Can be a port number (e.g., `25`) or the literal `MSA` for delivery to the message submission agent on port 587. Make sure to configure a daemon that listens on this port or local mail will remain stuck in the submission queue. Default value: `MSA`
 
 ##### `auxiliary_packages`
 
@@ -286,7 +286,7 @@ Configure whether the Sendmail package should be installed, and what version. Va
 
 ##### `package_manage`
 
-Configure whether Puppet should manage the Sendmail package(s). Valid options: `true` or `false`. Default value: `true`.
+Configure whether Puppet should manage the Sendmail package(s). Valid options: `true` or `false`. Default value: `true`
 
 ##### `service_name`
 
@@ -294,15 +294,15 @@ The service name to use on this operating system.
 
 ##### `service_enable`
 
-Configure whether the Sendmail MTA should be enabled at boot. Valid options: `true` or `false`. Default value: `true`.
+Configure whether the Sendmail MTA should be enabled at boot. Valid options: `true` or `false`. Default value: `true`
 
 ##### `service_manage`
 
-Configure whether Puppet should manage the Sendmail service. Valid options: `true` or `false`. Default value: `true`.
+Configure whether Puppet should manage the Sendmail service. Valid options: `true` or `false`. Default value: `true`
 
 ##### `service_ensure`
 
-Configure whether the Sendmail service should be running. Valid options: `running` or `stopped`. Default value: `running`.
+Configure whether the Sendmail service should be running. Valid options: `running` or `stopped`. Default value: `running`
 
 ##### `service_hasstatus`
 
@@ -330,15 +330,17 @@ class { 'sendmail::aliases': }
 
 ##### `content`
 
-The desired contents of the aliases file. This allows managing the aliases file as a whole. Changes to the file automatically triggers a rebuild of the aliases database file. This attribute is mutually exclusive with `source`.
+The desired contents of the aliases file. This allows managing the aliases file as a whole. Changes to the file automatically triggers a rebuild of the aliases database file. This attribute is mutually exclusive with `source` and `entries`.
 
 ##### `source`
 
-A source file for the aliases file. This allows managing the aliases file as a whole. Changes to the file automatically triggers a rebuild of the aliases database file. This attribute is mutually exclusive with `content`.
+A source file for the aliases file. This allows managing the aliases file as a whole. Changes to the file automatically triggers a rebuild of the aliases database file. This attribute is mutually exclusive with `content` and `entries`.
 
 ##### `entries`
 
-A hash that will be used to create [`sendmail::aliases::entry`](#define-sendmailaliasesentry) resources. The class can be used to create aliases defined in hiera. The hiera hash should look like this:
+A hash that will be used to create [`sendmail::aliases::entry`](#define-sendmailaliasesentry) resources. This attribute is mutually exclusive with `content` and `source`.
+
+The class can be used to create aliases defined in hiera. The hiera hash should look like this:
 
 ```yaml
 sendmail::aliases::entries:
@@ -368,15 +370,17 @@ class { 'sendmail::access': }
 
 ##### `content`
 
-The desired contents of the access file. This allows managing the access file as a whole. Changes to the file automatically triggers a rebuild of the access database file. This attribute is mutually exclusive with `source`.
+The desired contents of the access file. This allows managing the access file as a whole. Changes to the file automatically triggers a rebuild of the access database file. This attribute is mutually exclusive with `source` and `entries`.
 
 ##### `source`
 
-A source file for the access file. This allows managing the access file as a whole. Changes to the file automatically triggers a rebuild of the access database file. This attribute is mutually exclusive with `content`.
+A source file for the access file. This allows managing the access file as a whole. Changes to the file automatically triggers a rebuild of the access database file. This attribute is mutually exclusive with `content` and `entries`.
 
 ##### `entries`
 
-A hash that will be used to create [`sendmail::access::entry`](#define-sendmailaccessentry) resources. The class can be used to create access entries defined in hiera. The hiera hash should look like this:
+A hash that will be used to create [`sendmail::access::entry`](#define-sendmailaccessentry) resources. This attribute is mutually exclusive with `content` and `source`.
+
+The class can be used to create access entries defined in hiera. The hiera hash should look like this:
 
 ```yaml
 sendmail::access::entries:
@@ -408,15 +412,17 @@ class { 'sendmail::domaintable': }
 
 ##### `content`
 
-The desired contents of the domaintable file. This allows managing the domaintable file as a whole. Changes to the file automatically triggers a rebuild of the domaintable database file. This attribute is mutually exclusive with `source`.
+The desired contents of the domaintable file. This allows managing the domaintable file as a whole. Changes to the file automatically triggers a rebuild of the domaintable database file. This attribute is mutually exclusive with `source` and `entries`.
 
 ##### `source`
 
-A source file for the domaintable file. This allows managing the domaintable file as a whole. Changes to the file automatically triggers a rebuild of the domaintable database file. This attribute is mutually exclusive with `content`.
+A source file for the domaintable file. This allows managing the domaintable file as a whole. Changes to the file automatically triggers a rebuild of the domaintable database file. This attribute is mutually exclusive with `content` and `entries`.
 
 ##### `entries`
 
-A hash that will be used to create [`sendmail::domaintable::entry`](#define-sendmaildomaintableentry) resources. This class can be used to create domaintable entries defined in hiera. The hiera hash should look like this:
+A hash that will be used to create [`sendmail::domaintable::entry`](#define-sendmaildomaintableentry) resources. This attribute is mutually exclusive with `content` and `source`.
+
+This class can be used to create domaintable entries defined in hiera. The hiera hash should look like this:
 
 ```yaml
 sendmail::domaintable::entries:
@@ -448,15 +454,17 @@ class { 'sendmail::genericstable': }
 
 ##### `content`
 
-The desired contents of the genericstable file. This allows managing the genericstable file as a whole. Changes to the file automatically triggers a rebuild of the genericstable database file. This attribute is mutually exclusive with `source`.
+The desired contents of the genericstable file. This allows managing the genericstable file as a whole. Changes to the file automatically triggers a rebuild of the genericstable database file. This attribute is mutually exclusive with `source` and `entries`.
 
 ##### `source`
 
-A source file for the genericstable file. This allows managing the genericstable file as a whole. Changes to the file automatically triggers a rebuild of the genericstable database file. This attribute is mutually exclusive with `content`.
+A source file for the genericstable file. This allows managing the genericstable file as a whole. Changes to the file automatically triggers a rebuild of the genericstable database file. This attribute is mutually exclusive with `content` and `entries`.
 
 ##### `entries`
 
-A hash that will be used to create [`sendmail::genericstable::entry`](#define-sendmailgenericstableentry) resources. This class can be used to create genericstable entries defined in hiera. The hiera hash should look like this:
+A hash that will be used to create [`sendmail::genericstable::entry`](#define-sendmailgenericstableentry) resources. This attribute is mutually exclusive with `content` and `source`.
+
+This class can be used to create genericstable entries defined in hiera. The hiera hash should look like this:
 
 ```yaml
 sendmail::genericstable::entries:
@@ -488,15 +496,17 @@ class { 'sendmail::mailertable': }
 
 ##### `content`
 
-The desired contents of the mailertable file. This allows managing the mailertable file as a whole. Changes to the file automatically triggers a rebuild of the mailertable database file. This attribute is mutually exclusive with `source`.
+The desired contents of the mailertable file. This allows managing the mailertable file as a whole. Changes to the file automatically triggers a rebuild of the mailertable database file. This attribute is mutually exclusive with `source` and `entries`.
 
 ##### `source`
 
-A source file for the mailertable file. This allows managing the mailertable file as a whole. Changes to the file automatically triggers a rebuild of the mailertable database file. This attribute is mutually exclusive with `content`.
+A source file for the mailertable file. This allows managing the mailertable file as a whole. Changes to the file automatically triggers a rebuild of the mailertable database file. This attribute is mutually exclusive with `content` and `entries`.
 
 ##### `entries`
 
-A hash that will be used to create [`sendmail::mailertable::entry`](#define-sendmailmailertableentry) resources. This class can be used to create mailertable entries defined in hiera. The hiera hash should look like this:
+A hash that will be used to create [`sendmail::mailertable::entry`](#define-sendmailmailertableentry) resources. This attribute is mutually exclusive with `content` and `source`.
+
+This class can be used to create mailertable entries defined in hiera. The hiera hash should look like this:
 
 ```yaml
 sendmail::mailertable::entries:
@@ -530,15 +540,17 @@ class { 'sendmail::userdb': }
 
 ##### `content`
 
-The desired contents of the userdb file. This allows managing the userdb file as a whole. Changes to the file automatically triggers a rebuild of the userdb database file. This attribute is mutually exclusive with `source`.
+The desired contents of the userdb file. This allows managing the userdb file as a whole. Changes to the file automatically triggers a rebuild of the userdb database file. This attribute is mutually exclusive with `source` and `entries`.
 
 ##### `source`
 
-A source file for the userdb file. This allows managing the userdb file as a whole. Changes to the file automatically triggers a rebuild of the userdb database file. This attribute is mutually exclusive with `content`.
+A source file for the userdb file. This allows managing the userdb file as a whole. Changes to the file automatically triggers a rebuild of the userdb database file. This attribute is mutually exclusive with `content` and `entries`.
 
 ##### `entries`
 
-A hash that will be used to create [`sendmail::userdb::entry`](#define-sendmailuserdbentry) resources. This class can be used to create userdb entries defined in hiera. The hiera hash should look like this:
+A hash that will be used to create [`sendmail::userdb::entry`](#define-sendmailuserdbentry) resources. This attribute is mutually exclusive with `content` and `source`.
+
+This class can be used to create userdb entries defined in hiera. The hiera hash should look like this:
 
 ```yaml
 sendmail::userdb::entries:
@@ -570,15 +582,17 @@ class { 'sendmail::virtusertable': }
 
 ##### `content`
 
-The desired contents of the virtusertable file. This allows managing the virtusertable file as a whole. Changes to the file automatically triggers a rebuild of the virtusertable database file. This attribute is mutually exclusive with `source`.
+The desired contents of the virtusertable file. This allows managing the virtusertable file as a whole. Changes to the file automatically triggers a rebuild of the virtusertable database file. This attribute is mutually exclusive with `source` and `entries`.
 
 ##### `source`
 
-A source file for the virtusertable file. This allows managing the virtusertable file as a whole. Changes to the file automatically triggers a rebuild of the virtusertable database file. This attribute is mutually exclusive with `content`.
+A source file for the virtusertable file. This allows managing the virtusertable file as a whole. Changes to the file automatically triggers a rebuild of the virtusertable database file. This attribute is mutually exclusive with `content` and `entries`.
 
 ##### `entries`
 
-A hash that will be used to create [`sendmail::virtusertable::entry`](#define-sendmailvirtusertableentry) resources. This class can be used to create virtusertable entries defined in hiera. The hiera hash should look like this:
+A hash that will be used to create [`sendmail::virtusertable::entry`](#define-sendmailvirtusertableentry) resources. This attribute is mutually exclusive with `content` and `source`.
+
+This class can be used to create virtusertable entries defined in hiera. The hiera hash should look like this:
 
 ```yaml
 sendmail::virtusertable::entries:

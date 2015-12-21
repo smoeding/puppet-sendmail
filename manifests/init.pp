@@ -81,7 +81,7 @@
 #   '512', '1024', '2048' or a filename with generated parameters.
 #
 # [*cipher_list*]
-#   Set the available ciphers for encrypted conections.
+#   Set the available ciphers for encrypted connections.
 #
 # [*server_ssl_options*]
 #   Configure the SSL connection flags for inbound connections.
@@ -106,12 +106,12 @@
 #   can be a hostname or IP address. To prevent MX lookups for the host,
 #   put it in square brackets (e.g., [hostname]). Delivery to the local
 #   host would therefore use either [127.0.0.1] for IPv4 or [IPv6:::1]
-#   for IPv6.
-#
+#   for IPv6. Default value: '[127.0.0.1]'
+
 # [*msp_port*]
 #   The port used for the message submission program. Can be a port number
 #   (e.g., 25) or the literal 'MSA' for delivery to the message submission
-#   agent on port 587.
+#   agent on port 587. Default value: 'MSA'
 #
 # [*auxiliary_packages*]
 #   Additional packages that will be installed by the Sendmail module.

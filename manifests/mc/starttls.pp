@@ -30,7 +30,7 @@
 #   '512', '1024', '2048' or a filename with generated parameters.
 #
 # [*cipher_list*]
-#   Set the available ciphers for encrypted conections.
+#   Set the available ciphers for encrypted connections.
 #
 # [*server_ssl_options*]
 #   Configure the SSL connection flags for inbound connections.
