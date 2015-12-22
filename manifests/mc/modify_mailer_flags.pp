@@ -1,22 +1,22 @@
 # = Define: sendmail::mc::modify_mailer_flags
 #
-# Add MODIFY_MAILER_FLAGS macro to the sendmail.mc file.
+# Add a MODIFY_MAILER_FLAGS macro to the sendmail.mc file.
 #
 # == Parameters:
 #
 # [*mailer_name*]
-#   The name of the mailer for which the flags will be changed. This
-#   name is case-sensitive and must match the MAILER_FLAGS macro used.
-#   So usually this will be a name in uppercase (e.g. SMTP or LOCAL).
+#   The name of the mailer for which the flags will be changed. This name is
+#   case-sensitive and must match the MAILER macro used. So usually this will
+#   be a name in uppercase (e.g. SMTP or LOCAL).
 #
 # [*flags*]
 #   The flags to change.
 #
 # [*use_quotes*]
-#   A boolean that indicates if the flags should be quoted (using
-#   m4 quotes). If this argument is 'true', then the flags will be
-#   enclosed in ` and ' symbols in the generated output file.
-#   Valid options: 'true' or 'false'. Default value: 'true'.
+#   A boolean that indicates if the flags should be quoted (using m4 quotes).
+#   If this argument is 'true', then the flags will be enclosed in ` and '
+#   symbols in the generated output file. Valid options: 'true' or 'false'.
+#   Default value: 'true'.
 #
 # == Requires:
 #

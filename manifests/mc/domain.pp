@@ -5,9 +5,9 @@
 # == Parameters:
 #
 # [*domain*]
-#   The name of the sendmail domain file as a string. The value is as
-#   argument to the 'DOMAIN' macro to the generated sendmail.mc file.
-#   This will include the m4 file with domain specific settings.
+#   The name of the sendmail domain file as a string. The value is used as
+#   argument to the 'DOMAIN' macro to the generated sendmail.mc file. This
+#   will include the m4 file with domain specific settings.
 #
 # == Requires:
 #

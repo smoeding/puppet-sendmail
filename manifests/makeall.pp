@@ -1,6 +1,6 @@
 # = Class: sendmail::makeall
 #
-# Rebuild all config files for the Sendmail MTA using the Makefile
+# Rebuild all config files for the Sendmail MTA using a provided Makefile
 #
 # == Parameters:
 #

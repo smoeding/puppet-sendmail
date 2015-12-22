@@ -44,7 +44,7 @@
 #   Default value: '00'
 #
 # [*milter_name*]
-#   The name of the milter to create.
+#   The name of the milter to create. Defaults to the resource title.
 #
 # == Requires:
 #

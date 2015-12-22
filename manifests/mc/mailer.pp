@@ -1,10 +1,12 @@
 # = Define: sendmail::mc::mailer
 #
-# Add the MAILER macro to the sendmail.mc file.
+# Add a MAILER macro to the sendmail.mc file.
 #
 # == Parameters:
 #
-# None.
+# [*mailer*]
+#   The name of the mailer to add to the configuration. Default is the
+#   resource title.
 #
 # == Requires:
 #

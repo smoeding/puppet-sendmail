@@ -154,8 +154,7 @@
 #
 # == Sample Usage:
 #
-#  class { 'sendmail:
-#  }
+#  class { 'sendmail': }
 #
 #
 class sendmail (

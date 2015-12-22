@@ -6,7 +6,7 @@
 #
 # [*filename*]
 #   The absolute path of the file to include.
-#   Default: the resource title
+#   Defaults to the resource title.
 #
 # [*order*]
 #   The position in the sendmail.mc file where the include statement will

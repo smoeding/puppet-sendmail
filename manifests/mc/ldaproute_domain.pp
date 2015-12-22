@@ -4,7 +4,9 @@
 #
 # == Parameters:
 #
-# None.
+# [*domain*]
+#   The name of the domain for which LDAP routing is enabled.
+#   Default value is the resource title.
 #
 # == Requires:
 #

@@ -1,12 +1,16 @@
 # = Define: local_config
 #
-# Manage local_config
+# Add a LOCAL_CONFIG section into the sendmail.mc file.
 #
 # == Parameters:
 #
-# [*ensure*]
-#   Ensure parameter passed onto Service[] resources.
-#   Default: running
+# [*content*]
+#   The desired contents of the local config section. This attribute is
+#   mutually exclusive with 'source'.
+#
+# [*source*]
+#   A source file included as the local config section. This attribute is
+#   mutually exclusive with 'content'.
 #
 # == Requires:
 #
@@ -14,8 +18,8 @@
 #
 # == Sample Usage:
 #
-#   sendmail::mc::local_config { 'local_config':
-#
+#   sendmail::mc::local_config { 'X-AuthUser':
+#     content => 'HX-AuthUser: ${auth_authen}',
 #   }
 #
 #

@@ -31,7 +31,9 @@ Sendmail is a powerful mail transfer agent, and this modules provides an easy wa
 * In a default installation almost all the managed files are in the `/etc/mail` directory. A notably exception is the `/etc/aliases` file.
 * The module may generate a new `/etc/mail/sendmail.mc` which is the source for `/etc/mail/sendmail.cf`. This file is the main Sendmail configuration file and it affects how Sendmail operates.
 
-**WARNING**: Make sure to understand and test everything in these files before putting it in production. You are responsible to deploy a safe mailer configuration.
+**Warning**: Make sure to understand and test everything in these files before putting it in production. You alone are accountable for deploying a safe mailer configuration.
+
+**Warning**: If you do not know how to configure Sendmail without this module, then you should not assume you can do it with it.
 
 ### Setup Requirements
 
@@ -49,13 +51,47 @@ This installs the necessary packages and starts the Sendmail service. With this 
 
 Sendmail has a lot of configuration knobs and a complete setup may need more than just a few parameters. So it is probably a good idea to encapsulate your Sendmail settings by using the roles and profiles pattern.
 
-See the next sections for a detailed description of the available configuration options.
-
 ## Usage
 
 The Sendmail module provides classes and defined types to individually manage many of the configuration parameters used in the `sendmail.mc` file. This offers the possibility to manage even complex and unusual configurations with Puppet. The main Sendmail class also has parameters to directly enable certain configuration items without the need to provide a complete user defined `sendmail.mc` configuration.
 
-### I have a working config and like to keep it
+### I need a couple of macros and features in my Sendmail setting
+
+Normally the configuration of Sendmail is done by adding `define` statements to the main `sendmail.mc` configuration file. The `m4` macro processor is used to convert the settings into a `sendmail.cf` file that Sendmail understands.
+
+The same mechanism is used to add features like greylisting, virtual user setups or DNS blacklists. Sendmail uses the `feature` statement in the `sendmail.mc` configuration to enable the features.
+
+With the Sendmail module these settings are defined by adding resources using the [`sendmail::mc::define`](#define-sendmailmcdefine) or [`sendmail::mc::feature`](#define-sendmailmcfeature) defined types.
+
+```puppet
+class { 'sendmail':
+  smart_host => 'relay.example.com',
+}
+
+sendmail::mc::define { 'confMAX_MESSAGE_SIZE':
+  expansion => '33554432',
+}
+
+sendmail::mc::feature { 'local_procmail': }
+
+sendmail::mc::feature { 'ratecontrol':
+  args => [ 'nodelay', 'terminate', ],
+}
+```
+
+See the [Reference](#reference) section for the complete list of available defined types that can be used.
+
+### My hosts should only be able to send mail
+
+Use the [`sendmaill:nullclient`](##class-sendmailnullclient) class to create a setup where no mail can be received from the outside and all local mail is forwarded to a mail hub. This configuration is appropriate for the majority of satellite hosts.
+
+```puppet
+class { 'sendmail::nullclient':
+  mail_hub => '[192.168.1.1]',
+}
+```
+
+### I already have a working config and like to keep it
 
 Disable the internal management of the sendmail configuration files by setting the parameters [`manage_sendmail_mc`](#manage_sendmail_mc) or [`manage_submit_mc`](#manage_submit_mc) to `false`:
 
@@ -78,7 +114,7 @@ class { 'sendmail':
 }
 ```
 
-### I have a host that should not receive any mail
+### I have a host that should not receive any mail from the outside
 
 You can use the [`enable_ipv4_daemon`](#enable_ipv4_daemon) and [`enable_ipv6_daemon`](#enable_ipv6_daemon) parameters to prevent Sendmail from listening on all available network interfaces. Use the [`sendmail::mc::daemon_options`](#define-sendmailmcdaemon_options) defined type to explicitly define the addresses to use.
 
@@ -101,21 +137,22 @@ The Sendmail class has a comprehensive set of TLS related parameters. The follow
 
 ```puppet
 class { 'sendmail':
-  ca_cert_file     => '/etc/mail/tls/CA.pem',
+  ca_cert_file     => '/etc/mail/tls/my-ca-cert.pem',
   server_cert_file => '/etc/mail/tls/server.pem',
   server_key_file  => '/etc/mail/tls/server.key',
-  client_cert_file => '/etc/mail/tls/client.pem',
-  client_key_file  => '/etc/mail/tls/client.key',
-  dh_params        => '2048',
+  client_cert_file => '/etc/mail/tls/server.pem',
+  client_key_file  => '/etc/mail/tls/server.key',
+  cipher_list      => 'HIGH:!MD5:!eNULL'
 }
 ```
 
-**Note**: The Sendmail module does not manage any x509 certificates or key files.
+**Note**: The Sendmail module does not manage any x509 certificates or keys.
 
 ## Reference
 
 - [**Public Classes**](#public-classes)
   - [Class: sendmail](#class-sendmail)
+  - [Class: sendmail::nullclient](#class-sendmailnullclient)
   - [Class: sendmail::aliases](#class-sendmailaliases)
   - [Class: sendmail::access](#class-sendmailaccess)
   - [Class: sendmail::domaintable](#class-sendmaildomaintable)
@@ -149,8 +186,12 @@ class { 'sendmail':
   - [Define: sendmail::mc::domain](#define-sendmailmcdomain)
   - [Define: sendmail::mc::enhdnsbl](#define-sendmailmcenhdnsbl)
   - [Define: sendmail::mc::feature](#define-sendmailmcfeature)
+  - [Define: sendmail::mc::include](#define-sendmailmcinclude)
+  - [Define: sendmail::mc::ldaproute_domain](#define-sendmailmcldaproute_domain)
   - [Define: sendmail::mc::local_config](#define-sendmailmclocal_config)
   - [Define: sendmail::mc::mailer](#define-sendmailmcmailer)
+  - [Define: sendmail::mc::masquerade_as](#define-sendmailmcmasquerade_as)
+  - [Define: sendmail::mc::milter](#define-sendmailmcmilter)
   - [Define: sendmail::mc::modify_mailer_flags](#define-sendmailmcmodify_mailer_flags)
   - [Define: sendmail::mc::ostype](#define-sendmailmcostype)
   - [Define: sendmail::mc::starttls](#define-sendmailmcstarttls)
@@ -170,7 +211,7 @@ Performs the basic setup and installation of Sendmail on the system.
 
 ##### `smart_host`
 
-Servers that are behind a firewall may not be able to deliver mail directly to the outside world. In this case the host may need to forward the mail to the gateway machine defined by this parameter. All nonlocal mail is forwarded to this gateway. Default value: `undef`
+Servers behind a firewall may not be able to deliver mail directly to the outside world. In this case the host may need to forward the mail to a gateway machine defined by this parameter. All nonlocal mail is forwarded to this gateway. Default value: `undef`
 
 ##### `log_level`
 
@@ -188,21 +229,13 @@ Should the host accept mail on all IPv4 network adresses. Valid options: `true` 
 
 Should the host accept mail on all IPv6 network adresses. Valid options: `true` or `false`. Default value: `true`
 
-##### `enable_aliases`
-
-Automaticall manage the aliases file. This parameter only manages the file and not the content. Valid options: `true` or `false`. Default value: `true`
-
-##### `aliases`
-
-A hash that will be used to create [`sendmail::aliases::entry`](#define-sendmailaliasesentry) resources. Default value: `{}`
-
 ##### `mailers`
 
 An array of mailers to add to the configuration. Default value: `[ 'smtp', 'local' ]`
 
 ##### `local_host_names`
 
-An array of hostnames that Sendmail recognizes for local delivery. Default values: `[ $::fqdn ]`
+An array of hostnames that Sendmail recognizes for local delivery. Default value: `[ $::fqdn ]`
 
 ##### `relay_domains`
 
@@ -218,47 +251,47 @@ The value of trusted authentication mechanisms to set. If this is a string it is
 
 ##### `ca_cert_file`
 
-The filename of the SSL CA certificate.
+The filename of the SSL CA certificate. Default value: `undef`
 
 ##### `ca_cert_path`
 
-The directory where SSL CA certificates are kept.
+The directory where SSL CA certificates are kept. Default value: `undef`
 
 ##### `server_cert_file`
 
-The filename of the SSL server certificate for inbound connections.
+The filename of the SSL server certificate for inbound connections. Default value: `undef`
 
 ##### `server_key_file`
 
-The filename of the SSL server key for inbound connections.
+The filename of the SSL server key for inbound connections. Default value: `undef`
 
 ##### `client_cert_file`
 
-The filename of the SSL client certificate for outbound connections.
+The filename of the SSL client certificate for outbound connections. Default value: `undef`
 
 ##### `client_key_file`
 
-The filename of the SSL client key for outbound connections.
+The filename of the SSL client key for outbound connections. Default value: `undef`
 
 ##### `crl_file`
 
-The filename with a list of revoked certificates.
+The filename with a list of revoked certificates. Default value: `undef`
 
 ##### `dh_params`
 
-The DH parameters used for encryption. This can be one of the numbers `512`, `1024`, `2048` or a filename with pregenerated parameters.
+The DH parameters used for encryption. This can be one of the numbers `512`, `1024`, `2048` or a filename with pregenerated parameters. Default value: `undef`
 
 ##### `cipher_list`
 
-Set the available ciphers for encrypted connections.
+Set the available ciphers for encrypted connections. Default value: `undef`
 
 ##### `server_ssl_options`
 
-Configure the SSL connection flags for inbound connections.
+Configure the SSL connection flags for inbound connections. Default value: `undef`
 
 ##### `client_ssl_options`
 
-Configure the SSL connection flags for outbound connections.
+Configure the SSL connection flags for outbound connections. Default value: `undef`
 
 ##### `cf_version`
 
@@ -307,6 +340,28 @@ Configure whether the Sendmail service should be running. Valid options: `runnin
 ##### `service_hasstatus`
 
 Define whether the service type can rely on a working init script status. Valid options: `true` or `false`. Default value depends on the operating system and release.
+
+#### Class: `sendmail::nullclient`
+
+Create a simple Sendmail nullclient configuration. No mail can be received from the outside. All local mail is forwarded to a given mail hub.
+
+This is a convenience class to make the configuration simple. Internally it declares the `sendmail` class using appropriate parameters. Normally no other configuration should be necessary.
+
+```puppet
+class { 'sendmail::nullclient':
+  mail_hub => '[192.168.1.1]',
+}
+```
+
+**Parameters for the `sendmail::nullclient` class:**
+
+##### `mail_hub`
+
+The hostname or IP address of the mail hub where all mail is forwarded to. It can be enclosed in brackets to prevent MX lookups.
+
+##### `log_level`
+
+The loglevel for the sendmail process. Valid options: a numeric value. Default value: `undef`
 
 #### Class: `sendmail::aliases`
 
@@ -608,6 +663,39 @@ sendmail::virtusertable::entries:
 
 Manage the `sendmail.mc` file. This class uses the `concat` module to create configuration fragments to assemble the final configuration file.
 
+Different sections of the file are created by using the following settings for the `order` parameter of the fragments:
+
+Order | Type of fragment
+----: | :---------------
+00    | # file header
+01    | VERSIONID
+05    | OSTYPE
+07    | DOMAIN
+10    | # define header
+12    | define
+18    | # LDAP header
+19    | LDAP config
+20    | # FEATURE header
+22    | FEATURE
+28    | FEATURE conncontrol, ratecontrol
+29    | FEATURE nullclient
+30    | # macro header
+31    | MASQUERADE_AS
+38    | MODIFY_MAILER_FLAGS
+40    | DAEMON_OPTIONS
+45    | TRUST_AUTH_MECH
+47    | STARTTLS
+50    | # DNSBL header
+51    | DNSBL features
+55    | # Milter header
+56    | Milter
+60    | # MAILER header
+61-69 | MAILER
+80    | LOCAL_CONFIG header
+81    | LOCAL_CONFIG
+	  | LOCAL_RULE_*
+	  | LOCAL_RULESETS
+
 #### Class: `sendmail::submit`
 
 Manage the `submit.mc` file that contains the configuration for the local message submission program.
@@ -682,11 +770,11 @@ Manages the Sendmail service.
 
 #### Classes: `sendmail::*::file`
 
-These classes manage the various Sendmail database files and ensure correct owner, group and permissions.
+These classes manage the various Sendmail database files and ensure correct owner, group and permissions. Modifications of the files also trigger a rebuild of the corresponding database file.
 
 #### Classes: `sendmail::mc::*_section`
 
-These classes are included by some of the `sendmail::mc::*` defined types to create a suitable section header in the generated `sendmail.mc` file. The sole purpose is to improve the readability of the file.
+These classes are included by some of the `sendmail::mc::*` defined types to create a suitable section header in the generated `sendmail.mc` file. The sole purpose is to improve the readability of the generated file.
 
 ### Public Defined Types
 
@@ -708,7 +796,7 @@ The recipient where the mail is redirected to.
 
 ##### `ensure`
 
-Used to create or remove the alias entry. Valid options: `present`, `absent`. Default: `present`
+Used to create or remove the alias entry. Valid options: `present`, `absent`. Default value: `present`
 
 #### Define: `sendmail::access::entry`
 
@@ -732,7 +820,7 @@ The value for the given key. For the access map this is typically something like
 
 ##### `ensure`
 
-Used to create or remove the access db entry. Valid options: `present`, `absent`. Default: `present`
+Used to create or remove the access db entry. Valid options: `present`, `absent`. Default value: `present`
 
 #### Define: `sendmail::domaintable::entry`
 
@@ -756,7 +844,7 @@ The value for the given key. For the domaintable map this is typically another d
 
 ##### `ensure`
 
-Used to create or remove the domaintable db entry. Valid options: `present`, `absent`. Default: `present`
+Used to create or remove the domaintable db entry. Valid options: `present`, `absent`. Default value: `present`
 
 #### Define: `sendmail::genericstable::entry`
 
@@ -786,7 +874,7 @@ The value for the given key. For the genericstable map this is typically somethi
 
 ##### `ensure`
 
-Used to create or remove the genericstable db entry. Valid options: `present`, `absent`. Default: `present`
+Used to create or remove the genericstable db entry. Valid options: `present`, `absent`. Default value: `present`
 
 #### Define: `sendmail::mailertable::entry`
 
@@ -816,7 +904,7 @@ The value for the given key. For the mailertable map this is typically something
 
 ##### `ensure`
 
-Used to create or remove the mailertable db entry. Valid options: `present`, `absent`. Default: `present`
+Used to create or remove the mailertable db entry. Valid options: `present`, `absent`. Default value: `present`
 
 #### Define: `sendmail::userdb::entry`
 
@@ -840,7 +928,7 @@ The value for the given key. For the userdb map this is typically a single maila
 
 ##### `ensure`
 
-Used to create or remove the userdb db entry. Valid options: `present`, `absent`. Default: `present`
+Used to create or remove the userdb db entry. Valid options: `present`, `absent`. Default value: `present`
 
 #### Define: `sendmail::virtusertable::entry`
 
@@ -870,20 +958,495 @@ The value for the given key. For the virtusertable map this is typically a local
 
 ##### `ensure`
 
-Used to create or remove the virtusertable db entry. Valid options: `present`, `absent`. Default: `present`
+Used to create or remove the virtusertable db entry. Valid options: `present`, `absent`. Default value: `present`
 
 #### Define: `sendmail::mc::daemon_options`
+
+Add a `DAEMON_OPTIONS` macro to the `sendmail.mc` file.
+
+```puppet
+sendmail::mc::daemon_options { 'MTA-v4':
+  family => 'inet',
+  port   => '25',
+}
+```
+
+**Parameters for the `sendmail::mc::daemon_options` type:**
+
+##### `family`
+
+The network family type. Valid options: `inet`, `inet6` or `iso`
+
+##### `addr`
+
+The network address to listen on for remote connections. This can be a hostname or network address.
+
+##### `port`
+
+The port used by the daemon. This can be either a numeric port number or a service name like `smtp` for port 25.
+
+##### `children`
+
+The maximum number of processes to fork for this daemon.
+
+##### `delivery_mode`
+
+The mode of delivery for this daemon. Valid options: `background`, `deferred`, `interactive` or `queueonly`.
+
+##### `input_filter`
+
+A list of milters to use.
+
+##### `listen`
+
+The length of the listen queue used by the operating system.
+
+##### `modify`
+
+Single letter flags to modify the daemon behaviour. See the Sendmail documention for details.
+
+##### `delay_la`
+
+The local load average at which connections are delayed before they are accepted.
+
+##### `queue_la`
+
+The local load average at which received mail is queued and not delivered immediately.
+
+##### `refuse_la`
+
+The local load average at which mail is no longer accepted.
+
+##### `send_buf_size`
+
+The size of the network send buffer used by the operating system. The value is a size in bytes.
+
+##### `receive_buf_size`
+
+The size of the network receive buffer used by the operating system. The value is a size in bytes.
+
 #### Define: `sendmail::mc::define`
+
+Add a m4 macro `define` to the `sendmail.mc` file.
+
+```puppet
+sendmail::mc::define { 'confLOG_LEVEL':
+  expansion  => '12',
+}
+```
+
+**Parameters for the `sendmail::mc::define` type:**
+
+##### `macro_name`
+
+The name of the macro that will be defined. This will be the first argument of the m4 define builtin. Default is the resource title.
+
+**Note**: The macro name should not be quoted as it will always be quoted in the template.
+
+##### `expansion`
+
+The expansion defined for the macro.
+
+##### `use_quotes`
+
+A boolean that indicates if the expansion should be quoted (using m4 quotes). If this argument is `true`, then the expansion will be enclosed in \` and ' symbols in the generated output file. A value of `false` prevents automatic quotes. This is useful if the expansion references another macro. In this case the correct quotes have to be set manually.
+
+**Note**: The name of the defined macro will always be quoted. Valid options: `true` or `false`. Default value: `true`
+
 #### Define: `sendmail::mc::domain`
+
+Add the `DOMAIN` macro to the `sendmail.mc` file.
+
+```puppet
+sendmail::mc::domain { 'generic': }
+```
+
+**Parameters for the `sendmail::mc::domain` type:**
+
+##### `domain`
+
+The name of the sendmail domain file as a string. The value is used as argument to the `DOMAIN` macro to the generated `sendmail.mc` file. This will include the m4 file with domain specific settings. Default is the resource title.
+
 #### Define: `sendmail::mc::enhdnsbl`
+
+Manage enhanced DNS blacklist entries.
+
+```puppet
+sendmail::mc::enhdnsbl { 'dialups.mail-abuse.org':
+  reject_message          => '"550 dial-up site refused"',
+  allow_temporary_failure => true,
+  lookup_result           => '127.0.0.3.',
+}
+```
+
+**Parameters for the `sendmail::mc::enhdnsbl` type:**
+
+##### `blacklist`
+
+The DNS name to query the blacklist. This defaults to the resource title.
+
+##### `reject_message`
+
+The error message used when a message is rejected.
+
+##### `allow_temporary_failure`
+
+Determine what happens when a temporary failure of the DNS lookup occurs. The message is accepted when this parameter is set to `false` (the default). A temporary error is signaled when this is set to `true`.
+
+##### `lookup_result`
+
+Check the DNS lookup for this result. Leave this parameter unset to block the message as long as anything is returned from the lookup.
+
 #### Define: `sendmail::mc::feature`
+
+Add a `FEATURE` macro to the `sendmail.mc` file.
+
+```puppet
+sendmail::mc::feature { 'mailertable': }
+```
+
+```puppet
+sendmail::mc::feature { 'mailertable':
+  args => [ 'hash /etc/mail/mailertable' ],
+}
+```
+
+```puppet
+sendmail::mc::feature { 'mailertable':
+  args       => [ '`hash /etc/mail/mailertable\'' ],
+  use_quotes => false,
+}
+```
+
+**Parameters for the `sendmail::mc::feature` type:**
+
+##### `feature_name`
+
+The name of the feature that will be used. This will be the first argument of the `FEATURE`. Defaults to the resource title.
+
+**Note**: The feature name should not be quoted as it will always be quoted in the template.
+
+##### `args`
+
+The arguments used for the feature. This must be an array and it will be used for the following arguments of the `FEATURE`. Default value: `[]`
+
+##### `use_quotes`
+
+A boolean that indicates if the arguments should be quoted (using m4 quotes). If this argument is `true`, then the arguments will be enclosed in \` and ' symbols in the generated output file.
+
+**Note**: The name of the feature will always be quoted. Valid options: `true` or `false`. Default value: `true`
+
+#### Define: `sendmail::mc::include`
+
+Add include fragments to the `sendmail.mc` file.
+
+```puppet
+sendmail::mc::include { '/etc/mail/m4/clamav-milter.m4': }
+```
+
+**Parameters for the `sendmail::mc::include` type:**
+
+##### `filename`
+
+The absolute path of the file to include. Defaults to the resource title.
+
+##### `order`
+
+The position in the `sendmail.mc` file where the include statement will appear. This requires some internal knowledge of the Sendmail module. See the [`sendmail::mc`](#class-sendmailmc) class for details.
+
+The default value is `59`. This generates the include statements just before the `MAILER` section.
+
+#### Define: `sendmail::mc::ldaproute_domain`
+
+Add a `LDAPROUTE_DOMAIN` macro to the `sendmail.mc` file.
+
+```puppet
+sendmail::mc::ldaproute_domain { 'example.net': }
+```
+
+**Parameters for the `sendmail::mc::ldaproute_domain` type:**
+
+##### `domain`
+
+The name of the domain for which LDAP routing is enabled. Default value is the resource title.
+
 #### Define: `sendmail::mc::local_config`
+
+Add a `LOCAL_CONFIG` section into the `sendmail.mc` file.
+
+```puppet
+sendmail::mc::local_config { 'X-AuthUser':
+  content => 'HX-AuthUser: ${auth_authen}',
+}
+```
+
+**Parameters for the `sendmail::mc::local_config` type:**
+
+##### `content`
+
+The desired contents of the local config section. This attribute is mutually exclusive with `source`.
+
+##### `source`
+
+A source file included as the local config section. This attribute is mutually exclusive with `content`.
+
 #### Define: `sendmail::mc::mailer`
+
+Add a `MAILER` macro to the `sendmail.mc` file.
+
+```puppet
+sendmail::mc::mailer { 'local': }
+sendmail::mc::mailer { 'smtp': }
+```
+
+**Parameters for the `sendmail::mc::mailer` type:**
+
+##### `mailer`
+
+The name of the mailer to add to the configuration. Default is the resource title.
+
+#### Define: `sendmail::mc::masquerade_as`
+
+Add masquerade settings to the `sendmail.mc` file.
+
+```puppet
+sendmail::mc::masquerade_as { 'example.com':
+  masquerade_envelope => true,
+}
+```
+
+**Parameters for the `sendmail::mc::masquerade_as` type:**
+
+##### `masquerade_as`
+
+Mail being sent is rewritten as coming from the indicated address. Default is the resource title.
+
+##### `masquerade_domain`
+
+Normally masquerading only rewrites mail from the local host. This parameter sets a set of domain or host names that is used for masquerading. Default value: `[]`
+
+##### `masquerade_domain_file`
+
+The set of domain or host names to be used for masquerading can also be read from the file given here. Default value: `undef`
+
+##### `masquerade_exception`
+
+This parameter can set exceptions if not all hosts or subdomains for a given domain should be rewritten. Default value: `[]`
+
+##### `masquerade_exception_file`
+
+The exceptions can also be read from the file given here. Default value: `undef`
+
+##### `masquerade_envelope`
+
+Normally only header addresses are used for masquerading. By setting this parameter to `true`, also envelope addresses are rewritten. Default value: `false`
+
+##### `allmasquerade`
+
+Enable the `allmasquerade` feature if set to `true`. Default value: `false`
+
+##### `limited_masquerade`
+
+Enable the `limited_masquerade` feature if set to `true`. Default value: `false`
+
+##### `local_no_masquerade`
+
+Enable the `local_no_masquerade` feature if set to `true`. Default value: `false`
+
+##### `masquerade_entire_domain`
+
+Enable the `masquerade_entire_domain` feature if set to `true`. Default value: `false`
+
+##### `exposed_user`
+
+An array of usernames that should not be masqueraded. This may be useful for system users (`root` has been exposed by default prior to Sendmail 8.10). Default value: `[]`
+
+##### `exposed_user_file`
+
+The usernames that should not be masqueraded can also be read from the file given here. Default value: `undef`
+
+#### Define: `sendmail::mc::milter`
+
+Manage Sendmail Milter configuration in `sendmail.mc`.
+
+```puppet
+sendmail::mc::milter { 'greylist':
+  socket_type => 'local',
+  socket_spec => '/var/run/milter-greylist/milter-greylist.sock',
+}
+```
+
+```puppet
+sendmail::mc::milter { 'greylist':
+  socket_type => 'inet',
+  socket_spec => '12345@127.0.0.1',
+}
+```
+
+**Parameters for the `sendmail::mc::milter` type:**
+
+##### `socket_type`
+
+The type of socket to use for connecting to the milter. Valid values: `local`, `unix`, `inet`, `inet6`
+
+##### `socket_spec`
+
+The socket specification for connecting to the milter. For the type `local` (`unix` is a synonym) this is the full path to the Unix-domain socket. For the `inet` and `inet6` type socket this must be the port number, a literal `@` character and the host or address specification.
+
+##### `flags`
+
+A single character to specify how milter failures are handled by Sendmail. The letter `R` rejects the message, a `T` causes a temporary failure and the character `4` (available with Sendmail V8.4 or later) rejects with a 421 response code.
+
+##### `send_timeout`
+
+Timeout when sending data from the MTA to the Milter. Default value: `undef` (using the Sendmail default 10sec)
+
+##### `receive_timeout`
+
+Timeout when reading a reply from the Milter. Default value: `undef` (using the Sendmail default 10sec)
+
+##### `eom_timeout`
+
+Overall timeout from sending the messag to Milter until the final end of message reply is received. Default value: `undef` (using the Sendmail default 5min)
+
+##### `connect_timeout`
+
+Connection timeout. Default value: `undef` (using the Sendmail default 5min)
+
+##### `order`
+
+A string used to determine the order of the mail filters in the configuration file. This also defines the order in which the filters are called. Default value: `00`
+
+##### `milter_name`
+
+The name of the milter to create. Defaults to the resource title.
+
 #### Define: `sendmail::mc::modify_mailer_flags`
+
+Add a `MODIFY_MAILER_FLAGS` macro to the `sendmail.mc` file.
+
+```puppet
+sendmail::mc::modify_mailer_flags { 'SMTP':
+  flags => '+O',
+}
+```
+
+**Parameters for the `sendmail::mc::modify_mailer_flags` type:**
+
+##### `mailer_name`
+
+The name of the mailer for which the flags will be changed. This name is case-sensitive and must match the [`MAILER`](#define-sendmailmcmailer) macro used. So usually this will be a name in uppercase (e.g. `SMTP` or `LOCAL`). Defaults to the resource title.
+
+##### `flags`
+
+The flags to change.
+
+##### `use_quotes`
+
+A boolean that indicates if the flags should be quoted (using m4 quotes). If this argument is `true`, then the flags will be enclosed in \` and ' symbols in the generated output file. Valid options: `true` or `false`. Default value: `true`
+
 #### Define: `sendmail::mc::ostype`
+
+Add the `OSTYPE` macro to the `sendmail.mc` file.
+
+```puppet
+sendmail::mc::ostype { 'Debian': }
+```
+
+**Parameters for the `sendmail::mc::ostype` type:**
+
+##### `ostype`
+
+The type of operating system as a string. The value is used to add the `OSTYPE` macro to the generated `sendmail.mc` file. This will include the m4 file with operating system specific settings.
+
 #### Define: `sendmail::mc::starttls`
+
+Manage the `STARTTLS` configuration for Sendmail.
+
+```puppet
+sendmail::mc::starttls { 'starttls':
+  ca_cert_file     => '/etc/mail/tls/my-ca-cert.pem',
+  server_cert_file => '/etc/mail/tls/server.pem',
+  server_key_file  => '/etc/mail/tls/server.key',
+  client_cert_file => '/etc/mail/tls/server.pem',
+  client_key_file  => '/etc/mail/tls/server.key',
+  cipher_list      => 'HIGH:!MD5:!eNULL'
+}
+```
+
+**Parameters for the `sendmail::mc::starttls` type:**
+
+##### `ca_cert_file`
+
+The filename of the SSL CA certificate.
+
+##### `ca_cert_path`
+
+The directory where SSL CA certificates are kept.
+
+##### `server_cert_file`
+
+The filename of the SSL server certificate for inbound connections.
+
+##### `server_key_file`
+
+The filename of the SSL server key for inbound connections.
+
+##### `client_cert_file`
+
+The filename of the SSL client certificate for outbound connections.
+
+##### `client_key_file`
+
+The filename of the SSL client key for outbound connections.
+
+##### `crl_file`
+
+The filename with a list of revoked certificates.
+
+##### `dh_params`
+
+The DH parameters used for encryption. This can be one of the numbers `512`, `1024`, `2048` or a filename with generated parameters.
+
+##### `cipher_list`
+
+Set the available ciphers for encrypted connections.
+
+##### `server_ssl_options`
+
+Configure the SSL connection flags for inbound connections.
+
+##### `client_ssl_options`
+
+Configure the SSL connection flags for outbound connections.
+
 #### Define: `sendmail::mc::trust_auth_mech`
+
+Add the `TRUST_AUTH_MECH` macro to the `sendmail.mc` file.
+
+```puppet
+sendmail::mc::trust_auth_mech { 'PLAIN DIGEST-MD5': }
+```
+
+**Parameters for the `sendmail::mc::trust_auth_mech` type:**
+
+##### `trust_auth_mech`
+
+The value of the `TRUST_AUTH_MECH` macro to set. If this is a string it is used as-is. For an array the value will be concatenated into a string. Default is the resource title.
+
 #### Define: `sendmail::mc::versionid`
+
+Add the `VERSIONID` macro to the `sendmail.mc` file.
+
+```puppet
+sendmail::mc::versionid { 'generic': }
+```
+
+**Parameters for the `sendmail::mc::versionid` type:**
+
+##### `versionid`
+
+The identifier (a string) to set in the `sendmail.mc` file.
 
 ### Augeas Lenses
 
