@@ -25,7 +25,7 @@ describe 'sendmail' do
               .that_requires('Anchor[sendmail::config]') \
               .that_comes_before('Anchor[sendmail::end]')
 
-      should_not contain_sendmail__mc__starttls('starttls')
+      should_not contain_class('sendmail::mc::starttls')
     }
   end
 
@@ -157,7 +157,7 @@ describe 'sendmail' do
 
     it {
       should_not contain_class('sendmail::mc')
-      should_not contain_sendmail__mc__starttls('starttls')
+      should_not contain_class('sendmail::mc::starttls')
     }
   end
 
@@ -190,7 +190,7 @@ describe 'sendmail' do
     end
 
     it {
-      should contain_sendmail__mc__starttls('starttls').with(
+      should contain_class('sendmail::mc::starttls').with(
                'cipher_list' => 'foo',
              )
     }

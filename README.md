@@ -204,6 +204,7 @@ sendmail::mc::feature { 'virtusertable':
   - [Class: sendmail::package](#class-sendmailpackage)
   - [Class: sendmail::params](#class-sendmailparams)
   - [Class: sendmail::service](#class-sendmailservice)
+  - [Class: sendmail::mc::starttls](#class-sendmailmcstarttls)
   - [Classes: sendmail::*::file](#classes-sendmailfile)
   - [Classes: sendmail::mc::*_section](#classes-sendmailmc_section)
 - [**Public Defined Types**](#public-defined-types)
@@ -227,7 +228,6 @@ sendmail::mc::feature { 'virtusertable':
   - [Define: sendmail::mc::milter](#define-sendmailmcmilter)
   - [Define: sendmail::mc::modify_mailer_flags](#define-sendmailmcmodify_mailer_flags)
   - [Define: sendmail::mc::ostype](#define-sendmailmcostype)
-  - [Define: sendmail::mc::starttls](#define-sendmailmcstarttls)
   - [Define: sendmail::mc::trust_auth_mech](#define-sendmailmctrust_auth_mech)
   - [Define: sendmail::mc::versionid](#define-sendmailmcversionid)
 - [**Augeas Lenses**](#augeas-lenses)
@@ -808,6 +808,10 @@ The parameter class that contains operating specific values.
 #### Class: `sendmail::service`
 
 Manages the Sendmail service.
+
+#### Class: `sendmail::mc::starttls`
+
+Manage the `STARTTLS` configuration for Sendmail. This class is included by the main [`sendmail`](#class-sendmail) class and should not be used directly.
 
 #### Classes: `sendmail::*::file`
 
@@ -1399,67 +1403,6 @@ sendmail::mc::ostype { 'Debian': }
 ##### `ostype`
 
 The type of operating system as a string. The value is used to add the `OSTYPE` macro to the generated `sendmail.mc` file. This will include the m4 file with operating system specific settings.
-
-#### Define: `sendmail::mc::starttls`
-
-Manage the `STARTTLS` configuration for Sendmail.
-
-```puppet
-sendmail::mc::starttls { 'starttls':
-  ca_cert_file     => '/etc/mail/tls/my-ca-cert.pem',
-  server_cert_file => '/etc/mail/tls/server.pem',
-  server_key_file  => '/etc/mail/tls/server.key',
-  client_cert_file => '/etc/mail/tls/server.pem',
-  client_key_file  => '/etc/mail/tls/server.key',
-  cipher_list      => 'HIGH:!MD5:!eNULL',
-}
-```
-
-**Parameters for the `sendmail::mc::starttls` type:**
-
-##### `ca_cert_file`
-
-The filename of the SSL CA certificate.
-
-##### `ca_cert_path`
-
-The directory where SSL CA certificates are kept.
-
-##### `server_cert_file`
-
-The filename of the SSL server certificate for inbound connections.
-
-##### `server_key_file`
-
-The filename of the SSL server key for inbound connections.
-
-##### `client_cert_file`
-
-The filename of the SSL client certificate for outbound connections.
-
-##### `client_key_file`
-
-The filename of the SSL client key for outbound connections.
-
-##### `crl_file`
-
-The filename with a list of revoked certificates.
-
-##### `dh_params`
-
-The DH parameters used for encryption. This can be one of the numbers `512`, `1024`, `2048` or a filename with generated parameters.
-
-##### `cipher_list`
-
-Set the available ciphers for encrypted connections.
-
-##### `server_ssl_options`
-
-Configure the SSL connection flags for inbound connections.
-
-##### `client_ssl_options`
-
-Configure the SSL connection flags for outbound connections.
 
 #### Define: `sendmail::mc::trust_auth_mech`
 

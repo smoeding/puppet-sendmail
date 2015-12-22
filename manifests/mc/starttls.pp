@@ -1,6 +1,6 @@
-# = Define: sendmail::mc::starttls
+# = Class sendmail::mc::starttls
 #
-# Manage starttls
+# Manage STARTTLS parameters in the 'sendmail.mc' file.
 #
 # == Parameters:
 #
@@ -44,7 +44,7 @@
 #
 # == Sample Usage:
 #
-#   sendmail::mc::starttls { 'starttls':
+#   class { sendmail::mc::starttls':
 #     ca_cert_file     => '/etc/mail/tls/my-ca-cert.pem',
 #     server_cert_file => '/etc/mail/tls/server.pem',
 #     server_key_file  => '/etc/mail/tls/server.key',
@@ -54,7 +54,7 @@
 #   }
 #
 #
-define sendmail::mc::starttls (
+class sendmail::mc::starttls (
   $ca_cert_file       = undef,
   $ca_cert_path       = undef,
   $server_cert_file   = undef,

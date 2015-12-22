@@ -260,7 +260,7 @@ class sendmail (
     ]
 
     if (count($tls_opts) > 0) {
-      sendmail::mc::starttls { 'starttls':
+      class { 'sendmail::mc::starttls':
         ca_cert_file       => $ca_cert_file,
         ca_cert_path       => $ca_cert_path,
         server_cert_file   => $server_cert_file,
