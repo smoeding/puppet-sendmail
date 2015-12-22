@@ -142,7 +142,7 @@ class { 'sendmail':
   server_key_file  => '/etc/mail/tls/server.key',
   client_cert_file => '/etc/mail/tls/server.pem',
   client_key_file  => '/etc/mail/tls/server.key',
-  cipher_list      => 'HIGH:!MD5:!eNULL'
+  cipher_list      => 'HIGH:!MD5:!eNULL',
 }
 ```
 
@@ -713,7 +713,7 @@ Manage the `submit.mc` file that contains the configuration for the local messag
 Manage entries in the Sendmail local-host-names file. Do not declare this class directly. Use the [`local_host_names`](#local_host_names) parameter of the [`sendmail`](#class-sendmail) class instead.
 
 ```puppet
-class { 'sendmail::local_host_names:
+class { 'sendmail::local_host_names':
   local_host_names => [ 'example.org', 'mail.example.org', ],
 }
 ```
@@ -1378,7 +1378,7 @@ sendmail::mc::starttls { 'starttls':
   server_key_file  => '/etc/mail/tls/server.key',
   client_cert_file => '/etc/mail/tls/server.pem',
   client_key_file  => '/etc/mail/tls/server.key',
-  cipher_list      => 'HIGH:!MD5:!eNULL'
+  cipher_list      => 'HIGH:!MD5:!eNULL',
 }
 ```
 
