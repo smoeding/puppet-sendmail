@@ -15,7 +15,51 @@ describe 'sendmail::authinfo::file' do
                'owner'  => 'root',
                'group'  => 'smmsp',
                'mode'   => '0640',
-             )
+               'content' => nil,
+               'source'  => nil,
+             ).that_notifies('Class[sendmail::makeall]')
+    }
+  end
+
+  context 'On Debian with content => foo' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
+    let(:params) do
+      { :content => 'foo' }
+    end
+
+    it {
+      should contain_file('/etc/mail/authinfo').with(
+               'ensure' => 'file',
+               'owner'  => 'root',
+               'group'  => 'smmsp',
+               'mode'   => '0640',
+               'content' => 'foo',
+               'source'  => nil,
+             ).that_notifies('Class[sendmail::makeall]')
+    }
+  end
+
+  context 'On Debian with source => foo' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
+    let(:params) do
+      { :source => 'foo' }
+    end
+
+    it {
+      should contain_file('/etc/mail/authinfo').with(
+               'ensure' => 'file',
+               'owner'  => 'root',
+               'group'  => 'smmsp',
+               'mode'   => '0640',
+               'content' => nil,
+               'source'  => 'foo',
+             ).that_notifies('Class[sendmail::makeall]')
     }
   end
 end

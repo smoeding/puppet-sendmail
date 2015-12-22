@@ -4,7 +4,11 @@
 #
 # == Parameters:
 #
-# None.
+# [*content*]
+#   The content of the file resource.
+#
+# [*source*]
+#   The source of the file resource.
 #
 # == Requires:
 #
@@ -15,13 +19,20 @@
 #   class { 'sendmail::authinfo::file': }
 #
 #
-class sendmail::authinfo::file {
+class sendmail::authinfo::file (
+  $content = undef,
+  $source  = undef,
+) {
   include ::sendmail::params
+  include ::sendmail::makeall
 
   file { $::sendmail::params::authinfo_file:
-    ensure => file,
-    owner  => 'root',
-    group  => $::sendmail::params::sendmail_group,
-    mode   => '0640',
+    ensure  => file,
+    content => $content,
+    source  => $source,
+    owner   => 'root',
+    group   => $::sendmail::params::sendmail_group,
+    mode    => '0640',
+    notify  => Class['::sendmail::makeall'],
   }
 }
