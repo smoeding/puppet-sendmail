@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::starttls' do
-  let(:title) { 'foo' }
+  let(:title) { 'starttls' }
 
   context 'with defaults' do
     it {
@@ -19,7 +19,9 @@ describe 'sendmail::mc::starttls' do
 
     it {
       should contain_concat__fragment('sendmail_mc-starttls') \
-              .with_content(/^define\(`confCACERT', `\/foo'\)dnl/)
+              .with_content(/^define\(`confCACERT', `\/foo'\)dnl/) \
+              .with_order('47') \
+              .that_notifies('Class[sendmail::makeall]')
     }
   end
 
@@ -30,7 +32,9 @@ describe 'sendmail::mc::starttls' do
 
     it {
       should contain_concat__fragment('sendmail_mc-starttls') \
-              .with_content(/^define\(`confCACERT_PATH', `\/foo'\)dnl/)
+              .with_content(/^define\(`confCACERT_PATH', `\/foo'\)dnl/) \
+              .with_order('47') \
+              .that_notifies('Class[sendmail::makeall]')
     }
   end
 
@@ -42,7 +46,9 @@ describe 'sendmail::mc::starttls' do
     it {
       should contain_concat__fragment('sendmail_mc-starttls') \
               .with_content(/^define\(`confSERVER_CERT', `\/foo'\)dnl/) \
-              .with_content(/^define\(`confSERVER_KEY', `\/bar'\)dnl/)
+              .with_content(/^define\(`confSERVER_KEY', `\/bar'\)dnl/) \
+              .with_order('47') \
+              .that_notifies('Class[sendmail::makeall]')
     }
   end
 
@@ -54,7 +60,9 @@ describe 'sendmail::mc::starttls' do
     it {
       should contain_concat__fragment('sendmail_mc-starttls') \
               .with_content(/^define\(`confCLIENT_CERT', `\/foo'\)dnl/) \
-              .with_content(/^define\(`confCLIENT_KEY', `\/bar'\)dnl/)
+              .with_content(/^define\(`confCLIENT_KEY', `\/bar'\)dnl/) \
+              .with_order('47') \
+              .that_notifies('Class[sendmail::makeall]')
     }
   end
 
@@ -65,7 +73,9 @@ describe 'sendmail::mc::starttls' do
 
     it {
       should contain_concat__fragment('sendmail_mc-starttls') \
-              .with_content(/^define\(`confCRL', `\/foo'\)dnl/)
+              .with_content(/^define\(`confCRL', `\/foo'\)dnl/) \
+              .with_order('47') \
+              .that_notifies('Class[sendmail::makeall]')
     }
   end
 
@@ -76,7 +86,9 @@ describe 'sendmail::mc::starttls' do
 
     it {
       should contain_concat__fragment('sendmail_mc-starttls') \
-              .with_content(/^define\(`confDH_PARAMETERS', `512'\)dnl/)
+              .with_content(/^define\(`confDH_PARAMETERS', `512'\)dnl/) \
+              .with_order('47') \
+              .that_notifies('Class[sendmail::makeall]')
     }
   end
 
@@ -87,7 +99,9 @@ describe 'sendmail::mc::starttls' do
 
     it {
       should contain_concat__fragment('sendmail_mc-starttls') \
-              .with_content(/^define\(`confDH_PARAMETERS', `1024'\)dnl/)
+              .with_content(/^define\(`confDH_PARAMETERS', `1024'\)dnl/) \
+              .with_order('47') \
+              .that_notifies('Class[sendmail::makeall]')
     }
   end
 
@@ -98,7 +112,9 @@ describe 'sendmail::mc::starttls' do
 
     it {
       should contain_concat__fragment('sendmail_mc-starttls') \
-              .with_content(/^define\(`confDH_PARAMETERS', `2048'\)dnl/)
+              .with_content(/^define\(`confDH_PARAMETERS', `2048'\)dnl/) \
+              .with_order('47') \
+              .that_notifies('Class[sendmail::makeall]')
     }
   end
 
@@ -109,7 +125,9 @@ describe 'sendmail::mc::starttls' do
 
     it {
       should contain_concat__fragment('sendmail_mc-starttls') \
-              .with_content(/^define\(`confDH_PARAMETERS', `\/foo'\)dnl/)
+              .with_content(/^define\(`confDH_PARAMETERS', `\/foo'\)dnl/) \
+              .with_order('47') \
+              .that_notifies('Class[sendmail::makeall]')
     }
   end
 
@@ -120,7 +138,9 @@ describe 'sendmail::mc::starttls' do
 
     it {
       should contain_concat__fragment('sendmail_mc-starttls') \
-              .with_content(/^define\(`confTLS_SRV_OPTIONS', `V'\)dnl/)
+              .with_content(/^define\(`confTLS_SRV_OPTIONS', `V'\)dnl/) \
+              .with_order('47') \
+              .that_notifies('Class[sendmail::makeall]')
     }
   end
 

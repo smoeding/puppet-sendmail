@@ -47,6 +47,16 @@ describe 'sendmail::mc' do
     }
   end
 
+  context 'with ostype => redhat' do
+    let(:params) do
+      { :ostype => 'redhat' }
+    end
+
+    it {
+      should contain_sendmail__mc__ostype('redhat')
+    }
+  end
+
   context 'with sendmail_mc_domain => foobar' do
     let(:params) do
       { :sendmail_mc_domain => 'foobar' }
