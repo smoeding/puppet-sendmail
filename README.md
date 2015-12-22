@@ -148,6 +148,39 @@ class { 'sendmail':
 
 **Note**: The Sendmail module does not manage any x509 certificates or keys.
 
+### All my users are managed using LDAP
+
+The Sendmail module supports fairly complex setups using building blocks. Here is an LDAP example setup that is used in a production environment:
+
+```puppet
+sendmail::mc::define { 'confLDAP_CLUSTER':
+  expansion => 'example.net',
+}
+
+sendmail::mc::define { 'confLDAP_DEFAULT_SPEC':
+  expansion => '-H ldapi:/// -w 3 -b dc=example,dc=net',
+}
+
+sendmail::mc::ldaproute_domain { 'example.net': }
+
+$ldap_filter = '(&(objectClass=inetLocalMailRecipient)(mailLocalAddress=%0))'
+
+sendmail::mc::feature { 'ldap_routing':
+  args => [
+	"ldap -1 -T<TMPF> -v mailHost -k ${ldap_filter}",
+	"ldap -1 -T<TMPF> -v mailRoutingAddress -k ${ldap_filter}",
+	'bounce',
+	'preserve',
+	'nodomain',
+	'tempfail',
+  ]
+}
+
+sendmail::mc::feature { 'virtusertable':
+  args => [ "ldap -1 -T<TMPF> -v uid -k ${ldap_filter}", ],
+}
+```
+
 ## Reference
 
 - [**Public Classes**](#public-classes)
