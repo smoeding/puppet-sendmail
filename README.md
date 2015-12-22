@@ -83,7 +83,7 @@ See the [Reference](#reference) section for the complete list of available defin
 
 ### My hosts should only be able to send mail
 
-Use the [`sendmaill:nullclient`](##class-sendmailnullclient) class to create a setup where no mail can be received from the outside and all local mail is forwarded to a mail hub. This configuration is appropriate for the majority of satellite hosts.
+Use the [`sendmail::nullclient`](#class-sendmailnullclient) class to create a setup where no mail can be received from the outside and all local mail is forwarded to a mail hub. This configuration is appropriate for the majority of satellite hosts.
 
 ```puppet
 class { 'sendmail::nullclient':
@@ -308,6 +308,14 @@ The host where the message submission program should deliver to. This can be a h
 ##### `msp_port`
 
 The port used for the message submission program. Can be a port number (e.g., `25`) or the literal `MSA` for delivery to the message submission agent on port 587. Make sure to configure a daemon that listens on this port or local mail will remain stuck in the submission queue. Default value: `MSA`
+
+##### `manage_sendmail_mc`
+
+Whether to automatically manage the `sendmail.mc` file. Valid options: `true` or `false`. Default value: `true`
+
+##### `manage_submit_mc`
+
+Whether to automatically manage the `submit.mc` file. Valid options: `true` or `false`. Default value: `true`
 
 ##### `auxiliary_packages`
 

@@ -107,11 +107,19 @@
 #   put it in square brackets (e.g., [hostname]). Delivery to the local
 #   host would therefore use either [127.0.0.1] for IPv4 or [IPv6:::1]
 #   for IPv6. Default value: '[127.0.0.1]'
-
+#
 # [*msp_port*]
 #   The port used for the message submission program. Can be a port number
 #   (e.g., 25) or the literal 'MSA' for delivery to the message submission
 #   agent on port 587. Default value: 'MSA'
+#
+# [*manage_sendmail_mc*]
+#   Whether to automatically manage the 'sendmail.mc' file. Valid options:
+#   'true' or 'false'. Default value: 'true'
+#
+# [*manage_submit_mc*]
+#   Whether to automatically manage the 'submit.mc' file. Valid options:
+#   'true' or 'false'. Default value: 'true'
 #
 # [*auxiliary_packages*]
 #   Additional packages that will be installed by the Sendmail module.
