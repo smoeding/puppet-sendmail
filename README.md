@@ -71,21 +71,21 @@ sendmail::mc::define { 'confMAX_MESSAGE_SIZE':
   expansion => '33554432',
 }
 
-# Include local_procmail feature
-sendmail::mc::feature { 'local_procmail': }
-
 # Include ratecontrol feature with parameters
 sendmail::mc::feature { 'ratecontrol':
   args => [ 'nodelay', 'terminate', ],
 }
 
+# Enable access_db feature
+sendmail::mc::feature { 'access_db': }
+
+# Manage access_db entries in hiera
+class { 'sendmail::access': }
+
 # Manage aliases file using a template
 class { 'sendmail::aliases':
   content => template('site/aliases.erb'),
 }
-
-# Manage access_db entries in hiera
-class { 'sendmail::access': }
 ```
 
 See the [Reference](#reference) section for the complete list of available types that can be used.
