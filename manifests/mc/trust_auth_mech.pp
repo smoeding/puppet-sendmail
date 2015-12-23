@@ -22,12 +22,9 @@ define sendmail::mc::trust_auth_mech (
 ) {
   include ::sendmail::makeall
 
-  if is_array($trust_auth_mech) {
-    # Make a string from array elements
-    $mech = join(strip($trust_auth_mech), ' ')
-  }
-  else {
-    $mech = strip($trust_auth_mech)
+  $mech = is_array($trust_auth_mech) ? {
+    true    => join(strip($trust_auth_mech), ' '),
+    default => strip($trust_auth_mech),
   }
 
   concat::fragment { 'sendmail_mc-trust_auth_mech':
