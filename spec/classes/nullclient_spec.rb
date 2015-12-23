@@ -7,14 +7,25 @@ describe 'sendmail::nullclient' do
       { :mail_hub => 'example.com' }
     end
 
-    it { should contain_class('sendmail::nullclient') }
-
     it {
+      should contain_class('sendmail::nullclient')
       should contain_class('sendmail').with(
                'dont_probe_interfaces' => true,
                'enable_ipv4_daemon'    => false,
                'enable_ipv6_daemon'    => false,
-               'mailers'               => []
+               'mailers'               => [],
+               'ca_cert_file'          => nil,
+               'ca_cert_path'          => nil,
+               'server_cert_file'      => nil,
+               'server_key_file'       => nil,
+               'client_cert_file'      => nil,
+               'client_key_file'       => nil,
+               'crl_file'              => nil,
+               'dh_params'             => nil,
+               'tls_srv_options'       => nil,
+               'cipher_list'           => nil,
+               'server_ssl_options'    => nil,
+               'client_ssl_options'    => nil,
              )
 
       should contain_sendmail__mc__feature('no_default_msa')
@@ -29,5 +40,32 @@ describe 'sendmail::nullclient' do
                'args' => [ 'example.com' ]
              )
     }
+  end
+
+  context "with tls_srv_options => V" do
+    let(:params) do
+      { :tls_srv_options => 'V', :mail_hub => 'example.com' }
+    end
+
+    it {
+      should contain_class('sendmail').with('tls_srv_options' => 'V')
+    }
+  end
+
+  [ 'ca_cert_file', 'ca_cert_path',
+    'server_cert_file', 'server_key_file',
+    'client_cert_file', 'client_key_file',
+    'crl_file', 'dh_params', 'cipher_list',
+    'server_ssl_options', 'client_ssl_options' ].each do |parameter|
+
+    context "with #{parameter} defined" do
+      let(:params) do
+        { parameter.to_sym => '/foo', :mail_hub => 'example.com' }
+      end
+
+      it {
+        should contain_class('sendmail').with(parameter => '/foo')
+      }
+    end
   end
 end

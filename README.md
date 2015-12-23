@@ -404,6 +404,50 @@ The hostname or IP address of the mail hub where all mail is forwarded to. It ca
 
 The loglevel for the sendmail process. Valid options: a numeric value. Default value: `undef`
 
+##### `ca_cert_file`
+
+The filename of the SSL CA certificate. Default value: `undef`
+
+##### `ca_cert_path`
+
+The directory where SSL CA certificates are kept. Default value: `undef`
+
+##### `server_cert_file`
+
+The filename of the SSL server certificate for inbound connections. Default value: `undef`
+
+##### `server_key_file`
+
+The filename of the SSL server key for inbound connections. Default value: `undef`
+
+##### `client_cert_file`
+
+The filename of the SSL client certificate for outbound connections. Default value: `undef`
+
+##### `client_key_file`
+
+The filename of the SSL client key for outbound connections. Default value: `undef`
+
+##### `crl_file`
+
+The filename with a list of revoked certificates. Default value: `undef`
+
+##### `dh_params`
+
+The DH parameters used for encryption. This can be one of the numbers `512`, `1024`, `2048` or a filename with pregenerated parameters. Default value: `undef`
+
+##### `cipher_list`
+
+Set the available ciphers for encrypted connections. Default value: `undef`
+
+##### `server_ssl_options`
+
+Configure the SSL connection flags for inbound connections. Default value: `undef`
+
+##### `client_ssl_options`
+
+Configure the SSL connection flags for outbound connections. Default value: `undef`
+
 #### Class: `sendmail::aliases`
 
 Manage the Sendmail aliases file. The class manages the file either as a single file resource or each entry in the file separately.
