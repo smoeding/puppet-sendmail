@@ -4,11 +4,7 @@ describe 'sendmail::authinfo' do
 
   it { should contain_class('sendmail::authinfo') }
 
-  context 'On Debian with content => foo' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with content => foo' do
     let(:params) do
       { :content => 'foo' }
     end
@@ -21,11 +17,7 @@ describe 'sendmail::authinfo' do
     }
   end
 
-  context 'On Debian with source => foo' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with source => foo' do
     let(:params) do
       { :source => 'foo' }
     end
@@ -38,11 +30,7 @@ describe 'sendmail::authinfo' do
     }
   end
 
-  context 'On Debian with source and content set' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with source and content set' do
     let(:params) do
       { :source => 'foo', :content => 'foo' }
     end
@@ -50,11 +38,7 @@ describe 'sendmail::authinfo' do
     it { expect { should compile }.to raise_error(/cannot specify more than/) }
   end
 
-  context 'On Debian with source and entries set' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with source and entries set' do
     let(:params) do
       {
         :source  => 'foo',
@@ -68,11 +52,7 @@ describe 'sendmail::authinfo' do
     it { expect { should compile }.to raise_error(/cannot specify more than/) }
   end
 
-  context 'On Debian with content and entries set' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with content and entries set' do
     let(:params) do
       {
         :content => 'foo',

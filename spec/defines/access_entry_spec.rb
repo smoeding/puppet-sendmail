@@ -3,10 +3,6 @@ require 'spec_helper'
 describe 'sendmail::access::entry' do
   let(:title) { 'example.com' }
 
-  let(:facts) do
-    { :operatingsystem => 'Debian' }
-  end
-
   context 'with value' do
     let(:params) do
       { :value => 'REJECT' }
@@ -30,7 +26,7 @@ describe 'sendmail::access::entry' do
     it {
       expect {
         should compile
-      }.to raise_error(/value must be set when creating an access entry/)
+      }.to raise_error(/value must be set when creating/)
     }
   end
 end

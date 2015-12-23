@@ -4,11 +4,7 @@ describe 'sendmail::domaintable' do
 
   it { should contain_class('sendmail::domaintable') }
 
-  context 'On Debian with content => foo' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with content => foo' do
     let(:params) do
       { :content => 'foo' }
     end
@@ -21,11 +17,7 @@ describe 'sendmail::domaintable' do
     }
   end
 
-  context 'On Debian with source => foo' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with source => foo' do
     let(:params) do
       { :source => 'foo' }
     end
@@ -38,11 +30,7 @@ describe 'sendmail::domaintable' do
     }
   end
 
-  context 'On Debian with source and content set' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with source and content set' do
     let(:params) do
       { :source => 'foo', :content => 'foo' }
     end
@@ -50,11 +38,7 @@ describe 'sendmail::domaintable' do
     it { expect { should compile }.to raise_error(/cannot specify more than/) }
   end
 
-  context 'On Debian with source and entries set' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with source and entries set' do
     let(:params) do
       {
         :source  => 'foo',
@@ -65,11 +49,7 @@ describe 'sendmail::domaintable' do
     it { expect { should compile }.to raise_error(/cannot specify more than/) }
   end
 
-  context 'On Debian with content and entries set' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with content and entries set' do
     let(:params) do
       {
         :content => 'foo',
@@ -80,11 +60,7 @@ describe 'sendmail::domaintable' do
     it { expect { should compile }.to raise_error(/cannot specify more than/) }
   end
 
-  context 'On Debian with valid parameter hash' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with valid parameter hash' do
     let(:params) do
       { :entries => { 'example.com' => { 'value' => 'example.org' } } }
     end
@@ -92,11 +68,7 @@ describe 'sendmail::domaintable' do
     it { should contain_sendmail__domaintable__entry('example.com') }
   end
 
-  context 'On Debian with empty parameter hash' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with empty parameter hash' do
     let(:params) do
       { :entries => { } }
     end
@@ -104,11 +76,7 @@ describe 'sendmail::domaintable' do
     it { expect { should compile } }
   end
 
-  context 'On Debian with wrong parameter type' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with wrong parameter type' do
     let(:params) do
       { :entries => 'example.com' }
     end
