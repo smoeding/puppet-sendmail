@@ -704,39 +704,6 @@ sendmail::virtusertable::entries:
 
 Manage the `sendmail.mc` file. This class uses the `concat` module to create configuration fragments to assemble the final configuration file.
 
-Different sections of the file are created by using the following settings for the `order` parameter of the fragments:
-
-Order | Type of fragment
-----: | :---------------
-00    | # file header
-01    | VERSIONID
-05    | OSTYPE
-07    | DOMAIN
-10    | # define header
-12    | define
-18    | # LDAP header
-19    | LDAP config
-20    | # FEATURE header
-22    | FEATURE
-28    | FEATURE conncontrol, ratecontrol
-29    | FEATURE nullclient
-30    | # macro header
-31    | MASQUERADE_AS
-38    | MODIFY_MAILER_FLAGS
-40    | DAEMON_OPTIONS
-45    | TRUST_AUTH_MECH
-47    | STARTTLS
-50    | # DNSBL header
-51    | DNSBL features
-55    | # Milter header
-56    | Milter
-60    | # MAILER header
-61-69 | MAILER
-80    | LOCAL_CONFIG header
-81    | LOCAL_CONFIG
-	  | LOCAL_RULE_*
-	  | LOCAL_RULESETS
-
 #### Class: `sendmail::submit`
 
 Manage the `submit.mc` file that contains the configuration for the local message submission program.
