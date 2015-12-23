@@ -31,9 +31,7 @@ Sendmail is a powerful mail transfer agent, and this modules provides an easy wa
 * In a default installation almost all the managed files are in the `/etc/mail` directory. A notably exception is the `/etc/aliases` file.
 * The module may generate a new `/etc/mail/sendmail.mc` which is the source for `/etc/mail/sendmail.cf`. This file is the main Sendmail configuration file and it affects how Sendmail operates.
 
-**Warning**: Make sure to understand and test everything in these files before putting it in production. You alone are accountable for deploying a safe mailer configuration.
-
-**Warning**: If you do not know how to configure Sendmail without this module, then you should not assume you can do it with it.
+**WARNING**: Make sure to understand and test everything in these files before putting it in production. You alone are accountable for deploying a safe mailer configuration. If you do not know how to configure Sendmail without this module, then you should not assume you can do it with it.
 
 ### Setup Requirements
 
@@ -68,22 +66,33 @@ class { 'sendmail':
   smart_host => 'relay.example.com',
 }
 
+# Adjust acceptable message size
 sendmail::mc::define { 'confMAX_MESSAGE_SIZE':
   expansion => '33554432',
 }
 
+# Include local_procmail feature
 sendmail::mc::feature { 'local_procmail': }
 
+# Include ratecontrol feature with parameters
 sendmail::mc::feature { 'ratecontrol':
   args => [ 'nodelay', 'terminate', ],
 }
+
+# Manage aliases file using a template
+class { 'sendmail::aliases':
+  content => template('site/aliases.erb'),
+}
+
+# Manage access_db entries in hiera
+class { 'sendmail::access': }
 ```
 
-See the [Reference](#reference) section for the complete list of available defined types that can be used.
+See the [Reference](#reference) section for the complete list of available types that can be used.
 
-### My hosts should only be able to send mail
+### Most hosts do not need to receive mail
 
-Use the [`sendmail::nullclient`](#class-sendmailnullclient) class to create a setup where no mail can be received from the outside and all local mail is forwarded to a mail hub. This configuration is appropriate for the majority of satellite hosts.
+Use the [`sendmail::nullclient`](#class-sendmailnullclient) class to create a setup where no mail can be received from the outside and all local mail is forwarded to a central mail hub. This configuration is appropriate for the majority of satellite hosts.
 
 ```puppet
 class { 'sendmail::nullclient':
@@ -150,7 +159,7 @@ class { 'sendmail':
 
 ### All my users are managed using LDAP
 
-The Sendmail module supports fairly complex setups using building blocks. Here is an LDAP example setup that is used in a production environment:
+A complex configuration like this is supported by using the provided defined types as building blocks. The following example configuration reflects a setup that is actually in use:
 
 ```puppet
 sendmail::mc::define { 'confLDAP_CLUSTER':
@@ -1105,9 +1114,9 @@ The expansion defined for the macro.
 
 ##### `use_quotes`
 
-A boolean that indicates if the expansion should be quoted (using m4 quotes). If this argument is `true`, then the expansion will be enclosed in \` and ' symbols in the generated output file. A value of `false` prevents automatic quotes. This is useful if the expansion references another macro. In this case the correct quotes have to be set manually.
+A boolean that indicates if the expansion should be quoted (using m4 quotes). If this argument is `true`, then the expansion will be enclosed in \` and ' symbols in the generated output file. A value of `false` prevents automatic quotes. This is useful if the expansion references another macro. In this case the correct quotes have to be set manually. Valid options: `true` or `false`. Default value: `true`
 
-**Note**: The name of the defined macro will always be quoted. Valid options: `true` or `false`. Default value: `true`
+**Note**: The name of the defined macro will always be quoted.
 
 #### Define: `sendmail::mc::domain`
 
@@ -1188,9 +1197,9 @@ The arguments used for the feature. This must be an array and it will be used fo
 
 ##### `use_quotes`
 
-A boolean that indicates if the arguments should be quoted (using m4 quotes). If this argument is `true`, then the arguments will be enclosed in \` and ' symbols in the generated output file.
+A boolean that indicates if the arguments should be quoted (using m4 quotes). If this argument is `true`, then the arguments will be enclosed in \` and ' symbols in the generated output file. Valid options: `true` or `false`. Default value: `true`
 
-**Note**: The name of the feature will always be quoted. Valid options: `true` or `false`. Default value: `true`
+**Note**: The name of the feature will always be quoted.
 
 #### Define: `sendmail::mc::include`
 
@@ -1208,7 +1217,7 @@ The absolute path of the file to include. Defaults to the resource title.
 
 ##### `order`
 
-The position in the `sendmail.mc` file where the include statement will appear. This requires some internal knowledge of the Sendmail module. See the [`sendmail::mc`](#class-sendmailmc) class for details.
+The position in the `sendmail.mc` file where the include statement will appear. This requires some internal knowledge of the Sendmail module. See the comments in the code of the `sendmail::mc` class for details.
 
 The default value is `59`. This generates the include statements just before the `MAILER` section.
 
@@ -1421,6 +1430,12 @@ Add the `TRUST_AUTH_MECH` macro to the `sendmail.mc` file.
 
 ```puppet
 sendmail::mc::trust_auth_mech { 'PLAIN DIGEST-MD5': }
+```
+
+```puppet
+sendmail::mc::trust_auth_mech { 'trust_auth_mech':
+  trust_auth_mech => [ 'PLAIN', 'DIGEST-MD5', ],
+}
 ```
 
 **Parameters for the `sendmail::mc::trust_auth_mech` type:**
