@@ -13,6 +13,14 @@
 #   The loglevel for the sendmail process.
 #   Valid options: a numeric value. Default value: undef.
 #
+# [*port*]
+#   The port used for the local message submission agent. Default value:
+#   '587'.
+#
+# [*port_option_modify*]
+#   Port option modifiers for the local message submission agent. This
+#   parameter is used to set the 'daemon_port_options'. Default value: undef
+#
 # [*ca_cert_file*]
 #   The filename of the SSL CA certificate.
 #
@@ -60,6 +68,8 @@
 #
 class sendmail::nullclient (
   $mail_hub,
+  $port               = '587',
+  $port_option_modify = undef,
   $log_level          = undef,
   $ca_cert_file       = undef,
   $ca_cert_path       = undef,
@@ -74,6 +84,9 @@ class sendmail::nullclient (
   $server_ssl_options = undef,
   $client_ssl_options = undef,
 ) {
+
+  validate_re($port, '^[0-9]+$')
+  validate_re($port_option_modify, '^[abcfhruACEOS]*$')
 
   class { '::sendmail':
     log_level             => $log_level,
@@ -100,7 +113,8 @@ class sendmail::nullclient (
   ::sendmail::mc::daemon_options { 'MTA':
     family => 'inet',
     addr   => '127.0.0.1',
-    port   => '587',
+    port   => $port,
+    modify => $port_option_modify,
   }
 
   ::sendmail::mc::feature { 'nullclient':

@@ -33,12 +33,53 @@ describe 'sendmail::nullclient' do
       should contain_sendmail__mc__daemon_options('MTA').with(
                'family' => 'inet',
                'addr'   => '127.0.0.1',
-               'port'   => '587'
+               'port'   => '587',
+               'modify' => nil,
              )
 
       should contain_sendmail__mc__feature('nullclient').with(
                'args' => [ 'example.com' ]
              )
+    }
+  end
+
+  context "with port => 25" do
+    let(:params) do
+      { :port => '25', :mail_hub => 'example.com' }
+    end
+
+    it {
+      should contain_sendmail__mc__daemon_options('MTA').with('port' => '25')
+    }
+  end
+
+  context "with port => foo" do
+    let(:params) do
+      { :port => 'foo', :mail_hub => 'example.com' }
+    end
+
+    it {
+      expect { should compile }.to raise_error(/does not match/)
+    }
+  end
+
+  context "with port_option_modify => S" do
+    let(:params) do
+      { :port_option_modify => 'S', :mail_hub => 'example.com' }
+    end
+
+    it {
+      should contain_sendmail__mc__daemon_options('MTA').with('modify' => 'S')
+    }
+  end
+
+  context "with port_option_modify => X" do
+    let(:params) do
+      { :port_option_modify => 'X', :mail_hub => 'example.com' }
+    end
+
+    it {
+      expect { should compile }.to raise_error(/does not match/)
     }
   end
 

@@ -393,13 +393,14 @@ Define whether the service type can rely on a working init script status. Valid 
 
 #### Class: `sendmail::nullclient`
 
-Create a simple Sendmail nullclient configuration. No mail can be received from the outside. All local mail is forwarded to a given mail hub.
+Create a simple Sendmail nullclient configuration. No mail can be received from the outside since the Sendmail daemon only listens on the localhost address `127.0.0.1`. All local mail is forwarded to a given mail hub.
 
 This is a convenience class to make the configuration simple. Internally it declares the `sendmail` class using appropriate parameters. Normally no other configuration should be necessary.
 
 ```puppet
 class { 'sendmail::nullclient':
-  mail_hub => '[192.168.1.1]',
+  mail_hub           => '[192.168.1.1]',
+  port_option_modify => 'S',
 }
 ```
 
@@ -412,6 +413,14 @@ The hostname or IP address of the mail hub where all mail is forwarded to. It ca
 ##### `log_level`
 
 The loglevel for the sendmail process. Valid options: a numeric value. Default value: `undef`
+
+##### `port`
+
+The port used for the local message submission agent. Default value: `587`.
+
+##### `port_option_modify`
+
+Port option modifiers for the local message submission agent. This parameter is used for the daemon port options. A useful value for the nullclient configuration might be `S` to prevent offering STARTTLS on the MSA port. Default value: `undef`
 
 ##### `ca_cert_file`
 
