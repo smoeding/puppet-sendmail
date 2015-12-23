@@ -1,6 +1,6 @@
 # = Define: sendmail::userdb::entry
 #
-# Manage entries in the Sendmail userdb db file.
+# Manage an entry in the Sendmail userdb db file.
 #
 # == Parameters:
 #

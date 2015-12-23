@@ -43,7 +43,7 @@ define sendmail::genericstable::entry (
   validate_re($ensure, [ 'present', 'absent' ])
 
   if ($ensure == 'present' and empty($value)) {
-    fail('value must be set when creating an genericstable entry')
+    fail('value must be set when creating a genericstable entry')
   }
 
   $changes = $ensure ? {

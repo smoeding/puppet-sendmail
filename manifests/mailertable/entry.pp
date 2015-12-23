@@ -44,7 +44,7 @@ define sendmail::mailertable::entry (
   validate_re($ensure, [ 'present', 'absent' ])
 
   if ($ensure == 'present' and empty($value)) {
-    fail('value must be set when creating an mailertable entry')
+    fail('value must be set when creating a mailertable entry')
   }
 
   $changes = $ensure ? {

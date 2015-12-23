@@ -1,6 +1,6 @@
 # = Define: sendmail::virtusertable::entry
 #
-# Manage entries in the Sendmail virtusertable db file.
+# Manage an entry in the Sendmail virtusertable db file.
 #
 # == Parameters:
 #
@@ -43,7 +43,7 @@ define sendmail::virtusertable::entry (
   validate_re($ensure, [ 'present', 'absent' ])
 
   if ($ensure == 'present' and empty($value)) {
-    fail('value must be set when creating an virtusertable entry')
+    fail('value must be set when creating a virtusertable entry')
   }
 
   $changes = $ensure ? {

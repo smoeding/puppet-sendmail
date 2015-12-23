@@ -39,7 +39,7 @@ define sendmail::domaintable::entry (
   validate_re($ensure, [ 'present', 'absent' ])
 
   if ($ensure == 'present' and empty($value)) {
-    fail('value must be set when creating an domaintable entry')
+    fail('value must be set when creating a domaintable entry')
   }
 
   $changes = $ensure ? {
