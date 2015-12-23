@@ -151,4 +151,15 @@ describe 'sendmail::mc::feature' do
       should contain_class('sendmail::mc::feature_section')
     }
   end
+
+  context 'with feature access misspelled' do
+    let(:title) { 'access' }
+
+    it {
+      should contain_concat__fragment('sendmail_mc-feature-access') \
+              .with_content(/^FEATURE\(`access_db'\)dnl$/) \
+              .with_order('22')
+      should contain_class('sendmail::mc::feature_section')
+    }
+  end
 end

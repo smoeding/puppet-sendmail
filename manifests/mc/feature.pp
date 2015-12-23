@@ -50,15 +50,21 @@ define sendmail::mc::feature (
   validate_array($args)
   validate_bool($use_quotes)
 
+  # Gracefully handle misspelled feature names
+  $feature = $feature_name ? {
+    'access' => 'access_db',
+    default  => $feature_name,
+  }
+
   # Add quotes to the args if needed
   $exp_arg = $use_quotes ? {
     true  => suffix(prefix($args, '`'), '\''),
     false => $args,
   }
 
-  $arr = concat([ "`${feature_name}'" ], $exp_arg)
+  $arr = concat([ "`${feature}'" ], $exp_arg)
 
-  $order = $feature_name ? {
+  $order = $feature ? {
     'ldap_routing' => '19',
     'conncontrol'  => '28',
     'ratecontrol'  => '28',
