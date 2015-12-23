@@ -6,11 +6,15 @@
 #
 # [*mailer_name*]
 #   The name of the mailer for which the flags will be changed. This name is
-#   case-sensitive and must match the MAILER macro used. So usually this will
-#   be a name in uppercase (e.g. SMTP or LOCAL).
+#   case-sensitive and must conform to the name of the mailer. Usually this
+#   will be a name in uppercase (e.g. 'SMTP' or 'LOCAL'). Defaults to the
+#   resource title.
 #
 # [*flags*]
-#   The flags to change.
+#   The flags to change. Adding single flags is possible by prefixing the
+#   flag with a '+' symbol. Removing single flags from the mailer can be done
+#   with a '-' symbol as prefix. Without a leading '+' or '-' the flags will
+#   replace the flags of the delivery agent.
 #
 # [*use_quotes*]
 #   A boolean that indicates if the flags should be quoted (using m4 quotes).
