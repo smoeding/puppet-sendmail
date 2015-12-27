@@ -21,13 +21,13 @@ Install and manage the Sendmail MTA.
 
 ## Module Description
 
-Sendmail is a powerful mail transfer agent, and this modules provides an easy way to manage the main Sendmail configuration files `/etc/mail/sendmail.mc` and `/etc/mail/submit.mc`. It also manages entries in various Sendmail database files (e.g. `/etc/mail/access` and `/etc/mail/mailertable`).
+Sendmail is a powerful mail transfer agent, and this modules provides an easier way to manage the main Sendmail configuration files `/etc/mail/sendmail.mc` and `/etc/mail/submit.mc`. It also manages entries in various Sendmail database files (e.g. `/etc/mail/access` and `/etc/mail/mailertable`).
 
 ## Setup
 
 ### What sendmail affects
 
-* The module installs the operating system package to run the Sendmail MTA and possibly some other modules to support it (make, m4, ...)
+* The module installs the operating system package to run the Sendmail MTA and possibly some other packages (make, m4, ...) to support it.
 * In a default installation almost all the managed files are in the `/etc/mail` directory. A notably exception is the `/etc/aliases` file.
 * The module may generate a new `/etc/mail/sendmail.mc` which is the source for `/etc/mail/sendmail.cf`. This file is the main Sendmail configuration file and it affects how Sendmail operates.
 
@@ -155,11 +155,11 @@ class { 'sendmail':
 }
 ```
 
-**Note**: The Sendmail module does not manage any x509 certificates or keys.
+**Note**: The Sendmail module does not manage any X.509 certificates or keys.
 
 ### All my users are managed using LDAP
 
-A complex configuration like this is supported by using the provided defined types as building blocks. The following example configuration reflects a setup that is actually in use:
+A complex configuration like this is supported by using the provided defined types as building blocks. The following example configuration reflects a setup that is actually in use.
 
 ```puppet
 sendmail::mc::define { 'confLDAP_CLUSTER':
@@ -1021,7 +1021,7 @@ The network address to listen on for remote connections. This can be a hostname 
 
 ##### `port`
 
-The port used by the daemon. This can be either a numeric port number or a service name like `smtp` for port 25.
+The port used by the daemon. This can be either a numeric port number or a service name like `smtp` for port 25 or `submission` for port 587.
 
 ##### `children`
 
