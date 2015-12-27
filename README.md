@@ -774,49 +774,13 @@ Manage the `submit.mc` file that contains the configuration for the local messag
 
 Manage entries in the Sendmail local-host-names file. Do not declare this class directly. Use the [`local_host_names`](#local_host_names) parameter of the [`sendmail`](#class-sendmail) class instead.
 
-```puppet
-class { 'sendmail::local_host_names':
-  local_host_names => [ 'example.org', 'mail.example.org', ],
-}
-```
-
-**Parameters for the `sendmail::local_host_names` class:**
-
-##### `local_host_names`
-
-An array of host names that will be written into the local host names file. Leading or trailing whitespace is ignored. Empty entries are also ignored. Default value: `[]`
-
 #### Class: `sendmail::relay_domains`
 
 Manage entries in the Sendmail relay-domains file. Do not declare this class directly. Use the [`relay_domains`](#relay_domains) parameter of the [`sendmail`](#class-sendmail) class instead.
 
-```puppet
-class { 'sendmail::relay_domains':
-  relay_domains => [ 'example.com', 'example.net', ],
-}
-```
-
-**Parameters for the `sendmail::relay_domains` class:**
-
-##### `relay_domains`
-
-An array of domain names that will be written into the relay domains file. Leading or trailing whitespace is ignored. Empty entries are also ignored. Default value: `[]`
-
 #### Class: `sendmail::trusted_users`
 
 Manage entries in the Sendmail trusted-users file. Do not declare this class directly. Use the [`trusted_users`](#trusted_users) parameter of the [`sendmail`](#class-sendmail) class instead.
-
-```puppet
-class { 'sendmail::trusted_users':
-  trusted_users => [ 'root', 'fred', ],
-}
-```
-
-**Parameters for the `sendmail::trusted_users` class:**
-
-##### `trusted_users`
-
-An array of user names that will be written into the trusted users file. Leading or trailing whitespace is ignored. Empty entries are also ignored. Default value: `[]`
 
 #### Class: `sendmail::aliases::newaliases`
 
