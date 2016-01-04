@@ -109,38 +109,4 @@ describe 'sendmail::nullclient' do
       }
     end
   end
-
-  context 'with masquerade_as => example.com' do
-    let(:params) do
-      {
-        :mail_hub      => 'example.net',
-        :masquerade_as => 'example.com',
-      }
-    end
-
-    it {
-      should contain_sendmail__mc__masquerade_as('example.com').with(
-               'masquerade_envelope' => false,
-               'exposed_user'        => [],
-             )
-    }
-  end
-
-  context 'with masquerade_as => example.com and parameters' do
-    let(:params) do
-      {
-        :mail_hub            => 'example.net',
-        :masquerade_as       => 'example.com',
-        :masquerade_envelope => true,
-        :exposed_user        => [ 'root', ],
-      }
-    end
-
-    it {
-      should contain_sendmail__mc__masquerade_as('example.com').with(
-               'masquerade_envelope' => true,
-               'exposed_user'        => [ 'root' ],
-             )
-    }
-  end
 end

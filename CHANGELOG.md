@@ -2,11 +2,11 @@
 
 ### Summary
 
-TODO
+This release fixes a bug that can lead to an aborted Puppet run when a STARTTLS configuration is deployed to a machine where Sendmail is not yet installed.
 
 #### Features
 
-- Add parameters to allow simple masquerading with the `sendmail::nullclient` class.
+- Rename daemon in nullcient setup from `MTA` to `MSA`.
 
 #### Bugfixes
 
