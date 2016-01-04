@@ -55,6 +55,21 @@
 # [*client_ssl_options*]
 #   Configure the SSL connection flags for outbound connections.
 #
+# [*masquerade_as*]
+#   Mail being sent is rewritten as coming from the indicated address.
+#   This parameter must be set, to enable masquerading for the nullclient
+#   setup. Default value: undef
+#
+# [*masquerade_envelope*]
+#   Normally only header addresses are used for masquerading. By setting this
+#   parameter to 'true', also envelope addresses are rewritten. Default
+#   value: 'false'
+#
+# [*exposed_user*]
+#   An array of usernames that should not be masqueraded. This may be useful
+#   for system users ('root' has been exposed by default prior to Sendmail
+#   8.10). Default value: '[]'
+#
 # == Requires:
 #
 # Nothing.
@@ -68,21 +83,24 @@
 #
 class sendmail::nullclient (
   $mail_hub,
-  $port               = '587',
-  $port_option_modify = undef,
-  $log_level          = undef,
-  $ca_cert_file       = undef,
-  $ca_cert_path       = undef,
-  $server_cert_file   = undef,
-  $server_key_file    = undef,
-  $client_cert_file   = undef,
-  $client_key_file    = undef,
-  $crl_file           = undef,
-  $dh_params          = undef,
-  $tls_srv_options    = undef,
-  $cipher_list        = undef,
-  $server_ssl_options = undef,
-  $client_ssl_options = undef,
+  $port                = '587',
+  $port_option_modify  = undef,
+  $log_level           = undef,
+  $ca_cert_file        = undef,
+  $ca_cert_path        = undef,
+  $server_cert_file    = undef,
+  $server_key_file     = undef,
+  $client_cert_file    = undef,
+  $client_key_file     = undef,
+  $crl_file            = undef,
+  $dh_params           = undef,
+  $tls_srv_options     = undef,
+  $cipher_list         = undef,
+  $server_ssl_options  = undef,
+  $client_ssl_options  = undef,
+  $masquerade_as       = undef,
+  $masquerade_envelope = false,
+  $exposed_user        = [],
 ) {
 
   validate_re($port, '^[0-9]+$')
@@ -119,5 +137,12 @@ class sendmail::nullclient (
 
   ::sendmail::mc::feature { 'nullclient':
     args => [ $mail_hub ],
+  }
+
+  if ($masquerade_as != undef) {
+    ::sendmail::mc::masquerade_as { $masquerade_as:
+      masquerade_envelope => $masquerade_envelope,
+      exposed_user        => $exposed_user,
+    }
   }
 }

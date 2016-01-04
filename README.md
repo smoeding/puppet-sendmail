@@ -466,6 +466,18 @@ Configure the SSL connection flags for inbound connections. Default value: `unde
 
 Configure the SSL connection flags for outbound connections. Default value: `undef`
 
+##### `masquerade_as`
+
+Mail being sent is rewritten as coming from the indicated address. This parameter must be set, to enable masquerading for the nullclient setup. Default value: `undef`
+
+##### `masquerade_envelope`
+
+Normally only header addresses are used for masquerading. By setting this parameter to `true`, also envelope addresses are rewritten. Default value: `false`
+
+##### `exposed_user`
+
+An array of usernames that should not be masqueraded. This may be useful for system users (`root` has been exposed by default prior to Sendmail 8.10). Default value: `[]`
+
 #### Class: `sendmail::aliases`
 
 Manage the Sendmail aliases file. The class manages the file either as a single file resource or each entry in the file separately.
