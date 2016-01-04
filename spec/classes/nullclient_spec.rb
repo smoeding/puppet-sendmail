@@ -30,7 +30,7 @@ describe 'sendmail::nullclient' do
 
       should contain_sendmail__mc__feature('no_default_msa')
 
-      should contain_sendmail__mc__daemon_options('MTA').with(
+      should contain_sendmail__mc__daemon_options('MSA').with(
                'family' => 'inet',
                'addr'   => '127.0.0.1',
                'port'   => '587',
@@ -49,7 +49,7 @@ describe 'sendmail::nullclient' do
     end
 
     it {
-      should contain_sendmail__mc__daemon_options('MTA').with('port' => '25')
+      should contain_sendmail__mc__daemon_options('MSA').with('port' => '25')
     }
   end
 
@@ -69,7 +69,7 @@ describe 'sendmail::nullclient' do
     end
 
     it {
-      should contain_sendmail__mc__daemon_options('MTA').with('modify' => 'S')
+      should contain_sendmail__mc__daemon_options('MSA').with('modify' => 'S')
     }
   end
 

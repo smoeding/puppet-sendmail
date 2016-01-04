@@ -128,7 +128,7 @@ class sendmail::nullclient (
 
   ::sendmail::mc::feature { 'no_default_msa': }
 
-  ::sendmail::mc::daemon_options { 'MTA':
+  ::sendmail::mc::daemon_options { 'MSA':
     family => 'inet',
     addr   => '127.0.0.1',
     port   => $port,
