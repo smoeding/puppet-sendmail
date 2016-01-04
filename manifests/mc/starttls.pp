@@ -93,37 +93,39 @@ class sendmail::mc::starttls (
     notify  => Class['::sendmail::makeall'],
   }
 
-  if versioncmp($::sendmail_version, '8.15.1') < 0 {
-    if $cipher_list {
-      sendmail::mc::local_config { 'CipherList':
-        content => "O CipherList=${cipher_list}\n",
+  if $::sendmail_version != undef {
+    if versioncmp($::sendmail_version, '8.15.1') < 0 {
+      if $cipher_list {
+        sendmail::mc::local_config { 'CipherList':
+          content => "O CipherList=${cipher_list}\n",
+        }
+      }
+      if $server_ssl_options {
+        sendmail::mc::local_config { 'ServerSSLOptions':
+          content => "O ServerSSLOptions=${server_ssl_options}\n",
+        }
+      }
+      if $client_ssl_options {
+        sendmail::mc::local_config { 'ClientSSLOptions':
+          content => "O ClientSSLOptions=${client_ssl_options}\n",
+        }
       }
     }
-    if $server_ssl_options {
-      sendmail::mc::local_config { 'ServerSSLOptions':
-        content => "O ServerSSLOptions=${server_ssl_options}\n",
+    else {
+      if $cipher_list {
+        sendmail::mc::define { 'confCIPHER_LIST':
+          expansion => $cipher_list,
+        }
       }
-    }
-    if $client_ssl_options {
-      sendmail::mc::local_config { 'ClientSSLOptions':
-        content => "O ClientSSLOptions=${client_ssl_options}\n",
+      if $server_ssl_options {
+        sendmail::mc::define { 'confSERVER_SSL_OPTIONS':
+          expansion => $server_ssl_options,
+        }
       }
-    }
-  }
-  else {
-    if $cipher_list {
-      sendmail::mc::define { 'confCIPHER_LIST':
-        expansion => $cipher_list,
-      }
-    }
-    if $server_ssl_options {
-      sendmail::mc::define { 'confSERVER_SSL_OPTIONS':
-        expansion => $server_ssl_options,
-      }
-    }
-    if $client_ssl_options {
-      sendmail::mc::define { 'confCLIENT_SSL_OPTIONS':
-        expansion => $client_ssl_options,
+      if $client_ssl_options {
+        sendmail::mc::define { 'confCLIENT_SSL_OPTIONS':
+          expansion => $client_ssl_options,
+        }
       }
     }
   }
