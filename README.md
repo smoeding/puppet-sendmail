@@ -1,6 +1,7 @@
 # sendmail
 
 [![Build Status](https://travis-ci.org/smoeding/puppet-sendmail.svg?branch=master)](https://travis-ci.org/smoeding/puppet-sendmail)
+[![Puppet Forge](http://img.shields.io/puppetforge/v/stm/sendmail.svg)](https://forge.puppetlabs.com/stm/sendmail)
 
 #### Table of Contents
 
