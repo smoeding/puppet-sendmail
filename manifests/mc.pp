@@ -203,7 +203,7 @@ class sendmail::mc (
     # This would be easier in Puppet 4 where $mailers.each is available.
 
     # Turn every string into a JSON attribute-value pair
-    $json_single  = regsubst($mailers, '^(.*)$', '"\1": {}')
+    $json_single  = regsubst($mailers, '^.*$', '"\0": {}')
 
     # Concatenate all attribute-value pairs
     $json_all     = join($json_single, ', ')
