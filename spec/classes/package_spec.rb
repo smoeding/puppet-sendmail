@@ -6,7 +6,10 @@ describe 'sendmail::package' do
 
   context 'On Debian with defaults' do
     let(:facts) do
-      { :operatingsystem => 'Debian' }
+      {
+        :operatingsystem => 'Debian',
+        :osfamily        => 'Debian'
+      }
     end
 
     it {
@@ -17,7 +20,10 @@ describe 'sendmail::package' do
 
   context 'On Rehat with defaults' do
     let(:facts) do
-      { :operatingsystem => 'Redhat' }
+      {
+        :operatingsystem => 'RedHat',
+        :osfamily        => 'RedHat'
+      }
     end
 
     it {
