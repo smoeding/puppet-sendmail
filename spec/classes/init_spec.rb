@@ -198,7 +198,10 @@ describe 'sendmail' do
 
   context 'On unsupported operating system' do
     let(:facts) do
-      { :operatingsystem => 'VAX/VMS' }
+      {
+        :operatingsystem => 'VAX/VMS',
+        :osfamily        => 'VMS'
+      }
     end
 
     it {
