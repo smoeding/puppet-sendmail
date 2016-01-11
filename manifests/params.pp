@@ -48,7 +48,7 @@ class sendmail::params {
 
   $mailers = [ 'smtp', 'local' ]
 
-  case $::operatingsystem {
+  case $::osfamily {
 
     'Debian': {
       $auxiliary_packages = [ 'bsd-mailx', ]
@@ -65,7 +65,7 @@ class sendmail::params {
       $submit_mc_domain   = 'debian-msp'
     }
 
-    'Redhat': {
+    'RedHat': {
       $auxiliary_packages = [ 'sendmail-cf', 'm4', 'make', 'cyrus-sasl', 'mailx', ]
 
       $service_hasstatus = true

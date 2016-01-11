@@ -7,7 +7,7 @@ divert(0)dnl
 define(`_USE_ETC_MAIL_')dnl
 define(`confCF_VERSION', `Submit')dnl
 define(`confDONT_INIT_GROUPS', `True')dnl
-<% case @operatingsystem -%>
+<% case @osfamily -%>
 <% when 'Debian' -%>
 dnl #
 include(`/usr/share/sendmail/cf/m4/cf.m4')dnl
@@ -15,6 +15,10 @@ dnl #
 <% when 'FreeBSD' -%>
 define(`__OSTYPE__',`')dnl dirty hack to keep proto.m4 from complaining
 define(`confBIND_OPTS', `WorkAroundBrokenAAAA')dnl
+dnl #
+<% when 'RedHat' -%>
+define(`__OSTYPE__',`')dnl dirty hack to keep proto.m4 from complaining
+sinclude(`/usr/share/sendmail-cf/m4/cf.m4')dnl
 dnl #
 <% end -%>
 <% if @ostype -%>
