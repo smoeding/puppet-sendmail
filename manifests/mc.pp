@@ -199,23 +199,7 @@ class sendmail::mc (
   }
 
   if ($mailers and !empty($mailers)) {
-    # Do a transformation from an array to JSON to a hash.
-    # This would be easier in Puppet 4 where $mailers.each is available.
-
-    # Turn every string into a JSON attribute-value pair
-    $json_single  = regsubst($mailers, '^.*$', '"\0": {}')
-
-    # Concatenate all attribute-value pairs
-    $json_all     = join($json_single, ', ')
-
-    # Make the object complete
-    $json         = "{ ${json_all} }"
-
-    # Convert into a Puppet hash
-    $mailers_hash = parsejson($json)
-
-    if !empty($mailers_hash) {
-      create_resources('::sendmail::mc::mailer', $mailers_hash)
+    ::sendmail::mc::mailer { $mailers:
     }
   }
 
