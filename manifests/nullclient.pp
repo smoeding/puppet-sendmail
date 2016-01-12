@@ -9,6 +9,14 @@
 #   The hostname or IP address of the mail hub where all mail is forwarded
 #   to. It can be enclosed in brackets to prevent MX lookups.
 #
+# [*max_message_size*]
+#   Define the maximum message size that will be accepted. This can be a pure
+#   numerical value given in bytes (e.g. 33554432) or a number with a
+#   prefixed byte unit (e.g. 32MB). The conversion is done using the 1024
+#   convention (see the 'to_bytes' function in the 'stdlib' module), so valid
+#   prefixes are either 'k' for 1024 bytes or 'M' for 1048576 bytes. Default
+#   value: undef.
+#
 # [*log_level*]
 #   The loglevel for the sendmail process.
 #   Valid options: a numeric value. Default value: undef.
@@ -70,6 +78,7 @@ class sendmail::nullclient (
   $mail_hub,
   $port               = '587',
   $port_option_modify = undef,
+  $max_message_size   = undef,
   $log_level          = undef,
   $ca_cert_file       = undef,
   $ca_cert_path       = undef,
@@ -89,6 +98,7 @@ class sendmail::nullclient (
   validate_re($port_option_modify, '^[abcfhruACEOS]*$')
 
   class { '::sendmail':
+    max_message_size      => $max_message_size,
     log_level             => $log_level,
     dont_probe_interfaces => true,
     enable_ipv4_daemon    => false,

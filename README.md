@@ -63,13 +63,15 @@ The same mechanism is used to add features like greylisting, virtual user setups
 With the Sendmail module these settings are defined by adding resources using the [`sendmail::mc::define`](#define-sendmailmcdefine) or [`sendmail::mc::feature`](#define-sendmailmcfeature) defined types.
 
 ```puppet
+# Manage Sendmail and set a smart host and the maximum message size
 class { 'sendmail':
-  smart_host => 'relay.example.com',
+  smart_host       => 'relay.example.com',
+  max_message_size => '32MB',
 }
 
-# Adjust acceptable message size
-sendmail::mc::define { 'confMAX_MESSAGE_SIZE':
-  expansion => '33554432',
+# Set maximum number of daemon processes
+sendmail::mc::define { 'confMAX_DAEMON_CHILDREN':
+  expansion => '8',
 }
 
 # Include ratecontrol feature with parameters
@@ -256,6 +258,10 @@ Performs the basic setup and installation of Sendmail on the system.
 
 Servers behind a firewall may not be able to deliver mail directly to the outside world. In this case the host may need to forward the mail to a gateway machine defined by this parameter. All nonlocal mail is forwarded to this gateway. Default value: `undef`
 
+##### `max_message_size`
+
+Define the maximum message size that will be accepted. This can be a pure numerical value given in bytes (e.g. `33554432`) or a number with a prefixed byte unit (e.g. `32MB`). The conversion is done using the 1024 convention (see the `to_bytes` function in the `stdlib` module), so valid prefixes are either `k` for 1024 bytes or `M` for 1048576 bytes. Default value: `undef`
+
 ##### `log_level`
 
 The loglevel for the sendmail process. Valid options: a numeric value. Default value: `undef`
@@ -410,6 +416,10 @@ class { 'sendmail::nullclient':
 ##### `mail_hub`
 
 The hostname or IP address of the mail hub where all mail is forwarded to. It can be enclosed in brackets to prevent MX lookups.
+
+##### `max_message_size`
+
+Define the maximum message size that will be accepted. This can be a pure numerical value given in bytes (e.g. `33554432`) or a number with a prefixed byte unit (e.g. `32MB`). The conversion is done using the 1024 convention (see the `to_bytes` function in the `stdlib` module), so valid prefixes are either `k` for 1024 bytes or `M` for 1048576 bytes. Default value: `undef`
 
 ##### `log_level`
 

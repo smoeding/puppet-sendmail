@@ -11,6 +11,14 @@
 #   mail is forwarded to this gateway.
 #   Default value: undef.
 #
+# [*max_message_size*]
+#   Define the maximum message size that will be accepted. This can be a pure
+#   numerical value given in bytes (e.g. 33554432) or a number with a
+#   prefixed byte unit (e.g. 32MB). The conversion is done using the 1024
+#   convention (see the 'to_bytes' function in the 'stdlib' module), so valid
+#   prefixes are either 'k' for 1024 bytes or 'M' for 1048576 bytes. Default
+#   value: undef.
+#
 # [*log_level*]
 #   The loglevel for the sendmail process.
 #   Valid options: a numeric value. Default value: undef.
@@ -167,6 +175,7 @@
 #
 class sendmail (
   $smart_host            = undef,
+  $max_message_size      = undef,
   $log_level             = undef,
   $dont_probe_interfaces = undef,
   $enable_ipv4_daemon    = true,
@@ -240,6 +249,7 @@ class sendmail (
     class { '::sendmail::mc':
       cf_version            => $cf_version,
       smart_host            => $smart_host,
+      max_message_size      => $max_message_size,
       log_level             => $log_level,
       dont_probe_interfaces => $dont_probe_interfaces,
       enable_ipv4_daemon    => $enable_ipv4_daemon,

@@ -10,6 +10,7 @@ describe 'sendmail::nullclient' do
     it {
       should contain_class('sendmail::nullclient')
       should contain_class('sendmail').with(
+               'max_message_size'      => nil,
                'dont_probe_interfaces' => true,
                'enable_ipv4_daemon'    => false,
                'enable_ipv6_daemon'    => false,
@@ -80,6 +81,16 @@ describe 'sendmail::nullclient' do
 
     it {
       expect { should compile }.to raise_error(/does not match/)
+    }
+  end
+
+  context "with max_message_size => 42" do
+    let(:params) do
+      { :max_message_size => '42', :mail_hub => 'example.com' }
+    end
+
+    it {
+      should contain_class('sendmail').with('max_message_size' => '42')
     }
   end
 

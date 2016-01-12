@@ -29,6 +29,16 @@ describe 'sendmail' do
     }
   end
 
+  context "with max_message_size => 42" do
+    let(:params) do
+      { :max_message_size => '42' }
+    end
+
+    it {
+      should contain_class('sendmail::mc').with('max_message_size' => '42')
+    }
+  end
+
   context 'with local_host_names => www.example.net' do
     let(:params) do
       { :local_host_names => [ 'www.example.net' ] }
