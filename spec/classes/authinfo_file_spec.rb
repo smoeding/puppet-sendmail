@@ -14,7 +14,7 @@ describe 'sendmail::authinfo::file' do
                'ensure' => 'file',
                'owner'  => 'root',
                'group'  => 'smmsp',
-               'mode'   => '0640',
+               'mode'   => '0600',
                'content' => nil,
                'source'  => nil,
              ).that_notifies('Class[sendmail::makeall]')
@@ -35,7 +35,7 @@ describe 'sendmail::authinfo::file' do
                'ensure' => 'file',
                'owner'  => 'root',
                'group'  => 'smmsp',
-               'mode'   => '0640',
+               'mode'   => '0600',
                'content' => 'foo',
                'source'  => nil,
              ).that_notifies('Class[sendmail::makeall]')
@@ -56,7 +56,7 @@ describe 'sendmail::authinfo::file' do
                'ensure' => 'file',
                'owner'  => 'root',
                'group'  => 'smmsp',
-               'mode'   => '0640',
+               'mode'   => '0600',
                'content' => nil,
                'source'  => 'foo',
              ).that_notifies('Class[sendmail::makeall]')
