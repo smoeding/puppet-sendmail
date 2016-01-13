@@ -881,7 +881,7 @@ The authentication identifier. One of the parameters `authorization_id` or `auth
 
 The administrative realm to use. Default value: `undef`
 
-##### `mechanisms
+##### `mechanisms`
 
 The list of preferred authentication mechanisms. Default value: `[]`
 
