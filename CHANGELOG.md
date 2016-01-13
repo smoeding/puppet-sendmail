@@ -6,6 +6,8 @@ This release fixes a bug that can lead to an aborted Puppet run when a STARTTLS 
 
 #### Features
 
+- Add propper documentation for the `sendmail::authinfo::entry` defined type.
+- Add parameter to `sendmail::authinfo::entry` for base64 encoded password.
 - Add `max_message_size` as parameter in the `sendmail` and `sendmail::nullclient` classes.
 - Rename daemon in nullcient setup from `MTA` to `MSA`.
 

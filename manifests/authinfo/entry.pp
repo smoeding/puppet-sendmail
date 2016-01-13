@@ -1,12 +1,16 @@
 # = Define: sendmail::authinfo::entry
 #
-# Create entries in the Sendmail authinfo db file.
+# Manage an entry in the Sendmail authinfo db file.
 #
 # == Parameters:
 #
 # [*password*]
-#   The password used for remote authentication. Base64 encoded passwords are
-#   not implemented yet. This parameter is mandatory.
+#   The password used for remote authentication in clear text.
+#   Exactly one of 'password' or 'password_base64' must be set.
+#
+# [*password_base64*]
+#   The password used for remote authentication in Base64 encoding.
+#   Exactly one of 'password' or 'password_base64' must be set.
 #
 # [*authorization_id*]
 #   The user (authorization) identifier. One of the parameters
@@ -41,13 +45,14 @@
 # == Sample Usage:
 #
 #   sendmail::authinfo::entry { 'example.com':
-#     password          => 'secret',
-#     authentication_id => 'auth',
+#     password         => 'secret',
+#     authorization_id => 'auth',
 #   }
 #
 #
 define sendmail::authinfo::entry (
-  $password,
+  $password          = undef,
+  $password_base64   = undef,
   $authorization_id  = undef,
   $authentication_id = undef,
   $realm             = undef,
@@ -62,20 +67,31 @@ define sendmail::authinfo::entry (
   validate_re($ensure, [ 'present', 'absent' ])
   validate_array($mechanisms)
 
-  if $ensure == 'present' and !$authorization_id and !$authentication_id {
-    fail('Either authorization_id or authentication_id or both must be set')
+  if $ensure == 'present' {
+    if ($password == undef) and ($password_base64 == undef) {
+      fail('Either password or password_base64 must be set')
+    }
+
+    if ($password != undef) and ($password_base64 != undef) {
+      fail('Only one of password and password_base64 can be set')
+    }
+
+    if ($authorization_id == undef) and ($authentication_id == undef) {
+      fail('Either authorization_id or authentication_id or both must be set')
+    }
   }
 
+  # Base64 encoded values use '=' while clear text values use ':'
   $value_hash = delete_undef_values({
-      'U' => $authorization_id,
-      'I' => $authentication_id,
-      'P' => $password,
-      'R' => $realm,
-      'M' => join($mechanisms, ' '),
+      'U:' => $authorization_id,
+      'I:' => $authentication_id,
+      'P:' => $password,
+      'P=' => $password_base64,
+      'R:' => $realm,
+      'M:' => join($mechanisms, ' '),
   })
 
-  # FIXME: Base64 encoded values must use '=' instead of ':'
-  $value_pairs = join_keys_to_values($value_hash, ':')
+  $value_pairs = join_keys_to_values($value_hash, '')
 
   # Add quotes to each array element
   $value = join(regsubst($value_pairs, '^.*$', '"\0"'), ' ')

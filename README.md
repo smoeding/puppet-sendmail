@@ -221,6 +221,7 @@ sendmail::mc::feature { 'virtusertable':
   - [Classes: sendmail::mc::*_section](#classes-sendmailmc_section)
 - [**Public Defined Types**](#public-defined-types)
   - [Define: sendmail::aliases::entry](#define-sendmailaliasesentry)
+  - [Define: sendmail::authinfo::entry](#define-sendmailauthinfoentry)
   - [Define: sendmail::access::entry](#define-sendmailaccessentry)
   - [Define: sendmail::domaintable::entry](#define-sendmaildomaintableentry)
   - [Define: sendmail::genericstable::entry](#define-sendmailgenericstableentry)
@@ -846,6 +847,51 @@ The recipient where the mail is redirected to.
 ##### `ensure`
 
 Used to create or remove the alias entry. Valid options: `present`, `absent`. Default value: `present`
+
+#### Define: `sendmail::authentry::entry`
+
+Manage an entry in the Sendmail authinfo db file. The type has an internal dependency to rebuild the database file.
+
+```puppet
+sendmail::authinfo::entry { 'example.com':
+  password         => 'secret',
+  authorization_id => 'auth',
+}
+```
+
+**Parameters for the `sendmail::authentry::entry` type:**
+
+##### `password`
+
+The password used for remote authentication in clear text. Exactly one of `password` or `password_base64` must be set. Default value: `undef`
+
+##### `password_base64`
+
+The password used for remote authentication in Base64 encoding. Exactly one of `password` or `password_base64` must be set. Default value: `undef`
+
+##### `authorization_id`
+
+The user (authorization) identifier. One of the parameters `authorization_id` or `authentication_id` or both must be set. Default value: `undef`
+
+##### `authentication_id`
+
+The authentication identifier. One of the parameters `authorization_id` or `authentication_id` or both must be set. Default value: `undef`
+
+##### `realm`
+
+The administrative realm to use. Default value: `undef`
+
+##### `mechanisms
+
+The list of preferred authentication mechanisms. Default value: `[]`
+
+##### `key`
+
+The key Sendmail uses for the lookup. Normally it has one of the following formats: `AuthInfo:192.168.67.89` (IPv4 address), `AuthInfo:IPv6:2001:DB18::23f4` (IPv6 address), `AuthInfo:www.example.org` (hostname) or `AuthInfo:example.com` (domain name). Default value is the resource title. In this case the `AuthInfo:` prefix is added automatically.
+
+##### `ensure`
+
+Used to create or remove the authinfo db entry. Valid options: `present`, `absent`. Default value: `present`
 
 #### Define: `sendmail::access::entry`
 
