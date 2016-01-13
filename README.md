@@ -848,7 +848,7 @@ The recipient where the mail is redirected to.
 
 Used to create or remove the alias entry. Valid options: `present`, `absent`. Default value: `present`
 
-#### Define: `sendmail::authentry::entry`
+#### Define: `sendmail::authinfo::entry`
 
 Manage an entry in the Sendmail authinfo db file. The type has an internal dependency to rebuild the database file.
 
@@ -859,7 +859,7 @@ sendmail::authinfo::entry { 'example.com':
 }
 ```
 
-**Parameters for the `sendmail::authentry::entry` type:**
+**Parameters for the `sendmail::authinfo::entry` type:**
 
 ##### `password`
 
