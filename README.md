@@ -885,9 +885,9 @@ The administrative realm to use. Default value: `undef`
 
 The list of preferred authentication mechanisms. Default value: `[]`
 
-##### `key`
+##### `address`
 
-The key Sendmail uses for the lookup. Normally it has one of the following formats: `AuthInfo:192.168.67.89` (IPv4 address), `AuthInfo:IPv6:2001:DB18::23f4` (IPv6 address), `AuthInfo:www.example.org` (hostname) or `AuthInfo:example.com` (domain name). Default value is the resource title. In this case the `AuthInfo:` prefix is added automatically.
+The key used by Sendmail for the database lookup. This can be an IPv4 address (e.g. `192.168.67.89`), an IPv6 address (e.g. `IPv6:2001:DB18::23f4`), a hostname (e.g. `www.example.org`) or a domain name (e.g. `example.com`). The database key requires to start with the literal expression `AuthInfo:`. This prefix will be added automatically if necessary. Default value is the resource title.
 
 ##### `ensure`
 

@@ -15,7 +15,7 @@ describe 'sendmail::authinfo::entry' do
       should contain_class('sendmail::params')
       should contain_class('sendmail::makeall')
       should contain_class('sendmail::authinfo::file')
-      should contain_augeas('/etc/mail/authinfo-example.com') \
+      should contain_augeas('/etc/mail/authinfo-AuthInfo:example.com') \
               .that_requires('Class[sendmail::authinfo::file]') \
               .that_notifies('Class[sendmail::makeall]')
     }
@@ -33,7 +33,7 @@ describe 'sendmail::authinfo::entry' do
       should contain_class('sendmail::params')
       should contain_class('sendmail::makeall')
       should contain_class('sendmail::authinfo::file')
-      should contain_augeas('/etc/mail/authinfo-example.com') \
+      should contain_augeas('/etc/mail/authinfo-AuthInfo:example.com') \
               .that_requires('Class[sendmail::authinfo::file]') \
               .that_notifies('Class[sendmail::makeall]')
     }
@@ -51,7 +51,7 @@ describe 'sendmail::authinfo::entry' do
       should contain_class('sendmail::params')
       should contain_class('sendmail::makeall')
       should contain_class('sendmail::authinfo::file')
-      should contain_augeas('/etc/mail/authinfo-example.com') \
+      should contain_augeas('/etc/mail/authinfo-AuthInfo:example.com') \
               .that_requires('Class[sendmail::authinfo::file]') \
               .that_notifies('Class[sendmail::makeall]')
     }
@@ -69,7 +69,7 @@ describe 'sendmail::authinfo::entry' do
       should contain_class('sendmail::params')
       should contain_class('sendmail::makeall')
       should contain_class('sendmail::authinfo::file')
-      should contain_augeas('/etc/mail/authinfo-example.com') \
+      should contain_augeas('/etc/mail/authinfo-AuthInfo:example.com') \
               .that_requires('Class[sendmail::authinfo::file]') \
               .that_notifies('Class[sendmail::makeall]')
     }

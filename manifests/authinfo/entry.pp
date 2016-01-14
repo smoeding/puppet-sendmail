@@ -27,13 +27,13 @@
 # [*mechanisms*]
 #   The list of preferred authentication mechanisms. Default value: '[]'
 #
-# [*key*]
-#   The key used by Sendmail for the lookup. Normally this has one of the
-#   following formats: 'AuthInfo:192.168.67.89' (IPv4 address),
-#   'AuthInfo:IPv6:2001:DB18::23f4' (IPv6 address),
-#   'AuthInfo:www.example.org' (hostname) or 'AuthInfo:example.com' (domain
-#   name). Default value is the resource title. In this case the 'AuthInfo:'
-#   prefix is added automatically.
+# [*address*]
+#   The key used by Sendmail for the database lookup. This can be an IPv4
+#   address (e.g. '192.168.67.89'), an IPv6 address (e.g.
+#   'IPv6:2001:DB18::23f4'), a hostname (e.g. 'www.example.org') or a domain
+#   name (e.g. 'example.com'). The database key requires to start with the
+#   literal expression 'AuthInfo:'. This prefix will be added automatically
+#   if necessary. Default value is the resource title.
 #
 # [*ensure*]
 #   Used to create or remove the authinfo db entry. Default value: 'present'
@@ -57,7 +57,7 @@ define sendmail::authinfo::entry (
   $authentication_id = undef,
   $realm             = undef,
   $mechanisms        = [],
-  $key               = "AuthInfo:${title}",
+  $address           = $title,
   $ensure            = 'present',
 ) {
   include ::sendmail::params
@@ -66,6 +66,10 @@ define sendmail::authinfo::entry (
 
   validate_re($ensure, [ 'present', 'absent' ])
   validate_array($mechanisms)
+
+  if $address == undef {
+    fail('The address parameter must be defined')
+  }
 
   if $ensure == 'present' {
     if ($password == undef) and ($password_base64 == undef) {
@@ -81,6 +85,18 @@ define sendmail::authinfo::entry (
     }
   }
 
+  # The key must start with the literal expression 'AuthInfo:'
+  $key = $address ? {
+    /^AuthInfo:/ => $address,
+    default      => "AuthInfo:${address}"
+  }
+
+  # List of mechanisms
+  $mech = empty($mechanisms) ? {
+    true    => undef,
+    default => join($mechanisms, ' ')
+  }
+
   # Base64 encoded values use '=' while clear text values use ':'
   $value_hash = delete_undef_values({
       'U:' => $authorization_id,
@@ -88,7 +104,7 @@ define sendmail::authinfo::entry (
       'P:' => $password,
       'P=' => $password_base64,
       'R:' => $realm,
-      'M:' => join($mechanisms, ' '),
+      'M:' => $mech,
   })
 
   $value_pairs = join_keys_to_values($value_hash, '')
@@ -104,7 +120,7 @@ define sendmail::authinfo::entry (
     'absent'  => "rm key[ . = '${key}']",
   }
 
-  augeas { "${::sendmail::params::authinfo_file}-${title}":
+  augeas { "${::sendmail::params::authinfo_file}-${key}":
     lens    => 'Sendmail_Map.lns',
     incl    => $::sendmail::params::authinfo_file,
     changes => $changes,
