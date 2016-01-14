@@ -18,8 +18,9 @@ define(`__OSTYPE__',`')dnl dirty hack to keep proto.m4 from complaining
 define(`confBIND_OPTS', `WorkAroundBrokenAAAA')dnl
 dnl #
 <% when 'RedHat' -%>
+include(`/usr/share/sendmail-cf/m4/cf.m4')dnl
 define(`__OSTYPE__',`')dnl dirty hack to keep proto.m4 from complaining
-sinclude(`/usr/share/sendmail-cf/m4/cf.m4')dnl
+define(`confPID_FILE', `/var/run/sm-client.pid')dnl
 dnl #
 <% end -%>
 <% if @ostype -%>
