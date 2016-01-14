@@ -29,10 +29,7 @@ describe 'sendmail::package' do
     it {
       should contain_package('sendmail')
       should contain_package('sendmail-cf')
-      should contain_package('cyrus-sasl')
-      should contain_package('m4')
       should contain_package('mailx')
-      should contain_package('make')
     }
   end
 

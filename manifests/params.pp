@@ -66,9 +66,12 @@ class sendmail::params {
     }
 
     'RedHat': {
-      $auxiliary_packages = [ 'sendmail-cf', 'm4', 'make', 'cyrus-sasl', 'mailx', ]
+      $auxiliary_packages = [ 'sendmail-cf', 'mailx', ]
 
       $service_hasstatus = true
+
+      $sendmail_user  = 'root'
+      $sendmail_group = 'smmsp'
 
       $ostype             = undef
       $sendmail_mc_domain = undef
