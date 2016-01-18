@@ -121,6 +121,12 @@
 #   (e.g., 25) or the literal 'MSA' for delivery to the message submission
 #   agent on port 587. Default value: 'MSA'
 #
+# [*enable_msp_trusted_users*]
+#   Whether the trusted users file feature is enabled for the message
+#   submission program. This may be necessary if you want to allow certain
+#   users to change the sender address using 'sendmail -f'. Valid options:
+#   'true' or 'false'. Default value: 'false'.
+#
 # [*manage_sendmail_mc*]
 #   Whether to automatically manage the 'sendmail.mc' file. Valid options:
 #   'true' or 'false'. Default value: 'true'
@@ -174,47 +180,49 @@
 #
 #
 class sendmail (
-  $smart_host            = undef,
-  $max_message_size      = undef,
-  $log_level             = undef,
-  $dont_probe_interfaces = undef,
-  $enable_ipv4_daemon    = true,
-  $enable_ipv6_daemon    = true,
-  $mailers               = $::sendmail::params::mailers,
-  $local_host_names      = [ $::fqdn ],
-  $relay_domains         = [],
-  $trusted_users         = [],
-  $trust_auth_mech       = undef,
-  $ca_cert_file          = undef,
-  $ca_cert_path          = undef,
-  $server_cert_file      = undef,
-  $server_key_file       = undef,
-  $client_cert_file      = undef,
-  $client_key_file       = undef,
-  $crl_file              = undef,
-  $dh_params             = undef,
-  $tls_srv_options       = undef,
-  $cipher_list           = undef,
-  $server_ssl_options    = undef,
-  $client_ssl_options    = undef,
-  $cf_version            = undef,
-  $version_id            = undef,
-  $msp_host              = '[127.0.0.1]',
-  $msp_port              = 'MSA',
-  $manage_sendmail_mc    = true,
-  $manage_submit_mc      = true,
-  $auxiliary_packages    = $::sendmail::params::auxiliary_packages,
-  $package_ensure        = 'present',
-  $package_manage        = true,
-  $service_name          = $::sendmail::params::service_name,
-  $service_enable        = true,
-  $service_manage        = true,
-  $service_ensure        = 'running',
-  $service_hasstatus     = $::sendmail::params::service_hasstatus,
+  $smart_host               = undef,
+  $max_message_size         = undef,
+  $log_level                = undef,
+  $dont_probe_interfaces    = undef,
+  $enable_ipv4_daemon       = true,
+  $enable_ipv6_daemon       = true,
+  $mailers                  = $::sendmail::params::mailers,
+  $local_host_names         = [ $::fqdn ],
+  $relay_domains            = [],
+  $trusted_users            = [],
+  $trust_auth_mech          = undef,
+  $ca_cert_file             = undef,
+  $ca_cert_path             = undef,
+  $server_cert_file         = undef,
+  $server_key_file          = undef,
+  $client_cert_file         = undef,
+  $client_key_file          = undef,
+  $crl_file                 = undef,
+  $dh_params                = undef,
+  $tls_srv_options          = undef,
+  $cipher_list              = undef,
+  $server_ssl_options       = undef,
+  $client_ssl_options       = undef,
+  $cf_version               = undef,
+  $version_id               = undef,
+  $msp_host                 = '[127.0.0.1]',
+  $msp_port                 = 'MSA',
+  $enable_msp_trusted_users = false,
+  $manage_sendmail_mc       = true,
+  $manage_submit_mc         = true,
+  $auxiliary_packages       = $::sendmail::params::auxiliary_packages,
+  $package_ensure           = 'present',
+  $package_manage           = true,
+  $service_name             = $::sendmail::params::service_name,
+  $service_enable           = true,
+  $service_manage           = true,
+  $service_ensure           = 'running',
+  $service_hasstatus        = $::sendmail::params::service_hasstatus,
 ) inherits ::sendmail::params {
 
   validate_bool($manage_sendmail_mc)
   validate_bool($manage_submit_mc)
+  validate_bool($enable_msp_trusted_users)
 
   validate_array($local_host_names)
   validate_array($relay_domains)
@@ -289,11 +297,12 @@ class sendmail (
 
   if ($manage_submit_mc) {
     class { '::sendmail::submit':
-      msp_host => $msp_host,
-      msp_port => $msp_port,
-      before   => Anchor['sendmail::config'],
-      require  => Class['::sendmail::package'],
-      notify   => Class['::sendmail::service'],
+      msp_host                 => $msp_host,
+      msp_port                 => $msp_port,
+      enable_msp_trusted_users => $enable_msp_trusted_users,
+      before                   => Anchor['sendmail::config'],
+      require                  => Class['::sendmail::package'],
+      notify                   => Class['::sendmail::service'],
     }
   }
 

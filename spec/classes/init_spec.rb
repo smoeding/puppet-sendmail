@@ -19,7 +19,11 @@ describe 'sendmail' do
       should contain_class('sendmail::relay_domains')
       should contain_class('sendmail::trusted_users')
       should contain_class('sendmail::mc')
-      should contain_class('sendmail::submit')
+      should contain_class('sendmail::submit').with(
+               'msp_host'                 => '[127.0.0.1]',
+               'msp_port'                 => 'MSA',
+               'enable_msp_trusted_users' => false,
+             )
 
       should contain_class('sendmail::service') \
               .that_requires('Anchor[sendmail::config]') \
@@ -143,6 +147,18 @@ describe 'sendmail' do
     it {
       should contain_class('sendmail::submit').with(
                'msp_port' => '25',
+             )
+    }
+  end
+
+  context 'with enable_msp_trusted_users => true' do
+    let(:params) do
+      { :enable_msp_trusted_users => true }
+    end
+
+    it {
+      should contain_class('sendmail::submit').with(
+               'enable_msp_trusted_users' => true,
              )
     }
   end

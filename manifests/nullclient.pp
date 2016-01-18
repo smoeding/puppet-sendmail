@@ -29,6 +29,12 @@
 #   Port option modifiers for the local message submission agent. This
 #   parameter is used to set the 'daemon_port_options'. Default value: undef
 #
+# [*enable_msp_trusted_users*]
+#   Whether the trusted users file feature is enabled for the message
+#   submission program. This may be necessary if you want to allow certain
+#   users to change the sender address using 'sendmail -f'. Valid options:
+#   'true' or 'false'. Default value: 'false'.
+#
 # [*ca_cert_file*]
 #   The filename of the SSL CA certificate.
 #
@@ -76,46 +82,48 @@
 #
 class sendmail::nullclient (
   $mail_hub,
-  $port               = '587',
-  $port_option_modify = undef,
-  $max_message_size   = undef,
-  $log_level          = undef,
-  $ca_cert_file       = undef,
-  $ca_cert_path       = undef,
-  $server_cert_file   = undef,
-  $server_key_file    = undef,
-  $client_cert_file   = undef,
-  $client_key_file    = undef,
-  $crl_file           = undef,
-  $dh_params          = undef,
-  $tls_srv_options    = undef,
-  $cipher_list        = undef,
-  $server_ssl_options = undef,
-  $client_ssl_options = undef,
+  $port                     = '587',
+  $port_option_modify       = undef,
+  $enable_msp_trusted_users = false,
+  $max_message_size         = undef,
+  $log_level                = undef,
+  $ca_cert_file             = undef,
+  $ca_cert_path             = undef,
+  $server_cert_file         = undef,
+  $server_key_file          = undef,
+  $client_cert_file         = undef,
+  $client_key_file          = undef,
+  $crl_file                 = undef,
+  $dh_params                = undef,
+  $tls_srv_options          = undef,
+  $cipher_list              = undef,
+  $server_ssl_options       = undef,
+  $client_ssl_options       = undef,
 ) {
 
   validate_re($port, '^[0-9]+$')
   validate_re($port_option_modify, '^[abcfhruACEOS]*$')
 
   class { '::sendmail':
-    max_message_size      => $max_message_size,
-    log_level             => $log_level,
-    dont_probe_interfaces => true,
-    enable_ipv4_daemon    => false,
-    enable_ipv6_daemon    => false,
-    mailers               => [],
-    ca_cert_file          => $ca_cert_file,
-    ca_cert_path          => $ca_cert_path,
-    server_cert_file      => $server_cert_file,
-    server_key_file       => $server_key_file,
-    client_cert_file      => $client_cert_file,
-    client_key_file       => $client_key_file,
-    crl_file              => $crl_file,
-    dh_params             => $dh_params,
-    tls_srv_options       => $tls_srv_options,
-    cipher_list           => $cipher_list,
-    server_ssl_options    => $server_ssl_options,
-    client_ssl_options    => $client_ssl_options,
+    max_message_size         => $max_message_size,
+    log_level                => $log_level,
+    dont_probe_interfaces    => true,
+    enable_ipv4_daemon       => false,
+    enable_ipv6_daemon       => false,
+    mailers                  => [],
+    enable_msp_trusted_users => $enable_msp_trusted_users,
+    ca_cert_file             => $ca_cert_file,
+    ca_cert_path             => $ca_cert_path,
+    server_cert_file         => $server_cert_file,
+    server_key_file          => $server_key_file,
+    client_cert_file         => $client_cert_file,
+    client_key_file          => $client_key_file,
+    crl_file                 => $crl_file,
+    dh_params                => $dh_params,
+    tls_srv_options          => $tls_srv_options,
+    cipher_list              => $cipher_list,
+    server_ssl_options       => $server_ssl_options,
+    client_ssl_options       => $client_ssl_options,
   }
 
   ::sendmail::mc::feature { 'no_default_msa': }

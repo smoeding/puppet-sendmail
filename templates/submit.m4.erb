@@ -34,13 +34,13 @@ dnl #
 dnl # Masquerading
 MASQUERADE_AS(`<%= @masquerade_as -%>')dnl
 FEATURE(`masquerade_envelope')dnl
-<% if @submit_use_ct_file -%>
+<% end -%>
+<% if @enable_msp_trusted_users -%>
 dnl #
 dnl # Use trusted users file
 FEATURE(`use_ct_file')dnl
 <% end -%>
 dnl #
-<% end -%>
 dnl # Feature MSP
 FEATURE(`msp', `<%= @msp_host -%>', `<%= @msp_port -%>')dnl
 dnl #

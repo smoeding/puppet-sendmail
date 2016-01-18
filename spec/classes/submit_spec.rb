@@ -15,6 +15,7 @@ describe 'sendmail::submit' do
                'owner'  => 'root',
                'group'  => 'smmsp',
                'mode'   => '0644') \
+              .without_content(/^FEATURE\(`use_ct_file'\)dnl$/) \
               .with_content(/^FEATURE\(`msp', `\[127.0.0.1\]', `MSA'\)dnl$/)
     }
   end
@@ -75,6 +76,25 @@ describe 'sendmail::submit' do
               .with_content(/^MASQUERADE_AS\(`example.org'\)dnl$/) \
               .with_content(/^FEATURE\(`masquerade_envelope'\)dnl$/)
 
+    }
+  end
+
+  context 'On Debian with enable_msp_trusted_users => true' do
+    let(:facts) do
+      { :operatingsystem => 'Debian' }
+    end
+
+    let(:params) do
+      { :enable_msp_trusted_users => true }
+    end
+
+    it {
+      should contain_file('/etc/mail/submit.mc').with(
+               'ensure' => 'file',
+               'owner'  => 'root',
+               'group'  => 'smmsp',
+               'mode'   => '0644') \
+              .with_content(/^FEATURE\(`use_ct_file'\)dnl$/)
     }
   end
 end

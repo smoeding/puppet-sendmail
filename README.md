@@ -359,6 +359,10 @@ The host where the message submission program should deliver to. This can be a h
 
 The port used for the message submission program. Can be a port number (e.g., `25`) or the literal `MSA` for delivery to the message submission agent on port 587. Make sure to configure a daemon that listens on this port or local mail will remain stuck in the submission queue. Default value: `MSA`
 
+##### `enable_msp_trusted_users`
+
+Whether the trusted users file feature is enabled for the message submission program. This may be necessary if you want to allow certain users to change the sender address using `sendmail -f`. Valid options: `true` or `false`. Default value: `false`
+
 ##### `manage_sendmail_mc`
 
 Whether to automatically manage the `sendmail.mc` file. Valid options: `true` or `false`. Default value: `true`
@@ -433,6 +437,10 @@ The port used for the local message submission agent. Default value: `587`.
 ##### `port_option_modify`
 
 Port option modifiers for the local message submission agent. This parameter is used for the daemon port options. A useful value for the nullclient configuration might be `S` to prevent offering STARTTLS on the MSA port. Default value: `undef`
+
+##### `enable_msp_trusted_users`
+
+Whether the trusted users file feature is enabled for the message submission program. This may be necessary if you want to allow certain users to change the sender address using `sendmail -f`. Valid options: `true` or `false`. Default value: `false`
 
 ##### `ca_cert_file`
 

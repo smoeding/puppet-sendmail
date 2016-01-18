@@ -1,3 +1,12 @@
+## UNRELEASED
+
+### Summary
+#### Features
+
+- New parameter `enable_msp_trusted_users` activates the feature `use_ct_file` in `submit.mc`.
+
+#### Bugfixes
+
 ## 2016-01-14 - Release 0.2.0
 
 ### Summary
