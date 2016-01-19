@@ -236,4 +236,40 @@ describe 'sendmail::mc::daemon_options' do
               .that_notifies('Class[sendmail::makeall]')
     }
   end
+
+  context 'with input_filter of type string' do
+    let(:params) do
+      { :input_filter => 'foo' }
+    end
+
+    it {
+      should contain_class('sendmail::mc::macro_section')
+      should contain_concat__fragment('sendmail_mc-daemon_options-MSA') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MSA, InputFilter=foo'\)dnl$/)
+    }
+  end
+
+  context 'with input_filter of type array of 1 element' do
+    let(:params) do
+      { :input_filter => [ 'foo' ] }
+    end
+
+    it {
+      should contain_class('sendmail::mc::macro_section')
+      should contain_concat__fragment('sendmail_mc-daemon_options-MSA') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MSA, InputFilter=foo'\)dnl$/)
+    }
+  end
+
+  context 'with input_filter of type array of 2 elements' do
+    let(:params) do
+      { :input_filter => [ 'foo', 'bar' ] }
+    end
+
+    it {
+      should contain_class('sendmail::mc::macro_section')
+      should contain_concat__fragment('sendmail_mc-daemon_options-MSA') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MSA, InputFilter=foo;bar'\)dnl$/)
+    }
+  end
 end

@@ -1102,7 +1102,7 @@ The mode of delivery for this daemon. Valid options: `background`, `deferred`, `
 
 ##### `input_filter`
 
-A list of milters to use.
+A list of milters to use. This can either be an array of milter names or a single string, where the milter names are separated by colons.
 
 ##### `listen`
 
