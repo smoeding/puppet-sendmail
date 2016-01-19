@@ -71,9 +71,9 @@ class sendmail::params {
       $service_hasstatus = true
 
       $sendmail_user  = 'root'
-      $sendmail_group = 'smmsp'
+      $sendmail_group = 'root'
 
-      $ostype             = undef
+      $ostype             = 'linux'
       $sendmail_mc_domain = undef
       $submit_mc_domain   = undef
     }
