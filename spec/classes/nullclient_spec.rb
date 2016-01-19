@@ -15,6 +15,7 @@ describe 'sendmail::nullclient' do
                'enable_ipv4_daemon'       => false,
                'enable_ipv6_daemon'       => false,
                'mailers'                  => [],
+               'trusted_users'            => [],
                'enable_msp_trusted_users' => false,
                'ca_cert_file'             => nil,
                'ca_cert_path'             => nil,
@@ -112,6 +113,16 @@ describe 'sendmail::nullclient' do
 
     it {
       should contain_class('sendmail').with('enable_msp_trusted_users' => true)
+    }
+  end
+
+  context "with trusted_users => [ 'root' ]" do
+    let(:params) do
+      { :trusted_users => [ 'root' ], :mail_hub => 'example.com' }
+    end
+
+    it {
+      should contain_class('sendmail').with('trusted_users' => [ 'root' ])
     }
   end
 

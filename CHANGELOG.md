@@ -3,9 +3,11 @@
 ### Summary
 #### Features
 
-- New parameter `enable_msp_trusted_users` activates the feature `use_ct_file` in `submit.mc`.
+- New parameter `enable_msp_trusted_users` to activate the `use_ct_file` feature in `submit.mc`.
 
 #### Bugfixes
+
+- The nullclient setup didn't allow setting the content of the trusted users file. This has been fix by adding the `trusted_users` parameter to the `sendmail::nullclient` class.
 
 ## 2016-01-14 - Release 0.2.0
 

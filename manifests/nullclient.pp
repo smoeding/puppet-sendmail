@@ -35,6 +35,11 @@
 #   users to change the sender address using 'sendmail -f'. Valid options:
 #   'true' or 'false'. Default value: 'false'.
 #
+# [*trusted_users*]
+#   An array of user names that will be written into the trusted users file.
+#   Leading or trailing whitespace is ignored. Empty entries are also
+#   ignored. Default value: []
+#
 # [*ca_cert_file*]
 #   The filename of the SSL CA certificate.
 #
@@ -85,6 +90,7 @@ class sendmail::nullclient (
   $port                     = '587',
   $port_option_modify       = undef,
   $enable_msp_trusted_users = false,
+  $trusted_users            = [],
   $max_message_size         = undef,
   $log_level                = undef,
   $ca_cert_file             = undef,
@@ -112,6 +118,7 @@ class sendmail::nullclient (
     enable_ipv6_daemon       => false,
     mailers                  => [],
     enable_msp_trusted_users => $enable_msp_trusted_users,
+    trusted_users            => $trusted_users,
     ca_cert_file             => $ca_cert_file,
     ca_cert_path             => $ca_cert_path,
     server_cert_file         => $server_cert_file,

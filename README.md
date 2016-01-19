@@ -442,6 +442,10 @@ Port option modifiers for the local message submission agent. This parameter is 
 
 Whether the trusted users file feature is enabled for the message submission program. This may be necessary if you want to allow certain users to change the sender address using `sendmail -f`. Valid options: `true` or `false`. Default value: `false`
 
+##### `trusted_users`
+
+An array of user names that will be written into the trusted users file. Leading or trailing whitespace is ignored. Empty entries are also ignored. Default value: `[]`
+
 ##### `ca_cert_file`
 
 The filename of the SSL CA certificate. Default value: `undef`
