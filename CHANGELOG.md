@@ -1,9 +1,12 @@
-## UNRELEASED
+## 2016-01-21 - Release 0.3.0
 
 ### Summary
+
+This release adds support for the RedHat family and also includes some minor new features.
+
 #### Features
 
-- Add RedHat 6 to the list of supported operating systems.
+- Add RedHat/CentOS 6/7 to the list of supported operating systems.
 - New parameter `enable_msp_trusted_users` to activate the `use_ct_file` feature in `submit.mc`.
 - Allow strings and arrays for the `input_milter` parameter of the `sendmail::mc::daemon_options` defined type.
 
