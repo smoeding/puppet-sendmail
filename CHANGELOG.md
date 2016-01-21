@@ -3,6 +3,7 @@
 ### Summary
 #### Features
 
+- Add RedHat 6 to the list of supported operating systems.
 - New parameter `enable_msp_trusted_users` to activate the `use_ct_file` feature in `submit.mc`.
 - Allow strings and arrays for the `input_milter` parameter of the `sendmail::mc::daemon_options` defined type.
 

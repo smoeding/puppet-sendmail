@@ -6,7 +6,7 @@ describe 'sendmail::submit' do
 
   context 'On Debian with default parameters' do
     let(:facts) do
-      { :operatingsystem => 'Debian' }
+      { :operatingsystem => 'Debian', :osfamily => 'Debian', }
     end
 
     it {
@@ -16,15 +16,29 @@ describe 'sendmail::submit' do
                'group'  => 'smmsp',
                'mode'   => '0644') \
               .without_content(/^FEATURE\(`use_ct_file'\)dnl$/) \
+              .with_content(/^OSTYPE\(`debian'\)dnl$/) \
               .with_content(/^FEATURE\(`msp', `\[127.0.0.1\]', `MSA'\)dnl$/)
     }
   end
 
-  context 'On Debian with msp_host => localhost' do
+  context 'On RedHat with default parameters' do
     let(:facts) do
-      { :operatingsystem => 'Debian' }
+      { :operatingsystem => 'RedHat', :osfamily => 'RedHat', }
     end
 
+    it {
+      should contain_file('/etc/mail/submit.mc').with(
+               'ensure' => 'file',
+               'owner'  => 'root',
+               'group'  => 'root',
+               'mode'   => '0644') \
+              .without_content(/^FEATURE\(`use_ct_file'\)dnl$/) \
+              .without_content(/^OSTYPE/) \
+              .with_content(/^FEATURE\(`msp', `\[127.0.0.1\]', `MSA'\)dnl$/)
+    }
+  end
+
+  context 'with msp_host => localhost' do
     let(:params) do
       { :msp_host => 'localhost' }
     end
@@ -35,11 +49,7 @@ describe 'sendmail::submit' do
     }
   end
 
-  context 'On Debian with msp_port => 25' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with msp_port => 25' do
     let(:params) do
       { :msp_port => '25' }
     end
@@ -50,11 +60,7 @@ describe 'sendmail::submit' do
     }
   end
 
-  context 'On Debian with msp_port => foo' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with msp_port => foo' do
     let(:params) do
       { :msp_port => 'foo' }
     end
@@ -62,11 +68,7 @@ describe 'sendmail::submit' do
     it { expect { should compile }.to raise_error(/must be a numeric/) }
   end
 
-  context 'On Debian with masquerade_as => example.org' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'masquerade_as => example.org' do
     let(:params) do
       { :masquerade_as => 'example.org' }
     end
@@ -79,21 +81,13 @@ describe 'sendmail::submit' do
     }
   end
 
-  context 'On Debian with enable_msp_trusted_users => true' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with enable_msp_trusted_users => true' do
     let(:params) do
       { :enable_msp_trusted_users => true }
     end
 
     it {
-      should contain_file('/etc/mail/submit.mc').with(
-               'ensure' => 'file',
-               'owner'  => 'root',
-               'group'  => 'smmsp',
-               'mode'   => '0644') \
+      should contain_file('/etc/mail/submit.mc') \
               .with_content(/^FEATURE\(`use_ct_file'\)dnl$/)
     }
   end

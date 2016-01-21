@@ -82,7 +82,7 @@
 #
 #
 class sendmail::mc (
-  $ostype                = $::sendmail::params::ostype,
+  $ostype                = $::sendmail::params::sendmail_mc_ostype,
   $sendmail_mc_domain    = $::sendmail::params::sendmail_mc_domain,
   $cf_version            = undef,
   $smart_host            = undef,

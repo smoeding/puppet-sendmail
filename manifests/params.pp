@@ -60,7 +60,8 @@ class sendmail::params {
       $sendmail_user  = 'smmta'
       $sendmail_group = 'smmsp'
 
-      $ostype             = 'debian'
+      $sendmail_mc_ostype = 'debian'
+      $submit_mc_ostype   = 'debian'
       $sendmail_mc_domain = 'debian-mta'
       $submit_mc_domain   = 'debian-msp'
     }
@@ -73,7 +74,8 @@ class sendmail::params {
       $sendmail_user  = 'root'
       $sendmail_group = 'root'
 
-      $ostype             = 'linux'
+      $sendmail_mc_ostype = 'linux'
+      $submit_mc_ostype   = undef
       $sendmail_mc_domain = undef
       $submit_mc_domain   = undef
     }
@@ -83,7 +85,8 @@ class sendmail::params {
       $sendmail_user  = 'root'
       $sendmail_group = 'wheel'
 
-      $ostype             = 'freebsd6'
+      $sendmail_mc_ostype = 'freebsd6'
+      $submit_mc_ostype   = 'freebsd6'
       $sendmail_mc_domain = undef
       $submit_mc_domain   = undef
     }

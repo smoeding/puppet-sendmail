@@ -49,7 +49,7 @@
 #
 #
 class sendmail::submit (
-  $ostype                   = $::sendmail::params::ostype,
+  $ostype                   = $::sendmail::params::submit_mc_ostype,
   $submit_mc_domain         = $::sendmail::params::submit_mc_domain,
   $msp_host                 = '[127.0.0.1]',
   $msp_port                 = 'MSA',
