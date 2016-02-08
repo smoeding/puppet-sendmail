@@ -4,6 +4,10 @@
 #
 # == Parameters:
 #
+# [*daemon_name*]
+#   The name of the daemon to use. The logfile will contain this name to
+#   identify the daemon. Default is the resource title.
+#
 # [*family*]
 #   The network family type. Valid options: 'inet', 'inet6' or 'iso'
 #
@@ -65,6 +69,7 @@
 #
 #
 define sendmail::mc::daemon_options (
+  $daemon_name      = $title,
   $family           = undef,
   $addr             = undef,
   $port             = undef,
@@ -81,6 +86,8 @@ define sendmail::mc::daemon_options (
 ) {
 
   include ::sendmail::makeall
+
+  validate_string($daemon_name)
 
   if !empty($family) {
     validate_re($family, [ '^inet$', '^inet6$', '^iso$'])
@@ -109,7 +116,7 @@ define sendmail::mc::daemon_options (
   }
 
   $sparse_opts = {
-    'Name'           => $title,
+    'Name'           => $daemon_name,
     'Family'         => $family,
     'Addr'           => $addr,
     'Port'           => $port,

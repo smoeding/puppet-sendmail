@@ -1,3 +1,12 @@
+## UNRELEASED
+
+### Summary
+#### Features
+
+- Add parameter `daemon_name` to the `sendmail::mc::daemon_options` type. This allows reusing the same name for multiple daemon option enties.
+
+#### Bugfixes
+
 ## 2016-01-21 - Release 0.3.0
 
 ### Summary

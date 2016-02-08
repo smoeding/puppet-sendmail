@@ -1073,12 +1073,17 @@ Add a `DAEMON_OPTIONS` macro to the `sendmail.mc` file.
 
 ```puppet
 sendmail::mc::daemon_options { 'MTA-v4':
-  family => 'inet',
-  port   => '25',
+  daemon_name => 'MTA',
+  family      => 'inet',
+  port        => '25',
 }
 ```
 
 **Parameters for the `sendmail::mc::daemon_options` type:**
+
+##### `daemon_name`
+
+The name of the daemon to use for this entry. The logfile will contain the name to identify the daemon. Default is the resource title.
 
 ##### `family`
 

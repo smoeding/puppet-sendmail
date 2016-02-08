@@ -25,6 +25,20 @@ describe 'sendmail::mc::daemon_options' do
     }
   end
 
+  context 'with daemon_name => MTA' do
+    let(:params) do
+      { :daemon_name => 'MTA' }
+    end
+
+    it {
+      should contain_class('sendmail::mc::macro_section')
+      should contain_concat__fragment('sendmail_mc-daemon_options-MSA') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MTA'\)dnl$/) \
+              .with_order('40') \
+              .that_notifies('Class[sendmail::makeall]')
+    }
+  end
+
   context 'with argument family => inet' do
     let(:title) { 'MTA-v4' }
 
