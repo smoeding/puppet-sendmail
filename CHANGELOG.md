@@ -4,6 +4,7 @@
 #### Features
 
 - Add parameter `daemon_name` to the `sendmail::mc::daemon_options` type. This allows reusing the same name for multiple daemon option enties.
+- Allow a string parameter for `sendmail::mc::feature` if the feature requires only a single argument.
 
 #### Bugfixes
 

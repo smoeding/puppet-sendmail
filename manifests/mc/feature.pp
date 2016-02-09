@@ -11,8 +11,9 @@
 #   quoted in the template.
 #
 # [*args*]
-#   The arguments used for the feature. This must be an array and it will
-#   be used for the following arguments of the FEATURE().
+#   The arguments used for the feature. This can be a string (one argument)
+#   or and an array and it will be used for the following arguments of the
+#   FEATURE().
 #   Default value: []
 #
 # [*use_quotes*]
@@ -47,7 +48,10 @@ define sendmail::mc::feature (
 ) {
   include ::sendmail::makeall
 
-  validate_array($args)
+  # Make sure arguments are really an array
+  $args_array = any2array($args)
+
+  validate_array($args_array)
   validate_bool($use_quotes)
 
   # Gracefully handle misspelled feature names
@@ -58,8 +62,8 @@ define sendmail::mc::feature (
 
   # Add quotes to the args if needed
   $exp_arg = $use_quotes ? {
-    true  => suffix(prefix($args, '`'), '\''),
-    false => $args,
+    true  => suffix(prefix($args_array, '`'), '\''),
+    false => $args_array,
   }
 
   $arr = concat([ "`${feature}'" ], $exp_arg)

@@ -189,7 +189,7 @@ sendmail::mc::feature { 'ldap_routing':
 }
 
 sendmail::mc::feature { 'virtusertable':
-  args => [ "ldap -1 -T<TMPF> -v uid -k ${ldap_filter}", ],
+  args => "ldap -1 -T<TMPF> -v uid -k ${ldap_filter}",
 }
 ```
 
@@ -1219,7 +1219,7 @@ sendmail::mc::feature { 'mailertable': }
 
 ```puppet
 sendmail::mc::feature { 'mailertable':
-  args => [ 'hash /etc/mail/mailertable' ],
+  args => 'hash /etc/mail/mailertable',
 }
 ```
 
@@ -1240,7 +1240,7 @@ The name of the feature that will be used. This will be the first argument of th
 
 ##### `args`
 
-The arguments used for the feature. This must be an array and it will be used for the following arguments of the `FEATURE`. Default value: `[]`
+The arguments used for the feature. This can be a simple string, if the feature takes only one argument. If the feature requires more than one argument, it must be an array of strings. Default value: `[]`
 
 ##### `use_quotes`
 

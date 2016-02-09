@@ -13,7 +13,21 @@ describe 'sendmail::mc::feature' do
     }
   end
 
-  context 'with one argument' do
+  context 'with one argument as string' do
+    let(:params) do
+      { :args => 'foo' }
+    end
+
+    it {
+      should contain_concat__fragment('sendmail_mc-feature-no_default_msa') \
+              .with_content(/^FEATURE\(`no_default_msa', `foo'\)dnl$/) \
+              .with_order('22') \
+              .that_notifies('Class[sendmail::makeall]')
+      should contain_class('sendmail::mc::feature_section')
+    }
+  end
+
+  context 'with one argument as array' do
     let(:params) do
       { :args => [ 'foo' ] }
     end
@@ -27,7 +41,7 @@ describe 'sendmail::mc::feature' do
     }
   end
 
-  context 'with two arguments' do
+  context 'with two arguments as array' do
     let(:params) do
       { :args => [ 'foo', 'bar' ] }
     end
