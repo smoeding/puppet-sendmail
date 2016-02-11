@@ -13,16 +13,18 @@ describe 'sendmail::mc::daemon_options' do
     }
   end
 
-  context 'with title MTA' do
-    let(:title) { 'MTA' }
+  [ 'MTA', 'MSA-v4', 'MSA-v6' ].each do |title|
+    context "with title #{title}" do
+      let(:title) { title }
 
-    it {
-      should contain_class('sendmail::mc::macro_section')
-      should contain_concat__fragment('sendmail_mc-daemon_options-MTA') \
-              .with_content(/^DAEMON_OPTIONS\(`Name=MTA'\)dnl$/) \
-              .with_order('40') \
-              .that_notifies('Class[sendmail::makeall]')
-    }
+      it {
+        should contain_class('sendmail::mc::macro_section')
+        should contain_concat__fragment("sendmail_mc-daemon_options-#{title}") \
+                .with_content(/^DAEMON_OPTIONS\(`Name=#{title}'\)dnl$/) \
+                .with_order('40') \
+                .that_notifies('Class[sendmail::makeall]')
+      }
+    end
   end
 
   context 'with daemon_name => MTA' do
