@@ -414,6 +414,7 @@ This is a convenience class to make the configuration simple. Internally it decl
 class { 'sendmail::nullclient':
   mail_hub           => '[192.168.1.1]',
   port_option_modify => 'S',
+  enable_ipv6_msa    => false,
 }
 ```
 
@@ -431,9 +432,17 @@ Define the maximum message size that will be accepted. This can be a pure numeri
 
 The loglevel for the sendmail process. Valid options: a numeric value. Default value: `undef`
 
+##### `enable_ipv4_msa`
+
+Enable the local message submission agent on the IPv4 loopback address (`127.0.0.1`). Valid options: `true` or `false`. Default value: `true`
+
+##### `enable_ipv6_msa`
+
+Enable the local message submission agent on the IPv6 loopback address (`::1`). Valid options: `true` or `false`. Default value: `true`
+
 ##### `port`
 
-The port used for the local message submission agent. Default value: `587`.
+The port used for the local message submission agent. Default value: `587`
 
 ##### `port_option_modify`
 

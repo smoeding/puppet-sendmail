@@ -21,6 +21,14 @@
 #   The loglevel for the sendmail process.
 #   Valid options: a numeric value. Default value: undef.
 #
+# [*enable_ipv4_msa*]
+#   Enable the local message submission agent on the IPv4 loopback address
+#   (127.0.0.1). Valid options: 'true' or 'false'. Default value: 'true'.
+#
+# [*enable_ipv6_msa*]
+#   Enable the local message submission agent on the IPv6 loopback address
+#   (::1). Valid options: 'true' or 'false'. Default value: 'true'.
+#
 # [*port*]
 #   The port used for the local message submission agent. Default value:
 #   '587'.
@@ -89,6 +97,8 @@ class sendmail::nullclient (
   $mail_hub,
   $port                     = '587',
   $port_option_modify       = undef,
+  $enable_ipv4_msa          = true,
+  $enable_ipv6_msa          = true,
   $enable_msp_trusted_users = false,
   $trusted_users            = [],
   $max_message_size         = undef,
@@ -106,6 +116,13 @@ class sendmail::nullclient (
   $server_ssl_options       = undef,
   $client_ssl_options       = undef,
 ) {
+
+  validate_bool($enable_ipv4_msa)
+  validate_bool($enable_ipv6_msa)
+
+  if ((!$enable_ipv4_msa) and (!$enable_ipv6_msa)) {
+    fail('The MSA must be enabled for IPv4 or IPv6 or both')
+  }
 
   validate_re($port, '^[0-9]+$')
   validate_re($port_option_modify, '^[abcfhruACEOS]*$')
@@ -135,11 +152,24 @@ class sendmail::nullclient (
 
   ::sendmail::mc::feature { 'no_default_msa': }
 
-  ::sendmail::mc::daemon_options { 'MSA':
-    family => 'inet',
-    addr   => '127.0.0.1',
-    port   => $port,
-    modify => $port_option_modify,
+  if ($enable_ipv4_msa) {
+    ::sendmail::mc::daemon_options { 'MSA-v4':
+      daemon_name => 'MSA',
+      family      => 'inet',
+      addr        => '127.0.0.1',
+      port        => $port,
+      modify      => $port_option_modify,
+    }
+  }
+
+  if ($enable_ipv6_msa) {
+    ::sendmail::mc::daemon_options { 'MSA-v6':
+      daemon_name => 'MSA',
+      family      => 'inet6',
+      addr        => '::1',
+      port        => $port,
+      modify      => $port_option_modify,
+    }
   }
 
   ::sendmail::mc::feature { 'nullclient':

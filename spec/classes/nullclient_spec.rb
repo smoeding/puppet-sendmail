@@ -33,16 +33,61 @@ describe 'sendmail::nullclient' do
 
       should contain_sendmail__mc__feature('no_default_msa')
 
-      should contain_sendmail__mc__daemon_options('MSA').with(
-               'family' => 'inet',
-               'addr'   => '127.0.0.1',
-               'port'   => '587',
-               'modify' => nil,
+      should contain_sendmail__mc__daemon_options('MSA-v4').with(
+               'daemon_name' => 'MSA',
+               'family'      => 'inet',
+               'addr'        => '127.0.0.1',
+               'port'        => '587',
+               'modify'      => nil,
+             )
+
+      should contain_sendmail__mc__daemon_options('MSA-v6').with(
+               'daemon_name' => 'MSA',
+               'family'      => 'inet6',
+               'addr'        => '::1',
+               'port'        => '587',
+               'modify'      => nil,
              )
 
       should contain_sendmail__mc__feature('nullclient').with(
                'args' => [ 'example.com' ]
              )
+    }
+  end
+
+  context "with enable_ipv4_msa => false" do
+    let(:params) do
+      { :enable_ipv4_msa => false, :mail_hub => 'example.com' }
+    end
+
+    it {
+      should_not contain_sendmail__mc__daemon_options('MSA-v4')
+      should contain_sendmail__mc__daemon_options('MSA-v6')
+    }
+  end
+
+  context "with enable_ipv6_msa => false" do
+    let(:params) do
+      { :enable_ipv6_msa => false, :mail_hub => 'example.com' }
+    end
+
+    it {
+      should contain_sendmail__mc__daemon_options('MSA-v4')
+      should_not contain_sendmail__mc__daemon_options('MSA-v6')
+    }
+  end
+
+  context "with enable_ipv6_msa => false, enable_ipv6_msa => false" do
+    let(:params) do
+      {
+        :enable_ipv4_msa => false,
+        :enable_ipv6_msa => false,
+        :mail_hub => 'example.com'
+      }
+    end
+
+    it {
+      expect { should compile }.to raise_error(/enabled for IPv4 or IPv6/)
     }
   end
 
@@ -52,7 +97,8 @@ describe 'sendmail::nullclient' do
     end
 
     it {
-      should contain_sendmail__mc__daemon_options('MSA').with('port' => '25')
+      should contain_sendmail__mc__daemon_options('MSA-v4').with_port('25')
+      should contain_sendmail__mc__daemon_options('MSA-v6').with_port('25')
     }
   end
 
@@ -72,7 +118,8 @@ describe 'sendmail::nullclient' do
     end
 
     it {
-      should contain_sendmail__mc__daemon_options('MSA').with('modify' => 'S')
+      should contain_sendmail__mc__daemon_options('MSA-v4').with_modify('S')
+      should contain_sendmail__mc__daemon_options('MSA-v6').with_modify('S')
     }
   end
 
@@ -92,7 +139,7 @@ describe 'sendmail::nullclient' do
     end
 
     it {
-      should contain_class('sendmail').with('max_message_size' => '42')
+      should contain_class('sendmail').with_max_message_size('42')
     }
   end
 
@@ -102,7 +149,7 @@ describe 'sendmail::nullclient' do
     end
 
     it {
-      should contain_class('sendmail').with('tls_srv_options' => 'V')
+      should contain_class('sendmail').with_tls_srv_options('V')
     }
   end
 
@@ -112,7 +159,7 @@ describe 'sendmail::nullclient' do
     end
 
     it {
-      should contain_class('sendmail').with('enable_msp_trusted_users' => true)
+      should contain_class('sendmail').with_enable_msp_trusted_users(true)
     }
   end
 
@@ -122,7 +169,7 @@ describe 'sendmail::nullclient' do
     end
 
     it {
-      should contain_class('sendmail').with('trusted_users' => [ 'root' ])
+      should contain_class('sendmail').with_trusted_users([ 'root' ])
     }
   end
 

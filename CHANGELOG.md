@@ -3,6 +3,7 @@
 ### Summary
 #### Features
 
+- Add configuration parameters `enable_ipv4_msa` and `enable_ipv6_msa` to the `sendmail::nullclient` class to configure the MSA for IPv4 and IPv6.
 - Define privacy flags for the daemon with the help of the `sendmail::privacy_flags` class.
 - Add parameter `daemon_name` to the `sendmail::mc::daemon_options` type. This allows reusing the same name for multiple daemon option enties.
 - Allow a string parameter for `sendmail::mc::feature` if the feature requires only a single argument.
