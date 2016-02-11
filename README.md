@@ -205,6 +205,7 @@ sendmail::mc::feature { 'virtusertable':
   - [Class: sendmail::mailertable](#class-sendmailmailertable)
   - [Class: sendmail::userdb](#class-sendmailuserdb)
   - [Class: sendmail::virtusertable](#class-sendmailvirtusertable)
+  - [Class: sendmail::privacy_flags](#class-sendmailprivacy_flags)
 - [**Private Classes**](#private-classes)
   - [Class: sendmail::mc](#class-sendmailmc)
   - [Class: sendmail::submit](#class-sendmailsubmit)
@@ -783,6 +784,84 @@ sendmail::virtusertable::entries:
   '@example.org':
 	value: 'barney'
 ```
+
+#### Class: `sendmail::privacy_flags`
+
+This class defines privacy options for the main Sendmail daemon. Each option is enabled by setting the associated boolean parameter to `true`. See the Sendmail documentation for the meaning of the flags.
+
+```puppet
+class { '::sendmail::privacy_flags':
+  goaway         => true,
+  restrictexpand => true,
+  noetrn         => true,
+}
+```
+
+**Parameters for the `sendmail::privacy_flags` class:**
+
+##### `authwarnings`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `goaway`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `needexpnhelo`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `needmailhelo`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `needvrfyhelo`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `noactualrecipient`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `nobodyreturn`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `noetrn`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `noexpn`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `noreceipts`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `noverb`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `novrfy`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `public`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `restrictexpand`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `restrictmailq`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `restrictqrun`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
 
 ### Private Classes
 

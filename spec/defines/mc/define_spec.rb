@@ -222,4 +222,20 @@ describe 'sendmail::mc::define' do
       should contain_class('sendmail::mc::define_section')
     }
   end
+
+  context 'with argument confPRIVACY_FLAGS' do
+    let(:title) { 'confPRIVACY_FLAGS' }
+
+    let(:params) do
+      { :expansion => 'foo' }
+    end
+
+    it {
+      should contain_concat__fragment('sendmail_mc-define-confPRIVACY_FLAGS') \
+              .with_content(/^define\(`confPRIVACY_FLAGS', `foo'\)dnl$/) \
+              .with_order('12') \
+              .that_notifies('Class[sendmail::makeall]')
+      should contain_class('sendmail::mc::define_section')
+    }
+  end
 end
