@@ -1,3 +1,12 @@
+## UNRELEASED
+
+### Summary
+#### Features
+
+- Add Ubuntu 15.10 (Wily Werewolf) to the list of supported operating systems.
+
+#### Bugfixes
+
 ## 2016-02-11 - Release 0.4.0
 
 ### Summary
