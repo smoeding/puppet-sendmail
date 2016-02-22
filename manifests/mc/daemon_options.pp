@@ -115,26 +115,27 @@ define sendmail::mc::daemon_options (
     default => $input_filter,
   }
 
-  $sparse_opts = {
-    'Name'           => $daemon_name,
-    'Family'         => $family,
-    'Addr'           => $addr,
-    'Port'           => $port,
-    'children'       => $children,
-    'DeliveryMode'   => $delivery,
-    'InputFilter'    => $filter,
-    'Listen'         => $listen,
-    'M'              => $modify,
-    'delayLA'        => $delay_la,
-    'queueLA'        => $queue_la,
-    'refuseLA'       => $refuse_la,
-    'SendBufSize'    => $send_buf_size,
-    'ReceiveBufSize' => $receive_buf_size,
-  }
+  $sparse_opts = [
+    "Name=${daemon_name}",
+    "Family=${family}",
+    "Addr=${addr}",
+    "Port=${port}",
+    "children=${children}",
+    "DeliveryMode=${delivery}",
+    "InputFilter=${filter}",
+    "Listen=${listen}",
+    "M=${modify}",
+    "delayLA=${delay_la}",
+    "queueLA=${queue_la}",
+    "refuseLA=${refuse_la}",
+    "SendBufSize=${send_buf_size}",
+    "ReceiveBufSize=${receive_buf_size}",
+  ]
 
-  $hash_opts = delete_undef_values($sparse_opts)
+  # Remove unset options
+  $clean_opts = regsubst($sparse_opts, '^.*=$', '')
 
-  $opts = join(join_keys_to_values($hash_opts, '='), ', ')
+  $opts = join(delete($clean_opts, ''), ', ')
 
   concat::fragment { "sendmail_mc-daemon_options-${title}":
     target  => 'sendmail.mc',
