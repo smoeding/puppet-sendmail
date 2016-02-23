@@ -30,7 +30,7 @@ class sendmail::virtusertable::file (
     ensure  => file,
     content => $content,
     source  => $source,
-    owner   => 'smmta',
+    owner   => $::sendmail::params::sendmail_user,
     group   => $::sendmail::params::sendmail_group,
     mode    => '0640',
     notify  => Class['::sendmail::makeall'],
