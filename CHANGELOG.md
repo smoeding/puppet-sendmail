@@ -11,6 +11,7 @@ The release fixes some bugs. It has also been verified to run on Ubuntu 15.10.
 #### Bugfixes
 
 - Fix intermittent change of parameter order in some cases.
+- Fix file owner and group on RedHat family.
 
 ## 2016-02-11 - Release 0.4.0
 

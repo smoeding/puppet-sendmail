@@ -30,7 +30,7 @@ describe 'sendmail::authinfo::file' do
       should contain_file('/etc/mail/authinfo').with(
                'ensure'  => 'file',
                'owner'   => 'root',
-               'group'   => 'smmsp',
+               'group'   => 'root',
                'mode'    => '0600',
                'content' => nil,
                'source'  => nil,

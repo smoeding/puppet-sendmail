@@ -30,7 +30,7 @@ describe 'sendmail::domaintable::file' do
       should contain_file('/etc/mail/domaintable').with(
                'ensure'  => 'file',
                'owner'   => 'root',
-               'group'   => 'smmsp',
+               'group'   => 'root',
                'mode'    => '0640',
                'content' => nil,
                'source'  => nil,

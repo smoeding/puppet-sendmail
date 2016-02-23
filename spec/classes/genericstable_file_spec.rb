@@ -30,7 +30,7 @@ describe 'sendmail::genericstable::file' do
       should contain_file('/etc/mail/genericstable').with(
                'ensure'  => 'file',
                'owner'   => 'root',
-               'group'   => 'smmsp',
+               'group'   => 'root',
                'mode'    => '0640',
                'content' => nil,
                'source'  => nil,
