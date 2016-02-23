@@ -1,11 +1,16 @@
 ## UNRELEASED
 
 ### Summary
+
+The release fixes some bugs. It has also been verified to run on Ubuntu 15.10.
+
 #### Features
 
 - Add Ubuntu 15.10 (Wily Werewolf) to the list of supported operating systems.
 
 #### Bugfixes
+
+- Fix intermittent change of parameter order in some cases.
 
 ## 2016-02-11 - Release 0.4.0
 
