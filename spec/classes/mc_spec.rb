@@ -111,6 +111,30 @@ describe 'sendmail::mc' do
     }
   end
 
+  context 'with max_message_size => 1kB' do
+    let(:params) do
+      { :max_message_size => '1kB' }
+    end
+
+    it {
+      should contain_sendmail__mc__define('confMAX_MESSAGE_SIZE').with(
+               'expansion' => '1024',
+             )
+    }
+  end
+
+  context 'with max_message_size => 1MB' do
+    let(:params) do
+      { :max_message_size => '1MB' }
+    end
+
+    it {
+      should contain_sendmail__mc__define('confMAX_MESSAGE_SIZE').with(
+               'expansion' => '1048576',
+             )
+    }
+  end
+
   context 'with max_message_size => foo' do
     let(:params) do
       { :max_message_size => 'foo' }

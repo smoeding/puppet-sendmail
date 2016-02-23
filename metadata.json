@@ -1,10 +1,10 @@
 {
   "name": "stm-sendmail",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "author": "stm",
   "summary": "Install and manage the Sendmail MTA.",
   "license": "BSD-2-Clause",
-  "source": "git@github.com:smoeding/puppet-sendmail.git",
+  "source": "https://github.com/smoeding/puppet-sendmail",
   "project_page": "https://github.com/smoeding/puppet-sendmail",
   "issues_url": "https://github.com/smoeding/puppet-sendmail/issues",
   "tags": [ "mail", "email", "mta", "sendmail", "smtp" ],
@@ -12,6 +12,18 @@
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [ "7", "8" ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [ "14.04", "15.04", "15.10" ]
+    },
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [ "6", "7" ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [ "6", "7" ]
     }
   ],
   "dependencies": [

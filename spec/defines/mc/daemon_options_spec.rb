@@ -13,12 +13,28 @@ describe 'sendmail::mc::daemon_options' do
     }
   end
 
-  context 'with title MTA' do
-    let(:title) { 'MTA' }
+  [ 'MTA', 'MSA-v4', 'MSA-v6' ].each do |title|
+    context "with title #{title}" do
+      let(:title) { title }
+
+      it {
+        should contain_class('sendmail::mc::macro_section')
+        should contain_concat__fragment("sendmail_mc-daemon_options-#{title}") \
+                .with_content(/^DAEMON_OPTIONS\(`Name=#{title}'\)dnl$/) \
+                .with_order('40') \
+                .that_notifies('Class[sendmail::makeall]')
+      }
+    end
+  end
+
+  context 'with daemon_name => MTA' do
+    let(:params) do
+      { :daemon_name => 'MTA' }
+    end
 
     it {
       should contain_class('sendmail::mc::macro_section')
-      should contain_concat__fragment('sendmail_mc-daemon_options-MTA') \
+      should contain_concat__fragment('sendmail_mc-daemon_options-MSA') \
               .with_content(/^DAEMON_OPTIONS\(`Name=MTA'\)dnl$/) \
               .with_order('40') \
               .that_notifies('Class[sendmail::makeall]')
@@ -234,6 +250,42 @@ describe 'sendmail::mc::daemon_options' do
               .with_content(/^DAEMON_OPTIONS\(`Name=MSA, Family=inet, Port=25'\)dnl$/) \
               .with_order('40') \
               .that_notifies('Class[sendmail::makeall]')
+    }
+  end
+
+  context 'with input_filter of type string' do
+    let(:params) do
+      { :input_filter => 'foo' }
+    end
+
+    it {
+      should contain_class('sendmail::mc::macro_section')
+      should contain_concat__fragment('sendmail_mc-daemon_options-MSA') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MSA, InputFilter=foo'\)dnl$/)
+    }
+  end
+
+  context 'with input_filter of type array of 1 element' do
+    let(:params) do
+      { :input_filter => [ 'foo' ] }
+    end
+
+    it {
+      should contain_class('sendmail::mc::macro_section')
+      should contain_concat__fragment('sendmail_mc-daemon_options-MSA') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MSA, InputFilter=foo'\)dnl$/)
+    }
+  end
+
+  context 'with input_filter of type array of 2 elements' do
+    let(:params) do
+      { :input_filter => [ 'foo', 'bar' ] }
+    end
+
+    it {
+      should contain_class('sendmail::mc::macro_section')
+      should contain_concat__fragment('sendmail_mc-daemon_options-MSA') \
+              .with_content(/^DAEMON_OPTIONS\(`Name=MSA, InputFilter=foo;bar'\)dnl$/)
     }
   end
 end

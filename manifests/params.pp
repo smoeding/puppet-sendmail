@@ -48,7 +48,7 @@ class sendmail::params {
 
   $mailers = [ 'smtp', 'local' ]
 
-  case $::operatingsystem {
+  case $::osfamily {
 
     'Debian': {
       $auxiliary_packages = [ 'bsd-mailx', ]
@@ -60,17 +60,22 @@ class sendmail::params {
       $sendmail_user  = 'smmta'
       $sendmail_group = 'smmsp'
 
-      $ostype             = 'debian'
+      $sendmail_mc_ostype = 'debian'
+      $submit_mc_ostype   = 'debian'
       $sendmail_mc_domain = 'debian-mta'
       $submit_mc_domain   = 'debian-msp'
     }
 
-    'Redhat': {
-      $auxiliary_packages = [ 'sendmail-cf', 'm4', 'make', 'cyrus-sasl', 'mailx', ]
+    'RedHat': {
+      $auxiliary_packages = [ 'sendmail-cf', 'mailx', ]
 
       $service_hasstatus = true
 
-      $ostype             = undef
+      $sendmail_user  = 'root'
+      $sendmail_group = 'root'
+
+      $sendmail_mc_ostype = 'linux'
+      $submit_mc_ostype   = undef
       $sendmail_mc_domain = undef
       $submit_mc_domain   = undef
     }
@@ -80,7 +85,8 @@ class sendmail::params {
       $sendmail_user  = 'root'
       $sendmail_group = 'wheel'
 
-      $ostype             = 'freebsd6'
+      $sendmail_mc_ostype = 'freebsd6'
+      $submit_mc_ostype   = 'freebsd6'
       $sendmail_mc_domain = undef
       $submit_mc_domain   = undef
     }

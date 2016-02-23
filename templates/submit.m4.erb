@@ -6,8 +6,9 @@ divert(0)dnl
 #
 define(`_USE_ETC_MAIL_')dnl
 define(`confCF_VERSION', `Submit')dnl
+define(`confTIME_ZONE', `USE_TZ')dnl
 define(`confDONT_INIT_GROUPS', `True')dnl
-<% case @operatingsystem -%>
+<% case @osfamily -%>
 <% when 'Debian' -%>
 dnl #
 include(`/usr/share/sendmail/cf/m4/cf.m4')dnl
@@ -15,6 +16,12 @@ dnl #
 <% when 'FreeBSD' -%>
 define(`__OSTYPE__',`')dnl dirty hack to keep proto.m4 from complaining
 define(`confBIND_OPTS', `WorkAroundBrokenAAAA')dnl
+dnl #
+<% when 'RedHat' -%>
+dnl #
+include(`/usr/share/sendmail-cf/m4/cf.m4')dnl
+define(`__OSTYPE__',`')dnl dirty hack to keep proto.m4 from complaining
+define(`confPID_FILE', `/var/run/sm-client.pid')dnl
 dnl #
 <% end -%>
 <% if @ostype -%>
@@ -28,6 +35,11 @@ dnl #
 dnl # Masquerading
 MASQUERADE_AS(`<%= @masquerade_as -%>')dnl
 FEATURE(`masquerade_envelope')dnl
+dnl #
+<% end -%>
+<% if @enable_msp_trusted_users -%>
+dnl # Use trusted users file
+FEATURE(`use_ct_file')dnl
 dnl #
 <% end -%>
 dnl # Feature MSP

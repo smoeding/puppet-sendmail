@@ -19,13 +19,27 @@ describe 'sendmail' do
       should contain_class('sendmail::relay_domains')
       should contain_class('sendmail::trusted_users')
       should contain_class('sendmail::mc')
-      should contain_class('sendmail::submit')
+      should contain_class('sendmail::submit').with(
+               'msp_host'                 => '[127.0.0.1]',
+               'msp_port'                 => 'MSA',
+               'enable_msp_trusted_users' => false,
+             )
 
       should contain_class('sendmail::service') \
               .that_requires('Anchor[sendmail::config]') \
               .that_comes_before('Anchor[sendmail::end]')
 
       should_not contain_class('sendmail::mc::starttls')
+    }
+  end
+
+  context "with max_message_size => 42" do
+    let(:params) do
+      { :max_message_size => '42' }
+    end
+
+    it {
+      should contain_class('sendmail::mc').with('max_message_size' => '42')
     }
   end
 
@@ -137,6 +151,18 @@ describe 'sendmail' do
     }
   end
 
+  context 'with enable_msp_trusted_users => true' do
+    let(:params) do
+      { :enable_msp_trusted_users => true }
+    end
+
+    it {
+      should contain_class('sendmail::submit').with(
+               'enable_msp_trusted_users' => true,
+             )
+    }
+  end
+
   context 'with manage_sendmail_mc => true' do
     let(:params) do
       { :manage_sendmail_mc => true }
@@ -198,7 +224,10 @@ describe 'sendmail' do
 
   context 'On unsupported operating system' do
     let(:facts) do
-      { :operatingsystem => 'VAX/VMS' }
+      {
+        :operatingsystem => 'VAX/VMS',
+        :osfamily        => 'VMS'
+      }
     end
 
     it {

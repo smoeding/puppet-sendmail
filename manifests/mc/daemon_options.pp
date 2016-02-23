@@ -4,6 +4,10 @@
 #
 # == Parameters:
 #
+# [*daemon_name*]
+#   The name of the daemon to use. The logfile will contain this name to
+#   identify the daemon. Default is the resource title.
+#
 # [*family*]
 #   The network family type. Valid options: 'inet', 'inet6' or 'iso'
 #
@@ -23,7 +27,8 @@
 #   'deferred', 'interactive' or 'queueonly'.
 #
 # [*input_filter*]
-#   A list of milters to use.
+#   A list of milters to use. This can either be an array of milter names or
+#   a single string, where the milter names are separated by colons.
 #
 # [*listen*]
 #   The length of the listen queue used by the operating system.
@@ -64,6 +69,7 @@
 #
 #
 define sendmail::mc::daemon_options (
+  $daemon_name      = $title,
   $family           = undef,
   $addr             = undef,
   $port             = undef,
@@ -80,6 +86,8 @@ define sendmail::mc::daemon_options (
 ) {
 
   include ::sendmail::makeall
+
+  validate_string($daemon_name)
 
   if !empty($family) {
     validate_re($family, [ '^inet$', '^inet6$', '^iso$'])
@@ -101,14 +109,20 @@ define sendmail::mc::daemon_options (
     default => regsubst($delivery_mode, '^(.).*$', '\1')
   }
 
+  # Build string if array has been given
+  $filter = is_array($input_filter) ? {
+    true    => join($input_filter, ';'),
+    default => $input_filter,
+  }
+
   $sparse_opts = {
-    'Name'           => $title,
+    'Name'           => $daemon_name,
     'Family'         => $family,
     'Addr'           => $addr,
     'Port'           => $port,
     'children'       => $children,
     'DeliveryMode'   => $delivery,
-    'InputFilter'    => $input_filter,
+    'InputFilter'    => $filter,
     'Listen'         => $listen,
     'M'              => $modify,
     'delayLA'        => $delay_la,

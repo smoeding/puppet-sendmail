@@ -32,7 +32,7 @@ class sendmail::authinfo::file (
     source  => $source,
     owner   => 'root',
     group   => $::sendmail::params::sendmail_group,
-    mode    => '0640',
+    mode    => '0600',
     notify  => Class['::sendmail::makeall'],
   }
 }

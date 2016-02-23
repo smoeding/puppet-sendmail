@@ -63,13 +63,15 @@ The same mechanism is used to add features like greylisting, virtual user setups
 With the Sendmail module these settings are defined by adding resources using the [`sendmail::mc::define`](#define-sendmailmcdefine) or [`sendmail::mc::feature`](#define-sendmailmcfeature) defined types.
 
 ```puppet
+# Manage Sendmail and set a smart host and the maximum message size
 class { 'sendmail':
-  smart_host => 'relay.example.com',
+  smart_host       => 'relay.example.com',
+  max_message_size => '32MB',
 }
 
-# Adjust acceptable message size
-sendmail::mc::define { 'confMAX_MESSAGE_SIZE':
-  expansion => '33554432',
+# Set maximum number of daemon processes
+sendmail::mc::define { 'confMAX_DAEMON_CHILDREN':
+  expansion => '8',
 }
 
 # Include ratecontrol feature with parameters
@@ -187,7 +189,7 @@ sendmail::mc::feature { 'ldap_routing':
 }
 
 sendmail::mc::feature { 'virtusertable':
-  args => [ "ldap -1 -T<TMPF> -v uid -k ${ldap_filter}", ],
+  args => "ldap -1 -T<TMPF> -v uid -k ${ldap_filter}",
 }
 ```
 
@@ -203,6 +205,7 @@ sendmail::mc::feature { 'virtusertable':
   - [Class: sendmail::mailertable](#class-sendmailmailertable)
   - [Class: sendmail::userdb](#class-sendmailuserdb)
   - [Class: sendmail::virtusertable](#class-sendmailvirtusertable)
+  - [Class: sendmail::privacy_flags](#class-sendmailprivacy_flags)
 - [**Private Classes**](#private-classes)
   - [Class: sendmail::mc](#class-sendmailmc)
   - [Class: sendmail::submit](#class-sendmailsubmit)
@@ -219,6 +222,7 @@ sendmail::mc::feature { 'virtusertable':
   - [Classes: sendmail::mc::*_section](#classes-sendmailmc_section)
 - [**Public Defined Types**](#public-defined-types)
   - [Define: sendmail::aliases::entry](#define-sendmailaliasesentry)
+  - [Define: sendmail::authinfo::entry](#define-sendmailauthinfoentry)
   - [Define: sendmail::access::entry](#define-sendmailaccessentry)
   - [Define: sendmail::domaintable::entry](#define-sendmaildomaintableentry)
   - [Define: sendmail::genericstable::entry](#define-sendmailgenericstableentry)
@@ -255,6 +259,10 @@ Performs the basic setup and installation of Sendmail on the system.
 ##### `smart_host`
 
 Servers behind a firewall may not be able to deliver mail directly to the outside world. In this case the host may need to forward the mail to a gateway machine defined by this parameter. All nonlocal mail is forwarded to this gateway. Default value: `undef`
+
+##### `max_message_size`
+
+Define the maximum message size that will be accepted. This can be a pure numerical value given in bytes (e.g. `33554432`) or a number with a prefixed byte unit (e.g. `32MB`). The conversion is done using the 1024 convention (see the `to_bytes` function in the `stdlib` module), so valid prefixes are either `k` for 1024 bytes or `M` for 1048576 bytes. Default value: `undef`
 
 ##### `log_level`
 
@@ -352,6 +360,10 @@ The host where the message submission program should deliver to. This can be a h
 
 The port used for the message submission program. Can be a port number (e.g., `25`) or the literal `MSA` for delivery to the message submission agent on port 587. Make sure to configure a daemon that listens on this port or local mail will remain stuck in the submission queue. Default value: `MSA`
 
+##### `enable_msp_trusted_users`
+
+Whether the trusted users file feature is enabled for the message submission program. This may be necessary if you want to allow certain users to change the sender address using `sendmail -f`. Valid options: `true` or `false`. Default value: `false`
+
 ##### `manage_sendmail_mc`
 
 Whether to automatically manage the `sendmail.mc` file. Valid options: `true` or `false`. Default value: `true`
@@ -402,6 +414,7 @@ This is a convenience class to make the configuration simple. Internally it decl
 class { 'sendmail::nullclient':
   mail_hub           => '[192.168.1.1]',
   port_option_modify => 'S',
+  enable_ipv6_msa    => false,
 }
 ```
 
@@ -411,17 +424,37 @@ class { 'sendmail::nullclient':
 
 The hostname or IP address of the mail hub where all mail is forwarded to. It can be enclosed in brackets to prevent MX lookups.
 
+##### `max_message_size`
+
+Define the maximum message size that will be accepted. This can be a pure numerical value given in bytes (e.g. `33554432`) or a number with a prefixed byte unit (e.g. `32MB`). The conversion is done using the 1024 convention (see the `to_bytes` function in the `stdlib` module), so valid prefixes are either `k` for 1024 bytes or `M` for 1048576 bytes. Default value: `undef`
+
 ##### `log_level`
 
 The loglevel for the sendmail process. Valid options: a numeric value. Default value: `undef`
 
+##### `enable_ipv4_msa`
+
+Enable the local message submission agent on the IPv4 loopback address (`127.0.0.1`). Valid options: `true` or `false`. Default value: `true`
+
+##### `enable_ipv6_msa`
+
+Enable the local message submission agent on the IPv6 loopback address (`::1`). Valid options: `true` or `false`. Default value: `true`
+
 ##### `port`
 
-The port used for the local message submission agent. Default value: `587`.
+The port used for the local message submission agent. Default value: `587`
 
 ##### `port_option_modify`
 
 Port option modifiers for the local message submission agent. This parameter is used for the daemon port options. A useful value for the nullclient configuration might be `S` to prevent offering STARTTLS on the MSA port. Default value: `undef`
+
+##### `enable_msp_trusted_users`
+
+Whether the trusted users file feature is enabled for the message submission program. This may be necessary if you want to allow certain users to change the sender address using `sendmail -f`. Valid options: `true` or `false`. Default value: `false`
+
+##### `trusted_users`
+
+An array of user names that will be written into the trusted users file. Leading or trailing whitespace is ignored. Empty entries are also ignored. Default value: `[]`
 
 ##### `ca_cert_file`
 
@@ -761,6 +794,84 @@ sendmail::virtusertable::entries:
 	value: 'barney'
 ```
 
+#### Class: `sendmail::privacy_flags`
+
+This class defines privacy options for the main Sendmail daemon. Each option is enabled by setting the associated boolean parameter to `true`. See the Sendmail documentation for the meaning of the flags.
+
+```puppet
+class { '::sendmail::privacy_flags':
+  goaway         => true,
+  restrictexpand => true,
+  noetrn         => true,
+}
+```
+
+**Parameters for the `sendmail::privacy_flags` class:**
+
+##### `authwarnings`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `goaway`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `needexpnhelo`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `needmailhelo`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `needvrfyhelo`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `noactualrecipient`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `nobodyreturn`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `noetrn`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `noexpn`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `noreceipts`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `noverb`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `novrfy`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `public`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `restrictexpand`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `restrictmailq`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+##### `restrictqrun`
+
+Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
 ### Private Classes
 
 #### Class: `sendmail::mc`
@@ -836,6 +947,51 @@ The recipient where the mail is redirected to.
 ##### `ensure`
 
 Used to create or remove the alias entry. Valid options: `present`, `absent`. Default value: `present`
+
+#### Define: `sendmail::authinfo::entry`
+
+Manage an entry in the Sendmail authinfo db file. The type has an internal dependency to rebuild the database file.
+
+```puppet
+sendmail::authinfo::entry { 'example.com':
+  password         => 'secret',
+  authorization_id => 'auth',
+}
+```
+
+**Parameters for the `sendmail::authinfo::entry` type:**
+
+##### `password`
+
+The password used for remote authentication in clear text. Exactly one of `password` or `password_base64` must be set. Default value: `undef`
+
+##### `password_base64`
+
+The password used for remote authentication in Base64 encoding. Exactly one of `password` or `password_base64` must be set. Default value: `undef`
+
+##### `authorization_id`
+
+The user (authorization) identifier. One of the parameters `authorization_id` or `authentication_id` or both must be set. Default value: `undef`
+
+##### `authentication_id`
+
+The authentication identifier. One of the parameters `authorization_id` or `authentication_id` or both must be set. Default value: `undef`
+
+##### `realm`
+
+The administrative realm to use. Default value: `undef`
+
+##### `mechanisms`
+
+The list of preferred authentication mechanisms. Default value: `[]`
+
+##### `address`
+
+The key used by Sendmail for the database lookup. This can be an IPv4 address (e.g. `192.168.67.89`), an IPv6 address (e.g. `IPv6:2001:DB18::23f4`), a hostname (e.g. `www.example.org`) or a domain name (e.g. `example.com`). The database key requires to start with the literal expression `AuthInfo:`. This prefix will be added automatically if necessary. Default value is the resource title.
+
+##### `ensure`
+
+Used to create or remove the authinfo db entry. Valid options: `present`, `absent`. Default value: `present`
 
 #### Define: `sendmail::access::entry`
 
@@ -1005,12 +1161,17 @@ Add a `DAEMON_OPTIONS` macro to the `sendmail.mc` file.
 
 ```puppet
 sendmail::mc::daemon_options { 'MTA-v4':
-  family => 'inet',
-  port   => '25',
+  daemon_name => 'MTA',
+  family      => 'inet',
+  port        => '25',
 }
 ```
 
 **Parameters for the `sendmail::mc::daemon_options` type:**
+
+##### `daemon_name`
+
+The name of the daemon to use for this entry. The logfile will contain the name to identify the daemon. Default is the resource title.
 
 ##### `family`
 
@@ -1034,7 +1195,7 @@ The mode of delivery for this daemon. Valid options: `background`, `deferred`, `
 
 ##### `input_filter`
 
-A list of milters to use.
+A list of milters to use. This can either be an array of milter names or a single string, where the milter names are separated by colons.
 
 ##### `listen`
 
@@ -1146,7 +1307,7 @@ sendmail::mc::feature { 'mailertable': }
 
 ```puppet
 sendmail::mc::feature { 'mailertable':
-  args => [ 'hash /etc/mail/mailertable' ],
+  args => 'hash /etc/mail/mailertable',
 }
 ```
 
@@ -1167,7 +1328,7 @@ The name of the feature that will be used. This will be the first argument of th
 
 ##### `args`
 
-The arguments used for the feature. This must be an array and it will be used for the following arguments of the `FEATURE`. Default value: `[]`
+The arguments used for the feature. This can be a simple string, if the feature takes only one argument. If the feature requires more than one argument, it must be an array of strings. Default value: `[]`
 
 ##### `use_quotes`
 

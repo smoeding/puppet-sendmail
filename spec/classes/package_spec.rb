@@ -6,7 +6,10 @@ describe 'sendmail::package' do
 
   context 'On Debian with defaults' do
     let(:facts) do
-      { :operatingsystem => 'Debian' }
+      {
+        :operatingsystem => 'Debian',
+        :osfamily        => 'Debian'
+      }
     end
 
     it {
@@ -17,16 +20,16 @@ describe 'sendmail::package' do
 
   context 'On Rehat with defaults' do
     let(:facts) do
-      { :operatingsystem => 'Redhat' }
+      {
+        :operatingsystem => 'RedHat',
+        :osfamily        => 'RedHat'
+      }
     end
 
     it {
       should contain_package('sendmail')
       should contain_package('sendmail-cf')
-      should contain_package('cyrus-sasl')
-      should contain_package('m4')
       should contain_package('mailx')
-      should contain_package('make')
     }
   end
 

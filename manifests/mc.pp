@@ -28,6 +28,14 @@
 #   mail is forwarded to this gateway.
 #   Default value: undef.
 #
+# [*max_message_size*]
+#   Define the maximum message size that will be accepted. This can be a pure
+#   numerical value given in bytes (e.g. 33554432) or a number with a
+#   prefixed byte unit (e.g. 32MB). The conversion is done using the 1024
+#   convention (see the 'to_bytes' function in the 'stdlib' module), so valid
+#   prefixes are either 'k' for 1024 bytes or 'M' for 1048576 bytes. Default
+#   value: undef.
+#
 # [*log_level*]
 #   The loglevel for the sendmail process.
 #   Valid options: a numeric value. Default value: undef.
@@ -74,12 +82,12 @@
 #
 #
 class sendmail::mc (
-  $ostype                = $::sendmail::params::ostype,
+  $ostype                = $::sendmail::params::sendmail_mc_ostype,
   $sendmail_mc_domain    = $::sendmail::params::sendmail_mc_domain,
   $cf_version            = undef,
   $smart_host            = undef,
-  $log_level             = undef,
   $max_message_size      = undef,
+  $log_level             = undef,
   $dont_probe_interfaces = undef,
   $enable_ipv4_daemon    = true,
   $enable_ipv6_daemon    = true,
@@ -171,9 +179,10 @@ class sendmail::mc (
   }
 
   if ($max_message_size != undef) {
-    validate_re($max_message_size, '^\d+$', 'max_message_size must be numeric')
+    validate_re($max_message_size, '^[0-9]*\s*([kM][bB])?$',
+                'max_message_size must be numeric')
     ::sendmail::mc::define { 'confMAX_MESSAGE_SIZE':
-      expansion => $max_message_size,
+      expansion => to_bytes($max_message_size),
     }
   }
 
@@ -199,23 +208,7 @@ class sendmail::mc (
   }
 
   if ($mailers and !empty($mailers)) {
-    # Do a transformation from an array to JSON to a hash.
-    # This would be easier in Puppet 4 where $mailers.each is available.
-
-    # Turn every string into a JSON attribute-value pair
-    $json_single  = regsubst($mailers, '^.*$', '"\0": {}')
-
-    # Concatenate all attribute-value pairs
-    $json_all     = join($json_single, ', ')
-
-    # Make the object complete
-    $json         = "{ ${json_all} }"
-
-    # Convert into a Puppet hash
-    $mailers_hash = parsejson($json)
-
-    if !empty($mailers_hash) {
-      create_resources('::sendmail::mc::mailer', $mailers_hash)
+    ::sendmail::mc::mailer { $mailers:
     }
   }
 
