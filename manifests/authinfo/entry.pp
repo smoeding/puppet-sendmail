@@ -98,19 +98,20 @@ define sendmail::authinfo::entry (
   }
 
   # Base64 encoded values use '=' while clear text values use ':'
-  $value_hash = delete_undef_values({
-      'U:' => $authorization_id,
-      'I:' => $authentication_id,
-      'P:' => $password,
-      'P=' => $password_base64,
-      'R:' => $realm,
-      'M:' => $mech,
-  })
+  $values = [
+    "U:${authorization_id}",
+    "I:${authentication_id}",
+    "P:${password}",
+    "P=${password_base64}",
+    "R:${realm}",
+    "M:${mech}",
+  ]
 
-  $value_pairs = join_keys_to_values($value_hash, '')
+  # Remove unset values by mapping them to a single '=' and deleting it
+  $real_values = delete(regsubst($values, '^.[:=]$', '='), '=')
 
   # Add quotes to each array element
-  $value = join(regsubst($value_pairs, '^.*$', '"\0"'), ' ')
+  $value = join(regsubst($real_values, '^.*$', '"\0"'), ' ')
 
   $changes = $ensure ? {
     'present' => [

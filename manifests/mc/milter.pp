@@ -121,15 +121,18 @@ define sendmail::mc::milter (
     validate_re($connect_timeout, '^[0-9]+(s|m)?$')
   }
 
-  $timeouts = delete_undef_values({
-      'S' => $send_timeout,
-      'R' => $receive_timeout,
-      'E' => $eom_timeout,
-      'C' => $connect_timeout,
-  })
+  $sparse_timeouts = [
+    "S:${send_timeout}",
+    "R:${receive_timeout}",
+    "E:${eom_timeout}",
+    "C:${connect_timeout}",
+  ]
 
-  if count($timeouts) > 0 {
-    $opt_timeouts = join(join_keys_to_values($timeouts, ':'), '; ')
+  # Remove unset options
+  $real_timeouts = delete(regsubst($sparse_timeouts, '^.*:$', '='), '=')
+
+  if count($real_timeouts) > 0 {
+    $opt_timeouts = join($real_timeouts, '; ')
   }
   else {
     $opt_timeouts = undef
@@ -138,13 +141,16 @@ define sendmail::mc::milter (
   #
   # Put everything together
   #
-  $opts_all = delete_undef_values({
-      'S' => $opt_socket,
-      'F' => $opt_flags,
-      'T' => $opt_timeouts,
-  })
+  $sparse_opts_all = [
+    "S=${opt_socket}",
+    "F=${opt_flags}",
+    "T=${opt_timeouts}",
+  ]
 
-  $opts = join(join_keys_to_values($opts_all, '='), ', ')
+  # Remove unset options
+  $real_opts_all = delete(regsubst($sparse_opts_all, '^.*=$', '='), '=')
+
+  $opts = join($real_opts_all, ', ')
 
   concat::fragment { "sendmail_mc-milter-${milter_name}":
     target  => 'sendmail.mc',
