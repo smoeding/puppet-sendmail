@@ -12,6 +12,7 @@ The release fixes some bugs. It has also been verified to run on Ubuntu 15.10.
 
 - Fix intermittent change of parameter order in some cases.
 - Fix file owner and group on RedHat family.
+- Fix errors in logfile when `/usr/sbin/sendmail` isn't really Sendmail.
 
 ## 2016-02-11 - Release 0.4.0
 
