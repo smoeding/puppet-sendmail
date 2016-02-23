@@ -132,10 +132,10 @@ define sendmail::mc::daemon_options (
     "ReceiveBufSize=${receive_buf_size}",
   ]
 
-  # Remove unset options
-  $clean_opts = regsubst($sparse_opts, '^.*=$', '')
+  # Remove unset options by mapping them to a single '=' and deleting it
+  $real_opts = delete(regsubst($sparse_opts, '^.*=$', '='), '=')
 
-  $opts = join(delete($clean_opts, ''), ', ')
+  $opts = join($real_opts, ', ')
 
   concat::fragment { "sendmail_mc-daemon_options-${title}":
     target  => 'sendmail.mc',
