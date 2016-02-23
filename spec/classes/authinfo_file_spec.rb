@@ -6,7 +6,7 @@ describe 'sendmail::authinfo::file' do
 
   context 'On Debian' do
     let(:facts) do
-      { :operatingsystem => 'Debian' }
+      { :operatingsystem => 'Debian', :osfamily => 'Debian' }
     end
 
     it {
@@ -21,42 +21,45 @@ describe 'sendmail::authinfo::file' do
     }
   end
 
-  context 'On Debian with content => foo' do
+  context 'On RedHat' do
     let(:facts) do
-      { :operatingsystem => 'Debian' }
+      { :operatingsystem => 'RedHat', :osfamily => 'RedHat' }
     end
 
+    it {
+      should contain_file('/etc/mail/authinfo').with(
+               'ensure'  => 'file',
+               'owner'   => 'root',
+               'group'   => 'smmsp',
+               'mode'    => '0600',
+               'content' => nil,
+               'source'  => nil,
+             ).that_notifies('Class[sendmail::makeall]')
+    }
+  end
+
+  context 'with content => foo' do
     let(:params) do
       { :content => 'foo' }
     end
 
     it {
       should contain_file('/etc/mail/authinfo').with(
-               'ensure' => 'file',
-               'owner'  => 'root',
-               'group'  => 'smmsp',
-               'mode'   => '0600',
+               'ensure'  => 'file',
                'content' => 'foo',
                'source'  => nil,
              ).that_notifies('Class[sendmail::makeall]')
     }
   end
 
-  context 'On Debian with source => foo' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with source => foo' do
     let(:params) do
       { :source => 'foo' }
     end
 
     it {
       should contain_file('/etc/mail/authinfo').with(
-               'ensure' => 'file',
-               'owner'  => 'root',
-               'group'  => 'smmsp',
-               'mode'   => '0600',
+               'ensure'  => 'file',
                'content' => nil,
                'source'  => 'foo',
              ).that_notifies('Class[sendmail::makeall]')

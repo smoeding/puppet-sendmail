@@ -6,7 +6,7 @@ describe 'sendmail::aliases::file' do
 
   context 'On Debian' do
     let(:facts) do
-      { :operatingsystem => 'Debian' }
+      { :operatingsystem => 'Debian', :osfamily => 'Debian' }
     end
 
     it {
@@ -21,11 +21,24 @@ describe 'sendmail::aliases::file' do
     }
   end
 
-  context 'On Debian with content => foo' do
+  context 'On RedHat' do
     let(:facts) do
-      { :operatingsystem => 'Debian' }
+      { :operatingsystem => 'RedHat', :osfamily => 'RedHat' }
     end
 
+    it {
+      should contain_file('/etc/aliases').with(
+               'ensure'  => 'file',
+               'owner'   => 'root',
+               'group'   => 'root',
+               'mode'    => '0644',
+               'content' => nil,
+               'source'  => nil,
+             ).that_notifies('Class[sendmail::aliases::newaliases]')
+    }
+  end
+
+  context 'with content => foo' do
     let(:params) do
       { :content => 'foo' }
     end
@@ -33,20 +46,13 @@ describe 'sendmail::aliases::file' do
     it {
       should contain_file('/etc/aliases').with(
                'ensure'  => 'file',
-               'owner'   => 'root',
-               'group'   => 'root',
-               'mode'    => '0644',
                'content' => 'foo',
                'source'  => nil,
              ).that_notifies('Class[sendmail::aliases::newaliases]')
     }
   end
 
-  context 'On Debian with source => foo' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
+  context 'with source => foo' do
     let(:params) do
       { :source => 'foo' }
     end
@@ -54,9 +60,6 @@ describe 'sendmail::aliases::file' do
     it {
       should contain_file('/etc/aliases').with(
                'ensure'  => 'file',
-               'owner'   => 'root',
-               'group'   => 'root',
-               'mode'    => '0644',
                'content' => nil,
                'source'  => 'foo',
              ).that_notifies('Class[sendmail::aliases::newaliases]')
