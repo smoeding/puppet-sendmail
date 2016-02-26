@@ -5,6 +5,7 @@
 #### Features
 
 - Add class `sendmail::mc::timeouts` to conveniently specify most of the timeouts in one place.
+- The class `sendmail::privacy_flags` has been moved to `sendmail::mc::privacy_flags`.
 
 ## 2016-02-23 - Release 0.5.0
 

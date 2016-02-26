@@ -1,4 +1,4 @@
-# = Class: sendmail::privacy_flags
+# = Class: sendmail::mc::privacy_flags
 #
 # Manage privacy flags for the Sendmail MTA
 #
@@ -74,13 +74,13 @@
 #
 # == Sample Usage:
 #
-#   class { 'sendmail::privacy_flags':
+#   class { 'sendmail::mc::privacy_flags':
 #     authwarnings => true,
 #     noetrn       => true,
 #   }
 #
 #
-class sendmail::privacy_flags (
+class sendmail::mc::privacy_flags (
   $authwarnings      = false,
   $goaway            = false,
   $needexpnhelo      = false,

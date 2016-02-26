@@ -205,7 +205,7 @@ sendmail::mc::feature { 'virtusertable':
   - [Class: sendmail::mailertable](#class-sendmailmailertable)
   - [Class: sendmail::userdb](#class-sendmailuserdb)
   - [Class: sendmail::virtusertable](#class-sendmailvirtusertable)
-  - [Class: sendmail::privacy_flags](#class-sendmailprivacy_flags)
+  - [Class: sendmail::mc::privacy_flags](#class-sendmailmcprivacy_flags)
   - [Class: sendmail::mc::timeouts](#class-sendmailmctimeouts)
 - [**Private Classes**](#private-classes)
   - [Class: sendmail::mc](#class-sendmailmc)
@@ -795,19 +795,19 @@ sendmail::virtusertable::entries:
 	value: 'barney'
 ```
 
-#### Class: `sendmail::privacy_flags`
+#### Class: `sendmail::mc::privacy_flags`
 
 This class defines privacy options for the main Sendmail daemon. Each option is enabled by setting the associated boolean parameter to `true`. See the Sendmail documentation for the meaning of the flags.
 
 ```puppet
-class { '::sendmail::privacy_flags':
+class { 'sendmail::mc::privacy_flags':
   goaway         => true,
   restrictexpand => true,
   noetrn         => true,
 }
 ```
 
-**Parameters for the `sendmail::privacy_flags` class:**
+**Parameters for the `sendmail::mc::privacy_flags` class:**
 
 ##### `authwarnings`
 

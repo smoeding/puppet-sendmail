@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe 'sendmail::privacy_flags' do
+describe 'sendmail::mc::privacy_flags' do
 
   context 'with defaults' do
     it {
-      should contain_class('sendmail::privacy_flags')
+      should contain_class('sendmail::mc::privacy_flags')
       should contain_sendmail__mc__define('confPRIVACY_FLAGS') \
               .with_expansion('')
     }
