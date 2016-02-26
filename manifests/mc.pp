@@ -109,12 +109,13 @@ class sendmail::mc (
   # 07    DOMAIN
   # 10    # define header
   # 12    define
+  # 16    define (timeouts)
   # 18    # LDAP header
   # 19    LDAP config
   # 20    # FEATURE header
   # 22    FEATURE
-  # 28    FEATURE conncontrol, ratecontrol
-  # 29    FEATURE nullclient
+  # 28    FEATURE (conncontrol, ratecontrol)
+  # 29    FEATURE (nullclient)
   # 30    # macro header
   # 31    MASQUERADE_AS
   # 38    MODIFY_MAILER_FLAGS

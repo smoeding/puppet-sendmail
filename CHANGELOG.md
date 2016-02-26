@@ -1,3 +1,11 @@
+## UNRELEASED
+
+### Summary
+
+#### Features
+
+- Add class `sendmail::mc::timeouts` to conveniently specify most of the timeouts in one place.
+
 ## 2016-02-23 - Release 0.5.0
 
 ### Summary

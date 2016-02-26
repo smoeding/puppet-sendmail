@@ -206,6 +206,7 @@ sendmail::mc::feature { 'virtusertable':
   - [Class: sendmail::userdb](#class-sendmailuserdb)
   - [Class: sendmail::virtusertable](#class-sendmailvirtusertable)
   - [Class: sendmail::privacy_flags](#class-sendmailprivacy_flags)
+  - [Class: sendmail::mc::timeouts](#class-sendmailmctimeouts)
 - [**Private Classes**](#private-classes)
   - [Class: sendmail::mc](#class-sendmailmc)
   - [Class: sendmail::submit](#class-sendmailsubmit)
@@ -871,6 +872,102 @@ Whether the privacy option of the same name should be enabled. Valid options: `t
 ##### `restrictqrun`
 
 Whether the privacy option of the same name should be enabled. Valid options: `true` or `false`. Default value: `false`
+
+#### Class: `sendmail::mc::timeouts`
+
+This class allows setting various timeouts for Sendmail without having to use the [`sendmail::mc::define`](#define-sendmailmcdefine) macro individually for each entry.
+
+```puppet
+class { 'sendmail::mc::timeouts':
+  ident => '0',
+}
+```
+
+**Parameters for the `sendmail::mc::timeouts` class:**
+
+##### `aconnect`
+
+Timeout for all connection attempts when trying to reach one or multiple hosts for  sending a single mail. Default value: undef
+
+##### `auth`
+
+Timeout when waiting for AUTH negotiation. Default value: undef
+
+##### `command`
+
+Timeout when waiting for the next SMTP command. Default value: undef
+
+##### `connect`
+
+Timeout for one connection attempt when trying to establish a network connection. Also see then 'iconnect' parameter. Default value: undef
+
+##### `control`
+
+Timout when waiting for a command on the control socket. Default value: undef
+
+##### `datablock`
+
+Timeout when waiting on a read operation during the DATA phase. Default value: undef
+
+##### `datafinal`
+
+Timeout when waiting for the acknowledgment after sending the final dot in the DATA phase. Default value: undef
+
+##### `datainit`
+
+Timeout when waiting for the acknowledgment of the DATA command. Default value: undef
+
+##### `fileopen`
+
+Timeout when waiting for access to a local file. Default value: undef
+
+##### `helo`
+
+Timeout when waiting for the acknowledgment of the HELO or EHLO commands. Default value: undef
+
+##### `hoststatus`
+
+Timeout for invalidation of hoststatus information during a single queue run. Default value: undef
+
+##### `iconnect`
+
+Timeout for the first connection attempt to a host when trying to establish a network connection. Also see then 'connect' parameter. Default value: undef
+
+##### `ident`
+
+Timeout when waiting to a response to a RFC1413 identification protocol query. Set this to '0' to disable the identification protocol. Default value: undef
+
+##### `initial`
+
+Timeout when waiting for the initial greeting message. Default value: undef
+#
+##### `lhlo`
+
+Timeout when waiting for the reply to the initial LHLO command on an LMTP connection. Default value: undef
+
+##### `mail`
+
+Timeout when waiting for the acknowledgment of the MAIL command. Default value: undef
+
+##### `misc`
+
+Timeout when waiting for the acknowledgment of various other commands (VERB, NOOP, ...). Default value: undef
+
+##### `quit`
+
+Timeout when waiting for the acknowledgment of the QUIT command. Default value: undef
+
+##### `rcpt`
+
+Timeout when waiting for the acknowledgment of the RCPT command. Default value: undef
+
+##### `rset`
+
+Timeout when waiting for the acknowledgment of the RSET command. Default value: undef
+
+##### `starttls`
+
+Timeout when waiting for STARTTLS negotiation. Default value: undef
 
 ### Private Classes
 
