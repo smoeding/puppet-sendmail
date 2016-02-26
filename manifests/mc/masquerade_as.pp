@@ -90,7 +90,7 @@ define sendmail::mc::masquerade_as (
 
   concat::fragment { 'sendmail_mc-masquerade':
     target  => 'sendmail.mc',
-    order   => '31',
+    order   => '30',
     content => template('sendmail/masquerade.m4.erb'),
     notify  => Class['::sendmail::makeall'],
   }

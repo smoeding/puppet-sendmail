@@ -11,7 +11,7 @@ describe 'sendmail::mc::masquerade_as' do
               .without_content(/^MASQUERADE_DOMAIN/) \
               .without_content(/^MASQUERADE_EXCEPTION/) \
               .without_content(/^EXPOSED_USER/) \
-              .with_order('31') \
+              .with_order('30') \
               .that_notifies('Class[sendmail::makeall]')
     }
   end

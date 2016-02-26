@@ -116,8 +116,8 @@ class sendmail::mc (
   # 22    FEATURE
   # 28    FEATURE (conncontrol, ratecontrol)
   # 29    FEATURE (nullclient)
-  # 30    # macro header
-  # 31    MASQUERADE_AS
+  # 30    MASQUERADE_AS
+  # 31    # macro header
   # 38    MODIFY_MAILER_FLAGS
   # 40    DAEMON_OPTIONS
   # 45    TRUST_AUTH_MECH
