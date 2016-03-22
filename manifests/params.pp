@@ -51,6 +51,7 @@ class sendmail::params {
   case $::osfamily {
 
     'Debian': {
+      $package_manage = true
       $auxiliary_packages = [ ]
 
       # Unfortunately the /etc/init.d/sendmail script does
@@ -67,6 +68,7 @@ class sendmail::params {
     }
 
     'RedHat': {
+      $package_manage = true
       $auxiliary_packages = [ 'sendmail-cf', ]
 
       $service_hasstatus = true
@@ -81,7 +83,11 @@ class sendmail::params {
     }
 
     'FreeBSD': {
+      $package_manage = false
       $auxiliary_packages = []
+
+      $service_hasstatus = true
+
       $sendmail_user  = 'root'
       $sendmail_group = 'wheel'
 

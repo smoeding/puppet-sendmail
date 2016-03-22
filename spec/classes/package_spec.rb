@@ -13,11 +13,12 @@ describe 'sendmail::package' do
     end
 
     it {
+      should contain_class('sendmail::package').with('package_manage' => true)
       should contain_package('sendmail')
     }
   end
 
-  context 'On Rehat with defaults' do
+  context 'On ReHat with defaults' do
     let(:facts) do
       {
         :operatingsystem => 'RedHat',
@@ -26,8 +27,23 @@ describe 'sendmail::package' do
     end
 
     it {
+      should contain_class('sendmail::package').with('package_manage' => true)
       should contain_package('sendmail')
       should contain_package('sendmail-cf')
+    }
+  end
+
+  context 'On FreeBSD with defaults' do
+    let(:facts) do
+      {
+        :operatingsystem => 'FreeBSD',
+        :osfamily        => 'FreeBSD'
+      }
+    end
+
+    it {
+      should contain_class('sendmail::package').with('package_manage' => false)
+      should_not contain_package('sendmail')
     }
   end
 

@@ -212,7 +212,7 @@ class sendmail (
   $manage_submit_mc         = true,
   $auxiliary_packages       = $::sendmail::params::auxiliary_packages,
   $package_ensure           = 'present',
-  $package_manage           = true,
+  $package_manage           = $::sendmail::params::package_manage,
   $service_name             = $::sendmail::params::service_name,
   $service_enable           = true,
   $service_manage           = true,
