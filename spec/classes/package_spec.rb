@@ -14,7 +14,6 @@ describe 'sendmail::package' do
 
     it {
       should contain_package('sendmail')
-      should contain_package('bsd-mailx')
     }
   end
 
@@ -29,15 +28,10 @@ describe 'sendmail::package' do
     it {
       should contain_package('sendmail')
       should contain_package('sendmail-cf')
-      should contain_package('mailx')
     }
   end
 
   context 'with package_ensure => latest' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
     let(:params) do
       { :package_ensure => 'latest' }
     end
@@ -48,10 +42,6 @@ describe 'sendmail::package' do
   end
 
   context 'with package_manage => false' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
     let(:params) do
       { :package_manage => false }
     end
@@ -60,10 +50,6 @@ describe 'sendmail::package' do
   end
 
   context 'with auxiliary_packages defined' do
-    let(:facts) do
-      { :operatingsystem => 'Debian' }
-    end
-
     let(:params) do
       { :auxiliary_packages => [ 'foo', 'bar' ] }
     end

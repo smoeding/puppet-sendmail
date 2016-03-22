@@ -51,7 +51,7 @@ class sendmail::params {
   case $::osfamily {
 
     'Debian': {
-      $auxiliary_packages = [ 'bsd-mailx', ]
+      $auxiliary_packages = [ ]
 
       # Unfortunately the /etc/init.d/sendmail script does
       # not provide a useful status exit code on wheezy.
@@ -67,7 +67,7 @@ class sendmail::params {
     }
 
     'RedHat': {
-      $auxiliary_packages = [ 'sendmail-cf', 'mailx', ]
+      $auxiliary_packages = [ 'sendmail-cf', ]
 
       $service_hasstatus = true
 
