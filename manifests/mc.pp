@@ -226,7 +226,7 @@ class sendmail::mc (
     # expects (the hostname command is used by the makefile). Therefore we
     # use a symbolic link here to create the second alternative.
 
-    file { "${mail_settings_dir}/${::fqdn}.mc":
+    file { "${::sendmail::params::mail_settings_dir}/${::fqdn}.mc":
       ensure => link,
       target => "${::hostname}.mc",
       before => Concat['sendmail.mc'],
