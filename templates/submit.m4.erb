@@ -14,7 +14,6 @@ dnl #
 include(`/usr/share/sendmail/cf/m4/cf.m4')dnl
 dnl #
 <% when 'FreeBSD' -%>
-define(`__OSTYPE__',`')dnl dirty hack to keep proto.m4 from complaining
 define(`confBIND_OPTS', `WorkAroundBrokenAAAA')dnl
 dnl #
 <% when 'RedHat' -%>
