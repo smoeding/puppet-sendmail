@@ -69,4 +69,18 @@ class sendmail::submit (
     content => template('sendmail/submit.m4.erb'),
     notify  => [ Class['::sendmail::makeall'], Class['::sendmail::service'], ],
   }
+
+  if ($::osfamily == 'FreeBSD') {
+    # FreeBSD uses a sendmail.mc file named after the hostname of the
+    # machine. Unfortunately Puppet doesn't know, if $::hostname or $::fqdn
+    # will be the correct fact to determine the file name that the makefile
+    # expects (the hostname command is used by the makefile). Therefore we
+    # use a symbolic link here to create the second alternative.
+
+    file { "${mail_settings_dir}/${::fqdn}.submit.mc":
+      ensure => link,
+      target => "${::hostname}.submit.mc",
+      before => File[$::sendmail::params::submit_mc_file],
+    }
+  }
 }

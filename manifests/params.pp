@@ -36,15 +36,10 @@ class sendmail::params {
   $uudomain_file         = "${mail_settings_dir}/uudomain"
   $virtusertable_file    = "${mail_settings_dir}/virtusertable"
 
-  $sendmail_mc_file      = "${mail_settings_dir}/sendmail.mc"
-  $submit_mc_file        = "${mail_settings_dir}/submit.mc"
-
   $package_name      = 'sendmail'
   $service_name      = 'sendmail'
 
   $sendmail_binary   = '/usr/sbin/sendmail'
-
-  $configure_command = "make -C ${mail_settings_dir} all"
 
   $mailers = [ 'smtp', 'local' ]
 
@@ -65,6 +60,10 @@ class sendmail::params {
       $submit_mc_ostype   = 'debian'
       $sendmail_mc_domain = 'debian-mta'
       $submit_mc_domain   = 'debian-msp'
+
+      $configure_command = "make -C ${mail_settings_dir} all"
+      $sendmail_mc_file  = "${mail_settings_dir}/sendmail.mc"
+      $submit_mc_file    = "${mail_settings_dir}/submit.mc"
     }
 
     'RedHat': {
@@ -80,6 +79,10 @@ class sendmail::params {
       $submit_mc_ostype   = undef
       $sendmail_mc_domain = undef
       $submit_mc_domain   = undef
+
+      $configure_command = "make -C ${mail_settings_dir} all"
+      $sendmail_mc_file  = "${mail_settings_dir}/sendmail.mc"
+      $submit_mc_file    = "${mail_settings_dir}/submit.mc"
     }
 
     'FreeBSD': {
@@ -95,10 +98,14 @@ class sendmail::params {
       $submit_mc_ostype   = 'freebsd6'
       $sendmail_mc_domain = undef
       $submit_mc_domain   = undef
+
+      $configure_command = "make -C ${mail_settings_dir} all install"
+      $sendmail_mc_file  = "${mail_settings_dir}/${::hostname}.mc"
+      $submit_mc_file    = "${mail_settings_dir}/${::hostname}.submit.mc"
     }
 
     default: {
-      fail("Unsupported operatingsystem ${::operatingsystem}")
+      fail("Unsupported osfamily ${::osfamily}")
     }
   }
 }

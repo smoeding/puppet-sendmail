@@ -218,4 +218,18 @@ class sendmail::mc (
       trust_auth_mech => $trust_auth_mech,
     }
   }
+
+  if ($::osfamily == 'FreeBSD') {
+    # FreeBSD uses a sendmail.mc file named after the hostname of the
+    # machine. Unfortunately Puppet doesn't know, if $::hostname or $::fqdn
+    # will be the correct fact to determine the file name that the makefile
+    # expects (the hostname command is used by the makefile). Therefore we
+    # use a symbolic link here to create the second alternative.
+
+    file { "${mail_settings_dir}/${::fqdn}.mc":
+      ensure => link,
+      target => "${::hostname}.mc",
+      before => Concat['sendmail.mc'],
+    }
+  }
 }
