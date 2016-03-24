@@ -222,7 +222,7 @@ describe 'sendmail' do
     }
   end
 
-  context 'On unsupported operating system' do
+  context 'On unsupported osfamily' do
     let(:facts) do
       {
         :operatingsystem => 'VAX/VMS',
@@ -231,7 +231,7 @@ describe 'sendmail' do
     end
 
     it {
-      expect { should compile }.to raise_error(/Unsupported operatingsystem/)
+      expect { should compile }.to raise_error(/Unsupported osfamily/)
     }
   end
 end
