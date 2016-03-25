@@ -22,7 +22,7 @@ Install and manage the Sendmail MTA.
 
 ## Module Description
 
-Sendmail is a powerful mail transfer agent, and this modules provides an easier way to manage the main Sendmail configuration files `/etc/mail/sendmail.mc` and `/etc/mail/submit.mc`. It also manages entries in various Sendmail database files (e.g. `/etc/mail/access` and `/etc/mail/mailertable`).
+Sendmail is a powerful mail transfer agent, and this modules provides an easier way to generate and manage the main Sendmail configuration files `/etc/mail/sendmail.mc` and `/etc/mail/submit.mc`. It also manages entries in various Sendmail database files (e.g. `/etc/mail/access` and `/etc/mail/mailertable`).
 
 ## Setup
 
@@ -975,9 +975,13 @@ Timeout when waiting for STARTTLS negotiation. Default value: undef
 
 Manage the `sendmail.mc` file. This class uses the `concat` module to create configuration fragments to assemble the final configuration file.
 
+On FreeBSD the daemon configuration file is named after the hostname of the server. In this case the class also manages a symbolic link in `/etc/mail` to reference the file.
+
 #### Class: `sendmail::submit`
 
 Manage the `submit.mc` file that contains the configuration for the local message submission program.
+
+On FreeBSD the submit configuration file is named after the hostname of the server. In this case the class also manages a symbolic link in `/etc/mail` to reference the file.
 
 #### Class: `sendmail::local_host_names`
 
@@ -1705,6 +1709,7 @@ The Sendmail module uses templates to build the `sendmail.mc` and `submit.mc` fi
 The Sendmail module is currently developed and tested on:
 * Debian 7 (Wheezy)
 * Debian 8 (Jessie)
+* FreeBSD 10
 
 More supported operating systems are planned in future releases.
 

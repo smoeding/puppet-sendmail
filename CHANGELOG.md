@@ -4,6 +4,7 @@
 
 #### Features
 
+- Add FreeBSD 10  to the list of supported operating systems.
 - Add class `sendmail::mc::timeouts` to conveniently specify most of the timeouts in one place.
 - The class `sendmail::privacy_flags` has been moved to `sendmail::mc::privacy_flags`.
 
