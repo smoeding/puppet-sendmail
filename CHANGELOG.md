@@ -1,4 +1,4 @@
-## UNRELEASED
+## 2016-03-25 - Release 0.6.0
 
 ### Summary
 
