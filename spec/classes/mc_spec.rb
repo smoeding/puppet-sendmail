@@ -37,6 +37,46 @@ describe 'sendmail::mc' do
     }
   end
 
+  context 'on FreeBSD with no arguments' do
+    let(:facts) do
+      { :operatingsystem => 'FreeBSD', :osfamily => 'FreeBSD', }
+    end
+
+    it {
+      should contain_concat('sendmail.mc').with(
+               'ensure' => 'present',
+               'path'   => '/etc/mail/cliff.mc',
+               'owner'  => 'root',
+               'group'  => 'wheel',
+               'mode'   => '0644',
+             )
+
+      should contain_concat__fragment('sendmail_mc-header').with(
+               'target'  => 'sendmail.mc',
+               'order'   => '00'
+             ).that_notifies('Class[sendmail::makeall]')
+
+      should contain_sendmail__mc__ostype('freebsd6')
+
+      should_not contain_sendmail__mc__define('SMART_HOST')
+      should_not contain_sendmail__mc__define('confCF_VERSION')
+      should_not contain_sendmail__mc__define('confLOG_LEVEL')
+      should_not contain_sendmail__mc__define('confMAX_MESSAGE_SIZE')
+      should_not contain_sendmail__mc__define('confDONT_PROBE_INTERFACES')
+      should_not contain_sendmail__mc__trust_auth_mech('trust_auth_mech')
+
+      should contain_sendmail__mc__daemon_options('MTA-v4').with_family('inet')
+      should contain_sendmail__mc__daemon_options('MTA-v6').with_family('inet6')
+
+      should contain_sendmail__mc__mailer('local')
+      should contain_sendmail__mc__mailer('smtp')
+
+      should contain_file('/etc/mail/cliff.example.org.mc') \
+              .with_ensure('link') \
+              .with_target('cliff.mc')
+    }
+  end
+
   context 'with ostype => debian' do
     let(:params) do
       { :ostype => 'debian' }

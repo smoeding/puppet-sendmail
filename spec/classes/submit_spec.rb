@@ -4,7 +4,7 @@ describe 'sendmail::submit' do
 
   it { should contain_class('sendmail::submit') }
 
-  context 'On Debian with default parameters' do
+  context 'on Debian with default parameters' do
     let(:facts) do
       { :operatingsystem => 'Debian', :osfamily => 'Debian', }
     end
@@ -18,10 +18,12 @@ describe 'sendmail::submit' do
               .without_content(/^FEATURE\(`use_ct_file'\)dnl$/) \
               .with_content(/^OSTYPE\(`debian'\)dnl$/) \
               .with_content(/^FEATURE\(`msp', `\[127.0.0.1\]', `MSA'\)dnl$/)
+
+      should_not contain_file('/etc/mail/cliff.example.org.submit.mc')
     }
   end
 
-  context 'On RedHat with default parameters' do
+  context 'on RedHat with default parameters' do
     let(:facts) do
       { :operatingsystem => 'RedHat', :osfamily => 'RedHat', }
     end
@@ -35,6 +37,29 @@ describe 'sendmail::submit' do
               .without_content(/^FEATURE\(`use_ct_file'\)dnl$/) \
               .without_content(/^OSTYPE/) \
               .with_content(/^FEATURE\(`msp', `\[127.0.0.1\]', `MSA'\)dnl$/)
+
+      should_not contain_file('/etc/mail/cliff.example.org.submit.mc')
+    }
+  end
+
+  context 'on FreeBSD with default parameters' do
+    let(:facts) do
+      { :operatingsystem => 'FreeBSD', :osfamily => 'FreeBSD', }
+    end
+
+    it {
+      should contain_file('/etc/mail/cliff.submit.mc').with(
+               'ensure' => 'file',
+               'owner'  => 'root',
+               'group'  => 'wheel',
+               'mode'   => '0644') \
+              .without_content(/^FEATURE\(`use_ct_file'\)dnl$/) \
+              .with_content(/^OSTYPE\(`freebsd6'\)dnl$/) \
+              .with_content(/^FEATURE\(`msp', `\[127.0.0.1\]', `MSA'\)dnl$/)
+
+      should contain_file('/etc/mail/cliff.example.org.submit.mc') \
+              .with_ensure('link') \
+              .with_target('cliff.submit.mc')
     }
   end
 
