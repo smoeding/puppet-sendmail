@@ -2,11 +2,17 @@
 
 ### Summary
 
+This release adds FreeBSD compatibility. It also adds a new class to configure Sendmail related timeouts in a single place.
+
 #### Features
 
 - Add FreeBSD 10  to the list of supported operating systems.
 - Add class `sendmail::mc::timeouts` to conveniently specify most of the timeouts in one place.
-- The class `sendmail::privacy_flags` has been moved to `sendmail::mc::privacy_flags`.
+- The class `sendmail::privacy_flags` has been renamed to `sendmail::mc::privacy_flags`.
+
+#### Bugs
+
+- The `mailx` package is no longer managed by the Sendmail module. The user should be free to decide which MUA to install.
 
 ## 2016-02-23 - Release 0.5.0
 
