@@ -22,4 +22,15 @@ describe 'sendmail::mc::ostype' do
               .that_notifies('Class[sendmail::makeall]')
     }
   end
+
+  context 'on FreeBSD' do
+    let(:title) { 'freebsd6' }
+
+    it {
+      should contain_concat__fragment('sendmail_mc-ostype-freebsd6') \
+              .with_content(/^OSTYPE\(`freebsd6'\)dnl$/) \
+              .with_order('05') \
+              .that_notifies('Class[sendmail::makeall]')
+    }
+  end
 end
