@@ -18,6 +18,6 @@ script:
   - "bundle exec rake lint"
   - "bundle exec rake spec SPEC_OPTS='--format documentation'"
 bundler_args: --without system_tests
+cache: bundler
 notifications:
-  on_success: change
-  on_failure: change
+  email: false
