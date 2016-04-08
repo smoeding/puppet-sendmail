@@ -1,3 +1,11 @@
+## UNRELEASED
+
+### Summary
+
+#### Bugfixes
+
+- Fix group ownership of aliases file on FreeBSD.
+
 ## 2016-03-25 - Release 0.6.0
 
 ### Summary
@@ -10,7 +18,7 @@ This release adds FreeBSD compatibility. It also adds a new class to configure S
 - Add class `sendmail::mc::timeouts` to conveniently specify most of the timeouts in one place.
 - The class `sendmail::privacy_flags` has been renamed to `sendmail::mc::privacy_flags`.
 
-#### Bugs
+#### Bugfixes
 
 - The `mailx` package is no longer managed by the Sendmail module. The user should be free to decide which MUA to install.
 

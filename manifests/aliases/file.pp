@@ -31,7 +31,7 @@ class sendmail::aliases::file (
     content => $content,
     source  => $source,
     owner   => 'root',
-    group   => 'root',
+    group   => $::sendmail::params::alias_file_group,
     mode    => '0644',
     notify  => Class['::sendmail::aliases::newaliases'],
   }

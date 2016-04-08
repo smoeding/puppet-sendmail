@@ -53,8 +53,9 @@ class sendmail::params {
       # not provide a useful status exit code on wheezy.
       $service_hasstatus = false
 
-      $sendmail_user  = 'smmta'
-      $sendmail_group = 'smmsp'
+      $sendmail_user    = 'smmta'
+      $sendmail_group   = 'smmsp'
+      $alias_file_group = 'root'
 
       $sendmail_mc_ostype = 'debian'
       $submit_mc_ostype   = 'debian'
@@ -72,8 +73,9 @@ class sendmail::params {
 
       $service_hasstatus = true
 
-      $sendmail_user  = 'root'
-      $sendmail_group = 'root'
+      $sendmail_user    = 'root'
+      $sendmail_group   = 'root'
+      $alias_file_group = 'root'
 
       $sendmail_mc_ostype = 'linux'
       $submit_mc_ostype   = undef
@@ -91,8 +93,9 @@ class sendmail::params {
 
       $service_hasstatus = true
 
-      $sendmail_user  = 'root'
-      $sendmail_group = 'wheel'
+      $sendmail_user    = 'root'
+      $sendmail_group   = 'wheel'
+      $alias_file_group = 'wheel'
 
       $sendmail_mc_ostype = 'freebsd6'
       $submit_mc_ostype   = 'freebsd6'
