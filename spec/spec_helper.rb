@@ -12,9 +12,9 @@ RSpec.configure do |c|
 
   # :id and :osfamily facts are needed for concat module
   c.default_facts = {
-    :hostname         => 'cliff',
-    :domain           => 'example.org',
-    :fqdn             => 'cliff.example.org',
+    :hostname         => 'foo',
+    :domain           => 'example.com',
+    :fqdn             => 'foo.example.com',
     :id               => 'stm',
     :osfamily         => 'Debian',
     :operatingsystem  => 'Debian',

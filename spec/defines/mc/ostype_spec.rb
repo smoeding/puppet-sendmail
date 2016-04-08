@@ -13,11 +13,11 @@ describe 'sendmail::mc::ostype' do
   end
 
   context 'on RedHat' do
-    let(:title) { 'redhat' }
+    let(:title) { 'linux' }
 
     it {
-      should contain_concat__fragment('sendmail_mc-ostype-redhat') \
-              .with_content(/^OSTYPE\(`redhat'\)dnl$/) \
+      should contain_concat__fragment('sendmail_mc-ostype-linux') \
+              .with_content(/^OSTYPE\(`linux'\)dnl$/) \
               .with_order('05') \
               .that_notifies('Class[sendmail::makeall]')
     }

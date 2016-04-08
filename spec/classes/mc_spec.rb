@@ -4,77 +4,83 @@ describe 'sendmail::mc' do
 
   it { should contain_class('sendmail::mc') }
 
-  context 'with no arguments' do
-    it {
-      should contain_concat('sendmail.mc').with(
-               'ensure' => 'present',
-               'path'   => '/etc/mail/sendmail.mc',
-               'owner'  => 'root',
-               'group'  => 'smmsp',
-               'mode'   => '0644',
-             )
+  on_supported_os.each do |os, facts|
+    context "on #{os} with default parameters" do
+      let(:facts) { facts }
 
-      should contain_concat__fragment('sendmail_mc-header').with(
-               'target'  => 'sendmail.mc',
-               'order'   => '00'
-             ).that_notifies('Class[sendmail::makeall]')
+      case facts[:osfamily]
+      when 'Debian'
+        it {
+          should contain_concat('sendmail.mc').with(
+                   'ensure' => 'present',
+                   'path'   => '/etc/mail/sendmail.mc',
+                   'owner'  => 'root',
+                   'group'  => 'smmsp',
+                   'mode'   => '0644',
+                 )
 
-      should contain_sendmail__mc__ostype('debian')
-      should contain_sendmail__mc__domain('debian-mta')
+          should contain_sendmail__mc__ostype('debian')
+          should contain_sendmail__mc__domain('debian-mta')
 
-      should_not contain_sendmail__mc__define('SMART_HOST')
-      should_not contain_sendmail__mc__define('confCF_VERSION')
-      should_not contain_sendmail__mc__define('confLOG_LEVEL')
-      should_not contain_sendmail__mc__define('confMAX_MESSAGE_SIZE')
-      should_not contain_sendmail__mc__define('confDONT_PROBE_INTERFACES')
-      should_not contain_sendmail__mc__trust_auth_mech('trust_auth_mech')
+          should_not contain_file('/etc/mail/foo.example.com.mc')
+        }
+      when 'RedHat'
+        it {
+          should contain_concat('sendmail.mc').with(
+                   'ensure' => 'present',
+                   'path'   => '/etc/mail/sendmail.mc',
+                   'owner'  => 'root',
+                   'group'  => 'root',
+                   'mode'   => '0644',
+                 )
 
-      should contain_sendmail__mc__daemon_options('MTA-v4').with_family('inet')
-      should contain_sendmail__mc__daemon_options('MTA-v6').with_family('inet6')
+          should contain_sendmail__mc__ostype('linux')
 
-      should contain_sendmail__mc__mailer('local')
-      should contain_sendmail__mc__mailer('smtp')
-    }
-  end
+          should_not contain_file('/etc/mail/foo.example.com.mc')
+        }
+      when 'FreeBSD'
+        it {
+          should contain_concat('sendmail.mc').with(
+                   'ensure' => 'present',
+                   'path'   => '/etc/mail/foo.mc',
+                   'owner'  => 'root',
+                   'group'  => 'wheel',
+                   'mode'   => '0644',
+                 )
 
-  context 'on FreeBSD with no arguments' do
-    let(:facts) do
-      { :operatingsystem => 'FreeBSD', :osfamily => 'FreeBSD', }
+          should contain_sendmail__mc__ostype('freebsd6')
+
+          should contain_file('/etc/mail/foo.example.com.mc') \
+                  .with_ensure('link') \
+                  .with_target('foo.mc')
+        }
+      end
+
+      it {
+        should contain_concat__fragment('sendmail_mc-header').with(
+                 'target'  => 'sendmail.mc',
+                 'order'   => '00'
+               ).that_notifies('Class[sendmail::makeall]')
+
+        should_not contain_sendmail__mc__define('SMART_HOST')
+        should_not contain_sendmail__mc__define('confCF_VERSION')
+        should_not contain_sendmail__mc__define('confLOG_LEVEL')
+        should_not contain_sendmail__mc__define('confMAX_MESSAGE_SIZE')
+        should_not contain_sendmail__mc__define('confDONT_PROBE_INTERFACES')
+        should_not contain_sendmail__mc__trust_auth_mech('trust_auth_mech')
+
+        should contain_sendmail__mc__daemon_options('MTA-v4').with(
+                 'family' => 'inet'
+               )
+
+        should contain_sendmail__mc__daemon_options('MTA-v6').with(
+                 'family' =>'inet6'
+               )
+
+        should contain_sendmail__mc__mailer('local')
+        should contain_sendmail__mc__mailer('smtp')
+      }
     end
-
-    it {
-      should contain_concat('sendmail.mc').with(
-               'ensure' => 'present',
-               'path'   => '/etc/mail/cliff.mc',
-               'owner'  => 'root',
-               'group'  => 'wheel',
-               'mode'   => '0644',
-             )
-
-      should contain_concat__fragment('sendmail_mc-header').with(
-               'target'  => 'sendmail.mc',
-               'order'   => '00'
-             ).that_notifies('Class[sendmail::makeall]')
-
-      should contain_sendmail__mc__ostype('freebsd6')
-
-      should_not contain_sendmail__mc__define('SMART_HOST')
-      should_not contain_sendmail__mc__define('confCF_VERSION')
-      should_not contain_sendmail__mc__define('confLOG_LEVEL')
-      should_not contain_sendmail__mc__define('confMAX_MESSAGE_SIZE')
-      should_not contain_sendmail__mc__define('confDONT_PROBE_INTERFACES')
-      should_not contain_sendmail__mc__trust_auth_mech('trust_auth_mech')
-
-      should contain_sendmail__mc__daemon_options('MTA-v4').with_family('inet')
-      should contain_sendmail__mc__daemon_options('MTA-v6').with_family('inet6')
-
-      should contain_sendmail__mc__mailer('local')
-      should contain_sendmail__mc__mailer('smtp')
-
-      should contain_file('/etc/mail/cliff.example.org.mc') \
-              .with_ensure('link') \
-              .with_target('cliff.mc')
-    }
   end
 
   context 'with ostype => debian' do
@@ -87,13 +93,23 @@ describe 'sendmail::mc' do
     }
   end
 
-  context 'with ostype => redhat' do
+  context 'with ostype => linux' do
     let(:params) do
-      { :ostype => 'redhat' }
+      { :ostype => 'linux' }
     end
 
     it {
-      should contain_sendmail__mc__ostype('redhat')
+      should contain_sendmail__mc__ostype('linux')
+    }
+  end
+
+  context 'with ostype => freebsd6' do
+    let(:params) do
+      { :ostype => 'freebsd6' }
+    end
+
+    it {
+      should contain_sendmail__mc__ostype('freebsd6')
     }
   end
 
