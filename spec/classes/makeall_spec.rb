@@ -4,16 +4,24 @@ describe 'sendmail::makeall' do
 
   it { should contain_class('sendmail::makeall') }
 
-  [ 'Debian', 'RedHat' ].each do |operatingsystem|
-    context "On #{operatingsystem}" do
-      let(:facts) do
-        { :operatingsystem => operatingsystem }
-      end
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) { facts }
 
-      it {
-        should contain_exec('sendmail::makeall') \
-                .that_requires('Class[sendmail::package]')
-      }
+      case facts[:osfamily]
+      when 'FreeBSD'
+        it {
+          should contain_exec('sendmail::makeall') \
+                  .with_command('make -C /etc/mail all install') \
+                  .that_requires('Class[sendmail::package]')
+        }
+      else
+        it {
+          should contain_exec('sendmail::makeall') \
+                  .with_command('make -C /etc/mail all') \
+                  .that_requires('Class[sendmail::package]')
+        }
+      end
     end
   end
 end
