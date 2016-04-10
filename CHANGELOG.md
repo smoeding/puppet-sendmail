@@ -1,6 +1,8 @@
-## UNRELEASED
+## 2016-04-10 - Release 0.6.1
 
 ### Summary
+
+This release contains the fix for a problem with the group ownership of the aliases file on FreeBSD. Also some internal tests were rewritten to use the rspec-puppet-facts gem.
 
 #### Bugfixes
 
