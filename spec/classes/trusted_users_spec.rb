@@ -60,7 +60,7 @@ describe 'sendmail::trusted_users' do
       }
     end
 
-    context 'on #{os} with single element array' do
+    context "on #{os} with single element array" do
       let(:params) do
         { :trusted_users => [ 'foo' ] }
       end
@@ -72,7 +72,7 @@ describe 'sendmail::trusted_users' do
       }
     end
 
-    context 'on #{os} with multiple element array' do
+    context "on #{os} with multiple element array" do
       let(:params) do
         { :trusted_users => [ 'foo', 'bar', 'baz' ] }
       end

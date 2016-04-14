@@ -213,7 +213,7 @@ describe 'sendmail' do
       }
     end
 
-    context 'on #{os} with cipher_list defined' do
+    context "on #{os} with cipher_list defined" do
       let(:params) do
         { :manage_sendmail_mc => true, :cipher_list => 'foo' }
       end
@@ -226,7 +226,7 @@ describe 'sendmail' do
     end
   end
 
-  context 'On unsupported osfamily' do
+  context 'on unsupported osfamily' do
     let(:facts) do
       {
         :operatingsystem => 'VAX/VMS',
