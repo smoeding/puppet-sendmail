@@ -32,7 +32,7 @@ Sendmail is a powerful mail transfer agent, and this modules provides an easier 
 * In a default installation almost all the managed files are in the `/etc/mail` directory. A notably exception is the `/etc/aliases` file.
 * The module may generate a new `/etc/mail/sendmail.mc` which is the source for `/etc/mail/sendmail.cf`. This file is the main Sendmail configuration file and it affects how Sendmail operates.
 
-**WARNING**: Make sure to understand and test everything in these files before putting it in production. You alone are accountable for deploying a safe mailer configuration. If you do not know how to configure Sendmail without this module, then you should not assume you can do it with it.
+> **WARNING**: Make sure to understand and test everything in these files before putting it in production. You alone are accountable for deploying a safe mailer configuration. If you do not know how to configure Sendmail without this module, then you should not assume you can do it with it.
 
 ### Setup Requirements
 
@@ -114,7 +114,7 @@ class { 'sendmail':
 }
 ```
 
-**Note**: These settings also disable the automatic generation of the `sendmail.cf` and `submit.cf` files. You will have to do that yourself if you change one of the files.
+> **Note**: These settings also disable the automatic generation of the `sendmail.cf` and `submit.cf` files. You will have to do that yourself if you change one of the files.
 
 ### I am behind a firewall and need to forward outgoing mail to a relay host
 
@@ -158,7 +158,7 @@ class { 'sendmail':
 }
 ```
 
-**Note**: The Sendmail module does not manage any X.509 certificates or keys.
+> **Note**: The Sendmail module does not manage any X.509 certificates or keys.
 
 ### All my users are managed using LDAP
 
@@ -1342,7 +1342,7 @@ sendmail::mc::define { 'confLOG_LEVEL':
 
 The name of the macro that will be defined. This will be the first argument of the m4 define builtin. Default is the resource title.
 
-**Note**: The macro name should not be quoted as it will always be quoted in the template.
+> **Note**: The macro name should not be quoted as it will always be quoted in the template.
 
 ##### `expansion`
 
@@ -1352,7 +1352,7 @@ The expansion defined for the macro.
 
 A boolean that indicates if the expansion should be quoted (using m4 quotes). If this argument is `true`, then the expansion will be enclosed in \` and ' symbols in the generated output file. A value of `false` prevents automatic quotes. This is useful if the expansion references another macro. In this case the correct quotes have to be set manually. Valid options: `true` or `false`. Default value: `true`
 
-**Note**: The name of the defined macro will always be quoted.
+> **Note**: The name of the defined macro will always be quoted.
 
 #### Define: `sendmail::mc::domain`
 
@@ -1425,7 +1425,7 @@ sendmail::mc::feature { 'mailertable':
 
 The name of the feature that will be used. This will be the first argument of the `FEATURE`. Defaults to the resource title.
 
-**Note**: The feature name should not be quoted as it will always be quoted in the template.
+> **Note**: The feature name should not be quoted as it will always be quoted in the template.
 
 ##### `args`
 
@@ -1435,7 +1435,7 @@ The arguments used for the feature. This can be a simple string, if the feature 
 
 A boolean that indicates if the arguments should be quoted (using m4 quotes). If this argument is `true`, then the arguments will be enclosed in \` and ' symbols in the generated output file. Valid options: `true` or `false`. Default value: `true`
 
-**Note**: The name of the feature will always be quoted.
+> **Note**: The name of the feature will always be quoted.
 
 #### Define: `sendmail::mc::include`
 
