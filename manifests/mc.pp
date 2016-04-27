@@ -28,6 +28,13 @@
 #   mail is forwarded to this gateway.
 #   Default value: undef.
 #
+# [*domain_name*]
+#   Sets the official canonical name of the local machine. Normally this
+#   parameter is not required as Sendmail uses the fully qualified domain
+#   name by default. Setting this parameter will override the value of the
+#   '$j' macro in the sendmail.cf file.
+#   Default value: undef.
+#
 # [*max_message_size*]
 #   Define the maximum message size that will be accepted. This can be a pure
 #   numerical value given in bytes (e.g. 33554432) or a number with a
@@ -86,6 +93,7 @@ class sendmail::mc (
   $sendmail_mc_domain    = $::sendmail::params::sendmail_mc_domain,
   $cf_version            = undef,
   $smart_host            = undef,
+  $domain_name           = undef,
   $max_message_size      = undef,
   $log_level             = undef,
   $dont_probe_interfaces = undef,
@@ -169,6 +177,12 @@ class sendmail::mc (
   if ($smart_host != undef) {
     ::sendmail::mc::define { 'SMART_HOST':
       expansion => $smart_host,
+    }
+  }
+
+  if ($domain_name != undef) {
+    ::sendmail::mc::define { 'confDOMAIN_NAME':
+      expansion => $domain_name,
     }
   }
 

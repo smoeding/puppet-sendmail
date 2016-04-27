@@ -65,6 +65,7 @@ describe 'sendmail::mc' do
         should_not contain_sendmail__mc__define('SMART_HOST')
         should_not contain_sendmail__mc__define('confCF_VERSION')
         should_not contain_sendmail__mc__define('confLOG_LEVEL')
+        should_not contain_sendmail__mc__define('confDOMAIN_NAME')
         should_not contain_sendmail__mc__define('confMAX_MESSAGE_SIZE')
         should_not contain_sendmail__mc__define('confDONT_PROBE_INTERFACES')
         should_not contain_sendmail__mc__trust_auth_mech('trust_auth_mech')
@@ -153,6 +154,18 @@ describe 'sendmail::mc' do
     end
 
     it { expect { should compile }.to raise_error(/must be numeric/) }
+  end
+
+  context 'with domain_name => smtp.example.com' do
+    let(:params) do
+      { :domain_name => 'smtp.example.com' }
+    end
+
+    it {
+      should contain_sendmail__mc__define('confDOMAIN_NAME').with(
+               'expansion' => 'smtp.example.com',
+             )
+    }
   end
 
   context 'with max_message_size => 42' do

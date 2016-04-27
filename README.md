@@ -261,6 +261,10 @@ Performs the basic setup and installation of Sendmail on the system.
 
 Servers behind a firewall may not be able to deliver mail directly to the outside world. In this case the host may need to forward the mail to a gateway machine defined by this parameter. All nonlocal mail is forwarded to this gateway. Default value: `undef`
 
+##### `domain_name`
+
+Sets the official canonical name of the local machine. Normally this parameter is not required as Sendmail uses the fully qualified domain name by default. Setting this parameter will override the value of the `$j` macro in the `sendmail.cf` file. Default value: `undef`
+
 ##### `max_message_size`
 
 Define the maximum message size that will be accepted. This can be a pure numerical value given in bytes (e.g. `33554432`) or a number with a prefixed byte unit (e.g. `32MB`). The conversion is done using the 1024 convention (see the `to_bytes` function in the `stdlib` module), so valid prefixes are either `k` for 1024 bytes or `M` for 1048576 bytes. Default value: `undef`
@@ -424,6 +428,10 @@ class { 'sendmail::nullclient':
 ##### `mail_hub`
 
 The hostname or IP address of the mail hub where all mail is forwarded to. It can be enclosed in brackets to prevent MX lookups.
+
+##### `domain_name`
+
+Sets the official canonical name of the local machine. Normally this parameter is not required as Sendmail uses the fully qualified domain name by default. Setting this parameter will override the value of the `$j` macro in the `sendmail.cf` file. Default value: `undef`
 
 ##### `max_message_size`
 

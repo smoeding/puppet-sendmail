@@ -101,6 +101,7 @@ class sendmail::nullclient (
   $enable_ipv6_msa          = true,
   $enable_msp_trusted_users = false,
   $trusted_users            = [],
+  $domain_name              = undef,
   $max_message_size         = undef,
   $log_level                = undef,
   $ca_cert_file             = undef,
@@ -128,6 +129,7 @@ class sendmail::nullclient (
   validate_re($port_option_modify, '^[abcfhruACEOS]*$')
 
   class { '::sendmail':
+    domain_name              => $domain_name,
     max_message_size         => $max_message_size,
     log_level                => $log_level,
     dont_probe_interfaces    => true,

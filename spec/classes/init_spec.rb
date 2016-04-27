@@ -36,6 +36,18 @@ describe 'sendmail' do
       }
     end
 
+    context "on #{os} with domain_name => smtp.example.com" do
+      let(:params) do
+        { :domain_name => 'smtp.example.com' }
+      end
+
+      it {
+        should contain_class('sendmail::mc').with(
+                 'domain_name' => 'smtp.example.com'
+               )
+      }
+    end
+
     context "on #{os} with max_message_size => 42" do
       let(:params) do
         { :max_message_size => '42' }
