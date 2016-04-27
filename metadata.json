@@ -1,6 +1,6 @@
 {
   "name": "stm-sendmail",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "author": "stm",
   "summary": "Install and manage the Sendmail MTA.",
   "license": "BSD-2-Clause",

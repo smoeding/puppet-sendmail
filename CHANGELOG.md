@@ -1,3 +1,17 @@
+## 2016-04-27 - Release 0.7.0
+
+### Summary
+
+A small release that fixes a metadata warning and introduces the `domain_name` parameter.
+
+#### Features
+
+- Add parameter `domain_name` to allow setting the fully qualified domain name that Sendmail should use. This may be useful in rare conditions where Sendmail runs on a multihomed machine and picks the wrong name.
+
+#### Bugfixes
+
+- Update metadate dependencies to use a dash instead of a slash character. This fixes a dependency warning on newer Puppet releases.
+
 ## 2016-04-10 - Release 0.6.1
 
 ### Summary
