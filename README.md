@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/smoeding/puppet-sendmail.svg?branch=master)](https://travis-ci.org/smoeding/puppet-sendmail)
 [![Puppet Forge](http://img.shields.io/puppetforge/v/stm/sendmail.svg)](https://forge.puppetlabs.com/stm/sendmail)
+[![License](https://img.shields.io/github/license/smoeding/puppet-sendmail.svg)](https://raw.githubusercontent.com/smoeding/puppet-sendmail/master/LICENSE)
 
 #### Table of Contents
 
