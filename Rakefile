@@ -6,7 +6,7 @@ PuppetLint.configuration.fail_on_warnings = true
 PuppetLint.configuration.send('relative')
 PuppetLint.configuration.send('disable_80chars')
 PuppetLint.configuration.send('disable_class_inherits_from_params_class')
-PuppetLint.configuration.ignore_paths = ["spec/**/*.pp", "pkg/**/*.pp"]
+PuppetLint.configuration.ignore_paths = [ 'spec/**/*', 'pkg/**/*', 'vendor/**/*', '.vendor/**/*' ]
 
 # A simple task to run augparse on all my Augeas tests
 task :augparse do
