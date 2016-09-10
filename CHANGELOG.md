@@ -1,3 +1,17 @@
+## 2016-09-10 - Release 1.0.0
+
+### Summary
+
+With this 1.0.0 release the module interface is considered stable. The requirements have been updated to Puppet 3.7 or Puppet Enterprise 3.7.
+
+#### Features
+
+- Add Ubuntu 16.04 (Xenial Xerus) to the list of supported operating systems.
+
+#### Bugfixes
+
+- A timeout for the sendmail version fact has been added (fixes #10).
+
 ## 2016-04-27 - Release 0.7.0
 
 ### Summary
