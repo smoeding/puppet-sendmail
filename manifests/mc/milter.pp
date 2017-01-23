@@ -15,10 +15,12 @@
 #   number, a literal '@' character and the host or address specification.
 #
 # [*flags*]
-#   A single character to specify how milter failures are handled by
-#   Sendmail. The letter 'R' rejects the message, a 'T' causes a temporary
-#   failure and the character '4' (available with Sendmail V8.4 or later)
-#   rejects with a 421 response code.
+#   Either the empty string or a single character to specify how milter
+#   failures are handled by Sendmail. The letter 'R' rejects the message, a
+#   'T' causes a temporary failure and the character '4' (available with
+#   Sendmail V8.4 or later) rejects with a 421 response code. If the empty
+#   string is used, Sendmail will treat a milter failure as if the milter
+#   wasn't configured.
 #
 # [*send_timeout*]
 #   Timeout when sending data from the MTA to the Milter.
@@ -97,7 +99,7 @@ define sendmail::mc::milter (
   # Flags parameter
   #
   if $flags {
-    validate_re($flags, [ '^R$', '^T$', '^4$' ])
+    validate_re($flags, [ '^R$', '^T$', '^4$', '^$' ])
 
     $opt_flags = $flags
   }
@@ -148,7 +150,7 @@ define sendmail::mc::milter (
   ]
 
   # Remove unset options
-  $real_opts_all = delete(regsubst($sparse_opts_all, '^.*=$', '='), '=')
+  $real_opts_all = delete(regsubst($sparse_opts_all, '^[ST]=$', '='), '=')
 
   $opts = join($real_opts_all, ', ')
 

@@ -1605,7 +1605,7 @@ The socket specification for connecting to the milter. For the type `local` (`un
 
 ##### `flags`
 
-A single character to specify how milter failures are handled by Sendmail. The letter `R` rejects the message, a `T` causes a temporary failure and the character `4` (available with Sendmail V8.4 or later) rejects with a 421 response code.
+Either the empty string or a single character to specify how milter failures are handled by Sendmail. The letter `R` rejects the message, a `T` causes a temporary failure and the character `4` (available with Sendmail V8.4 or later) rejects with a 421 response code. If the empty string is used, Sendmail will treat a milter failure as if the milter wasn't configured.
 
 ##### `send_timeout`
 
