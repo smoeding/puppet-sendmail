@@ -58,7 +58,7 @@ define sendmail::mc::define (
       include ::sendmail::mc::define_section
       $order = '19'
     }
-    /^confMILTER/: {
+    /^conf(MILTER|INPUT_MAIL_FILTERS)/: {
       include ::sendmail::mc::milter_section
       $order = '56'
     }

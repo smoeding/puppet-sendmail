@@ -107,6 +107,18 @@ describe 'sendmail::mc::define' do
     }
   end
 
+  context 'with milter argument confINPUT_MAIL_FILTERS' do
+    let(:title) { 'confINPUT_MAIL_FILTERS' }
+
+    it {
+      should contain_concat__fragment('sendmail_mc-define-confINPUT_MAIL_FILTERS') \
+              .with_content(/^define\(`confINPUT_MAIL_FILTERS', `'\)dnl$/) \
+              .with_order('56') \
+              .that_notifies('Class[sendmail::makeall]')
+      should contain_class('sendmail::mc::milter_section')
+    }
+  end
+
   [ 'SMART_HOST', 'confCF_VERSION', 'confDONT_PROBE_INTERFACES',
     'confLOG_LEVEL', 'confMAX_MESSAGE_SIZE', 'confCIPHER_LIST',
     'confCLIENT_SSL_OPTIONS', 'confSERVER_SSL_OPTIONS',
