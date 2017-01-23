@@ -95,6 +95,18 @@ describe 'sendmail::mc::define' do
     }
   end
 
+  context 'with milter related argument' do
+    let(:title) { 'confMILTER_FOO' }
+
+    it {
+      should contain_concat__fragment('sendmail_mc-define-confMILTER_FOO') \
+              .with_content(/^define\(`confMILTER_FOO', `'\)dnl$/) \
+              .with_order('56') \
+              .that_notifies('Class[sendmail::makeall]')
+      should contain_class('sendmail::mc::milter_section')
+    }
+  end
+
   [ 'SMART_HOST', 'confCF_VERSION', 'confDONT_PROBE_INTERFACES',
     'confLOG_LEVEL', 'confMAX_MESSAGE_SIZE', 'confCIPHER_LIST',
     'confCLIENT_SSL_OPTIONS', 'confSERVER_SSL_OPTIONS',

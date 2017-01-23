@@ -53,9 +53,19 @@ define sendmail::mc::define (
 
   $arr = [ "`${macro_name}'", $exp_arg ]
 
-  $order = $macro_name ? {
-    /^confLDAP/ => '19',
-    default     => '12',
+  case $macro_name {
+    /^confLDAP/: {
+      include ::sendmail::mc::define_section
+      $order = '19'
+    }
+    /^confMILTER/: {
+      include ::sendmail::mc::milter_section
+      $order = '56'
+    }
+    default: {
+      include ::sendmail::mc::define_section
+      $order = '12'
+    }
   }
 
   concat::fragment { "sendmail_mc-define-${title}":
@@ -64,7 +74,4 @@ define sendmail::mc::define (
     content => inline_template("define(<%= @arr.join(', ') -%>)dnl\n"),
     notify  => Class['::sendmail::makeall'],
   }
-
-  # Also add the section header
-  include ::sendmail::mc::define_section
 }
