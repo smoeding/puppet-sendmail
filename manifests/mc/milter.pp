@@ -48,6 +48,15 @@
 # [*milter_name*]
 #   The name of the milter to create. Defaults to the resource title.
 #
+# [*enable*]
+#   A boolean to indicate if the milter should automatically be enabled. If
+#   this is 'true' (the default) then the milter will be called by Sendmail
+#   for every incoming mail. If this is set to 'false' then the milter is
+#   only defined. It needs to be enabled by either setting the parameter
+#   `input_filter' for 'sendmail::mc::daemon_options' or defining
+#   'confINPUT_MAIL_FILTERS'. Internally this parameter determines if the
+#   'INPUT_MAIL_FILTER()' or 'MAIL_FILTER()' macros are used.
+#
 # == Requires:
 #
 # Nothing.
@@ -75,6 +84,7 @@ define sendmail::mc::milter (
   $connect_timeout = undef,
   $order           = '00',
   $milter_name     = $title,
+  $enable          = true,
 ) {
 
   include ::sendmail::makeall
@@ -154,10 +164,20 @@ define sendmail::mc::milter (
 
   $opts = join($real_opts_all, ', ')
 
+  #
+  # Decide which macro to use
+  #
+  validate_bool($enable)
+
+  $macro_name = $enable ? {
+    true    => 'INPUT_MAIL_FILTER',
+    default => 'MAIL_FILTER',
+  }
+
   concat::fragment { "sendmail_mc-milter-${milter_name}":
     target  => 'sendmail.mc',
     order   => "56-${order}",
-    content => inline_template("INPUT_MAIL_FILTER(`${milter_name}', `${opts}')dnl\n"),
+    content => inline_template("${macro_name}(`${milter_name}', `${opts}')dnl\n"),
     notify  => Class['::sendmail::makeall'],
   }
 

@@ -21,6 +21,42 @@ describe 'sendmail::mc::milter' do
     }
   end
 
+  context 'with enable => true' do
+    let(:params) do
+      super().merge(
+        {
+          :enable => true,
+        }
+      )
+    end
+
+    it {
+      should contain_concat__fragment('sendmail_mc-milter-greylist') \
+              .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T')dnl\n") \
+              .with_order('56-00') \
+              .that_notifies('Class[sendmail::makeall]')
+      should contain_class('sendmail::mc::milter_section')
+    }
+  end
+
+  context 'with enable => false' do
+    let(:params) do
+      super().merge(
+        {
+          :enable => false,
+        }
+      )
+    end
+
+    it {
+      should contain_concat__fragment('sendmail_mc-milter-greylist') \
+              .with_content("MAIL_FILTER(`greylist', `S=local:/old/sock, F=T')dnl\n") \
+              .with_order('56-00') \
+              .that_notifies('Class[sendmail::makeall]')
+      should contain_class('sendmail::mc::milter_section')
+    }
+  end
+
   context 'with order => 01' do
     let(:params) do
       super().merge(

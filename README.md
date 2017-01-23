@@ -1625,11 +1625,15 @@ Connection timeout. Default value: `undef` (using the Sendmail default 5min)
 
 ##### `order`
 
-A string used to determine the order of the mail filters in the configuration file. This also defines the order in which the filters are called. Default value: `00`
+A string used to determine the order of the mail filters in the configuration file. This also defines the order in which enabled filters are called. Default value: `00`
 
 ##### `milter_name`
 
 The name of the milter to create. Defaults to the resource title.
+
+#### `enable`
+
+A boolean to indicate if the milter should automatically be enabled. If this is `true` (the default) then the milter will be called by Sendmail for every incoming mail. If this is set to `false` then the milter is only defined. It needs to be enabled by either setting the parameter `input_filter` for [`sendmail::mc::daemon_options`](#define-sendmailmcdaemon_options) or defining `confINPUT_MAIL_FILTERS`. Internally this parameter determines if the `INPUT_MAIL_FILTER()` or `MAIL_FILTER()` macros are used.
 
 #### Define: `sendmail::mc::modify_mailer_flags`
 
