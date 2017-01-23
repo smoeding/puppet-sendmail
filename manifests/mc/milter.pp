@@ -132,7 +132,7 @@ define sendmail::mc::milter (
   $real_timeouts = delete(regsubst($sparse_timeouts, '^.*:$', '='), '=')
 
   if count($real_timeouts) > 0 {
-    $opt_timeouts = join($real_timeouts, '; ')
+    $opt_timeouts = join($real_timeouts, ';')
   }
   else {
     $opt_timeouts = undef
