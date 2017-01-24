@@ -120,9 +120,8 @@ describe 'sendmail::mc::define' do
   end
 
   [ 'SMART_HOST', 'confCF_VERSION', 'confDONT_PROBE_INTERFACES',
-    'confLOG_LEVEL', 'confMAX_MESSAGE_SIZE', 'confCIPHER_LIST',
-    'confCLIENT_SSL_OPTIONS', 'confSERVER_SSL_OPTIONS',
-    'confPRIVACY_FLAGS', 'confDOMAIN_NAME' ].each do |arg|
+    'confLOG_LEVEL', 'confMAX_MESSAGE_SIZE', 'confPRIVACY_FLAGS',
+    'confDOMAIN_NAME' ].each do |arg|
 
     context "with argument #{arg}" do
       let(:title) { arg }
@@ -140,4 +139,24 @@ describe 'sendmail::mc::define' do
       }
     end
   end
+
+  [ 'confCIPHER_LIST', 'confCLIENT_SSL_OPTIONS',
+    'confSERVER_SSL_OPTIONS', ].each do |arg|
+
+    context "with argument #{arg}" do
+      let(:title) { arg }
+
+      let(:params) do
+        { :expansion => 'foo' }
+      end
+
+      it {
+        should contain_concat__fragment("sendmail_mc-define-#{arg}") \
+                .with_content(/^define\(`#{arg}', `foo'\)dnl$/) \
+                .with_order('48') \
+                .that_notifies('Class[sendmail::makeall]')
+      }
+    end
+  end
+
 end
