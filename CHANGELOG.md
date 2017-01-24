@@ -1,3 +1,15 @@
+## 2017-01-24 - Release 1.1.0
+
+### Summary
+
+This release adds some milter related improvements and rearranges TLS related parameters in the generated configuration file.
+
+#### Features
+
+- The `flags` parameter of `sendmail::mc::milter` allows the empty string value now. This value indicates that a milter failure should be treated as if the milter wasn't configured.
+- Also the boolean parameter `enable` was added to `sendmail::mc::milter`. A value of `true` (default) will automatically enable the milter for all daemons. A value of `false` will only define the milter in the config file.
+- Milter and TLS related config file options are now grouped together in the generated `sendmail.mc` file.
+
 ## 2016-09-10 - Release 1.0.0
 
 ### Summary
