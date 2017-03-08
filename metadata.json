@@ -11,23 +11,41 @@
   "operatingsystem_support": [
     {
       "operatingsystem": "Debian",
-      "operatingsystemrelease": [ "7", "8" ]
+      "operatingsystemrelease": [
+        "7",
+        "8"
+      ]
     },
     {
       "operatingsystem": "Ubuntu",
-      "operatingsystemrelease": [ "14.04", "15.04", "15.10", "16.04" ]
+      "operatingsystemrelease": [
+        "14.04",
+        "15.04",
+        "15.10",
+        "16.04",
+        "16.10"
+      ]
     },
     {
       "operatingsystem": "RedHat",
-      "operatingsystemrelease": [ "6", "7" ]
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
     },
     {
       "operatingsystem": "CentOS",
-      "operatingsystemrelease": [ "6", "7" ]
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
     },
     {
       "operatingsystem": "FreeBSD",
-      "operatingsystemrelease": [ "10" ]
+      "operatingsystemrelease": [
+        "10",
+        "11"
+      ]
     }
   ],
   "dependencies": [
