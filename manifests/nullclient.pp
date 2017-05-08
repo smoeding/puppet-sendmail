@@ -126,7 +126,10 @@ class sendmail::nullclient (
   }
 
   validate_re($port, '^[0-9]+$')
-  validate_re($port_option_modify, '^[abcfhruACEOS]*$')
+
+  if $port_option_modify {
+    validate_re($port_option_modify, '^[abcfhruACEOS]*$')
+  }
 
   class { '::sendmail':
     domain_name              => $domain_name,
