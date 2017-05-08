@@ -1,3 +1,13 @@
+## 2017-05-08 - Release 1.1.1
+
+### Summary
+
+This release fixes a bug in the validation code of the `sendmail::nullclient` class.
+
+#### Bugfixes
+
+- The `sendmail::nullclient` class could incorrectly cause a validation error when version 4.14 or later of the `stdlib` module was used. This error has been fixed.
+
 ## 2017-01-24 - Release 1.1.0
 
 ### Summary
