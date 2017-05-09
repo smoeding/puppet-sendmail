@@ -568,6 +568,8 @@ The `entries` parameter is used to manage each entry separately. Preferable this
 class { 'sendmail::access': }
 ```
 
+This class is only used to manage the access db file. You will also need to enable the `access_db` feature using [`sendmail::mc::feature`](#define-sendmailmcfeature) to tell Sendmail to actually use the file.
+
 **Parameters for the `sendmail::access` class:**
 
 ##### `content`
@@ -1112,6 +1114,8 @@ sendmail::access::entry { 'example.com':
   value => 'RELAY',
 }
 ```
+
+You also need to enable the `access_db` feature by calling [`sendmail::mc::feature`](#define-sendmailmcfeature) to make Sendmail use the access db file.
 
 **Parameters for the `sendmail::access::entry` type:**
 
