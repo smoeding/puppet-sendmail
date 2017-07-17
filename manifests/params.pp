@@ -107,6 +107,27 @@ class sendmail::params {
       $submit_mc_file    = "${mail_settings_dir}/${::hostname}.submit.mc"
     }
 
+    'Solaris':{
+      $package_manage   = false
+      $service_hasstatus = true
+
+      $sendmail_user    = 'root'
+      $sendmail_group   = 'mail'
+      $alias_file_group = 'root'
+
+      $sendmail_mc_ostype = 'solaris8'
+      $submit_mc_ostype   = undef
+      $sendmail_mc_domain = 'solaris-generic'
+      $submit_mc_domain   = undef
+
+      $configure_command = "cd ${mail_settings_dir}/cf/cf && \n
+                            /usr/ccs/bin/make all && \n
+                            cp sendmail.cf ${mail_settings_dir}/sendmail.cf && \n
+                            cp submit.cf ${mail_settings_dir}/submit.cf "
+      $sendmail_mc_file  = "${mail_settings_dir}/cf/cf/sendmail.mc"
+      $submit_mc_file    = "${mail_settings_dir}/cf/cf/submit.mc"
+    }
+
     default: {
       fail("Unsupported osfamily ${::osfamily}")
     }
