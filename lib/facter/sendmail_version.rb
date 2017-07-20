@@ -24,7 +24,7 @@ Facter.add(:sendmail_version) do
         nil
       else
         version = Facter::Core::Execution.execute(smcmd, options)
-        if version =~ /^Version ([0-9.]+)$/
+        if version =~ /^Version ([0-9.]+).*$/
           $1
         else
           nil
