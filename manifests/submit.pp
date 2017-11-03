@@ -57,6 +57,8 @@ class sendmail::submit (
   $masquerade_as            = undef,
 ) inherits sendmail::params {
 
+  include ::sendmail::makeall
+
   validate_re($msp_port, [ '^[0-9]+$', '^MSA$' ], 'msp_port must be a numeric port number or the literal "MSA"')
 
   validate_bool($enable_msp_trusted_users)

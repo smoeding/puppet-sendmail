@@ -118,6 +118,7 @@ class sendmail::mc::timeouts (
   $rset       = undef,
   $starttls   = undef,
 ) {
+  include ::sendmail::makeall
 
   $sparse_timeouts = [
     "`confTO_ACONNECT', `${aconnect}'",
