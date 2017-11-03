@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'sendmail::domaintable::entry' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
+
   let(:title) { 'example.com' }
 
   context 'with value' do

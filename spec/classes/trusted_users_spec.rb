@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe 'sendmail::trusted_users' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
 
   it { should contain_class('sendmail::trusted_users') }
 

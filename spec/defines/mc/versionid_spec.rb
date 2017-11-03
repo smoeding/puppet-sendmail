@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::versionid' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
+
   let(:title) { 'foo' }
 
   context 'with title only' do

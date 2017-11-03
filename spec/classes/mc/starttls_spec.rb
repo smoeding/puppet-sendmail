@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::starttls' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
+
   context 'with defaults' do
     it {
       should contain_concat__fragment('sendmail_mc-starttls') \

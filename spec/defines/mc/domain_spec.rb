@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::domain' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
 
   context 'with domain foobar' do
     let(:title) { 'foobar' }

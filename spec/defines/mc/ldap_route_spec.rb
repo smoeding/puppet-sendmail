@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::ldaproute_domain' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
 
   context 'with domain example.net' do
     let(:title) { 'example.net' }

@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::masquerade_as' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
+
   let(:title) { 'example.com' }
 
   context 'example.com' do

@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::define' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
+
   let(:title) { 'foobar' }
 
   context 'with no argument' do

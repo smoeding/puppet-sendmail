@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::local_config' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
+
   let(:title) { 'local_config' }
 
   context 'without source or content' do

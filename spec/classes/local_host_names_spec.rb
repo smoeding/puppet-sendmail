@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe 'sendmail::local_host_names' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
 
   it { should contain_class('sendmail::local_host_names') }
 

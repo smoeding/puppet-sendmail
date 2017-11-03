@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::mailer' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
 
   context 'with mailer smtp' do
     let(:title) { 'smtp' }

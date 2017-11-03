@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::milter' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
 
   let(:title) { 'greylist' }
 

@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::include' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
 
   context 'with include file' do
     let(:title) { '/foo' }

@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe 'sendmail::access' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
 
   it { should contain_class('sendmail::access') }
 

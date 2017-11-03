@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::feature' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
+
   let(:title) { 'no_default_msa' }
 
   context 'with no argument' do

@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::trust_auth_mech' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
+
   let(:title) { 'trust_auth_mech' }
 
   context 'with resource title only' do

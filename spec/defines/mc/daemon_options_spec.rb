@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::daemon_options' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
+
   let(:title) { 'MSA' }
 
   context 'with default arguments' do

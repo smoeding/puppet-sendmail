@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::modify_mailer_flags' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
+
   let(:title) { 'foobar' }
 
   context 'with one argument' do

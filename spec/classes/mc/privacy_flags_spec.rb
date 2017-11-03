@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::privacy_flags' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
 
   context 'with defaults' do
     it {

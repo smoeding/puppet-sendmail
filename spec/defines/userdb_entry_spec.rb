@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'sendmail::userdb::entry' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
+
   let(:title) { 'fred:maildrop' }
 
   context 'with value' do

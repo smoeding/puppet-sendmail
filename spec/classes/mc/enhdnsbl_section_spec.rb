@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::enhdnsbl_section' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
 
   it { should contain_class('sendmail::mc::enhdnsbl_section') }
 

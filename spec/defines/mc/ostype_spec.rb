@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::ostype' do
+  let(:pre_condition) {
+    'include sendmail::service'
+  }
+
   context 'on Debian' do
     let(:title) { 'debian' }
 
