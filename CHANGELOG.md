@@ -1,3 +1,13 @@
+## 2018-02-04 - Release 1.2.0
+
+### Summary
+
+A small update that fixes a minor bug and includes an updated compatibility matrix.
+
+#### Bugfixes
+
+- Improved compatibility of the `sendmail_version` fact when other mailers are installed.
+
 ## 2017-05-08 - Release 1.1.1
 
 ### Summary
