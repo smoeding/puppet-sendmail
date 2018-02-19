@@ -292,6 +292,27 @@ A hash of features to include in the configuration. Each hash key should be a fe
 
 Some features (e.g. `mailertable`, `access_db`, ...) may need to be managed individually. So the `mailertable` feature could be enabled using this parameter but that does not manage the mailertable file itself. So in addition you would have to use the [`sendmail::mailertable`](#class-sendmailmailertable) class or the [`sendmail::mailertable::entry`](#define-sendmailmailertableentry) defined type.
 
+The following two code blocks are equivalent:
+
+``` puppet
+class { '::sendmail':
+  ...
+  features => { 'mailertable' => { 'args' => 'hash /etc/mail/mailertable' } },
+  ...
+}
+```
+
+``` puppet
+class { '::sendmail':
+  ...
+}
+
+sendmail::mc::feature { 'mailertable':
+  args => 'hash /etc/mail/mailertable',
+}
+```
+
+
 ##### `mailers`
 
 An array of mailers to add to the configuration. Default value: `[ 'smtp', 'local' ]`
