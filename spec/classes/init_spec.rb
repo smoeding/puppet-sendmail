@@ -236,6 +236,38 @@ describe 'sendmail' do
                )
       }
     end
+
+    context "on #{os} with features defining a simple feature" do
+      let(:params) do
+        { :features => { 'no_default_msa' => {} } }
+      end
+
+      it {
+        should contain_sendmail__mc__feature('no_default_msa')
+      }
+    end
+
+    context "on #{os} with features defining a complex feature" do
+      let(:params) do
+        { :features => { 'no_default_msa' => { 'args' => 'foo' } } }
+      end
+
+      it {
+        should contain_sendmail__mc__feature('no_default_msa') \
+                 .with_args('foo')
+      }
+    end
+
+    context "on #{os} with features defining multiple features" do
+      let(:params) do
+        { :features => { 'conncontrol' => {}, 'ratecontrol' => {} } }
+      end
+
+      it {
+        should contain_sendmail__mc__feature('conncontrol')
+        should contain_sendmail__mc__feature('ratecontrol')
+      }
+    end
   end
 
   context 'on unsupported osfamily' do
