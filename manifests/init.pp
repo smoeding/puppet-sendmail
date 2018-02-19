@@ -39,6 +39,13 @@
 #   Valid options: the strings 'true', 'false' or 'localhost'.
 #   Default value: undef.
 #
+# [*features*]
+#   A hash of features to include in the configuration. Each hash key should
+#   be a feature name while the value should be a hash itself. The value hash
+#   is used as parameters for the 'sendmail::mc::feature' defined type. Check
+#   the documentation of this type for details.
+#   Default value: {}
+#
 # [*enable_ipv4_daemon*]
 #   Should the host accept mail on all IPv4 network adresses.
 #   Valid options: 'true' or 'false'. Default value: 'true'.
@@ -194,6 +201,7 @@ class sendmail (
   $dont_probe_interfaces    = undef,
   $enable_ipv4_daemon       = true,
   $enable_ipv6_daemon       = true,
+  $features                 = {},
   $mailers                  = $::sendmail::params::mailers,
   $local_host_names         = [ $::fqdn ],
   $relay_domains            = [],
@@ -313,6 +321,11 @@ class sendmail (
       require                  => Class['::sendmail::package'],
       notify                   => Class['::sendmail::service'],
     }
+  }
+
+  unless empty($features) {
+    validate_hash($features)
+    create_resources('sendmail::mc::feature', $features)
   }
 
   anchor { 'sendmail::config': }
