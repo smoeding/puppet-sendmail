@@ -9,9 +9,9 @@
 1. [Overview](#overview)
 2. [Module Description - What the module does and why it is useful](#module-description)
 3. [Setup - The basics of getting started with sendmail](#setup)
-	* [What sendmail affects](#what-sendmail-affects)
-	* [Setup requirements](#setup-requirements)
-	* [Beginning with sendmail](#beginning-with-sendmail)
+    * [What sendmail affects](#what-sendmail-affects)
+    * [Setup requirements](#setup-requirements)
+    * [Beginning with sendmail](#beginning-with-sendmail)
 4. [Usage - Configuration options and additional functionality](#usage)
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 5. [Limitations - OS compatibility, etc.](#limitations)
@@ -180,12 +180,12 @@ $ldap_filter = '(&(objectClass=inetLocalMailRecipient)(mailLocalAddress=%0))'
 
 sendmail::mc::feature { 'ldap_routing':
   args => [
-	"ldap -1 -T<TMPF> -v mailHost -k ${ldap_filter}",
-	"ldap -1 -T<TMPF> -v mailRoutingAddress -k ${ldap_filter}",
-	'bounce',
-	'preserve',
-	'nodomain',
-	'tempfail',
+    "ldap -1 -T<TMPF> -v mailHost -k ${ldap_filter}",
+    "ldap -1 -T<TMPF> -v mailRoutingAddress -k ${ldap_filter}",
+    'bounce',
+    'preserve',
+    'nodomain',
+    'tempfail',
   ]
 }
 
@@ -574,7 +574,7 @@ The class can be used to create aliases defined in hiera. The hiera hash should 
 ```yaml
 sendmail::aliases::entries:
   'fred':
-	recipient: 'barney@example.org'
+    recipient: 'barney@example.org'
 ```
 
 #### Class: `sendmail::access`
@@ -616,9 +616,9 @@ The class can be used to create access entries defined in hiera. The hiera hash 
 ```yaml
 sendmail::access::entries:
   'example.com':
-	value: 'OK'
+    value: 'OK'
   'example.org':
-	value: 'REJECT'
+    value: 'REJECT'
 ```
 
 #### Class: `sendmail::domaintable`
@@ -658,9 +658,9 @@ This class can be used to create domaintable entries defined in hiera. The hiera
 ```yaml
 sendmail::domaintable::entries:
   'example.com':
-	value: 'example.org'
+    value: 'example.org'
   'example.net':
-	value: 'example.org'
+    value: 'example.org'
 ```
 
 #### Class: `sendmail::genericstable`
@@ -700,9 +700,9 @@ This class can be used to create genericstable entries defined in hiera. The hie
 ```yaml
 sendmail::genericstable::entries:
   'fred@example.com':
-	value: 'fred@example.org'
+    value: 'fred@example.org'
   'barney':
-	value: 'barney@example.org'
+    value: 'barney@example.org'
 ```
 
 #### Class: `sendmail::mailertable`
@@ -742,11 +742,11 @@ This class can be used to create mailertable entries defined in hiera. The hiera
 ```yaml
 sendmail::mailertable::entries:
   '.example.com':
-	value: 'smtp:relay.example.com'
+    value: 'smtp:relay.example.com'
   'www.example.org':
-	value: 'relay:relay.example.com'
+    value: 'relay:relay.example.com'
   '.example.net':
-	value: 'error:5.7.0:550 mail is not accepted'
+    value: 'error:5.7.0:550 mail is not accepted'
 ```
 
 #### Class: `sendmail::userdb`
@@ -786,9 +786,9 @@ This class can be used to create userdb entries defined in hiera. The hiera hash
 ```yaml
 sendmail::userdb::entries:
   'fred:maildrop':
-	value: 'fred@example.org'
+    value: 'fred@example.org'
   'barney:maildrop':
-	value: 'barney@example.org'
+    value: 'barney@example.org'
 ```
 
 #### Class: `sendmail::virtusertable`
@@ -828,9 +828,9 @@ This class can be used to create virtusertable entries defined in hiera. The hie
 ```yaml
 sendmail::virtusertable::entries:
   'info@example.com':
-	value: 'fred'
+    value: 'fred'
   '@example.org':
-	value: 'barney'
+    value: 'barney'
 ```
 
 #### Class: `sendmail::mc::privacy_flags`
