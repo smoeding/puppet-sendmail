@@ -1,3 +1,13 @@
+## 2018-02-19 - Release 1.3.0
+
+### Summary
+
+A feature release that adds a new class parameter.
+
+#### Features
+
+- The new parameter `features` was added to the `sendmail` class. This enables additional sendmail features directly within the mail class.
+
 ## 2018-02-04 - Release 1.2.0
 
 ### Summary
