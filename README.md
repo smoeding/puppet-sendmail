@@ -286,6 +286,12 @@ Should the host accept mail on all IPv4 network adresses. Valid options: `true` 
 
 Should the host accept mail on all IPv6 network adresses. Valid options: `true` or `false`. Default value: `true`
 
+##### `features`
+
+A hash of features to include in the configuration. Each hash key should be a feature name while the value should be a hash itself. The value hash is used as parameters for the [`sendmail::mc::feature`](#define-sendmailmcfeature) defined type. Check the documentation of this type for details. Default value: `{}`
+
+Some features (e.g. `mailertable`, `access_db`, ...) may need to be managed individually. So the `mailertable` feature could be enabled using this parameter but that does not manage the mailertable file itself. So in addition you would have to use the [`sendmail::mailertable`](#class-sendmailmailertable) class or the [`sendmail::mailertable::entry`](#define-sendmailmailertableentry) defined type.
+
 ##### `mailers`
 
 An array of mailers to add to the configuration. Default value: `[ 'smtp', 'local' ]`
