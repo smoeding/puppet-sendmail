@@ -297,7 +297,11 @@ The following two code blocks are equivalent:
 ``` puppet
 class { '::sendmail':
   ...
-  features => { 'mailertable' => { 'args' => 'hash /etc/mail/mailertable' } },
+  features => {
+    'delay_checks' => {},
+    'mailertable'  => { 'args' => 'hash /etc/mail/mailertable' },
+    'local_lmtp'   => { 'args' => [ '[IPC]', 'FILE /var/run/dovecot/lmtp' ] },
+  },
   ...
 }
 ```
@@ -307,8 +311,14 @@ class { '::sendmail':
   ...
 }
 
+sendmail::mc::feature { 'delay_checks': }
+
 sendmail::mc::feature { 'mailertable':
   args => 'hash /etc/mail/mailertable',
+}
+
+sendmail::mc::feature { 'local_lmtp':
+  args => [ '[IPC]', 'FILE /var/run/dovecot/lmtp' ],
 }
 ```
 
