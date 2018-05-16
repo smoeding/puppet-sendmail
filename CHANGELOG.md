@@ -1,3 +1,9 @@
+## 2018-05-16 - Release 1.3.1
+
+### Summary
+
+The module dependencies have been updated to include current releases of the concat module. No functional changes were made.
+
 ## 2018-02-19 - Release 1.3.0
 
 ### Summary
