@@ -1,3 +1,9 @@
+## 2018-05-16 - Release 1.3.2
+
+### Summary
+
+Remove unintended code that was included in 1.3.1.
+
 ## 2018-05-16 - Release 1.3.1
 
 ### Summary
