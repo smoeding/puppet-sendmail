@@ -1,6 +1,8 @@
-## 2018-06-xx - Release 1.4.0
+## 2018-06-03 - Release 1.4.0
 
 ### Summary
+
+This release adds an new defined type to set generic domains. The sendmail version fact has also been improved to be more resistant to DNS failures.
 
 #### Features
 
@@ -8,7 +10,7 @@
 
 #### Bugfixes
 
-- Increase stability of `sendmail_version` fact. The old implementation sometimes returned a wrong result when a DNS lookup caused a timeout.
+- Increase stability of `sendmail_version` fact. The previous implementation sometimes failed to return the correct version number when a DNS lookup timed out.
 
 ## 2018-05-16 - Release 1.3.2
 
