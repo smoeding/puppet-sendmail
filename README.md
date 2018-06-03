@@ -692,6 +692,8 @@ The `entries` parameter is used to manage each entry separately. Preferable this
 class { 'sendmail::genericstable': }
 ```
 
+Use the [sendmail::mc::generics_domain](#define-sendmailmcgenerics_domain) type to configure the domains for which non-local user addresses should be rewritten.
+
 **Parameters for the `sendmail::genericstable` class:**
 
 ##### `content`
