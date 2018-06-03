@@ -1,3 +1,13 @@
+## 2018-06-xx - Release 1.4.0
+
+### Summary
+
+#### Features
+
+#### Bugfixes
+
+- Increase stability of `sendmail_version` fact. The old implementation sometimes returned a wrong result when a DNS lookup caused a timeout.
+
 ## 2018-05-16 - Release 1.3.2
 
 ### Summary
