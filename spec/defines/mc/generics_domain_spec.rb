@@ -9,6 +9,8 @@ describe 'sendmail::mc::generics_domain' do
     let(:title) { 'example.net' }
 
     it {
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-generics_domain-example.net') \
               .with_content(/^GENERICS_DOMAIN\(`example.net'\)dnl$/) \
               .with_order('32') \

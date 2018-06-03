@@ -9,6 +9,8 @@ describe 'sendmail::mc::versionid' do
 
   context 'with title only' do
     it {
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-versionid') \
               .with_content(/^VERSIONID\(`foo'\)dnl$/) \
               .with_order('01') \
@@ -22,6 +24,8 @@ describe 'sendmail::mc::versionid' do
     end
 
     it {
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-versionid') \
               .with_content(/^VERSIONID\(`bar'\)dnl$/) \
               .with_order('01') \

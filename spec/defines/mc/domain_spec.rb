@@ -9,6 +9,8 @@ describe 'sendmail::mc::domain' do
     let(:title) { 'foobar' }
 
     it {
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-domain-foobar') \
               .with_content(/^DOMAIN\(`foobar'\)dnl$/) \
               .with_order('07') \
@@ -20,6 +22,8 @@ describe 'sendmail::mc::domain' do
     let(:title) { 'debian-mta' }
 
     it {
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-domain-debian-mta') \
               .with_content(/^DOMAIN\(`debian-mta'\)dnl$/) \
               .with_order('07') \

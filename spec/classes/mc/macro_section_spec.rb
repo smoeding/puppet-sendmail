@@ -5,10 +5,10 @@ describe 'sendmail::mc::macro_section' do
     'include sendmail::service'
   }
 
-  it { should contain_class('sendmail::mc::macro_section') }
-
   context 'with no arguments' do
     it {
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-macro_header') \
               .with_content(/^dnl # Macros$/) \
               .with_order('35') \

@@ -14,6 +14,8 @@ describe 'sendmail::mc::modify_mailer_flags' do
 
     it {
       should contain_class('sendmail::mc::macro_section')
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-modify_mailer_flags-foobar') \
               .with_content(/^MODIFY_MAILER_FLAGS\(`foobar', `foo'\)dnl$/) \
               .with_order('38') \
@@ -28,6 +30,8 @@ describe 'sendmail::mc::modify_mailer_flags' do
 
     it {
       should contain_class('sendmail::mc::macro_section')
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-modify_mailer_flags-foobar') \
               .with_content(/^MODIFY_MAILER_FLAGS\(`baz', `foo'\)dnl$/) \
               .with_order('38') \
@@ -42,6 +46,8 @@ describe 'sendmail::mc::modify_mailer_flags' do
 
     it {
       should contain_class('sendmail::mc::macro_section')
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-modify_mailer_flags-foobar') \
               .with_content(/^MODIFY_MAILER_FLAGS\(`foobar', `foo'\)dnl$/) \
               .with_order('38') \
@@ -56,6 +62,8 @@ describe 'sendmail::mc::modify_mailer_flags' do
 
     it {
       should contain_class('sendmail::mc::macro_section')
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-modify_mailer_flags-foobar') \
               .with_content(/^MODIFY_MAILER_FLAGS\(`foobar', foo\)dnl$/) \
               .with_order('38') \

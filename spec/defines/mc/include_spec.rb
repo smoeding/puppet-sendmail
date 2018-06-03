@@ -9,6 +9,8 @@ describe 'sendmail::mc::include' do
     let(:title) { '/foo' }
 
     it {
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-include-/foo') \
             .with_content(/^include\(`\/foo'\)dnl$/) \
             .with_order('59') \
@@ -24,6 +26,8 @@ describe 'sendmail::mc::include' do
     end
 
     it {
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-include-/foo') \
             .with_content(/^include\(`\/foo'\)dnl$/) \
             .with_order('xx') \

@@ -9,12 +9,13 @@ describe 'sendmail::mc::enhdnsbl' do
 
   context 'with defaults' do
     it {
+      should contain_class('sendmail::mc::enhdnsbl_section')
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com') \
               .with_content(/^FEATURE\(`enhdnsbl', `bl.example.com'\)dnl$/) \
               .with_order('51') \
               .that_notifies('Class[sendmail::makeall]')
-
-      should contain_class('sendmail::mc::enhdnsbl_section')
    }
   end
 
@@ -24,6 +25,9 @@ describe 'sendmail::mc::enhdnsbl' do
     end
 
     it {
+      should contain_class('sendmail::mc::enhdnsbl_section')
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com') \
               .with_content(/`bl.example.com', `foo'\)dnl$/)
     }
@@ -35,6 +39,9 @@ describe 'sendmail::mc::enhdnsbl' do
     end
 
     it {
+      should contain_class('sendmail::mc::enhdnsbl_section')
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com') \
               .with_content(/`bl.example.com', , `t'\)dnl$/)
     }
@@ -46,6 +53,9 @@ describe 'sendmail::mc::enhdnsbl' do
     end
 
     it {
+      should contain_class('sendmail::mc::enhdnsbl_section')
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com') \
               .with_content(/`bl.example.com', , , `foo'\)dnl$/)
     }

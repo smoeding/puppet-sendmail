@@ -10,6 +10,8 @@ describe 'sendmail::mc::trust_auth_mech' do
   context 'with resource title only' do
     it {
       should contain_class('sendmail::mc::macro_section')
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-trust_auth_mech') \
             .with_content(/^TRUST_AUTH_MECH\(`trust_auth_mech'\)dnl$/) \
             .with_order('45') \
@@ -25,6 +27,8 @@ describe 'sendmail::mc::trust_auth_mech' do
 
     it {
       should contain_class('sendmail::mc::macro_section')
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-trust_auth_mech') \
             .with_content(/^TRUST_AUTH_MECH\(`bar'\)dnl$/) \
             .with_order('45') \
@@ -39,6 +43,8 @@ describe 'sendmail::mc::trust_auth_mech' do
 
     it {
       should contain_class('sendmail::mc::macro_section')
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-trust_auth_mech') \
             .with_content(/^TRUST_AUTH_MECH\(`'\)dnl$/) \
             .with_order('45') \
@@ -53,6 +59,8 @@ describe 'sendmail::mc::trust_auth_mech' do
 
     it {
       should contain_class('sendmail::mc::macro_section')
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-trust_auth_mech') \
             .with_content(/^TRUST_AUTH_MECH\(`bar baz'\)dnl$/) \
             .with_order('45') \
@@ -67,6 +75,8 @@ describe 'sendmail::mc::trust_auth_mech' do
 
     it {
       should contain_class('sendmail::mc::macro_section')
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-trust_auth_mech') \
             .with_content(/^TRUST_AUTH_MECH\(`'\)dnl$/) \
             .with_order('45') \

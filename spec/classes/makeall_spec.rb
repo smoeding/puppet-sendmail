@@ -5,8 +5,6 @@ describe 'sendmail::makeall' do
     'include sendmail::service'
   }
 
-  it { should contain_class('sendmail::makeall') }
-
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) { facts }

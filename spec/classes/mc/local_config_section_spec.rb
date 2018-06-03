@@ -5,10 +5,10 @@ describe 'sendmail::mc::local_config_section' do
     'include sendmail::service'
   }
 
-  it { should contain_class('sendmail::mc::local_config_section') }
-
   context 'with defaults' do
     it {
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-local_config_header') \
               .with_content(/^LOCAL_CONFIG/) \
               .with_target('sendmail.mc') \

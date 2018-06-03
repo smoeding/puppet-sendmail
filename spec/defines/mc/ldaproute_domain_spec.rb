@@ -9,11 +9,13 @@ describe 'sendmail::mc::ldaproute_domain' do
     let(:title) { 'example.net' }
 
     it {
+      should contain_class('sendmail::mc::ldap_section')
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-ldaproute_domain-example.net') \
               .with_content(/^LDAPROUTE_DOMAIN\(`example.net'\)dnl$/) \
               .with_order('19') \
               .that_notifies('Class[sendmail::makeall]')
-      should contain_class('sendmail::mc::ldap_section')
     }
   end
 end

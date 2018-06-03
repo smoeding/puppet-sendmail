@@ -9,6 +9,8 @@ describe 'sendmail::mc::masquerade_as' do
 
   context 'example.com' do
     it {
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-masquerade') \
               .with_content(/^MASQUERADE_AS\(`example.com'\)dnl$/) \
               .without_content(/^FEATURE/) \
@@ -26,6 +28,8 @@ describe 'sendmail::mc::masquerade_as' do
     end
 
     it {
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-masquerade') \
               .with_content(/^MASQUERADE_DOMAIN\(`example.net example.org'\)dnl$/) \
               .without_content(/^MASQUERADE_DOMAIN_FILE/)
@@ -38,6 +42,8 @@ describe 'sendmail::mc::masquerade_as' do
     end
 
     it {
+      should contain_class('sendmail::makeall')
+
       should contain_concat__fragment('sendmail_mc-masquerade') \
               .with_content(/^MASQUERADE_DOMAIN_FILE\(`\/foo\/bar'\)dnl$/) \
               .without_content(/^MASQUERADE_DOMAIN\(/)
