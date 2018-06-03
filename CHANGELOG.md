@@ -4,6 +4,8 @@
 
 #### Features
 
+- New defined type `sendmail::mc::generics_domain` to manage the domains to use with FEATURE(genericstable).
+
 #### Bugfixes
 
 - Increase stability of `sendmail_version` fact. The old implementation sometimes returned a wrong result when a DNS lookup caused a timeout.

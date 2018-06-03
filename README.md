@@ -236,6 +236,7 @@ sendmail::mc::feature { 'virtusertable':
   - [Define: sendmail::mc::domain](#define-sendmailmcdomain)
   - [Define: sendmail::mc::enhdnsbl](#define-sendmailmcenhdnsbl)
   - [Define: sendmail::mc::feature](#define-sendmailmcfeature)
+  - [Define: sendmail::mc::generics_domain](#define-sendmailmcgenerics_domain)
   - [Define: sendmail::mc::include](#define-sendmailmcinclude)
   - [Define: sendmail::mc::ldaproute_domain](#define-sendmailmcldaproute_domain)
   - [Define: sendmail::mc::local_config](#define-sendmailmclocal_config)
@@ -1486,6 +1487,20 @@ The arguments used for the feature. This can be a simple string, if the feature 
 A boolean that indicates if the arguments should be quoted (using m4 quotes). If this argument is `true`, then the arguments will be enclosed in \` and ' symbols in the generated output file. Valid options: `true` or `false`. Default value: `true`
 
 > **Note**: The name of the feature will always be quoted.
+
+#### Define: `sendmail::mc::generics_domain`
+
+Add a `GENERICS_DOMAIN` macro to the `sendmail.mc` file.
+
+```puppet
+sendmail::mc::generics_domain { 'example.net': }
+```
+
+**Parameters for the `sendmail::mc::generics_domain` type:**
+
+##### `domain`
+
+The name of the domain for use with [sendmail::genericstable](#class-sendmailgenericstable). Default value is the resource title.
 
 #### Define: `sendmail::mc::include`
 
