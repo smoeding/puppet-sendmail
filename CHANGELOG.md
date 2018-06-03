@@ -1,3 +1,9 @@
+## 2018-06-03 - Release 1.4.1
+
+### Summary
+
+An unused backup file was removed from the module.
+
 ## 2018-06-03 - Release 1.4.0
 
 ### Summary
