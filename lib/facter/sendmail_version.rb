@@ -7,20 +7,22 @@
 # Otherwise we might cause logfile errors by calling 'sendmail' when a
 # different mailer is used.
 
+# For Sendmail this fact tries to verify a random username to get the
+# sendmail version number. This should minimize the dependency on DNS when
+# the fact is called.
+
 Facter.add(:sendmail_version) do
   setcode do
-    options = { :on_fail => nil, :timeout => 10 }
+    options = { :on_fail => nil, :timeout => 30 }
 
-    excmd = 'exim -bV'
-    pfcmd = 'postconf -h mail_version'
-    smcmd = 'sendmail -d0.4 -ODontProbeInterfaces=true -bv root 2>/dev/null'
+    smcmd = 'sendmail -d0.1 -ODontProbeInterfaces=true -bv moowoc6ji5'
 
     begin
-      if Facter::Core::Execution.execute(excmd, options)
-        # Exim is running here, so no version of Sendmail
+      if Facter::Core::Execution.which('exim')
+        # Exim is installed here, so no version of Sendmail
         nil
-      elsif Facter::Core::Execution.execute(pfcmd, options)
-        # Postfix is running here, so no version of Sendmail
+      elsif Facter::Core::Execution.which('postfix')
+        # Postfix is installed here, so no version of Sendmail
         nil
       else
         version = Facter::Core::Execution.execute(smcmd, options)
