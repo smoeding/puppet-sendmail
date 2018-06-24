@@ -13,9 +13,8 @@
 
 Facter.add(:sendmail_version) do
   setcode do
-    options = { :on_fail => nil, :timeout => 30 }
-
-    smcmd = 'sendmail -d0.1 -ODontProbeInterfaces=true -bv moowoc6ji5'
+    opt = { :on_fail => nil, :timeout => 30 }
+    cmd = 'sendmail -d0.1 -OLogLevel=0 -ODontProbeInterfaces=true -bv mowoc6ji5'
 
     begin
       if Facter::Core::Execution.which('exim')
@@ -25,7 +24,7 @@ Facter.add(:sendmail_version) do
         # Postfix is installed here, so no version of Sendmail
         nil
       else
-        version = Facter::Core::Execution.execute(smcmd, options)
+        version = Facter::Core::Execution.execute(cmd, opt)
         if version =~ /^Version ([0-9.]+).*$/
           $1
         else

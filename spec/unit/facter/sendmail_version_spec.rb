@@ -8,7 +8,7 @@ describe Facter::Util::Fact do
   describe 'sendmail_version' do
     excmd = 'exim -bV'
     pfcmd = 'postconf -h mail_version'
-    smcmd = 'sendmail -d0.1 -ODontProbeInterfaces=true -bv moowoc6ji5'
+    smcmd = 'sendmail -d0.1 -OLogLevel=0 -ODontProbeInterfaces=true -bv mowoc6ji5'
 
     options = { :on_fail => nil, :timeout => 30 }
 
