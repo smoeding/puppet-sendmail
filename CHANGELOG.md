@@ -1,3 +1,17 @@
+## 2018-06-24 - Release 1.5.0
+
+### Summary
+
+This release contains a bugfix related to the `sendmail_version` fact. It also adds support for Ubuntu-18.04 Bionic Beaver.
+
+#### Features
+
+- The module has been tested to work on Ubuntu-18.04 Bionic Beaver.
+
+#### Bugfixes
+
+- Under certain conditions a Puppet run could lead to a `User unknown` error message in the mail log. This was caused by the execution of the Sendmail binary to determine the `sendmail_version` fact. The fact now uses a reduced log level to prevent that message.
+
 ## 2018-06-03 - Release 1.4.1
 
 ### Summary

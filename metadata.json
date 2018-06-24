@@ -1,6 +1,6 @@
 {
   "name": "stm-sendmail",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "author": "stm",
   "summary": "Install and manage the Sendmail MTA.",
   "license": "BSD-2-Clause",
@@ -15,7 +15,7 @@
     },
     {
       "operatingsystem": "Ubuntu",
-      "operatingsystemrelease": [ "14.04", "16.04", "17.10" ]
+      "operatingsystemrelease": [ "14.04", "16.04", "17.10", "18.04" ]
     },
     {
       "operatingsystem": "RedHat",
