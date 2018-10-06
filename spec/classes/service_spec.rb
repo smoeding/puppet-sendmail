@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 describe 'sendmail::service' do
-
-  it { should contain_class('sendmail::service') }
-
   on_supported_os.each do |os, facts|
     context "on #{os} with default parameters" do
       let(:facts) { facts }
@@ -11,103 +8,113 @@ describe 'sendmail::service' do
       case facts[:osfamily]
       when 'Debian'
         it {
-          should contain_service('sendmail').with(
-                   'ensure'    => 'running',
-                   'name'      => 'sendmail',
-                   'enable'    => 'true',
-                   'hasstatus' => 'false',
-                 )
+          is_expected.to contain_class('sendmail::service')
+          is_expected.to contain_service('sendmail') \
+            .with_ensure('running') \
+            .with_name('sendmail') \
+            .with_enable(true) \
+            .with_hasstatus(false)
         }
-      else
+      when 'RedHat', 'FreeBSD'
         it {
-          should contain_service('sendmail').with(
-                   'ensure'    => 'running',
-                   'name'      => 'sendmail',
-                   'enable'    => 'true',
-                   'hasstatus' => 'true',
-                 )
+          is_expected.to contain_class('sendmail::service')
+          is_expected.to contain_service('sendmail') \
+            .with_ensure('running') \
+            .with_name('sendmail') \
+            .with_enable(true) \
+            .with_hasstatus(true)
         }
       end
     end
 
     context "on #{os} with service_manage => false" do
+      let(:facts) { facts }
       let(:params) do
-        { :service_manage => false }
+        { service_manage: false }
       end
 
-      it { should_not contain_service('sendmail') }
+      it { is_expected.not_to contain_service('sendmail') }
     end
 
     context "on #{os} with service_ensure => stopped" do
+      let(:facts) { facts }
       let(:params) do
-        { :service_ensure => 'stopped' }
+        { service_ensure: 'stopped' }
       end
 
-      it { should contain_service('sendmail').with_ensure('stopped') }
+      it { is_expected.to contain_service('sendmail').with_ensure('stopped') }
     end
 
     context "on #{os} with service_ensure => running" do
+      let(:facts) { facts }
       let(:params) do
-        { :service_ensure => 'running' }
+        { service_ensure: 'running' }
       end
 
-      it { should contain_service('sendmail').with_ensure('running') }
+      it { is_expected.to contain_service('sendmail').with_ensure('running') }
     end
 
     context "on #{os} with service_ensure => true" do
+      let(:facts) { facts }
       let(:params) do
-        { :service_ensure => true }
+        { service_ensure: true }
       end
 
-      it { should contain_service('sendmail').with_ensure('running') }
+      it { is_expected.to contain_service('sendmail').with_ensure('running') }
     end
 
     context "on #{os} with service_ensure => false" do
+      let(:facts) { facts }
       let(:params) do
-        { :service_ensure => false }
+        { service_ensure: false }
       end
 
-      it { should contain_service('sendmail').with_ensure('stopped') }
+      it { is_expected.to contain_service('sendmail').with_ensure('stopped') }
     end
 
     context "on #{os} with service_enable => true" do
+      let(:facts) { facts }
       let(:params) do
-        { :service_enable => true }
+        { service_enable: true }
       end
 
-      it { should contain_service('sendmail').with_enable('true') }
+      it { is_expected.to contain_service('sendmail').with_enable('true') }
     end
 
     context "on #{os} with service_enable => false" do
+      let(:facts) { facts }
       let(:params) do
-        { :service_enable => false }
+        { service_enable: false }
       end
 
-      it { should contain_service('sendmail').with_enable('false') }
+      it { is_expected.to contain_service('sendmail').with_enable('false') }
     end
 
     context "on #{os} with service_name set" do
+      let(:facts) { facts }
       let(:params) do
-        { :service_name => 'sendmoremail' }
+        { service_name: 'sendmoremail' }
       end
 
-      it { should contain_service('sendmail').with_name('sendmoremail') }
+      it { is_expected.to contain_service('sendmail').with_name('sendmoremail') }
     end
 
     context "on #{os} with service_hasstatus => true" do
+      let(:facts) { facts }
       let(:params) do
-        { :service_hasstatus => 'true' }
+        { service_hasstatus: 'true' }
       end
 
-      it { should contain_service('sendmail').with_hasstatus('true') }
+      it { is_expected.to contain_service('sendmail').with_hasstatus('true') }
     end
 
     context "on #{os} with service_hasstatus => false" do
+      let(:facts) { facts }
       let(:params) do
-        { :service_hasstatus => 'false' }
+        { service_hasstatus: 'false' }
       end
 
-      it { should contain_service('sendmail').with_hasstatus('false') }
+      it { is_expected.to contain_service('sendmail').with_hasstatus('false') }
     end
   end
 end

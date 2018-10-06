@@ -1,46 +1,47 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::ostype' do
-  let(:pre_condition) {
-    'include sendmail::service'
-  }
+  on_supported_os.each do |os, facts|
+    let(:facts) { facts }
+    let(:pre_condition) { 'include sendmail::service' }
 
-  context 'on Debian' do
-    let(:title) { 'debian' }
+    context "on #{os}" do
+      case facts[:osfamily]
+      when 'Debian'
+        let(:title) { 'debian' }
 
-    it {
-      should contain_class('sendmail::makeall')
+        it {
+          is_expected.to contain_class('sendmail::makeall')
 
-      should contain_concat__fragment('sendmail_mc-ostype-debian') \
-              .with_content(/^OSTYPE\(`debian'\)dnl$/) \
-              .with_order('05') \
-              .that_notifies('Class[sendmail::makeall]')
-    }
-  end
+          is_expected.to contain_concat__fragment('sendmail_mc-ostype-debian') \
+            .with_content(%r{^OSTYPE\(`debian'\)dnl$}) \
+            .with_order('05') \
+            .that_notifies('Class[sendmail::makeall]')
+        }
+      when 'RedHat'
+        let(:title) { 'linux' }
 
-  context 'on RedHat' do
-    let(:title) { 'linux' }
+        it {
+          is_expected.to contain_class('sendmail::makeall')
 
-    it {
-      should contain_class('sendmail::makeall')
+          is_expected.to contain_concat__fragment('sendmail_mc-ostype-linux') \
+            .with_content(%r{^OSTYPE\(`linux'\)dnl$}) \
+            .with_order('05') \
+            .that_notifies('Class[sendmail::makeall]')
+        }
 
-      should contain_concat__fragment('sendmail_mc-ostype-linux') \
-              .with_content(/^OSTYPE\(`linux'\)dnl$/) \
-              .with_order('05') \
-              .that_notifies('Class[sendmail::makeall]')
-    }
-  end
+      when 'FreeBSD'
+        let(:title) { 'freebsd6' }
 
-  context 'on FreeBSD' do
-    let(:title) { 'freebsd6' }
+        it {
+          is_expected.to contain_class('sendmail::makeall')
 
-    it {
-      should contain_class('sendmail::makeall')
-
-      should contain_concat__fragment('sendmail_mc-ostype-freebsd6') \
-              .with_content(/^OSTYPE\(`freebsd6'\)dnl$/) \
-              .with_order('05') \
-              .that_notifies('Class[sendmail::makeall]')
-    }
+          is_expected.to contain_concat__fragment('sendmail_mc-ostype-freebsd6') \
+            .with_content(%r{^OSTYPE\(`freebsd6'\)dnl$}) \
+            .with_order('05') \
+            .that_notifies('Class[sendmail::makeall]')
+        }
+      end
+    end
   end
 end

@@ -1,21 +1,22 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::ldaproute_domain' do
-  let(:pre_condition) {
-    'include sendmail::service'
-  }
+  on_supported_os.each do |os, facts|
+    let(:facts) { facts }
+    let(:pre_condition) { 'include sendmail::service' }
 
-  context 'with domain example.net' do
-    let(:title) { 'example.net' }
+    context "on #{os} with domain example.net" do
+      let(:title) { 'example.net' }
 
-    it {
-      should contain_class('sendmail::mc::ldap_section')
-      should contain_class('sendmail::makeall')
+      it {
+        is_expected.to contain_class('sendmail::mc::ldap_section')
+        is_expected.to contain_class('sendmail::makeall')
 
-      should contain_concat__fragment('sendmail_mc-ldaproute_domain-example.net') \
-              .with_content(/^LDAPROUTE_DOMAIN\(`example.net'\)dnl$/) \
-              .with_order('19') \
-              .that_notifies('Class[sendmail::makeall]')
-    }
+        is_expected.to contain_concat__fragment('sendmail_mc-ldaproute_domain-example.net') \
+          .with_content(%r{^LDAPROUTE_DOMAIN\(`example.net'\)dnl$}) \
+          .with_order('19') \
+          .that_notifies('Class[sendmail::makeall]')
+      }
+    end
   end
 end

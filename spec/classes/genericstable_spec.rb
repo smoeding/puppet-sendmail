@@ -1,89 +1,95 @@
 require 'spec_helper'
 
 describe 'sendmail::genericstable' do
-  let(:pre_condition) {
-    'include sendmail::service'
-  }
+  let(:pre_condition) { 'include sendmail::service' }
 
-  it { should contain_class('sendmail::genericstable') }
+  on_supported_os.each do |os, facts|
+    context "on #{os} with content => foo" do
+      let(:facts) { facts }
+      let(:params) do
+        { content: 'foo' }
+      end
 
-  context 'with content => foo' do
-    let(:params) do
-      { :content => 'foo' }
-    end
-
-    it {
-      should contain_class('sendmail::genericstable::file').with(
-               'content' => 'foo',
-               'source'  => nil,
-             )
-    }
-  end
-
-  context 'with source => foo' do
-    let(:params) do
-      { :source => 'foo' }
-    end
-
-    it {
-      should contain_class('sendmail::genericstable::file').with(
-               'content' => nil,
-               'source'  => 'foo',
-             )
-    }
-  end
-
-  context 'with source and content set' do
-    let(:params) do
-      { :source => 'foo', :content => 'foo' }
-    end
-
-    it { expect { should compile }.to raise_error(/cannot specify more than/) }
-  end
-
-  context 'with source and entries set' do
-    let(:params) do
-      {
-        :source  => 'foo',
-        :entries => { 'user@example.com' => { 'value' => 'user@example.org' } }
+      it {
+        is_expected.to contain_class('sendmail::genericstable')
+        is_expected.to contain_class('sendmail::genericstable::file') \
+          .with_content('foo') \
+          .with_source(nil)
       }
     end
 
-    it { expect { should compile }.to raise_error(/cannot specify more than/) }
-  end
+    context "on #{os} with source => foo" do
+      let(:facts) { facts }
+      let(:params) do
+        { source: 'foo' }
+      end
 
-  context 'with content and entries set' do
-    let(:params) do
-      {
-        :content => 'foo',
-        :entries => { 'user@example.com' => { 'value' => 'user@example.org' } }
+      it {
+        is_expected.to contain_class('sendmail::genericstable')
+        is_expected.to contain_class('sendmail::genericstable::file') \
+          .with_content(nil) \
+          .with_source('foo')
       }
     end
 
-    it { expect { should compile }.to raise_error(/cannot specify more than/) }
-  end
+    context "on #{os} with source and content set" do
+      let(:facts) { facts }
+      let(:params) do
+        { source: 'foo', content: 'foo' }
+      end
 
-  context 'with valid parameter hash' do
-    let(:params) do
-      { :entries => { 'user@example.com' => { 'value' => 'user@example.org' } } }
+      it { is_expected.to compile.and_raise_error(%r{cannot specify more than}) }
     end
 
-    it { should contain_sendmail__genericstable__entry('user@example.com') }
-  end
+    context "on #{os} with source and entries set" do
+      let(:facts) { facts }
+      let(:params) do
+        {
+          source:  'foo',
+          entries: { 'user@example.com' => { 'value' => 'user@example.org' } },
+        }
+      end
 
-  context 'with empty parameter hash' do
-    let(:params) do
-      { :entries => { } }
+      it { is_expected.to compile.and_raise_error(%r{cannot specify more than}) }
     end
 
-    it { expect { should compile } }
-  end
+    context "on #{os} with content and entries set" do
+      let(:facts) { facts }
+      let(:params) do
+        {
+          content: 'foo',
+          entries: { 'user@example.com' => { 'value' => 'user@example.org' } },
+        }
+      end
 
-  context 'with wrong parameter type' do
-    let(:params) do
-      { :entries => 'example.com' }
+      it { is_expected.to compile.and_raise_error(%r{cannot specify more than}) }
     end
 
-    it { expect { should compile }.to raise_error(/is not a Hash/) }
+    context "on #{os} with valid parameter hash" do
+      let(:facts) { facts }
+      let(:params) do
+        { entries: { 'user@example.com' => { 'value' => 'user@example.org' } } }
+      end
+
+      it { is_expected.to contain_sendmail__genericstable__entry('user@example.com') }
+    end
+
+    context "on #{os} with empty parameter hash" do
+      let(:facts) { facts }
+      let(:params) do
+        { entries: {} }
+      end
+
+      it { is_expected.to compile }
+    end
+
+    context "on #{os} with wrong parameter type" do
+      let(:facts) { facts }
+      let(:params) do
+        { entries: 'example.com' }
+      end
+
+      it { is_expected.to compile.and_raise_error(%r{is not a Hash}) }
+    end
   end
 end

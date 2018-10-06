@@ -72,7 +72,7 @@ class sendmail::submit (
     notify  => [ Class['::sendmail::makeall'], Class['::sendmail::service'], ],
   }
 
-  if ($::osfamily == 'FreeBSD') {
+  if ($::os['family'] == 'FreeBSD') {
     # FreeBSD uses a sendmail.mc file named after the hostname of the
     # machine. Unfortunately Puppet doesn't know, if $::hostname or $::fqdn
     # will be the correct fact to determine the file name that the makefile

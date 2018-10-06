@@ -1,86 +1,85 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::trust_auth_mech' do
-  let(:pre_condition) {
-    'include sendmail::service'
-  }
+  on_supported_os.each do |os, facts|
+    let(:facts) { facts }
+    let(:title) { 'trust_auth_mech' }
+    let(:pre_condition) { 'include sendmail::service' }
 
-  let(:title) { 'trust_auth_mech' }
+    context "on #{os} with resource title only" do
+      it {
+        is_expected.to contain_class('sendmail::mc::macro_section')
+        is_expected.to contain_class('sendmail::makeall')
 
-  context 'with resource title only' do
-    it {
-      should contain_class('sendmail::mc::macro_section')
-      should contain_class('sendmail::makeall')
-
-      should contain_concat__fragment('sendmail_mc-trust_auth_mech') \
-            .with_content(/^TRUST_AUTH_MECH\(`trust_auth_mech'\)dnl$/) \
-            .with_order('45') \
-            .that_notifies('Class[sendmail::makeall]')
-
-    }
-  end
-
-  context 'with title and string argument' do
-    let(:params) do
-      { :trust_auth_mech => 'bar' }
+        is_expected.to contain_concat__fragment('sendmail_mc-trust_auth_mech') \
+          .with_content(%r{^TRUST_AUTH_MECH\(`trust_auth_mech'\)dnl$}) \
+          .with_order('45') \
+          .that_notifies('Class[sendmail::makeall]')
+      }
     end
 
-    it {
-      should contain_class('sendmail::mc::macro_section')
-      should contain_class('sendmail::makeall')
+    context "on #{os} with title and string argument" do
+      let(:params) do
+        { trust_auth_mech: 'bar' }
+      end
 
-      should contain_concat__fragment('sendmail_mc-trust_auth_mech') \
-            .with_content(/^TRUST_AUTH_MECH\(`bar'\)dnl$/) \
-            .with_order('45') \
-            .that_notifies('Class[sendmail::makeall]')
-    }
-  end
+      it {
+        is_expected.to contain_class('sendmail::mc::macro_section')
+        is_expected.to contain_class('sendmail::makeall')
 
-  context 'with title and empty string argument' do
-    let(:params) do
-      { :trust_auth_mech => '' }
+        is_expected.to contain_concat__fragment('sendmail_mc-trust_auth_mech') \
+          .with_content(%r{^TRUST_AUTH_MECH\(`bar'\)dnl$}) \
+          .with_order('45') \
+          .that_notifies('Class[sendmail::makeall]')
+      }
     end
 
-    it {
-      should contain_class('sendmail::mc::macro_section')
-      should contain_class('sendmail::makeall')
+    context "on #{os} with title and empty string argument" do
+      let(:params) do
+        { trust_auth_mech: '' }
+      end
 
-      should contain_concat__fragment('sendmail_mc-trust_auth_mech') \
-            .with_content(/^TRUST_AUTH_MECH\(`'\)dnl$/) \
-            .with_order('45') \
-            .that_notifies('Class[sendmail::makeall]')
-    }
-  end
+      it {
+        is_expected.to contain_class('sendmail::mc::macro_section')
+        is_expected.to contain_class('sendmail::makeall')
 
-  context 'with title and array argument' do
-    let(:params) do
-      { :trust_auth_mech => [ 'bar', 'baz' ] }
+        is_expected.to contain_concat__fragment('sendmail_mc-trust_auth_mech') \
+          .with_content(%r{^TRUST_AUTH_MECH\(`'\)dnl$}) \
+          .with_order('45') \
+          .that_notifies('Class[sendmail::makeall]')
+      }
     end
 
-    it {
-      should contain_class('sendmail::mc::macro_section')
-      should contain_class('sendmail::makeall')
+    context "on #{os} with title and array argument" do
+      let(:params) do
+        { trust_auth_mech: ['bar', 'baz'] }
+      end
 
-      should contain_concat__fragment('sendmail_mc-trust_auth_mech') \
-            .with_content(/^TRUST_AUTH_MECH\(`bar baz'\)dnl$/) \
-            .with_order('45') \
-            .that_notifies('Class[sendmail::makeall]')
-    }
-  end
+      it {
+        is_expected.to contain_class('sendmail::mc::macro_section')
+        is_expected.to contain_class('sendmail::makeall')
 
-  context 'with title and empty array argument' do
-    let(:params) do
-      { :trust_auth_mech => [] }
+        is_expected.to contain_concat__fragment('sendmail_mc-trust_auth_mech') \
+          .with_content(%r{^TRUST_AUTH_MECH\(`bar baz'\)dnl$}) \
+          .with_order('45') \
+          .that_notifies('Class[sendmail::makeall]')
+      }
     end
 
-    it {
-      should contain_class('sendmail::mc::macro_section')
-      should contain_class('sendmail::makeall')
+    context "on #{os} with title and empty array argument" do
+      let(:params) do
+        { trust_auth_mech: [] }
+      end
 
-      should contain_concat__fragment('sendmail_mc-trust_auth_mech') \
-            .with_content(/^TRUST_AUTH_MECH\(`'\)dnl$/) \
-            .with_order('45') \
-            .that_notifies('Class[sendmail::makeall]')
-    }
+      it {
+        is_expected.to contain_class('sendmail::mc::macro_section')
+        is_expected.to contain_class('sendmail::makeall')
+
+        is_expected.to contain_concat__fragment('sendmail_mc-trust_auth_mech') \
+          .with_content(%r{^TRUST_AUTH_MECH\(`'\)dnl$}) \
+          .with_order('45') \
+          .that_notifies('Class[sendmail::makeall]')
+      }
+    end
   end
 end

@@ -1,11 +1,16 @@
 require 'spec_helper'
 
 describe 'sendmail::aliases::newaliases' do
-  it {
-    should contain_class('sendmail::params')
-    should contain_exec('sendmail::aliases::newaliases').with(
-             'command'     => '/usr/sbin/sendmail -bi',
-             'refreshonly' => 'true',
-           )
-  }
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) { facts }
+
+      it {
+        is_expected.to contain_class('sendmail::params')
+        is_expected.to contain_exec('sendmail::aliases::newaliases') \
+          .with_command('/usr/sbin/sendmail -bi') \
+          .with_refreshonly('true')
+      }
+    end
+  end
 end

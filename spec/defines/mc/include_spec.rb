@@ -1,37 +1,38 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::include' do
-  let(:pre_condition) {
-    'include sendmail::service'
-  }
+  on_supported_os.each do |os, facts|
+    let(:facts) { facts }
+    let(:pre_condition) { 'include sendmail::service' }
 
-  context 'with include file' do
-    let(:title) { '/foo' }
+    context "on #{os} with include file" do
+      let(:title) { '/foo' }
 
-    it {
-      should contain_class('sendmail::makeall')
+      it {
+        is_expected.to contain_class('sendmail::makeall')
 
-      should contain_concat__fragment('sendmail_mc-include-/foo') \
-            .with_content(/^include\(`\/foo'\)dnl$/) \
-            .with_order('59') \
-            .that_notifies('Class[sendmail::makeall]')
-    }
-  end
-
-  context 'with order => xx' do
-    let(:title) { '/foo' }
-
-    let(:params) do
-      { :order => 'xx' }
+        is_expected.to contain_concat__fragment('sendmail_mc-include-/foo') \
+          .with_content(%r{^include\(`\/foo'\)dnl$}) \
+          .with_order('59') \
+          .that_notifies('Class[sendmail::makeall]')
+      }
     end
 
-    it {
-      should contain_class('sendmail::makeall')
+    context "on #{os} with order => xx" do
+      let(:title) { '/foo' }
 
-      should contain_concat__fragment('sendmail_mc-include-/foo') \
-            .with_content(/^include\(`\/foo'\)dnl$/) \
-            .with_order('xx') \
-            .that_notifies('Class[sendmail::makeall]')
-    }
+      let(:params) do
+        { order: 'xx' }
+      end
+
+      it {
+        is_expected.to contain_class('sendmail::makeall')
+
+        is_expected.to contain_concat__fragment('sendmail_mc-include-/foo') \
+          .with_content(%r{^include\(`\/foo'\)dnl$}) \
+          .with_order('xx') \
+          .that_notifies('Class[sendmail::makeall]')
+      }
+    end
   end
 end

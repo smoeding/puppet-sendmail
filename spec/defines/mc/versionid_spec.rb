@@ -1,35 +1,35 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::versionid' do
-  let(:pre_condition) {
-    'include sendmail::service'
-  }
+  on_supported_os.each do |os, facts|
+    let(:facts) { facts }
+    let(:title) { 'foo' }
+    let(:pre_condition) { 'include sendmail::service' }
 
-  let(:title) { 'foo' }
+    context "on #{os} with title only" do
+      it {
+        is_expected.to contain_class('sendmail::makeall')
 
-  context 'with title only' do
-    it {
-      should contain_class('sendmail::makeall')
-
-      should contain_concat__fragment('sendmail_mc-versionid') \
-              .with_content(/^VERSIONID\(`foo'\)dnl$/) \
-              .with_order('01') \
-              .that_notifies('Class[sendmail::makeall]')
-    }
-  end
-
-  context 'with versionid => foo' do
-    let(:params) do
-      { :versionid => 'bar' }
+        is_expected.to contain_concat__fragment('sendmail_mc-versionid') \
+          .with_content(%r{^VERSIONID\(`foo'\)dnl$}) \
+          .with_order('01') \
+          .that_notifies('Class[sendmail::makeall]')
+      }
     end
 
-    it {
-      should contain_class('sendmail::makeall')
+    context "on #{os} with versionid => foo" do
+      let(:params) do
+        { versionid: 'bar' }
+      end
 
-      should contain_concat__fragment('sendmail_mc-versionid') \
-              .with_content(/^VERSIONID\(`bar'\)dnl$/) \
-              .with_order('01') \
-              .that_notifies('Class[sendmail::makeall]')
-    }
+      it {
+        is_expected.to contain_class('sendmail::makeall')
+
+        is_expected.to contain_concat__fragment('sendmail_mc-versionid') \
+          .with_content(%r{^VERSIONID\(`bar'\)dnl$}) \
+          .with_order('01') \
+          .that_notifies('Class[sendmail::makeall]')
+      }
+    end
   end
 end

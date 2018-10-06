@@ -1,213 +1,176 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::milter' do
-  let(:pre_condition) {
-    'include sendmail::service'
-  }
+  on_supported_os.each do |os, facts|
+    let(:facts) { facts }
+    let(:title) { 'greylist' }
+    let(:pre_condition) { 'include sendmail::service' }
 
-  let(:title) { 'greylist' }
-
-  let(:params) do
-    {
-      :socket_type => 'local',
-      :socket_spec => '/old/sock',
-    }
-  end
-
-  context 'with socket_type and socket_spec' do
-    it {
-      should contain_class('sendmail::mc::milter_section')
-      should contain_class('sendmail::makeall')
-
-      should contain_concat__fragment('sendmail_mc-milter-greylist') \
-              .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T')dnl\n") \
-              .with_order('56-00') \
-              .that_notifies('Class[sendmail::makeall]')
-    }
-  end
-
-  context 'with enable => true' do
     let(:params) do
-      super().merge(
-        {
-          :enable => true,
-        }
-      )
+      { socket_type: 'local', socket_spec: '/old/sock' }
     end
 
-    it {
-      should contain_class('sendmail::mc::milter_section')
-      should contain_class('sendmail::makeall')
+    context "on #{os} with socket_type and socket_spec" do
+      it {
+        is_expected.to contain_class('sendmail::mc::milter_section')
+        is_expected.to contain_class('sendmail::makeall')
 
-      should contain_concat__fragment('sendmail_mc-milter-greylist') \
-              .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T')dnl\n") \
-              .with_order('56-00') \
-              .that_notifies('Class[sendmail::makeall]')
-    }
-  end
-
-  context 'with enable => false' do
-    let(:params) do
-      super().merge(
-        {
-          :enable => false,
-        }
-      )
+        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist') \
+          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T')dnl\n") \
+          .with_order('56-00') \
+          .that_notifies('Class[sendmail::makeall]')
+      }
     end
 
-    it {
-      should contain_class('sendmail::mc::milter_section')
-      should contain_class('sendmail::makeall')
+    context "on #{os} with enable => true" do
+      let(:params) do
+        super().merge(enable: true)
+      end
 
-      should contain_concat__fragment('sendmail_mc-milter-greylist') \
-              .with_content("MAIL_FILTER(`greylist', `S=local:/old/sock, F=T')dnl\n") \
-              .with_order('56-00') \
-              .that_notifies('Class[sendmail::makeall]')
-    }
-  end
+      it {
+        is_expected.to contain_class('sendmail::mc::milter_section')
+        is_expected.to contain_class('sendmail::makeall')
 
-  context 'with order => 01' do
-    let(:params) do
-      super().merge(
-        {
-          :order => '01',
-        }
-      )
+        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist') \
+          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T')dnl\n") \
+          .with_order('56-00') \
+          .that_notifies('Class[sendmail::makeall]')
+      }
     end
 
-    it {
-      should contain_class('sendmail::mc::milter_section')
-      should contain_class('sendmail::makeall')
+    context "on #{os} with enable => false" do
+      let(:params) do
+        super().merge(enable: false)
+      end
 
-      should contain_concat__fragment('sendmail_mc-milter-greylist') \
-              .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T')dnl\n") \
-              .with_order('56-01') \
-              .that_notifies('Class[sendmail::makeall]')
-    }
-  end
+      it {
+        is_expected.to contain_class('sendmail::mc::milter_section')
+        is_expected.to contain_class('sendmail::makeall')
 
-  context 'with send_timeout' do
-    let(:params) do
-      super().merge(
-        {
-          :send_timeout => '2m',
-        }
-      )
+        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist') \
+          .with_content("MAIL_FILTER(`greylist', `S=local:/old/sock, F=T')dnl\n") \
+          .with_order('56-00') \
+          .that_notifies('Class[sendmail::makeall]')
+      }
     end
 
-    it {
-      should contain_class('sendmail::mc::milter_section')
-      should contain_class('sendmail::makeall')
+    context "on #{os} with order => 01" do
+      let(:params) do
+        super().merge(order: '01')
+      end
 
-      should contain_concat__fragment('sendmail_mc-milter-greylist') \
-              .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T, T=S:2m')dnl\n") \
-              .with_order('56-00') \
-              .that_notifies('Class[sendmail::makeall]')
-    }
-  end
+      it {
+        is_expected.to contain_class('sendmail::mc::milter_section')
+        is_expected.to contain_class('sendmail::makeall')
 
-  context 'with receive_timeout' do
-    let(:params) do
-      super().merge(
-        {
-          :receive_timeout => '3m',
-        }
-      )
+        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist') \
+          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T')dnl\n") \
+          .with_order('56-01') \
+          .that_notifies('Class[sendmail::makeall]')
+      }
     end
 
-    it {
-      should contain_class('sendmail::mc::milter_section')
-      should contain_class('sendmail::makeall')
+    context "on #{os} with send_timeout" do
+      let(:params) do
+        super().merge(send_timeout: '2m')
+      end
 
-      should contain_concat__fragment('sendmail_mc-milter-greylist') \
-              .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T, T=R:3m')dnl\n") \
-              .with_order('56-00') \
-              .that_notifies('Class[sendmail::makeall]')
-    }
-  end
+      it {
+        is_expected.to contain_class('sendmail::mc::milter_section')
+        is_expected.to contain_class('sendmail::makeall')
 
-  context 'with eom_timeout' do
-    let(:params) do
-      super().merge(
-        {
-          :eom_timeout => '5m',
-        }
-      )
+        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist') \
+          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T, T=S:2m')dnl\n") \
+          .with_order('56-00') \
+          .that_notifies('Class[sendmail::makeall]')
+      }
     end
 
-    it {
-      should contain_class('sendmail::mc::milter_section')
-      should contain_class('sendmail::makeall')
+    context "on #{os} with receive_timeout" do
+      let(:params) do
+        super().merge(receive_timeout: '3m')
+      end
 
-      should contain_concat__fragment('sendmail_mc-milter-greylist') \
-              .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T, T=E:5m')dnl\n") \
-              .with_order('56-00') \
-              .that_notifies('Class[sendmail::makeall]')
-    }
-  end
+      it {
+        is_expected.to contain_class('sendmail::mc::milter_section')
+        is_expected.to contain_class('sendmail::makeall')
 
-  context 'with connect_timeout' do
-    let(:params) do
-      super().merge(
-        {
-          :connect_timeout => '7m',
-        }
-      )
+        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist') \
+          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T, T=R:3m')dnl\n") \
+          .with_order('56-00') \
+          .that_notifies('Class[sendmail::makeall]')
+      }
     end
 
-    it {
-      should contain_class('sendmail::mc::milter_section')
-      should contain_class('sendmail::makeall')
+    context "on #{os} with eom_timeout" do
+      let(:params) do
+        super().merge(eom_timeout: '5m')
+      end
 
-      should contain_concat__fragment('sendmail_mc-milter-greylist') \
-              .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T, T=C:7m')dnl\n") \
-              .with_order('56-00') \
-              .that_notifies('Class[sendmail::makeall]')
-    }
-  end
+      it {
+        is_expected.to contain_class('sendmail::mc::milter_section')
+        is_expected.to contain_class('sendmail::makeall')
 
-  context 'with all timeouts' do
-    let(:params) do
-      super().merge(
-        {
-          :send_timeout    => '2m',
-          :receive_timeout => '3m',
-          :eom_timeout     => '5m',
-          :connect_timeout => '7m',
-        }
-      )
+        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist') \
+          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T, T=E:5m')dnl\n") \
+          .with_order('56-00') \
+          .that_notifies('Class[sendmail::makeall]')
+      }
     end
 
-    it {
-      should contain_class('sendmail::mc::milter_section')
-      should contain_class('sendmail::makeall')
+    context "on #{os} with connect_timeout" do
+      let(:params) do
+        super().merge(connect_timeout: '7m')
+      end
 
-      should contain_concat__fragment('sendmail_mc-milter-greylist') \
-              .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T, T=S:2m;R:3m;E:5m;C:7m')dnl\n") \
-              .with_order('56-00') \
-              .that_notifies('Class[sendmail::makeall]')
-    }
-  end
+      it {
+        is_expected.to contain_class('sendmail::mc::milter_section')
+        is_expected.to contain_class('sendmail::makeall')
 
-  [ 'R', 'T', '4', '' ].each do |flag|
-    context "with flags => #{flag}" do
+        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist') \
+          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T, T=C:7m')dnl\n") \
+          .with_order('56-00') \
+          .that_notifies('Class[sendmail::makeall]')
+      }
+    end
+
+    context "on #{os} with all timeouts" do
       let(:params) do
         super().merge(
-          {
-            :flags => flag,
-          }
+          send_timeout:    '2m',
+          receive_timeout: '3m',
+          eom_timeout:     '5m',
+          connect_timeout: '7m',
         )
       end
 
       it {
-        should contain_class('sendmail::mc::milter_section')
-        should contain_class('sendmail::makeall')
+        is_expected.to contain_class('sendmail::mc::milter_section')
+        is_expected.to contain_class('sendmail::makeall')
 
-        should contain_concat__fragment('sendmail_mc-milter-greylist') \
-                 .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=#{flag}')dnl\n") \
-                 .with_order('56-00') \
-                 .that_notifies('Class[sendmail::makeall]')
+        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist') \
+          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T, T=S:2m;R:3m;E:5m;C:7m')dnl\n") \
+          .with_order('56-00') \
+          .that_notifies('Class[sendmail::makeall]')
       }
+    end
+
+    ['R', 'T', '4', ''].each do |flag|
+      context "on #{os} with flags => #{flag}" do
+        let(:params) do
+          super().merge(flags: flag)
+        end
+
+        it {
+          is_expected.to contain_class('sendmail::mc::milter_section')
+          is_expected.to contain_class('sendmail::makeall')
+
+          is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist') \
+            .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=#{flag}')dnl\n") \
+            .with_order('56-00') \
+            .that_notifies('Class[sendmail::makeall]')
+        }
+      end
     end
   end
 end

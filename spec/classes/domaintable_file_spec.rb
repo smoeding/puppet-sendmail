@@ -1,11 +1,7 @@
 require 'spec_helper'
 
 describe 'sendmail::domaintable::file' do
-  let(:pre_condition) {
-    'include sendmail::service'
-  }
-
-  it { should contain_class('sendmail::domaintable::file') }
+  let(:pre_condition) { 'include sendmail::service' }
 
   on_supported_os.each do |os, facts|
     context "on #{os} with default parameters" do
@@ -14,65 +10,70 @@ describe 'sendmail::domaintable::file' do
       case facts[:osfamily]
       when 'Debian'
         it {
-          should contain_file('/etc/mail/domaintable').with(
-                   'ensure'  => 'file',
-                   'owner'   => 'smmta',
-                   'group'   => 'smmsp',
-                   'mode'    => '0640',
-                   'content' => nil,
-                   'source'  => nil,
-                 ).that_notifies('Class[sendmail::makeall]')
+          is_expected.to contain_class('sendmail::domaintable::file')
+          is_expected.to contain_file('/etc/mail/domaintable') \
+            .with_ensure('file') \
+            .with_owner('smmta') \
+            .with_group('smmsp') \
+            .with_mode('0640') \
+            .with_content(nil) \
+            .with_source(nil) \
+            .that_notifies('Class[sendmail::makeall]')
         }
       when 'RedHat'
         it {
-          should contain_file('/etc/mail/domaintable').with(
-                   'ensure'  => 'file',
-                   'owner'   => 'root',
-                   'group'   => 'root',
-                   'mode'    => '0640',
-                   'content' => nil,
-                   'source'  => nil,
-                 ).that_notifies('Class[sendmail::makeall]')
+          is_expected.to contain_class('sendmail::domaintable::file')
+          is_expected.to contain_file('/etc/mail/domaintable') \
+            .with_ensure('file') \
+            .with_owner('root') \
+            .with_group('root') \
+            .with_mode('0640') \
+            .with_content(nil) \
+            .with_source(nil) \
+            .that_notifies('Class[sendmail::makeall]')
         }
       when 'FreeBSD'
         it {
-          should contain_file('/etc/mail/domaintable').with(
-                   'ensure'  => 'file',
-                   'owner'   => 'root',
-                   'group'   => 'wheel',
-                   'mode'    => '0640',
-                   'content' => nil,
-                   'source'  => nil,
-                 ).that_notifies('Class[sendmail::makeall]')
+          is_expected.to contain_class('sendmail::domaintable::file')
+          is_expected.to contain_file('/etc/mail/domaintable') \
+            .with_ensure('file') \
+            .with_owner('root') \
+            .with_group('wheel') \
+            .with_mode('0640') \
+            .with_content(nil) \
+            .with_source(nil) \
+            .that_notifies('Class[sendmail::makeall]')
         }
       end
     end
 
     context "on #{os} with content => foo" do
+      let(:facts) { facts }
       let(:params) do
-        { :content => 'foo' }
+        { content: 'foo' }
       end
 
       it {
-        should contain_file('/etc/mail/domaintable').with(
-                 'ensure'  => 'file',
-                 'content' => 'foo',
-                 'source'  => nil,
-               ).that_notifies('Class[sendmail::makeall]')
+        is_expected.to contain_file('/etc/mail/domaintable') \
+          .with_ensure('file') \
+          .with_content('foo') \
+          .with_source(nil) \
+          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
     context "on #{os} with source => foo" do
+      let(:facts) { facts }
       let(:params) do
-        { :source => 'foo' }
+        { source: 'foo' }
       end
 
       it {
-        should contain_file('/etc/mail/domaintable').with(
-                 'ensure'  => 'file',
-                 'content' => nil,
-                 'source'  => 'foo',
-               ).that_notifies('Class[sendmail::makeall]')
+        is_expected.to contain_file('/etc/mail/domaintable') \
+          .with_ensure('file') \
+          .with_content(nil) \
+          .with_source('foo') \
+          .that_notifies('Class[sendmail::makeall]')
       }
     end
   end

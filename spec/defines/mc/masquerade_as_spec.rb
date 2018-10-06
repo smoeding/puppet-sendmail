@@ -1,52 +1,52 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::masquerade_as' do
-  let(:pre_condition) {
-    'include sendmail::service'
-  }
+  on_supported_os.each do |os, facts|
+    let(:facts) { facts }
+    let(:title) { 'example.com' }
+    let(:pre_condition) { 'include sendmail::service' }
 
-  let(:title) { 'example.com' }
+    context "on #{os} with title => 'example.com'" do
+      it {
+        is_expected.to contain_class('sendmail::makeall')
 
-  context 'example.com' do
-    it {
-      should contain_class('sendmail::makeall')
-
-      should contain_concat__fragment('sendmail_mc-masquerade') \
-              .with_content(/^MASQUERADE_AS\(`example.com'\)dnl$/) \
-              .without_content(/^FEATURE/) \
-              .without_content(/^MASQUERADE_DOMAIN/) \
-              .without_content(/^MASQUERADE_EXCEPTION/) \
-              .without_content(/^EXPOSED_USER/) \
-              .with_order('30') \
-              .that_notifies('Class[sendmail::makeall]')
-    }
-  end
-
-  context "with masquerade_domain => [ 'example.net', 'example.org' ]" do
-    let(:params) do
-      { :masquerade_domain => [ 'example.net', 'example.org' ] }
+        is_expected.to contain_concat__fragment('sendmail_mc-masquerade') \
+          .with_content(%r{^MASQUERADE_AS\(`example.com'\)dnl$}) \
+          .without_content(%r{^FEATURE}) \
+          .without_content(%r{^MASQUERADE_DOMAIN}) \
+          .without_content(%r{^MASQUERADE_EXCEPTION}) \
+          .without_content(%r{^EXPOSED_USER}) \
+          .with_order('30') \
+          .that_notifies('Class[sendmail::makeall]')
+      }
     end
 
-    it {
-      should contain_class('sendmail::makeall')
+    context "on #{os} with masquerade_domain => [ 'example.net', 'example.org' ]" do
+      let(:params) do
+        { masquerade_domain: ['example.net', 'example.org'] }
+      end
 
-      should contain_concat__fragment('sendmail_mc-masquerade') \
-              .with_content(/^MASQUERADE_DOMAIN\(`example.net example.org'\)dnl$/) \
-              .without_content(/^MASQUERADE_DOMAIN_FILE/)
-    }
-  end
+      it {
+        is_expected.to contain_class('sendmail::makeall')
 
-  context "with masquerade_domain_file => /foo/bar" do
-    let(:params) do
-      { :masquerade_domain_file => '/foo/bar' }
+        is_expected.to contain_concat__fragment('sendmail_mc-masquerade') \
+          .with_content(%r{^MASQUERADE_DOMAIN\(`example.net example.org'\)dnl$}) \
+          .without_content(%r{^MASQUERADE_DOMAIN_FILE})
+      }
     end
 
-    it {
-      should contain_class('sendmail::makeall')
+    context "on #{os} with masquerade_domain_file => /foo/bar" do
+      let(:params) do
+        { masquerade_domain_file: '/foo/bar' }
+      end
 
-      should contain_concat__fragment('sendmail_mc-masquerade') \
-              .with_content(/^MASQUERADE_DOMAIN_FILE\(`\/foo\/bar'\)dnl$/) \
-              .without_content(/^MASQUERADE_DOMAIN\(/)
-    }
+      it {
+        is_expected.to contain_class('sendmail::makeall')
+
+        is_expected.to contain_concat__fragment('sendmail_mc-masquerade') \
+          .with_content(%r{^MASQUERADE_DOMAIN_FILE\(`\/foo\/bar'\)dnl$}) \
+          .without_content(%r{^MASQUERADE_DOMAIN\(})
+      }
+    end
   end
 end

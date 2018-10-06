@@ -13,7 +13,7 @@
 
 Facter.add(:sendmail_version) do
   setcode do
-    opt = { :on_fail => nil, :timeout => 30 }
+    opt = { on_fail: nil, timeout: 30 }
     cmd = 'sendmail -d0.1 -OLogLevel=0 -ODontProbeInterfaces=true -bv mowoc6ji5'
 
     begin
@@ -25,8 +25,8 @@ Facter.add(:sendmail_version) do
         nil
       else
         version = Facter::Core::Execution.execute(cmd, opt)
-        if version =~ /^Version ([0-9.]+).*$/
-          $1
+        if version =~ %r{^Version ([0-9.]+).*$}
+          Regexp.last_match(1)
         else
           nil
         end

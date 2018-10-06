@@ -43,7 +43,7 @@ class sendmail::params {
 
   $mailers = [ 'smtp', 'local' ]
 
-  case $::osfamily {
+  case $::os['family'] {
 
     'Debian': {
       $package_manage = true
@@ -108,7 +108,7 @@ class sendmail::params {
     }
 
     default: {
-      fail("Unsupported osfamily ${::osfamily}")
+      fail("Unsupported osfamily ${::os[family]}")
     }
   }
 }

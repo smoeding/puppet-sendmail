@@ -1,63 +1,63 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::enhdnsbl' do
-  let(:pre_condition) {
-    'include sendmail::service'
-  }
+  on_supported_os.each do |os, facts|
+    let(:facts) { facts }
+    let(:title) { 'bl.example.com' }
+    let(:pre_condition) { 'include sendmail::service' }
 
-  let(:title) { 'bl.example.com' }
+    context "on #{os} with defaults" do
+      it {
+        is_expected.to contain_class('sendmail::mc::enhdnsbl_section')
+        is_expected.to contain_class('sendmail::makeall')
 
-  context 'with defaults' do
-    it {
-      should contain_class('sendmail::mc::enhdnsbl_section')
-      should contain_class('sendmail::makeall')
-
-      should contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com') \
-              .with_content(/^FEATURE\(`enhdnsbl', `bl.example.com'\)dnl$/) \
-              .with_order('51') \
-              .that_notifies('Class[sendmail::makeall]')
-   }
-  end
-
-  context 'with reject_message => foo' do
-    let(:params) do
-      { :reject_message => 'foo' }
+        is_expected.to contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com') \
+          .with_content(%r{^FEATURE\(`enhdnsbl', `bl.example.com'\)dnl$}) \
+          .with_order('51') \
+          .that_notifies('Class[sendmail::makeall]')
+      }
     end
 
-    it {
-      should contain_class('sendmail::mc::enhdnsbl_section')
-      should contain_class('sendmail::makeall')
+    context "on #{os} with reject_message => foo" do
+      let(:params) do
+        { reject_message: 'foo' }
+      end
 
-      should contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com') \
-              .with_content(/`bl.example.com', `foo'\)dnl$/)
-    }
-  end
+      it {
+        is_expected.to contain_class('sendmail::mc::enhdnsbl_section')
+        is_expected.to contain_class('sendmail::makeall')
 
-  context 'with allow_temporary_failure => true' do
-    let(:params) do
-      { :allow_temporary_failure => true }
+        is_expected.to contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com') \
+          .with_content(%r{`bl.example.com', `foo'\)dnl$})
+      }
     end
 
-    it {
-      should contain_class('sendmail::mc::enhdnsbl_section')
-      should contain_class('sendmail::makeall')
+    context "on #{os} with allow_temporary_failure => true" do
+      let(:params) do
+        { allow_temporary_failure: true }
+      end
 
-      should contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com') \
-              .with_content(/`bl.example.com', , `t'\)dnl$/)
-    }
-  end
+      it {
+        is_expected.to contain_class('sendmail::mc::enhdnsbl_section')
+        is_expected.to contain_class('sendmail::makeall')
 
-  context 'with lookup_result => foo' do
-    let(:params) do
-      { :lookup_result => 'foo' }
+        is_expected.to contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com') \
+          .with_content(%r{`bl.example.com', , `t'\)dnl$})
+      }
     end
 
-    it {
-      should contain_class('sendmail::mc::enhdnsbl_section')
-      should contain_class('sendmail::makeall')
+    context "on #{os} with lookup_result => foo" do
+      let(:params) do
+        { lookup_result: 'foo' }
+      end
 
-      should contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com') \
-              .with_content(/`bl.example.com', , , `foo'\)dnl$/)
-    }
+      it {
+        is_expected.to contain_class('sendmail::mc::enhdnsbl_section')
+        is_expected.to contain_class('sendmail::makeall')
+
+        is_expected.to contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com') \
+          .with_content(%r{`bl.example.com', , , `foo'\)dnl$})
+      }
+    end
   end
 end

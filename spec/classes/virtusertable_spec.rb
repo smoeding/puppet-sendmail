@@ -1,89 +1,102 @@
 require 'spec_helper'
 
 describe 'sendmail::virtusertable' do
-  let(:pre_condition) {
-    'include sendmail::service'
-  }
+  on_supported_os.each do |os, facts|
+    let(:facts) { facts }
+    let(:pre_condition) { 'include sendmail::service' }
 
-  it { should contain_class('sendmail::virtusertable') }
+    context "on #{os} with content => foo" do
+      let(:params) do
+        { content: 'foo' }
+      end
 
-  context 'with content => foo' do
-    let(:params) do
-      { :content => 'foo' }
-    end
-
-    it {
-      should contain_class('sendmail::virtusertable::file').with(
-               'content' => 'foo',
-               'source'  => nil,
-             )
-    }
-  end
-
-  context 'with source => foo' do
-    let(:params) do
-      { :source => 'foo' }
-    end
-
-    it {
-      should contain_class('sendmail::virtusertable::file').with(
-               'content' => nil,
-               'source'  => 'foo',
-             )
-    }
-  end
-
-  context 'with source and content set' do
-    let(:params) do
-      { :source => 'foo', :content => 'foo' }
-    end
-
-    it { expect { should compile }.to raise_error(/cannot specify more than/) }
-  end
-
-  context 'with source and entries set' do
-    let(:params) do
-      {
-        :source  => 'foo',
-        :entries => { 'info@example.com' => { 'value' => 'fred' } }
+      it {
+        is_expected.to contain_class('sendmail::virtusertable')
+        is_expected.to contain_class('sendmail::virtusertable::file').with(
+          'content' => 'foo',
+          'source'  => nil,
+        )
       }
     end
 
-    it { expect { should compile }.to raise_error(/cannot specify more than/) }
-  end
+    context "on #{os} with source => foo" do
+      let(:params) do
+        { source: 'foo' }
+      end
 
-  context 'with content and entries set' do
-    let(:params) do
-      {
-        :content => 'foo',
-        :entries => { 'info@example.com' => { 'value' => 'fred' } }
+      it {
+        is_expected.to contain_class('sendmail::virtusertable')
+        is_expected.to contain_class('sendmail::virtusertable::file').with(
+          'content' => nil,
+          'source'  => 'foo',
+        )
       }
     end
 
-    it { expect { should compile }.to raise_error(/cannot specify more than/) }
-  end
+    context "on #{os} with source and content set" do
+      let(:params) do
+        { source: 'foo', content: 'foo' }
+      end
 
-  context 'with valid parameter hash' do
-    let(:params) do
-      { :entries => { 'info@example.com' => { 'value' => 'fred' } } }
+      it {
+        is_expected.to compile.and_raise_error(%r{cannot specify more than})
+      }
     end
 
-    it { should contain_sendmail__virtusertable__entry('info@example.com') }
-  end
+    context "on #{os} with source and entries set" do
+      let(:params) do
+        {
+          source:  'foo',
+          entries: { 'info@example.com' => { 'value' => 'fred' } },
+        }
+      end
 
-  context 'with empty parameter hash' do
-    let(:params) do
-      { :entries => { } }
+      it {
+        is_expected.to compile.and_raise_error(%r{cannot specify more than})
+      }
     end
 
-    it { expect { should compile } }
-  end
+    context "on #{os} with content and entries set" do
+      let(:params) do
+        {
+          content: 'foo',
+          entries: { 'info@example.com' => { 'value' => 'fred' } },
+        }
+      end
 
-  context 'with wrong parameter type' do
-    let(:params) do
-      { :entries => 'example.com' }
+      it {
+        is_expected.to compile.and_raise_error(%r{cannot specify more than})
+      }
     end
 
-    it { expect { should compile }.to raise_error(/is not a Hash/) }
+    context "on #{os} with valid parameter hash" do
+      let(:params) do
+        { entries: { 'info@example.com' => { 'value' => 'fred' } } }
+      end
+
+      it {
+        is_expected.to contain_sendmail__virtusertable__entry('info@example.com')
+      }
+    end
+
+    context "on #{os} with empty parameter hash" do
+      let(:params) do
+        { entries: {} }
+      end
+
+      it {
+        is_expected.to compile
+      }
+    end
+
+    context "on #{os} with wrong parameter type" do
+      let(:params) do
+        { entries: 'example.com' }
+      end
+
+      it {
+        is_expected.to compile.and_raise_error(%r{is not a Hash})
+      }
+    end
   end
 end

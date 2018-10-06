@@ -1,47 +1,47 @@
 require 'spec_helper'
 
 describe 'sendmail::aliases::entry' do
-  let(:title) { 'fred' }
+  on_supported_os.each do |os, facts|
+    let(:facts) { facts }
+    let(:title) { 'fred' }
 
-  context 'with recipient' do
-    let(:params) do
-      { :recipient => 'fred@example.org' }
+    context 'on #{os} with recipient' do
+      let(:params) do
+        { recipient: 'fred@example.org' }
+      end
+
+      it {
+        is_expected.to contain_class('sendmail::params')
+        is_expected.to contain_class('sendmail::aliases::file')
+        is_expected.to contain_class('sendmail::aliases::newaliases')
+        is_expected.to contain_mailalias('fred') \
+          .that_requires('Class[sendmail::aliases::file]') \
+          .that_notifies('Class[sendmail::aliases::newaliases]')
+
+        is_expected.to contain_mailalias('fred') \
+          .with_ensure('present') \
+          .with_recipient('fred@example.org')
+      }
     end
 
-    it {
-      should contain_class('sendmail::params')
-      should contain_class('sendmail::aliases::file')
-      should contain_class('sendmail::aliases::newaliases')
-      should contain_mailalias('fred') \
-              .that_requires('Class[sendmail::aliases::file]') \
-              .that_notifies('Class[sendmail::aliases::newaliases]')
+    context "on #{os} with ensure => absent" do
+      let(:params) do
+        { recipient: 'fred@example.org', ensure: 'absent' }
+      end
 
-      should contain_mailalias('fred').with(
-               'ensure'    => 'present',
-               'recipient' => 'fred@example.org',
-             )
-    }
-  end
-
-  context 'with ensure => absent' do
-    let(:params) do
-      { :recipient => 'fred@example.org', :ensure => 'absent' }
+      it {
+        is_expected.to contain_mailalias('fred').with_ensure('absent')
+      }
     end
 
-    it {
-      should contain_mailalias('fred').with_ensure('absent')
-    }
-  end
+    context "on #{os} without recipient" do
+      let(:params) do
+        { ensure: 'present' }
+      end
 
-  context 'without recipient' do
-    let(:params) do
-      { :ensure => 'present' }
+      it {
+        is_expected.to compile.and_raise_error(%r{recipient must be set when creating})
+      }
     end
-
-    it {
-      expect {
-        should compile
-      }.to raise_error(/recipient must be set when creating/)
-    }
   end
 end

@@ -1,16 +1,16 @@
 require 'spec_helper'
 
 describe Facter::Util::Fact do
-  before {
+  before :each do
     Facter.clear
-  }
+  end
 
   describe 'sendmail_version' do
     excmd = 'exim -bV'
     pfcmd = 'postconf -h mail_version'
     smcmd = 'sendmail -d0.1 -OLogLevel=0 -ODontProbeInterfaces=true -bv mowoc6ji5'
 
-    options = { :on_fail => nil, :timeout => 30 }
+    options = { on_fail: nil, timeout: 30 }
 
     context 'with standard version number' do
       output = <<-END
@@ -35,14 +35,34 @@ Notice: -bv may give misleading output for non-privileged user
       END
 
       before :each do
-        Facter::Core::Execution.stubs(:which).with('exim').returns(nil)
-        Facter::Core::Execution.stubs(:which).with('postfix').returns(nil)
-        Facter::Core::Execution.stubs(:which).with('sendmail').returns('/usr/sbin/sendmail')
-        Facter::Core::Execution.stubs(:execute).with(excmd, options) \
+        Facter::Core::Execution
+          .stubs(:which)
+          .with('exim')
           .returns(nil)
-        Facter::Core::Execution.stubs(:execute).with(pfcmd, options) \
+
+        Facter::Core::Execution
+          .stubs(:which)
+          .with('postfix')
           .returns(nil)
-        Facter::Core::Execution.stubs(:execute).with(smcmd, options) \
+
+        Facter::Core::Execution
+          .stubs(:which)
+          .with('sendmail')
+          .returns('/usr/sbin/sendmail')
+
+        Facter::Core::Execution
+          .stubs(:execute)
+          .with(excmd, options)
+          .returns(nil)
+
+        Facter::Core::Execution
+          .stubs(:execute)
+          .with(pfcmd, options)
+          .returns(nil)
+
+        Facter::Core::Execution
+          .stubs(:execute)
+          .with(smcmd, options)
           .returns(output)
       end
       it {
@@ -73,14 +93,34 @@ Notice: -bv may give misleading output for non-privileged user
       END
 
       before :each do
-        Facter::Core::Execution.stubs(:which).with('exim').returns(nil)
-        Facter::Core::Execution.stubs(:which).with('postfix').returns(nil)
-        Facter::Core::Execution.stubs(:which).with('sendmail').returns('/usr/sbin/sendmail')
-        Facter::Core::Execution.stubs(:execute).with(excmd, options) \
+        Facter::Core::Execution
+          .stubs(:which)
+          .with('exim')
           .returns(nil)
-        Facter::Core::Execution.stubs(:execute).with(pfcmd, options) \
+
+        Facter::Core::Execution
+          .stubs(:which)
+          .with('postfix')
           .returns(nil)
-        Facter::Core::Execution.stubs(:execute).with(smcmd, options) \
+
+        Facter::Core::Execution
+          .stubs(:which)
+          .with('sendmail')
+          .returns('/usr/sbin/sendmail')
+
+        Facter::Core::Execution
+          .stubs(:execute)
+          .with(excmd, options)
+          .returns(nil)
+
+        Facter::Core::Execution
+          .stubs(:execute)
+          .with(pfcmd, options)
+          .returns(nil)
+
+        Facter::Core::Execution
+          .stubs(:execute)
+          .with(smcmd, options)
           .returns(output)
       end
       it {
@@ -92,14 +132,34 @@ Notice: -bv may give misleading output for non-privileged user
       output = "Dummymail Version 3.14-alpha\n"
 
       before :each do
-        Facter::Core::Execution.stubs(:which).with('exim').returns(nil)
-        Facter::Core::Execution.stubs(:which).with('postfix').returns(nil)
-        Facter::Core::Execution.stubs(:which).with('sendmail').returns('/usr/sbin/sendmail')
-        Facter::Core::Execution.stubs(:execute).with(excmd, options) \
+        Facter::Core::Execution
+          .stubs(:which)
+          .with('exim')
           .returns(nil)
-        Facter::Core::Execution.stubs(:execute).with(pfcmd, options) \
+
+        Facter::Core::Execution
+          .stubs(:which)
+          .with('postfix')
           .returns(nil)
-        Facter::Core::Execution.stubs(:execute).with(smcmd, options) \
+
+        Facter::Core::Execution
+          .stubs(:which)
+          .with('sendmail')
+          .returns('/usr/sbin/sendmail')
+
+        Facter::Core::Execution
+          .stubs(:execute)
+          .with(excmd, options)
+          .returns(nil)
+
+        Facter::Core::Execution
+          .stubs(:execute)
+          .with(pfcmd, options)
+          .returns(nil)
+
+        Facter::Core::Execution
+          .stubs(:execute)
+          .with(smcmd, options)
           .returns(output)
       end
       it {
@@ -111,14 +171,31 @@ Notice: -bv may give misleading output for non-privileged user
       output = nil
 
       before :each do
-        Facter::Core::Execution.stubs(:which).with('exim').returns(nil)
-        Facter::Core::Execution.stubs(:which).with('postfix').returns(nil)
-        Facter::Core::Execution.stubs(:which).with('sendmail').returns(nil)
-        Facter::Core::Execution.stubs(:execute).with(excmd, options) \
+        Facter::Core::Execution
+          .stubs(:which)
+          .with('exim').returns(nil)
+
+        Facter::Core::Execution
+          .stubs(:which)
+          .with('postfix').returns(nil)
+
+        Facter::Core::Execution
+          .stubs(:which)
+          .with('sendmail').returns(nil)
+
+        Facter::Core::Execution
+          .stubs(:execute)
+          .with(excmd, options) \
           .returns(nil)
-        Facter::Core::Execution.stubs(:execute).with(pfcmd, options) \
+
+        Facter::Core::Execution
+          .stubs(:execute)
+          .with(pfcmd, options) \
           .returns(nil)
-        Facter::Core::Execution.stubs(:execute).with(smcmd, options) \
+
+        Facter::Core::Execution
+          .stubs(:execute)
+          .with(smcmd, options) \
           .returns(output)
       end
       it {
@@ -145,11 +222,26 @@ Configuration file is /etc/exim4/exim4.conf
       END
 
       before :each do
-        Facter::Core::Execution.stubs(:which).with('exim').returns('/usr/sbin/exim')
-        Facter::Core::Execution.stubs(:which).with('postfix').returns(nil)
-        Facter::Core::Execution.stubs(:which).with('sendmail').returns('/usr/sbin/sendmail')
-        Facter::Core::Execution.stubs(:execute).with(excmd, options) \
+        Facter::Core::Execution
+          .stubs(:which)
+          .with('exim')
+          .returns('/usr/sbin/exim')
+
+        Facter::Core::Execution
+          .stubs(:which)
+          .with('postfix')
+          .returns(nil)
+
+        Facter::Core::Execution
+          .stubs(:which)
+          .with('sendmail')
+          .returns('/usr/sbin/sendmail')
+
+        Facter::Core::Execution
+          .stubs(:execute)
+          .with(excmd, options)
           .returns(output)
+
         # Postfix and Sendmail not called
       end
       it {
@@ -161,13 +253,31 @@ Configuration file is /etc/exim4/exim4.conf
       output = '2.7.1'
 
       before :each do
-        Facter::Core::Execution.stubs(:which).with('exim').returns(nil)
-        Facter::Core::Execution.stubs(:which).with('postfix').returns('/usr/sbin/postfix')
-        Facter::Core::Execution.stubs(:which).with('sendmail').returns('/usr/sbin/sendmail')
-        Facter::Core::Execution.stubs(:execute).with(excmd, options) \
+        Facter::Core::Execution
+          .stubs(:which)
+          .with('exim')
           .returns(nil)
-        Facter::Core::Execution.stubs(:execute).with(pfcmd, options) \
+
+        Facter::Core::Execution
+          .stubs(:which)
+          .with('postfix')
+          .returns('/usr/sbin/postfix')
+
+        Facter::Core::Execution
+          .stubs(:which)
+          .with('sendmail')
+          .returns('/usr/sbin/sendmail')
+
+        Facter::Core::Execution
+          .stubs(:execute)
+          .with(excmd, options)
+          .returns(nil)
+
+        Facter::Core::Execution
+          .stubs(:execute)
+          .with(pfcmd, options)
           .returns(output)
+
         # Sendmail not called
       end
       it {

@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 describe 'sendmail::package' do
-
-  it { should contain_class('sendmail::package') }
-
   on_supported_os.each do |os, facts|
     context "on #{os} with default parameters" do
       let(:facts) { facts }
@@ -11,56 +8,79 @@ describe 'sendmail::package' do
       case facts[:osfamily]
       when 'Debian'
         it {
-          should contain_class('sendmail::package').with(
-                   'package_manage' => true
-                 )
-          should contain_package('sendmail')
+          is_expected.to contain_class('sendmail::package') \
+            .with_package_manage(true)
+
+          is_expected.to contain_package('sendmail')
         }
       when 'RedHat'
         it {
-          should contain_class('sendmail::package').with(
-                   'package_manage' => true
-                 )
-          should contain_package('sendmail')
-          should contain_package('sendmail-cf')
+          is_expected.to contain_class('sendmail::package') \
+            .with_package_manage(true)
+
+          is_expected.to contain_package('sendmail')
+          is_expected.to contain_package('sendmail-cf')
         }
       when 'FreeBSD'
         it {
-          should contain_class('sendmail::package').with(
-                   'package_manage' => false
-                 )
-          should_not contain_package('sendmail')
+          is_expected.to contain_class('sendmail::package') \
+            .with_package_manage(false)
+
+          is_expected.not_to contain_package('sendmail')
         }
       end
     end
 
     context "on #{os} with package_ensure => latest" do
+      let(:facts) { facts }
       let(:params) do
-        { :package_ensure => 'latest' }
+        { package_ensure: 'latest' }
       end
 
-      it {
-        should contain_package('sendmail').with_ensure('latest')
-      }
+      case facts[:osfamily]
+      when 'Debian'
+        it {
+          is_expected.to contain_package('sendmail').with_ensure('latest')
+        }
+      when 'RedHat'
+        it {
+          is_expected.to contain_package('sendmail').with_ensure('latest')
+          is_expected.to contain_package('sendmail-cf')
+        }
+      when 'FreeBSD'
+        it {
+          is_expected.not_to contain_package('sendmail')
+        }
+      end
     end
 
     context "on #{os} with package_manage => false" do
+      let(:facts) { facts }
       let(:params) do
-        { :package_manage => false }
+        { package_manage: false }
       end
 
-      it { should_not contain_package('sendmail') }
+      it { is_expected.not_to contain_package('sendmail') }
     end
 
     context "on #{os} with auxiliary_packages defined" do
+      let(:facts) { facts }
       let(:params) do
-        { :auxiliary_packages => [ 'foo', 'bar' ] }
+        { auxiliary_packages: ['foo', 'bar'] }
       end
 
-      it {
-        should contain_package('foo')
-        should contain_package('bar')
-      }
+      case facts[:osfamily]
+      when 'Debian', 'RedHat'
+        it {
+          is_expected.to contain_package('foo')
+          is_expected.to contain_package('bar')
+        }
+      when 'FreeBSD'
+        it {
+          is_expected.not_to contain_package('foo')
+          is_expected.not_to contain_package('bar')
+        }
+      end
     end
   end
 end
