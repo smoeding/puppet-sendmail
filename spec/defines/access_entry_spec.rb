@@ -6,7 +6,7 @@ describe 'sendmail::access::entry' do
     let(:title) { 'example.com' }
     let(:pre_condition) { 'include sendmail::service' }
 
-    context 'on #{os} with value' do
+    context "on #{os} with value" do
       let(:params) do
         { value: 'REJECT' }
       end

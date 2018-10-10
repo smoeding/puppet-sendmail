@@ -5,7 +5,7 @@ describe 'sendmail::aliases::entry' do
     let(:facts) { facts }
     let(:title) { 'fred' }
 
-    context 'on #{os} with recipient' do
+    context "on #{os} with recipient" do
       let(:params) do
         { recipient: 'fred@example.org' }
       end

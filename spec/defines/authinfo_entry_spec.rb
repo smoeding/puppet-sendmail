@@ -66,7 +66,7 @@ describe 'sendmail::authinfo::entry' do
       }
     end
 
-    context 'on #{os} without authentication_id and authorization_id' do
+    context "on #{os} without authentication_id and authorization_id" do
       let(:params) do
         { password: 'secret' }
       end
@@ -86,7 +86,7 @@ describe 'sendmail::authinfo::entry' do
       }
     end
 
-    context 'on #{os} with password and password_base64' do
+    context "on #{os} with password and password_base64" do
       let(:params) do
         {
           password:         'secret',
