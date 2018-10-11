@@ -117,25 +117,28 @@ class sendmail::mc::privacy_flags (
   validate_bool($restrictqrun)
 
   $flags = [
-    $authwarnings      ? { true => 'authwarnings',      default => undef },
-    $goaway            ? { true => 'goaway',            default => undef },
-    $needexpnhelo      ? { true => 'needexpnhelo',      default => undef },
-    $needmailhelo      ? { true => 'needmailhelo',      default => undef },
-    $needvrfyhelo      ? { true => 'needvrfyhelo',      default => undef },
-    $noactualrecipient ? { true => 'noactualrecipient', default => undef },
-    $nobodyreturn      ? { true => 'nobodyreturn',      default => undef },
-    $noetrn            ? { true => 'noetrn',            default => undef },
-    $noexpn            ? { true => 'noexpn',            default => undef },
-    $noreceipts        ? { true => 'noreceipts',        default => undef },
-    $noverb            ? { true => 'noverb',            default => undef },
-    $novrfy            ? { true => 'novrfy',            default => undef },
-    $public            ? { true => 'public',            default => undef },
-    $restrictexpand    ? { true => 'restrictexpand',    default => undef },
-    $restrictmailq     ? { true => 'restrictmailq',     default => undef },
-    $restrictqrun      ? { true => 'restrictqrun',      default => undef },
+    bool2str($authwarnings,      'authwarnings',      ''),
+    bool2str($goaway,            'goaway',            ''),
+    bool2str($needexpnhelo,      'needexpnhelo',      ''),
+    bool2str($needmailhelo,      'needmailhelo',      ''),
+    bool2str($needvrfyhelo,      'needvrfyhelo',      ''),
+    bool2str($noactualrecipient, 'noactualrecipient', ''),
+    bool2str($nobodyreturn,      'nobodyreturn',      ''),
+    bool2str($noetrn,            'noetrn',            ''),
+    bool2str($noexpn,            'noexpn',            ''),
+    bool2str($noreceipts,        'noreceipts',        ''),
+    bool2str($noverb,            'noverb',            ''),
+    bool2str($novrfy,            'novrfy',            ''),
+    bool2str($public,            'public',            ''),
+    bool2str($restrictexpand,    'restrictexpand',    ''),
+    bool2str($restrictmailq,     'restrictmailq',     ''),
+    bool2str($restrictqrun,      'restrictqrun',      ''),
   ]
 
+  # Remove empty flags
+  $real_flags = filter($flags) |$f| { !empty($f) }
+
   ::sendmail::mc::define { 'confPRIVACY_FLAGS':
-    expansion => join(delete_undef_values($flags), ','),
+    expansion => join($real_flags, ','),
   }
 }
