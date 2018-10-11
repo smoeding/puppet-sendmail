@@ -1,0 +1,3 @@
+# default_module_facts.yml --- Facts for this module
+---
+sendmail_version: '8.14.4'
