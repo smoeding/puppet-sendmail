@@ -27,6 +27,7 @@ define sendmail::mc::local_config (
   Optional[String] $content = undef,
   Optional[String] $source  = undef,
 ) {
+  include ::sendmail::makeall
 
   if $content and $source {
     fail('sendmail::mc::local_config cannot have both content and source')
