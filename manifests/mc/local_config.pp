@@ -24,8 +24,8 @@
 #
 #
 define sendmail::mc::local_config (
-  String $content = undef,
-  String $source  = undef,
+  Optional[String] $content = undef,
+  Optional[String] $source  = undef,
 ) {
 
   if $content and $source {
