@@ -17,7 +17,7 @@
 #
 #
 define sendmail::mc::versionid (
-  $versionid = $title,
+  String $versionid = $title,
 ) {
   include ::sendmail::makeall
 

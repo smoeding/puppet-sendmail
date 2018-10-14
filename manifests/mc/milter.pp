@@ -83,7 +83,7 @@ define sendmail::mc::milter (
   $eom_timeout     = undef,
   $connect_timeout = undef,
   $order           = '00',
-  $milter_name     = $title,
+  String  $milter_name     = $title,
   Boolean $enable          = true,
 ) {
 

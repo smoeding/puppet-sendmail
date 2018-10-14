@@ -33,10 +33,10 @@
 #
 #
 define sendmail::mc::enhdnsbl (
-  $blacklist               = $title,
-  $reject_message          = undef,
+  String  $blacklist               = $title,
+  String  $reject_message          = undef,
   Boolean $allow_temporary_failure = false,
-  $lookup_result           = undef,
+  String  $lookup_result           = undef,
 ) {
 
   # The parameter for temporary_failure must be `t' or empty

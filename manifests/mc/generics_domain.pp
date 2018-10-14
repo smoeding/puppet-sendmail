@@ -18,7 +18,7 @@
 #
 #
 define sendmail::mc::generics_domain (
-  $domain = $title,
+  String $domain = $title,
 ) {
   include ::sendmail::makeall
 

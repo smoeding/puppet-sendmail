@@ -42,7 +42,7 @@
 #
 #
 define sendmail::mc::feature (
-  $feature_name = $title,
+  String $feature_name = $title,
   $args         = [],
   Boolean $use_quotes   = true,
 ) {

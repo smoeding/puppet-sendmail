@@ -19,7 +19,7 @@
 #
 #
 define sendmail::mc::ostype (
-  $ostype = $title,
+  String $ostype = $title,
 ) {
   include ::sendmail::makeall
 

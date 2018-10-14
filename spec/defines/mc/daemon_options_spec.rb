@@ -86,18 +86,6 @@ describe 'sendmail::mc::daemon_options' do
       }
     end
 
-    context "on #{os} with illegal argument family" do
-      let(:params) do
-        { family: 'foobar' }
-      end
-
-      it {
-        expect {
-          is_expected.to compile
-        }.to raise_error(%r{does not match})
-      }
-    end
-
     context "on #{os} with argument delivery_mode => background" do
       let(:params) do
         { delivery_mode: 'background' }

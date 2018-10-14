@@ -19,7 +19,7 @@
 #
 #
 define sendmail::mc::domain (
-  $domain = $title,
+  String $domain = $title,
 ) {
   include ::sendmail::makeall
 

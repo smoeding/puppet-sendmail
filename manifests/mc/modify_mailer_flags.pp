@@ -35,7 +35,7 @@
 #
 define sendmail::mc::modify_mailer_flags (
   $flags,
-  $mailer_name = $title,
+  String  $mailer_name = $title,
   Boolean $use_quotes  = true,
 ) {
   include ::sendmail::makeall

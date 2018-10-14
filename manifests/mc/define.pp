@@ -37,19 +37,15 @@
 #
 #
 define sendmail::mc::define (
-  $macro_name = $title,
-  $expansion  = undef,
+  String  $macro_name = $title,
   Boolean $use_quotes = true,
+  String  $expansion  = '',
 ) {
   include ::sendmail::makeall
 
   # Add quotes to the expansion if needed
-  $exp_arg = $use_quotes ? {
-    true    => "`${expansion}'",
-    default => $expansion,
-  }
-
-  $arr = [ "`${macro_name}'", $exp_arg ]
+  $exp = bool2str($use_quotes, "`${expansion}'", $expansion)
+  $arg = join([ "`${macro_name}'", $exp ], ', ')
 
   case $macro_name {
     /^confLDAP/: {
@@ -72,7 +68,7 @@ define sendmail::mc::define (
   concat::fragment { "sendmail_mc-define-${title}":
     target  => 'sendmail.mc',
     order   => $order,
-    content => inline_template("define(<%= @arr.join(', ') -%>)dnl\n"),
+    content => "define(${arg})dnl\n",
     notify  => Class['::sendmail::makeall'],
   }
 }

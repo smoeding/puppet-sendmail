@@ -67,7 +67,7 @@
 #
 #
 define sendmail::mc::masquerade_as (
-  $masquerade_as             = $title,
+  String $masquerade_as             = $title,
   $masquerade_domain         = [],
   $masquerade_domain_file    = undef,
   $masquerade_exception      = [],

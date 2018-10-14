@@ -69,78 +69,63 @@
 #
 #
 define sendmail::mc::daemon_options (
-  $daemon_name      = $title,
-  $family           = undef,
-  $addr             = undef,
-  $port             = undef,
-  $children         = undef,
-  $delivery_mode    = undef,
-  $input_filter     = undef,
-  $listen           = undef,
-  $modify           = undef,
-  $delay_la         = undef,
-  $queue_la         = undef,
-  $refuse_la        = undef,
-  $send_buf_size    = undef,
-  $receive_buf_size = undef,
+  String                                  $daemon_name      = $title,
+  Optional[Sendmail::Protocolfamily]      $family           = undef,
+  Optional[String]                        $addr             = undef,
+  Optional[String]                        $port             = undef,
+  Optional[String]                        $children         = undef,
+  Optional[Sendmail::Deliverymode]        $delivery_mode    = undef,
+  Optional[Variant[String,Array[String]]] $input_filter     = undef,
+  Optional[String]                        $listen           = undef,
+  Optional[String]                        $modify           = undef,
+  Optional[String]                        $delay_la         = undef,
+  Optional[String]                        $queue_la         = undef,
+  Optional[String]                        $refuse_la        = undef,
+  Optional[String]                        $send_buf_size    = undef,
+  Optional[String]                        $receive_buf_size = undef,
 ) {
 
   include ::sendmail::makeall
 
-  validate_string($daemon_name)
-
-  if !empty($family) {
-    validate_re($family, [ '^inet$', '^inet6$', '^iso$'])
-  }
-
-  if !empty($delivery_mode) {
-    validate_re($delivery_mode,
-      [
-        '^b$', '^background$',
-        '^d$', '^deferred$',
-        '^i$', '^interactive$',
-        '^q$', '^queueonly$',
-    ])
-  }
-
+  # Get the first character
   $delivery = $delivery_mode ? {
     undef   => undef,
     ''      => undef,
-    default => regsubst($delivery_mode, '^(.).*$', '\1')
+    default => $delivery_mode[0,1],
   }
 
   # Build string if array has been given
-  $filter = is_array($input_filter) ? {
-    true    => join($input_filter, ';'),
+  $filter = $input_filter ? {
+    Array   => join($input_filter, ';'),
     default => $input_filter,
   }
 
-  $sparse_opts = [
-    "Name=${daemon_name}",
-    "Family=${family}",
-    "Addr=${addr}",
-    "Port=${port}",
-    "children=${children}",
-    "DeliveryMode=${delivery}",
-    "InputFilter=${filter}",
-    "Listen=${listen}",
-    "M=${modify}",
-    "delayLA=${delay_la}",
-    "queueLA=${queue_la}",
-    "refuseLA=${refuse_la}",
-    "SendBufSize=${send_buf_size}",
-    "ReceiveBufSize=${receive_buf_size}",
-  ]
+  $sparse_opts = {
+    'Name'           => $daemon_name,
+    'Family'         => $family,
+    'Addr'           => $addr,
+    'Port'           => $port,
+    'children'       => $children,
+    'DeliveryMode'   => $delivery,
+    'InputFilter'    => $filter,
+    'Listen'         => $listen,
+    'M'              => $modify,
+    'delayLA'        => $delay_la,
+    'queueLA'        => $queue_la,
+    'refuseLA'       => $refuse_la,
+    'SendBufSize'    => $send_buf_size,
+    'ReceiveBufSize' => $receive_buf_size,
+  }
 
-  # Remove unset options by mapping them to a single '=' and deleting it
-  $real_opts = delete(regsubst($sparse_opts, '^.*=$', '='), '=')
+  # Remove unset options
+  $real_opts = $sparse_opts.filter |$key,$val| { !empty($val) }
 
-  $opts = join($real_opts, ', ')
+  $opts = join(join_keys_to_values($real_opts, '='), ', ')
 
   concat::fragment { "sendmail_mc-daemon_options-${title}":
     target  => 'sendmail.mc',
     order   => '40',
-    content => inline_template("DAEMON_OPTIONS(`${opts}')dnl\n"),
+    content => "DAEMON_OPTIONS(`${opts}')dnl\n",
     notify  => Class['::sendmail::makeall'],
   }
 

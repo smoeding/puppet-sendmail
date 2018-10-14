@@ -20,7 +20,7 @@
 #
 #
 define sendmail::mc::mailer (
-  $mailer = $title,
+  String $mailer = $title,
 ) {
   include ::sendmail::makeall
 
