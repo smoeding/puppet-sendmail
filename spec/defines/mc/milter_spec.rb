@@ -15,9 +15,9 @@ describe 'sendmail::mc::milter' do
         is_expected.to contain_class('sendmail::mc::milter_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist') \
-          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T')dnl\n") \
-          .with_order('56-00') \
+        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist')
+          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T')dnl\n")
+          .with_order('56-00')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -31,9 +31,9 @@ describe 'sendmail::mc::milter' do
         is_expected.to contain_class('sendmail::mc::milter_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist') \
-          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T')dnl\n") \
-          .with_order('56-00') \
+        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist')
+          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T')dnl\n")
+          .with_order('56-00')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -47,9 +47,9 @@ describe 'sendmail::mc::milter' do
         is_expected.to contain_class('sendmail::mc::milter_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist') \
-          .with_content("MAIL_FILTER(`greylist', `S=local:/old/sock, F=T')dnl\n") \
-          .with_order('56-00') \
+        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist')
+          .with_content("MAIL_FILTER(`greylist', `S=local:/old/sock, F=T')dnl\n")
+          .with_order('56-00')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -63,9 +63,9 @@ describe 'sendmail::mc::milter' do
         is_expected.to contain_class('sendmail::mc::milter_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist') \
-          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T')dnl\n") \
-          .with_order('56-01') \
+        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist')
+          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T')dnl\n")
+          .with_order('56-01')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -79,9 +79,9 @@ describe 'sendmail::mc::milter' do
         is_expected.to contain_class('sendmail::mc::milter_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist') \
-          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T, T=S:2m')dnl\n") \
-          .with_order('56-00') \
+        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist')
+          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T, T=S:2m')dnl\n")
+          .with_order('56-00')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -95,9 +95,9 @@ describe 'sendmail::mc::milter' do
         is_expected.to contain_class('sendmail::mc::milter_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist') \
-          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T, T=R:3m')dnl\n") \
-          .with_order('56-00') \
+        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist')
+          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T, T=R:3m')dnl\n")
+          .with_order('56-00')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -111,9 +111,9 @@ describe 'sendmail::mc::milter' do
         is_expected.to contain_class('sendmail::mc::milter_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist') \
-          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T, T=E:5m')dnl\n") \
-          .with_order('56-00') \
+        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist')
+          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T, T=E:5m')dnl\n")
+          .with_order('56-00')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -127,9 +127,9 @@ describe 'sendmail::mc::milter' do
         is_expected.to contain_class('sendmail::mc::milter_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist') \
-          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T, T=C:7m')dnl\n") \
-          .with_order('56-00') \
+        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist')
+          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T, T=C:7m')dnl\n")
+          .with_order('56-00')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -148,9 +148,9 @@ describe 'sendmail::mc::milter' do
         is_expected.to contain_class('sendmail::mc::milter_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist') \
-          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T, T=S:2m;R:3m;E:5m;C:7m')dnl\n") \
-          .with_order('56-00') \
+        is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist')
+          .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=T, T=S:2m;R:3m;E:5m;C:7m')dnl\n")
+          .with_order('56-00')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -165,9 +165,9 @@ describe 'sendmail::mc::milter' do
           is_expected.to contain_class('sendmail::mc::milter_section')
           is_expected.to contain_class('sendmail::makeall')
 
-          is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist') \
-            .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=#{flag}')dnl\n") \
-            .with_order('56-00') \
+          is_expected.to contain_concat__fragment('sendmail_mc-milter-greylist')
+            .with_content("INPUT_MAIL_FILTER(`greylist', `S=local:/old/sock, F=#{flag}')dnl\n")
+            .with_order('56-00')
             .that_notifies('Class[sendmail::makeall]')
         }
       end

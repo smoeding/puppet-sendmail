@@ -15,8 +15,8 @@ describe 'sendmail::authinfo::entry' do
         is_expected.to contain_class('sendmail::params')
         is_expected.to contain_class('sendmail::makeall')
         is_expected.to contain_class('sendmail::authinfo::file')
-        is_expected.to contain_augeas('/etc/mail/authinfo-AuthInfo:example.com') \
-          .that_requires('Class[sendmail::authinfo::file]') \
+        is_expected.to contain_augeas('/etc/mail/authinfo-AuthInfo:example.com')
+          .that_requires('Class[sendmail::authinfo::file]')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -30,8 +30,8 @@ describe 'sendmail::authinfo::entry' do
         is_expected.to contain_class('sendmail::params')
         is_expected.to contain_class('sendmail::makeall')
         is_expected.to contain_class('sendmail::authinfo::file')
-        is_expected.to contain_augeas('/etc/mail/authinfo-AuthInfo:example.com') \
-          .that_requires('Class[sendmail::authinfo::file]') \
+        is_expected.to contain_augeas('/etc/mail/authinfo-AuthInfo:example.com')
+          .that_requires('Class[sendmail::authinfo::file]')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -45,8 +45,8 @@ describe 'sendmail::authinfo::entry' do
         is_expected.to contain_class('sendmail::params')
         is_expected.to contain_class('sendmail::makeall')
         is_expected.to contain_class('sendmail::authinfo::file')
-        is_expected.to contain_augeas('/etc/mail/authinfo-AuthInfo:example.com') \
-          .that_requires('Class[sendmail::authinfo::file]') \
+        is_expected.to contain_augeas('/etc/mail/authinfo-AuthInfo:example.com')
+          .that_requires('Class[sendmail::authinfo::file]')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -60,8 +60,8 @@ describe 'sendmail::authinfo::entry' do
         is_expected.to contain_class('sendmail::params')
         is_expected.to contain_class('sendmail::makeall')
         is_expected.to contain_class('sendmail::authinfo::file')
-        is_expected.to contain_augeas('/etc/mail/authinfo-AuthInfo:example.com') \
-          .that_requires('Class[sendmail::authinfo::file]') \
+        is_expected.to contain_augeas('/etc/mail/authinfo-AuthInfo:example.com')
+          .that_requires('Class[sendmail::authinfo::file]')
           .that_notifies('Class[sendmail::makeall]')
       }
     end

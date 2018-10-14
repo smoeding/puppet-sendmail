@@ -13,8 +13,8 @@ describe 'sendmail' do
         is_expected.to contain_class('sendmail')
         is_expected.to contain_class('sendmail::params')
 
-        is_expected.to contain_class('sendmail::package') \
-          .that_requires('Anchor[sendmail::begin]') \
+        is_expected.to contain_class('sendmail::package')
+          .that_requires('Anchor[sendmail::begin]')
           .that_comes_before('Anchor[sendmail::config]')
 
         is_expected.to contain_class('sendmail::local_host_names')
@@ -27,8 +27,8 @@ describe 'sendmail' do
           'enable_msp_trusted_users' => false,
         )
 
-        is_expected.to contain_class('sendmail::service') \
-          .that_requires('Anchor[sendmail::config]') \
+        is_expected.to contain_class('sendmail::service')
+          .that_requires('Anchor[sendmail::config]')
           .that_comes_before('Anchor[sendmail::end]')
 
         is_expected.not_to contain_class('sendmail::mc::starttls')
@@ -43,7 +43,7 @@ describe 'sendmail' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::mc') \
+        is_expected.to contain_class('sendmail::mc')
           .with_domain_name('smtp.example.com')
       }
     end
@@ -56,7 +56,7 @@ describe 'sendmail' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::mc') \
+        is_expected.to contain_class('sendmail::mc')
           .with_max_message_size('42')
       }
     end
@@ -69,7 +69,7 @@ describe 'sendmail' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::local_host_names') \
+        is_expected.to contain_class('sendmail::local_host_names')
           .with_local_host_names(['www.example.net'])
       }
     end
@@ -82,7 +82,7 @@ describe 'sendmail' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::relay_domains') \
+        is_expected.to contain_class('sendmail::relay_domains')
           .with_relay_domains(['example.net'])
       }
     end
@@ -95,7 +95,7 @@ describe 'sendmail' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::trusted_users') \
+        is_expected.to contain_class('sendmail::trusted_users')
           .with_trusted_users(['fred'])
       }
     end
@@ -108,7 +108,7 @@ describe 'sendmail' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::mc') \
+        is_expected.to contain_class('sendmail::mc')
           .with_trust_auth_mech('PLAIN')
       }
     end
@@ -121,7 +121,7 @@ describe 'sendmail' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::mc') \
+        is_expected.to contain_class('sendmail::mc')
           .with_trust_auth_mech(['PLAIN', 'LOGIN'])
       }
     end
@@ -134,7 +134,7 @@ describe 'sendmail' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::mc') \
+        is_expected.to contain_class('sendmail::mc')
           .with_cf_version('1.2-3')
       }
     end
@@ -147,7 +147,7 @@ describe 'sendmail' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::mc') \
+        is_expected.to contain_class('sendmail::mc')
           .with_version_id('foo')
       }
     end
@@ -160,7 +160,7 @@ describe 'sendmail' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::submit') \
+        is_expected.to contain_class('sendmail::submit')
           .with_msp_host('localhost')
       }
     end
@@ -173,7 +173,7 @@ describe 'sendmail' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::submit') \
+        is_expected.to contain_class('sendmail::submit')
           .with_msp_port('25')
       }
     end
@@ -186,7 +186,7 @@ describe 'sendmail' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::submit') \
+        is_expected.to contain_class('sendmail::submit')
           .with_enable_msp_trusted_users(true)
       }
     end
@@ -199,9 +199,9 @@ describe 'sendmail' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::mc') \
-          .that_comes_before('Anchor[sendmail::config]') \
-          .that_requires('Class[sendmail::package]') \
+        is_expected.to contain_class('sendmail::mc')
+          .that_comes_before('Anchor[sendmail::config]')
+          .that_requires('Class[sendmail::package]')
           .that_notifies('Class[sendmail::service]')
       }
     end
@@ -227,9 +227,9 @@ describe 'sendmail' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::submit') \
-          .that_comes_before('Anchor[sendmail::config]') \
-          .that_requires('Class[sendmail::package]') \
+        is_expected.to contain_class('sendmail::submit')
+          .that_comes_before('Anchor[sendmail::config]')
+          .that_requires('Class[sendmail::package]')
           .that_notifies('Class[sendmail::service]')
       }
     end
@@ -254,7 +254,7 @@ describe 'sendmail' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::mc::starttls') \
+        is_expected.to contain_class('sendmail::mc::starttls')
           .with_cipher_list('foo')
       }
     end
@@ -279,7 +279,7 @@ describe 'sendmail' do
       end
 
       it {
-        is_expected.to contain_sendmail__mc__feature('no_default_msa') \
+        is_expected.to contain_sendmail__mc__feature('no_default_msa')
           .with_args('foo')
       }
     end

@@ -11,9 +11,9 @@ describe 'sendmail::mc::enhdnsbl' do
         is_expected.to contain_class('sendmail::mc::enhdnsbl_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com') \
-          .with_content(%r{^FEATURE\(`enhdnsbl', `bl.example.com'\)dnl$}) \
-          .with_order('51') \
+        is_expected.to contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com')
+          .with_content(%r{^FEATURE\(`enhdnsbl', `bl.example.com'\)dnl$})
+          .with_order('51')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -27,7 +27,7 @@ describe 'sendmail::mc::enhdnsbl' do
         is_expected.to contain_class('sendmail::mc::enhdnsbl_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com') \
+        is_expected.to contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com')
           .with_content(%r{`bl.example.com', `foo'\)dnl$})
       }
     end
@@ -41,7 +41,7 @@ describe 'sendmail::mc::enhdnsbl' do
         is_expected.to contain_class('sendmail::mc::enhdnsbl_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com') \
+        is_expected.to contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com')
           .with_content(%r{`bl.example.com', , `t'\)dnl$})
       }
     end
@@ -55,7 +55,7 @@ describe 'sendmail::mc::enhdnsbl' do
         is_expected.to contain_class('sendmail::mc::enhdnsbl_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com') \
+        is_expected.to contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com')
           .with_content(%r{`bl.example.com', , , `foo'\)dnl$})
       }
     end

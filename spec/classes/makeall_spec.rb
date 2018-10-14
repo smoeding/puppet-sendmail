@@ -10,14 +10,14 @@ describe 'sendmail::makeall' do
       case facts[:osfamily]
       when 'Debian', 'RedHat'
         it {
-          is_expected.to contain_exec('sendmail::makeall') \
-            .with_command('make -C /etc/mail all') \
+          is_expected.to contain_exec('sendmail::makeall')
+            .with_command('make -C /etc/mail all')
             .that_requires('Class[sendmail::package]')
         }
       when 'FreeBSD'
         it {
-          is_expected.to contain_exec('sendmail::makeall') \
-            .with_command('make -C /etc/mail all install') \
+          is_expected.to contain_exec('sendmail::makeall')
+            .with_command('make -C /etc/mail all install')
             .that_requires('Class[sendmail::package]')
         }
       end

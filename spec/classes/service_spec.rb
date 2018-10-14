@@ -9,19 +9,19 @@ describe 'sendmail::service' do
       when 'Debian'
         it {
           is_expected.to contain_class('sendmail::service')
-          is_expected.to contain_service('sendmail') \
-            .with_ensure('running') \
-            .with_name('sendmail') \
-            .with_enable(true) \
+          is_expected.to contain_service('sendmail')
+            .with_ensure('running')
+            .with_name('sendmail')
+            .with_enable(true)
             .with_hasstatus(false)
         }
       when 'RedHat', 'FreeBSD'
         it {
           is_expected.to contain_class('sendmail::service')
-          is_expected.to contain_service('sendmail') \
-            .with_ensure('running') \
-            .with_name('sendmail') \
-            .with_enable(true) \
+          is_expected.to contain_service('sendmail')
+            .with_ensure('running')
+            .with_name('sendmail')
+            .with_enable(true)
             .with_hasstatus(true)
         }
       end

@@ -11,9 +11,9 @@ describe 'sendmail::mc::domain' do
       it {
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-domain-foobar') \
-          .with_content(%r{^DOMAIN\(`foobar'\)dnl$}) \
-          .with_order('07') \
+        is_expected.to contain_concat__fragment('sendmail_mc-domain-foobar')
+          .with_content(%r{^DOMAIN\(`foobar'\)dnl$})
+          .with_order('07')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -24,9 +24,9 @@ describe 'sendmail::mc::domain' do
       it {
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-domain-debian-mta') \
-          .with_content(%r{^DOMAIN\(`debian-mta'\)dnl$}) \
-          .with_order('07') \
+        is_expected.to contain_concat__fragment('sendmail_mc-domain-debian-mta')
+          .with_content(%r{^DOMAIN\(`debian-mta'\)dnl$})
+          .with_order('07')
           .that_notifies('Class[sendmail::makeall]')
       }
     end

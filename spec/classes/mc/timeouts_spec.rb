@@ -21,8 +21,8 @@ describe 'sendmail::mc::timeouts' do
       end
 
       it {
-        is_expected.to contain_concat__fragment('sendmail_mc-timeouts') \
-          .without_content(%r{^define\(`confTO_A}) \
+        is_expected.to contain_concat__fragment('sendmail_mc-timeouts')
+          .without_content(%r{^define\(`confTO_A})
       }
     end
 
@@ -41,8 +41,8 @@ describe 'sendmail::mc::timeouts' do
         it {
           macro = 'confTO_' << param.upcase
 
-          is_expected.to contain_concat__fragment('sendmail_mc-timeouts') \
-            .with_content(%r{^define\(`#{macro}', `1w3d5h7m9s'\)dnl$}) \
+          is_expected.to contain_concat__fragment('sendmail_mc-timeouts')
+            .with_content(%r{^define\(`#{macro}', `1w3d5h7m9s'\)dnl$})
             .with_order('16')
         }
       end

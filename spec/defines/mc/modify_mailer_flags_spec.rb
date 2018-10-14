@@ -15,9 +15,9 @@ describe 'sendmail::mc::modify_mailer_flags' do
         is_expected.to contain_class('sendmail::mc::macro_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-modify_mailer_flags-foobar') \
-          .with_content(%r{^MODIFY_MAILER_FLAGS\(`foobar', `foo'\)dnl$}) \
-          .with_order('38') \
+        is_expected.to contain_concat__fragment('sendmail_mc-modify_mailer_flags-foobar')
+          .with_content(%r{^MODIFY_MAILER_FLAGS\(`foobar', `foo'\)dnl$})
+          .with_order('38')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -31,9 +31,9 @@ describe 'sendmail::mc::modify_mailer_flags' do
         is_expected.to contain_class('sendmail::mc::macro_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-modify_mailer_flags-foobar') \
-          .with_content(%r{^MODIFY_MAILER_FLAGS\(`baz', `foo'\)dnl$}) \
-          .with_order('38') \
+        is_expected.to contain_concat__fragment('sendmail_mc-modify_mailer_flags-foobar')
+          .with_content(%r{^MODIFY_MAILER_FLAGS\(`baz', `foo'\)dnl$})
+          .with_order('38')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -47,9 +47,9 @@ describe 'sendmail::mc::modify_mailer_flags' do
         is_expected.to contain_class('sendmail::mc::macro_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-modify_mailer_flags-foobar') \
-          .with_content(%r{^MODIFY_MAILER_FLAGS\(`foobar', `foo'\)dnl$}) \
-          .with_order('38') \
+        is_expected.to contain_concat__fragment('sendmail_mc-modify_mailer_flags-foobar')
+          .with_content(%r{^MODIFY_MAILER_FLAGS\(`foobar', `foo'\)dnl$})
+          .with_order('38')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -63,9 +63,9 @@ describe 'sendmail::mc::modify_mailer_flags' do
         is_expected.to contain_class('sendmail::mc::macro_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-modify_mailer_flags-foobar') \
-          .with_content(%r{^MODIFY_MAILER_FLAGS\(`foobar', foo\)dnl$}) \
-          .with_order('38') \
+        is_expected.to contain_concat__fragment('sendmail_mc-modify_mailer_flags-foobar')
+          .with_content(%r{^MODIFY_MAILER_FLAGS\(`foobar', foo\)dnl$})
+          .with_order('38')
           .that_notifies('Class[sendmail::makeall]')
       }
     end

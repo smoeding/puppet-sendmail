@@ -10,13 +10,13 @@ describe 'sendmail::mc::masquerade_as' do
       it {
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-masquerade') \
-          .with_content(%r{^MASQUERADE_AS\(`example.com'\)dnl$}) \
-          .without_content(%r{^FEATURE}) \
-          .without_content(%r{^MASQUERADE_DOMAIN}) \
-          .without_content(%r{^MASQUERADE_EXCEPTION}) \
-          .without_content(%r{^EXPOSED_USER}) \
-          .with_order('30') \
+        is_expected.to contain_concat__fragment('sendmail_mc-masquerade')
+          .with_content(%r{^MASQUERADE_AS\(`example.com'\)dnl$})
+          .without_content(%r{^FEATURE})
+          .without_content(%r{^MASQUERADE_DOMAIN})
+          .without_content(%r{^MASQUERADE_EXCEPTION})
+          .without_content(%r{^EXPOSED_USER})
+          .with_order('30')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -29,8 +29,8 @@ describe 'sendmail::mc::masquerade_as' do
       it {
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-masquerade') \
-          .with_content(%r{^MASQUERADE_DOMAIN\(`example.net example.org'\)dnl$}) \
+        is_expected.to contain_concat__fragment('sendmail_mc-masquerade')
+          .with_content(%r{^MASQUERADE_DOMAIN\(`example.net example.org'\)dnl$})
           .without_content(%r{^MASQUERADE_DOMAIN_FILE})
       }
     end
@@ -43,8 +43,8 @@ describe 'sendmail::mc::masquerade_as' do
       it {
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-masquerade') \
-          .with_content(%r{^MASQUERADE_DOMAIN_FILE\(`\/foo\/bar'\)dnl$}) \
+        is_expected.to contain_concat__fragment('sendmail_mc-masquerade')
+          .with_content(%r{^MASQUERADE_DOMAIN_FILE\(`\/foo\/bar'\)dnl$})
           .without_content(%r{^MASQUERADE_DOMAIN\(})
       }
     end

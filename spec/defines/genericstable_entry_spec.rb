@@ -15,8 +15,8 @@ describe 'sendmail::genericstable::entry' do
         is_expected.to contain_class('sendmail::params')
         is_expected.to contain_class('sendmail::makeall')
         is_expected.to contain_class('sendmail::genericstable::file')
-        is_expected.to contain_augeas('/etc/mail/genericstable-user@example.com') \
-          .that_requires('Class[sendmail::genericstable::file]') \
+        is_expected.to contain_augeas('/etc/mail/genericstable-user@example.com')
+          .that_requires('Class[sendmail::genericstable::file]')
           .that_notifies('Class[sendmail::makeall]')
       }
     end

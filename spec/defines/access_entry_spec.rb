@@ -15,8 +15,8 @@ describe 'sendmail::access::entry' do
         is_expected.to contain_class('sendmail::params')
         is_expected.to contain_class('sendmail::makeall')
         is_expected.to contain_class('sendmail::access::file')
-        is_expected.to contain_augeas('/etc/mail/access-example.com') \
-          .that_requires('Class[sendmail::access::file]') \
+        is_expected.to contain_augeas('/etc/mail/access-example.com')
+          .that_requires('Class[sendmail::access::file]')
           .that_notifies('Class[sendmail::makeall]')
       }
     end

@@ -11,13 +11,13 @@ describe 'sendmail::submit' do
       when 'Debian'
         it {
           is_expected.to contain_class('sendmail::submit')
-          is_expected.to contain_file('/etc/mail/submit.mc') \
-            .with_ensure('file') \
-            .with_owner('root') \
-            .with_group('smmsp') \
-            .with_mode('0644') \
-            .without_content(%r{^FEATURE\(`use_ct_file'\)dnl$}) \
-            .with_content(%r{^OSTYPE\(`debian'\)dnl$}) \
+          is_expected.to contain_file('/etc/mail/submit.mc')
+            .with_ensure('file')
+            .with_owner('root')
+            .with_group('smmsp')
+            .with_mode('0644')
+            .without_content(%r{^FEATURE\(`use_ct_file'\)dnl$})
+            .with_content(%r{^OSTYPE\(`debian'\)dnl$})
             .with_content(%r{^FEATURE\(`msp', `\[127.0.0.1\]', `MSA'\)dnl$})
 
           is_expected.not_to contain_file('/etc/mail/foo.example.com.submit.mc')
@@ -25,13 +25,13 @@ describe 'sendmail::submit' do
       when 'RedHat'
         it {
           is_expected.to contain_class('sendmail::submit')
-          is_expected.to contain_file('/etc/mail/submit.mc') \
-            .with_ensure('file') \
-            .with_owner('root') \
-            .with_group('root') \
-            .with_mode('0644') \
-            .without_content(%r{^FEATURE\(`use_ct_file'\)dnl$}) \
-            .without_content(%r{^OSTYPE}) \
+          is_expected.to contain_file('/etc/mail/submit.mc')
+            .with_ensure('file')
+            .with_owner('root')
+            .with_group('root')
+            .with_mode('0644')
+            .without_content(%r{^FEATURE\(`use_ct_file'\)dnl$})
+            .without_content(%r{^OSTYPE})
             .with_content(%r{^FEATURE\(`msp', `\[127.0.0.1\]', `MSA'\)dnl$})
 
           is_expected.not_to contain_file('/etc/mail/foo.example.com.submit.mc')
@@ -39,17 +39,17 @@ describe 'sendmail::submit' do
       when 'FreeBSD'
         it {
           is_expected.to contain_class('sendmail::submit')
-          is_expected.to contain_file('/etc/mail/foo.submit.mc') \
-            .with_ensure('file') \
-            .with_owner('root') \
-            .with_group('wheel') \
-            .with_mode('0644') \
-            .without_content(%r{^FEATURE\(`use_ct_file'\)dnl$}) \
-            .with_content(%r{^OSTYPE\(`freebsd6'\)dnl$}) \
+          is_expected.to contain_file('/etc/mail/foo.submit.mc')
+            .with_ensure('file')
+            .with_owner('root')
+            .with_group('wheel')
+            .with_mode('0644')
+            .without_content(%r{^FEATURE\(`use_ct_file'\)dnl$})
+            .with_content(%r{^OSTYPE\(`freebsd6'\)dnl$})
             .with_content(%r{^FEATURE\(`msp', `\[127.0.0.1\]', `MSA'\)dnl$})
 
-          is_expected.to contain_file('/etc/mail/foo.example.com.submit.mc') \
-            .with_ensure('link') \
+          is_expected.to contain_file('/etc/mail/foo.example.com.submit.mc')
+            .with_ensure('link')
             .with_target('foo.submit.mc')
         }
       end
@@ -67,7 +67,7 @@ describe 'sendmail::submit' do
              end
 
       it {
-        is_expected.to contain_file(file) \
+        is_expected.to contain_file(file)
           .with_content(%r{^FEATURE\(`msp', `localhost', `MSA'\)dnl$})
       }
     end
@@ -84,7 +84,7 @@ describe 'sendmail::submit' do
              end
 
       it {
-        is_expected.to contain_file(file) \
+        is_expected.to contain_file(file)
           .with_content(%r{^FEATURE\(`msp', `\[127.0.0.1\]', `25'\)dnl$})
       }
     end
@@ -110,8 +110,8 @@ describe 'sendmail::submit' do
              end
 
       it {
-        is_expected.to contain_file(file) \
-          .with_content(%r{^MASQUERADE_AS\(`example.org'\)dnl$}) \
+        is_expected.to contain_file(file)
+          .with_content(%r{^MASQUERADE_AS\(`example.org'\)dnl$})
           .with_content(%r{^FEATURE\(`masquerade_envelope'\)dnl$})
       }
     end
@@ -128,7 +128,7 @@ describe 'sendmail::submit' do
              end
 
       it {
-        is_expected.to contain_file(file) \
+        is_expected.to contain_file(file)
           .with_content(%r{^FEATURE\(`use_ct_file'\)dnl$})
       }
     end

@@ -15,8 +15,8 @@ describe 'sendmail::virtusertable::entry' do
         is_expected.to contain_class('sendmail::params')
         is_expected.to contain_class('sendmail::makeall')
         is_expected.to contain_class('sendmail::virtusertable::file')
-        is_expected.to contain_augeas('/etc/mail/virtusertable-info@example.com') \
-          .that_requires('Class[sendmail::virtusertable::file]') \
+        is_expected.to contain_augeas('/etc/mail/virtusertable-info@example.com')
+          .that_requires('Class[sendmail::virtusertable::file]')
           .that_notifies('Class[sendmail::makeall]')
       }
     end

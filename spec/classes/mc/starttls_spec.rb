@@ -11,16 +11,16 @@ describe 'sendmail::mc::starttls' do
       when 'Debian'
         it {
           is_expected.to contain_class('sendmail::makeall')
-          is_expected.to contain_concat__fragment('sendmail_mc-starttls') \
-            .with_content(%r{^include.*starttls.m4}) \
-            .with_order('47') \
+          is_expected.to contain_concat__fragment('sendmail_mc-starttls')
+            .with_content(%r{^include.*starttls.m4})
+            .with_order('47')
             .that_notifies('Class[sendmail::makeall]')
         }
       else
         it {
           is_expected.to contain_class('sendmail::makeall')
-          is_expected.to contain_concat__fragment('sendmail_mc-starttls') \
-            .with_order('47') \
+          is_expected.to contain_concat__fragment('sendmail_mc-starttls')
+            .with_order('47')
             .that_notifies('Class[sendmail::makeall]')
         }
       end
@@ -36,9 +36,9 @@ describe 'sendmail::mc::starttls' do
       it {
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-starttls') \
-          .with_content(%r{^define\(`confCACERT', `\/foo'\)dnl}) \
-          .with_order('47') \
+        is_expected.to contain_concat__fragment('sendmail_mc-starttls')
+          .with_content(%r{^define\(`confCACERT', `\/foo'\)dnl})
+          .with_order('47')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -53,9 +53,9 @@ describe 'sendmail::mc::starttls' do
       it {
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-starttls') \
-          .with_content(%r{^define\(`confCACERT_PATH', `\/foo'\)dnl}) \
-          .with_order('47') \
+        is_expected.to contain_concat__fragment('sendmail_mc-starttls')
+          .with_content(%r{^define\(`confCACERT_PATH', `\/foo'\)dnl})
+          .with_order('47')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -70,10 +70,10 @@ describe 'sendmail::mc::starttls' do
       it {
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-starttls') \
-          .with_content(%r{^define\(`confSERVER_CERT', `\/foo'\)dnl}) \
-          .with_content(%r{^define\(`confSERVER_KEY', `\/bar'\)dnl}) \
-          .with_order('47') \
+        is_expected.to contain_concat__fragment('sendmail_mc-starttls')
+          .with_content(%r{^define\(`confSERVER_CERT', `\/foo'\)dnl})
+          .with_content(%r{^define\(`confSERVER_KEY', `\/bar'\)dnl})
+          .with_order('47')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -88,10 +88,10 @@ describe 'sendmail::mc::starttls' do
       it {
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-starttls') \
-          .with_content(%r{^define\(`confCLIENT_CERT', `\/foo'\)dnl}) \
-          .with_content(%r{^define\(`confCLIENT_KEY', `\/bar'\)dnl}) \
-          .with_order('47') \
+        is_expected.to contain_concat__fragment('sendmail_mc-starttls')
+          .with_content(%r{^define\(`confCLIENT_CERT', `\/foo'\)dnl})
+          .with_content(%r{^define\(`confCLIENT_KEY', `\/bar'\)dnl})
+          .with_order('47')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -106,9 +106,9 @@ describe 'sendmail::mc::starttls' do
       it {
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-starttls') \
-          .with_content(%r{^define\(`confCRL', `\/foo'\)dnl}) \
-          .with_order('47') \
+        is_expected.to contain_concat__fragment('sendmail_mc-starttls')
+          .with_content(%r{^define\(`confCRL', `\/foo'\)dnl})
+          .with_order('47')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -123,9 +123,9 @@ describe 'sendmail::mc::starttls' do
       it {
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-starttls') \
-          .with_content(%r{^define\(`confDH_PARAMETERS', `512'\)dnl}) \
-          .with_order('47') \
+        is_expected.to contain_concat__fragment('sendmail_mc-starttls')
+          .with_content(%r{^define\(`confDH_PARAMETERS', `512'\)dnl})
+          .with_order('47')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -140,9 +140,9 @@ describe 'sendmail::mc::starttls' do
       it {
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-starttls') \
-          .with_content(%r{^define\(`confDH_PARAMETERS', `1024'\)dnl}) \
-          .with_order('47') \
+        is_expected.to contain_concat__fragment('sendmail_mc-starttls')
+          .with_content(%r{^define\(`confDH_PARAMETERS', `1024'\)dnl})
+          .with_order('47')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -157,9 +157,9 @@ describe 'sendmail::mc::starttls' do
       it {
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-starttls') \
-          .with_content(%r{^define\(`confDH_PARAMETERS', `2048'\)dnl}) \
-          .with_order('47') \
+        is_expected.to contain_concat__fragment('sendmail_mc-starttls')
+          .with_content(%r{^define\(`confDH_PARAMETERS', `2048'\)dnl})
+          .with_order('47')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -174,9 +174,9 @@ describe 'sendmail::mc::starttls' do
       it {
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-starttls') \
-          .with_content(%r{^define\(`confDH_PARAMETERS', `\/foo'\)dnl}) \
-          .with_order('47') \
+        is_expected.to contain_concat__fragment('sendmail_mc-starttls')
+          .with_content(%r{^define\(`confDH_PARAMETERS', `\/foo'\)dnl})
+          .with_order('47')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -191,9 +191,9 @@ describe 'sendmail::mc::starttls' do
       it {
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-starttls') \
-          .with_content(%r{^define\(`confTLS_SRV_OPTIONS', `V'\)dnl}) \
-          .with_order('47') \
+        is_expected.to contain_concat__fragment('sendmail_mc-starttls')
+          .with_content(%r{^define\(`confTLS_SRV_OPTIONS', `V'\)dnl})
+          .with_order('47')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -206,7 +206,7 @@ describe 'sendmail::mc::starttls' do
       end
 
       it {
-        is_expected.to contain_sendmail__mc__local_config('CipherList') \
+        is_expected.to contain_sendmail__mc__local_config('CipherList')
           .with_content(%r{^O CipherList=foo$})
       }
     end
@@ -219,7 +219,7 @@ describe 'sendmail::mc::starttls' do
       end
 
       it {
-        is_expected.to contain_sendmail__mc__define('confCIPHER_LIST') \
+        is_expected.to contain_sendmail__mc__define('confCIPHER_LIST')
           .with_expansion(%r{^foo$})
       }
     end
@@ -232,7 +232,7 @@ describe 'sendmail::mc::starttls' do
       end
 
       it {
-        is_expected.to contain_sendmail__mc__local_config('ServerSSLOptions') \
+        is_expected.to contain_sendmail__mc__local_config('ServerSSLOptions')
           .with_content(%r{^O ServerSSLOptions=foo$})
       }
     end
@@ -245,7 +245,7 @@ describe 'sendmail::mc::starttls' do
       end
 
       it {
-        is_expected.to contain_sendmail__mc__define('confSERVER_SSL_OPTIONS') \
+        is_expected.to contain_sendmail__mc__define('confSERVER_SSL_OPTIONS')
           .with_expansion(%r{^foo$})
       }
     end
@@ -258,7 +258,7 @@ describe 'sendmail::mc::starttls' do
       end
 
       it {
-        is_expected.to contain_sendmail__mc__local_config('ClientSSLOptions') \
+        is_expected.to contain_sendmail__mc__local_config('ClientSSLOptions')
           .with_content(%r{^O ClientSSLOptions=foo$})
       }
     end
@@ -271,7 +271,7 @@ describe 'sendmail::mc::starttls' do
       end
 
       it {
-        is_expected.to contain_sendmail__mc__define('confCLIENT_SSL_OPTIONS') \
+        is_expected.to contain_sendmail__mc__define('confCLIENT_SSL_OPTIONS')
           .with_expansion(%r{^foo$})
       }
     end

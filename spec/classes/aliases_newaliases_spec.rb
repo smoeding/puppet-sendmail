@@ -7,8 +7,8 @@ describe 'sendmail::aliases::newaliases' do
 
       it {
         is_expected.to contain_class('sendmail::params')
-        is_expected.to contain_exec('sendmail::aliases::newaliases') \
-          .with_command('/usr/sbin/sendmail -bi') \
+        is_expected.to contain_exec('sendmail::aliases::newaliases')
+          .with_command('/usr/sbin/sendmail -bi')
           .with_refreshonly('true')
       }
     end

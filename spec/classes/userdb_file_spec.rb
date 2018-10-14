@@ -11,37 +11,37 @@ describe 'sendmail::userdb::file' do
       when 'Debian'
         it {
           is_expected.to contain_class('sendmail::userdb::file')
-          is_expected.to contain_file('/etc/mail/userdb') \
-            .with_ensure('file') \
-            .with_owner('smmta') \
-            .with_group('smmsp') \
-            .with_mode('0640') \
-            .with_content(nil) \
-            .with_source(nil) \
+          is_expected.to contain_file('/etc/mail/userdb')
+            .with_ensure('file')
+            .with_owner('smmta')
+            .with_group('smmsp')
+            .with_mode('0640')
+            .with_content(nil)
+            .with_source(nil)
             .that_notifies('Class[sendmail::makeall]')
         }
       when 'RedHat'
         it {
           is_expected.to contain_class('sendmail::userdb::file')
-          is_expected.to contain_file('/etc/mail/userdb') \
-            .with_ensure('file') \
-            .with_owner('root') \
-            .with_group('root') \
-            .with_mode('0640') \
-            .with_content(nil) \
-            .with_source(nil) \
+          is_expected.to contain_file('/etc/mail/userdb')
+            .with_ensure('file')
+            .with_owner('root')
+            .with_group('root')
+            .with_mode('0640')
+            .with_content(nil)
+            .with_source(nil)
             .that_notifies('Class[sendmail::makeall]')
         }
       when 'FreeBSD'
         it {
           is_expected.to contain_class('sendmail::userdb::file')
-          is_expected.to contain_file('/etc/mail/userdb') \
-            .with_ensure('file') \
-            .with_owner('root') \
-            .with_group('wheel') \
-            .with_mode('0640') \
-            .with_content(nil) \
-            .with_source(nil) \
+          is_expected.to contain_file('/etc/mail/userdb')
+            .with_ensure('file')
+            .with_owner('root')
+            .with_group('wheel')
+            .with_mode('0640')
+            .with_content(nil)
+            .with_source(nil)
             .that_notifies('Class[sendmail::makeall]')
         }
       end
@@ -56,10 +56,10 @@ describe 'sendmail::userdb::file' do
 
       it {
         is_expected.to contain_class('sendmail::userdb::file')
-        is_expected.to contain_file('/etc/mail/userdb') \
-          .with_ensure('file') \
-          .with_content('foo') \
-          .with_source(nil) \
+        is_expected.to contain_file('/etc/mail/userdb')
+          .with_ensure('file')
+          .with_content('foo')
+          .with_source(nil)
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -73,10 +73,10 @@ describe 'sendmail::userdb::file' do
 
       it {
         is_expected.to contain_class('sendmail::userdb::file')
-        is_expected.to contain_file('/etc/mail/userdb') \
-          .with_ensure('file') \
-          .with_content(nil) \
-          .with_source('foo') \
+        is_expected.to contain_file('/etc/mail/userdb')
+          .with_ensure('file')
+          .with_content(nil)
+          .with_source('foo')
           .that_notifies('Class[sendmail::makeall]')
       }
     end

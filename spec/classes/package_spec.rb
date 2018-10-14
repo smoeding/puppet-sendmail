@@ -8,14 +8,14 @@ describe 'sendmail::package' do
       case facts[:osfamily]
       when 'Debian'
         it {
-          is_expected.to contain_class('sendmail::package') \
+          is_expected.to contain_class('sendmail::package')
             .with_package_manage(true)
 
           is_expected.to contain_package('sendmail')
         }
       when 'RedHat'
         it {
-          is_expected.to contain_class('sendmail::package') \
+          is_expected.to contain_class('sendmail::package')
             .with_package_manage(true)
 
           is_expected.to contain_package('sendmail')
@@ -23,7 +23,7 @@ describe 'sendmail::package' do
         }
       when 'FreeBSD'
         it {
-          is_expected.to contain_class('sendmail::package') \
+          is_expected.to contain_class('sendmail::package')
             .with_package_manage(false)
 
           is_expected.not_to contain_package('sendmail')
@@ -69,7 +69,7 @@ describe 'sendmail::package' do
         { auxiliary_packages: ['foo', 'bar'] }
       end
 
-      case facts[:osfamily]
+      case facts[:os#family]
       when 'Debian', 'RedHat'
         it {
           is_expected.to contain_package('foo')

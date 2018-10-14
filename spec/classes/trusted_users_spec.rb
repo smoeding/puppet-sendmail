@@ -11,31 +11,31 @@ describe 'sendmail::trusted_users' do
       when 'Debian'
         it {
           is_expected.to contain_class('sendmail::trusted_users')
-          is_expected.to contain_file('/etc/mail/trusted-users') \
-            .with_ensure('file') \
-            .with_owner('root') \
-            .with_group('smmsp') \
-            .with_mode('0644') \
+          is_expected.to contain_file('/etc/mail/trusted-users')
+            .with_ensure('file')
+            .with_owner('root')
+            .with_group('smmsp')
+            .with_mode('0644')
             .with_content('')
         }
       when 'RedHat'
         it {
           is_expected.to contain_class('sendmail::trusted_users')
-          is_expected.to contain_file('/etc/mail/trusted-users') \
-            .with_ensure('file') \
-            .with_owner('root') \
-            .with_group('root') \
-            .with_mode('0644') \
+          is_expected.to contain_file('/etc/mail/trusted-users')
+            .with_ensure('file')
+            .with_owner('root')
+            .with_group('root')
+            .with_mode('0644')
             .with_content('')
         }
       when 'FreeBSD'
         it {
           is_expected.to contain_class('sendmail::trusted_users')
-          is_expected.to contain_file('/etc/mail/trusted-users') \
-            .with_ensure('file') \
-            .with_owner('root') \
-            .with_group('wheel') \
-            .with_mode('0644') \
+          is_expected.to contain_file('/etc/mail/trusted-users')
+            .with_ensure('file')
+            .with_owner('root')
+            .with_group('wheel')
+            .with_mode('0644')
             .with_content('')
         }
       end
@@ -68,7 +68,7 @@ describe 'sendmail::trusted_users' do
       end
 
       it {
-        is_expected.to contain_file('/etc/mail/trusted-users') \
+        is_expected.to contain_file('/etc/mail/trusted-users')
           .with_content("foo\n")
       }
     end
@@ -80,7 +80,7 @@ describe 'sendmail::trusted_users' do
       end
 
       it {
-        is_expected.to contain_file('/etc/mail/trusted-users') \
+        is_expected.to contain_file('/etc/mail/trusted-users')
           .with_content("bar\nbaz\nfoo\n")
       }
     end

@@ -13,9 +13,9 @@ describe 'sendmail::mc::ostype' do
         it {
           is_expected.to contain_class('sendmail::makeall')
 
-          is_expected.to contain_concat__fragment('sendmail_mc-ostype-debian') \
-            .with_content(%r{^OSTYPE\(`debian'\)dnl$}) \
-            .with_order('05') \
+          is_expected.to contain_concat__fragment('sendmail_mc-ostype-debian')
+            .with_content(%r{^OSTYPE\(`debian'\)dnl$})
+            .with_order('05')
             .that_notifies('Class[sendmail::makeall]')
         }
       when 'RedHat'
@@ -24,9 +24,9 @@ describe 'sendmail::mc::ostype' do
         it {
           is_expected.to contain_class('sendmail::makeall')
 
-          is_expected.to contain_concat__fragment('sendmail_mc-ostype-linux') \
-            .with_content(%r{^OSTYPE\(`linux'\)dnl$}) \
-            .with_order('05') \
+          is_expected.to contain_concat__fragment('sendmail_mc-ostype-linux')
+            .with_content(%r{^OSTYPE\(`linux'\)dnl$})
+            .with_order('05')
             .that_notifies('Class[sendmail::makeall]')
         }
 
@@ -36,9 +36,9 @@ describe 'sendmail::mc::ostype' do
         it {
           is_expected.to contain_class('sendmail::makeall')
 
-          is_expected.to contain_concat__fragment('sendmail_mc-ostype-freebsd6') \
-            .with_content(%r{^OSTYPE\(`freebsd6'\)dnl$}) \
-            .with_order('05') \
+          is_expected.to contain_concat__fragment('sendmail_mc-ostype-freebsd6')
+            .with_content(%r{^OSTYPE\(`freebsd6'\)dnl$})
+            .with_order('05')
             .that_notifies('Class[sendmail::makeall]')
         }
       end

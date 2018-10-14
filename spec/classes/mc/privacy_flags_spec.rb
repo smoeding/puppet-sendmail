@@ -9,7 +9,7 @@ describe 'sendmail::mc::privacy_flags' do
 
       it {
         is_expected.to contain_class('sendmail::mc::privacy_flags')
-        is_expected.to contain_sendmail__mc__define('confPRIVACY_FLAGS') \
+        is_expected.to contain_sendmail__mc__define('confPRIVACY_FLAGS')
           .with_expansion('')
       }
     end
@@ -28,7 +28,7 @@ describe 'sendmail::mc::privacy_flags' do
         end
 
         it {
-          is_expected.to contain_sendmail__mc__define('confPRIVACY_FLAGS') \
+          is_expected.to contain_sendmail__mc__define('confPRIVACY_FLAGS')
             .with_expansion(flag)
         }
       end

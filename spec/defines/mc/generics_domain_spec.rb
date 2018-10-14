@@ -11,9 +11,9 @@ describe 'sendmail::mc::generics_domain' do
       it {
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-generics_domain-example.net') \
-          .with_content(%r{^GENERICS_DOMAIN\(`example.net'\)dnl$}) \
-          .with_order('32') \
+        is_expected.to contain_concat__fragment('sendmail_mc-generics_domain-example.net')
+          .with_content(%r{^GENERICS_DOMAIN\(`example.net'\)dnl$})
+          .with_order('32')
           .that_notifies('Class[sendmail::makeall]')
       }
     end

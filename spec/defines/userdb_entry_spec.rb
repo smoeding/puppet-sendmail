@@ -15,8 +15,8 @@ describe 'sendmail::userdb::entry' do
         is_expected.to contain_class('sendmail::params')
         is_expected.to contain_class('sendmail::makeall')
         is_expected.to contain_class('sendmail::userdb::file')
-        is_expected.to contain_augeas('/etc/mail/userdb-fred:maildrop') \
-          .that_requires('Class[sendmail::userdb::file]') \
+        is_expected.to contain_augeas('/etc/mail/userdb-fred:maildrop')
+          .that_requires('Class[sendmail::userdb::file]')
           .that_notifies('Class[sendmail::makeall]')
       }
     end

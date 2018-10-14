@@ -12,8 +12,8 @@ describe 'sendmail::genericstable' do
 
       it {
         is_expected.to contain_class('sendmail::genericstable')
-        is_expected.to contain_class('sendmail::genericstable::file') \
-          .with_content('foo') \
+        is_expected.to contain_class('sendmail::genericstable::file')
+          .with_content('foo')
           .with_source(nil)
       }
     end
@@ -26,8 +26,8 @@ describe 'sendmail::genericstable' do
 
       it {
         is_expected.to contain_class('sendmail::genericstable')
-        is_expected.to contain_class('sendmail::genericstable::file') \
-          .with_content(nil) \
+        is_expected.to contain_class('sendmail::genericstable::file')
+          .with_content(nil)
           .with_source('foo')
       }
     end

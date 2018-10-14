@@ -15,8 +15,8 @@ describe 'sendmail::mailertable::entry' do
         is_expected.to contain_class('sendmail::params')
         is_expected.to contain_class('sendmail::makeall')
         is_expected.to contain_class('sendmail::mailertable::file')
-        is_expected.to contain_augeas('/etc/mail/mailertable-.example.com') \
-          .that_requires('Class[sendmail::mailertable::file]') \
+        is_expected.to contain_augeas('/etc/mail/mailertable-.example.com')
+          .that_requires('Class[sendmail::mailertable::file]')
           .that_notifies('Class[sendmail::makeall]')
       }
     end

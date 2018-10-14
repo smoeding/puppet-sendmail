@@ -1,4 +1,4 @@
-require 'spec_helper'
+requirespec_helper'
 
 describe 'sendmail::mc::feature' do
   on_supported_os.each do |os, facts|
@@ -11,9 +11,9 @@ describe 'sendmail::mc::feature' do
         is_expected.to contain_class('sendmail::mc::feature_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-feature-no_default_msa') \
-          .with_content(%r{^FEATURE\(`no_default_msa'\)dnl$}) \
-          .with_order('22') \
+        is_expected.to contain_concat__fragment('sendmail_mc-feature-no_default_msa')
+          .with_content(%r{^FEATURE\(`no_default_msa'\)dnl$})
+          .with_order('22')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -27,9 +27,9 @@ describe 'sendmail::mc::feature' do
         is_expected.to contain_class('sendmail::mc::feature_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-feature-no_default_msa') \
-          .with_content(%r{^FEATURE\(`no_default_msa', `foo'\)dnl$}) \
-          .with_order('22') \
+        is_expected.to contain_concat__fragment('sendmail_mc-feature-no_default_msa')
+          .with_content(%r{^FEATURE\(`no_default_msa', `foo'\)dnl$})
+          .with_order('22')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -43,9 +43,9 @@ describe 'sendmail::mc::feature' do
         is_expected.to contain_class('sendmail::mc::feature_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-feature-no_default_msa') \
-          .with_content(%r{^FEATURE\(`no_default_msa', `foo'\)dnl$}) \
-          .with_order('22') \
+        is_expected.to contain_concat__fragment('sendmail_mc-feature-no_default_msa')
+          .with_content(%r{^FEATURE\(`no_default_msa', `foo'\)dnl$})
+          .with_order('22')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -59,9 +59,9 @@ describe 'sendmail::mc::feature' do
         is_expected.to contain_class('sendmail::mc::feature_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-feature-no_default_msa') \
-          .with_content(%r{^FEATURE\(`no_default_msa', `foo', `bar'\)dnl$}) \
-          .with_order('22') \
+        is_expected.to contain_concat__fragment('sendmail_mc-feature-no_default_msa')
+          .with_content(%r{^FEATURE\(`no_default_msa', `foo', `bar'\)dnl$})
+          .with_order('22')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -75,9 +75,9 @@ describe 'sendmail::mc::feature' do
         is_expected.to contain_class('sendmail::mc::feature_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-feature-no_default_msa') \
-          .with_content(%r{^FEATURE\(`baz', `foo'\)dnl$}) \
-          .with_order('22') \
+        is_expected.to contain_concat__fragment('sendmail_mc-feature-no_default_msa')
+          .with_content(%r{^FEATURE\(`baz', `foo'\)dnl$})
+          .with_order('22')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -91,9 +91,9 @@ describe 'sendmail::mc::feature' do
         is_expected.to contain_class('sendmail::mc::feature_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-feature-no_default_msa') \
-          .with_content(%r{^FEATURE\(`no_default_msa', `foo'\)dnl$}) \
-          .with_order('22') \
+        is_expected.to contain_concat__fragment('sendmail_mc-feature-no_default_msa')
+          .with_content(%r{^FEATURE\(`no_default_msa', `foo'\)dnl$})
+          .with_order('22')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -107,9 +107,9 @@ describe 'sendmail::mc::feature' do
         is_expected.to contain_class('sendmail::mc::feature_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-feature-no_default_msa') \
-          .with_content(%r{^FEATURE\(`no_default_msa', foo\)dnl$}) \
-          .with_order('22') \
+        is_expected.to contain_concat__fragment('sendmail_mc-feature-no_default_msa')
+          .with_content(%r{^FEATURE\(`no_default_msa', foo\)dnl$})
+          .with_order('22')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -123,9 +123,9 @@ describe 'sendmail::mc::feature' do
         is_expected.to contain_class('sendmail::mc::feature_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-feature-no_default_msa') \
-          .with_content(%r{^FEATURE\(`no_default_msa', `'\)dnl$}) \
-          .with_order('22') \
+        is_expected.to contain_concat__fragment('sendmail_mc-feature-no_default_msa')
+          .with_content(%r{^FEATURE\(`no_default_msa', `'\)dnl$})
+          .with_order('22')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -137,8 +137,8 @@ describe 'sendmail::mc::feature' do
         is_expected.to contain_class('sendmail::mc::feature_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-feature-ldap_routing') \
-          .with_content(%r{^FEATURE\(`ldap_routing'\)dnl$}) \
+        is_expected.to contain_concat__fragment('sendmail_mc-feature-ldap_routing')
+          .with_content(%r{^FEATURE\(`ldap_routing'\)dnl$})
           .with_order('19')
       }
     end
@@ -150,8 +150,8 @@ describe 'sendmail::mc::feature' do
         is_expected.to contain_class('sendmail::mc::feature_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-feature-conncontrol') \
-          .with_content(%r{^FEATURE\(`conncontrol'\)dnl$}) \
+        is_expected.to contain_concat__fragment('sendmail_mc-feature-conncontrol')
+          .with_content(%r{^FEATURE\(`conncontrol'\)dnl$})
           .with_order('28')
       }
     end
@@ -163,8 +163,8 @@ describe 'sendmail::mc::feature' do
         is_expected.to contain_class('sendmail::mc::feature_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-feature-ratecontrol') \
-          .with_content(%r{^FEATURE\(`ratecontrol'\)dnl$}) \
+        is_expected.to contain_concat__fragment('sendmail_mc-feature-ratecontrol')
+          .with_content(%r{^FEATURE\(`ratecontrol'\)dnl$})
           .with_order('28')
       }
     end
@@ -176,8 +176,8 @@ describe 'sendmail::mc::feature' do
         is_expected.to contain_class('sendmail::mc::feature_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-feature-nullclient') \
-          .with_content(%r{^FEATURE\(`nullclient'\)dnl$}) \
+        is_expected.to contain_concat__fragment('sendmail_mc-feature-nullclient')
+          .with_content(%r{^FEATURE\(`nullclient'\)dnl$})
           .with_order('29')
       }
     end
@@ -189,8 +189,8 @@ describe 'sendmail::mc::feature' do
         is_expected.to contain_class('sendmail::mc::feature_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-feature-no_default_msa') \
-          .with_content(%r{^FEATURE\(`no_default_msa'\)dnl$}) \
+        is_expected.to contain_concat__fragment('sendmail_mc-feature-no_default_msa')
+          .with_content(%r{^FEATURE\(`no_default_msa'\)dnl$})
           .with_order('22')
       }
     end
@@ -202,8 +202,8 @@ describe 'sendmail::mc::feature' do
         is_expected.to contain_class('sendmail::mc::feature_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-feature-access') \
-          .with_content(%r{^FEATURE\(`access_db'\)dnl$}) \
+        is_expected.to contain_concat__fragment('sendmail_mc-feature-access')
+          .with_content(%r{^FEATURE\(`access_db'\)dnl$})
           .with_order('22')
       }
     end

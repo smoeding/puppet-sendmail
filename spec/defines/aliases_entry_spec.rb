@@ -14,12 +14,12 @@ describe 'sendmail::aliases::entry' do
         is_expected.to contain_class('sendmail::params')
         is_expected.to contain_class('sendmail::aliases::file')
         is_expected.to contain_class('sendmail::aliases::newaliases')
-        is_expected.to contain_mailalias('fred') \
-          .that_requires('Class[sendmail::aliases::file]') \
+        is_expected.to contain_mailalias('fred')
+          .that_requires('Class[sendmail::aliases::file]')
           .that_notifies('Class[sendmail::aliases::newaliases]')
 
-        is_expected.to contain_mailalias('fred') \
-          .with_ensure('present') \
+        is_expected.to contain_mailalias('fred')
+          .with_ensure('present')
           .with_recipient('fred@example.org')
       }
     end

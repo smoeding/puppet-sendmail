@@ -11,11 +11,11 @@ describe 'sendmail::mc' do
       when 'Debian'
         it {
           is_expected.to contain_class('sendmail::mc')
-          is_expected.to contain_concat('sendmail.mc') \
-            .with_ensure('present') \
-            .with_path('/etc/mail/sendmail.mc') \
-            .with_owner('root') \
-            .with_group('smmsp') \
+          is_expected.to contain_concat('sendmail.mc')
+            .with_ensure('present')
+            .with_path('/etc/mail/sendmail.mc')
+            .with_owner('root')
+            .with_group('smmsp')
             .with_mode('0644')
 
           is_expected.to contain_sendmail__mc__ostype('debian')
@@ -26,11 +26,11 @@ describe 'sendmail::mc' do
       when 'RedHat'
         it {
           is_expected.to contain_class('sendmail::mc')
-          is_expected.to contain_concat('sendmail.mc') \
-            .with_ensure('present') \
-            .with_path('/etc/mail/sendmail.mc') \
-            .with_owner('root') \
-            .with_group('root') \
+          is_expected.to contain_concat('sendmail.mc')
+            .with_ensure('present')
+            .with_path('/etc/mail/sendmail.mc')
+            .with_owner('root')
+            .with_group('root')
             .with_mode('0644')
 
           is_expected.to contain_sendmail__mc__ostype('linux')
@@ -40,25 +40,25 @@ describe 'sendmail::mc' do
       when 'FreeBSD'
         it {
           is_expected.to contain_class('sendmail::mc')
-          is_expected.to contain_concat('sendmail.mc') \
-            .with_ensure('present') \
-            .with_path('/etc/mail/foo.mc') \
-            .with_owner('root') \
-            .with_group('wheel') \
+          is_expected.to contain_concat('sendmail.mc')
+            .with_ensure('present')
+            .with_path('/etc/mail/foo.mc')
+            .with_owner('root')
+            .with_group('wheel')
             .with_mode('0644')
 
           is_expected.to contain_sendmail__mc__ostype('freebsd6')
 
-          is_expected.to contain_file('/etc/mail/foo.example.com.mc') \
-            .with_ensure('link') \
+          is_expected.to contain_file('/etc/mail/foo.example.com.mc')
+            .with_ensure('link')
             .with_target('foo.mc')
         }
       end
 
       it {
-        is_expected.to contain_concat__fragment('sendmail_mc-header') \
-          .with_target('sendmail.mc') \
-          .with_order('00') \
+        is_expected.to contain_concat__fragment('sendmail_mc-header')
+          .with_target('sendmail.mc')
+          .with_order('00')
           .that_notifies('Class[sendmail::makeall]')
 
         is_expected.not_to contain_sendmail__mc__define('SMART_HOST')
@@ -69,10 +69,10 @@ describe 'sendmail::mc' do
         is_expected.not_to contain_sendmail__mc__define('confDONT_PROBE_INTERFACES')
         is_expected.not_to contain_sendmail__mc__trust_auth_mech('trust_auth_mech')
 
-        is_expected.to contain_sendmail__mc__daemon_options('MTA-v4') \
+        is_expected.to contain_sendmail__mc__daemon_options('MTA-v4')
           .with_family('inet')
 
-        is_expected.to contain_sendmail__mc__daemon_options('MTA-v6') \
+        is_expected.to contain_sendmail__mc__daemon_options('MTA-v6')
           .with_family('inet6')
 
         is_expected.to contain_sendmail__mc__mailer('local')
@@ -131,7 +131,7 @@ describe 'sendmail::mc' do
       end
 
       it {
-        is_expected.to contain_sendmail__mc__define('SMART_HOST') \
+        is_expected.to contain_sendmail__mc__define('SMART_HOST')
           .with_expansion('relay')
       }
     end
@@ -143,7 +143,7 @@ describe 'sendmail::mc' do
       end
 
       it {
-        is_expected.to contain_sendmail__mc__define('confLOG_LEVEL') \
+        is_expected.to contain_sendmail__mc__define('confLOG_LEVEL')
           .with_expansion('7')
       }
     end
@@ -164,7 +164,7 @@ describe 'sendmail::mc' do
       end
 
       it {
-        is_expected.to contain_sendmail__mc__define('confDOMAIN_NAME') \
+        is_expected.to contain_sendmail__mc__define('confDOMAIN_NAME')
           .with_expansion('smtp.example.com')
       }
     end
@@ -176,7 +176,7 @@ describe 'sendmail::mc' do
       end
 
       it {
-        is_expected.to contain_sendmail__mc__define('confMAX_MESSAGE_SIZE') \
+        is_expected.to contain_sendmail__mc__define('confMAX_MESSAGE_SIZE')
           .with_expansion('42')
       }
     end
@@ -188,7 +188,7 @@ describe 'sendmail::mc' do
       end
 
       it {
-        is_expected.to contain_sendmail__mc__define('confMAX_MESSAGE_SIZE') \
+        is_expected.to contain_sendmail__mc__define('confMAX_MESSAGE_SIZE')
           .with_expansion('1024')
       }
     end
@@ -200,7 +200,7 @@ describe 'sendmail::mc' do
       end
 
       it {
-        is_expected.to contain_sendmail__mc__define('confMAX_MESSAGE_SIZE') \
+        is_expected.to contain_sendmail__mc__define('confMAX_MESSAGE_SIZE')
           .with_expansion('1048576')
       }
     end
@@ -221,7 +221,7 @@ describe 'sendmail::mc' do
       end
 
       it {
-        is_expected.to contain_sendmail__mc__define('confDONT_PROBE_INTERFACES') \
+        is_expected.to contain_sendmail__mc__define('confDONT_PROBE_INTERFACES')
           .with_expansion('foo')
       }
     end
@@ -290,7 +290,7 @@ describe 'sendmail::mc' do
       end
 
       it {
-        is_expected.to contain_sendmail__mc__trust_auth_mech('trust_auth_mech') \
+        is_expected.to contain_sendmail__mc__trust_auth_mech('trust_auth_mech')
           .with_trust_auth_mech('PLAIN')
       }
     end
@@ -302,7 +302,7 @@ describe 'sendmail::mc' do
       end
 
       it {
-        is_expected.to contain_sendmail__mc__trust_auth_mech('trust_auth_mech') \
+        is_expected.to contain_sendmail__mc__trust_auth_mech('trust_auth_mech')
           .with_trust_auth_mech(['PLAIN', 'LOGIN'])
       }
     end
@@ -314,7 +314,7 @@ describe 'sendmail::mc' do
       end
 
       it {
-        is_expected.to contain_sendmail__mc__define('confCF_VERSION') \
+        is_expected.to contain_sendmail__mc__define('confCF_VERSION')
           .with_expansion('1.2-3')
       }
     end

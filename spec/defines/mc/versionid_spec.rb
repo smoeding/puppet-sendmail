@@ -10,9 +10,9 @@ describe 'sendmail::mc::versionid' do
       it {
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-versionid') \
-          .with_content(%r{^VERSIONID\(`foo'\)dnl$}) \
-          .with_order('01') \
+        is_expected.to contain_concat__fragment('sendmail_mc-versionid')
+          .with_content(%r{^VERSIONID\(`foo'\)dnl$})
+          .with_order('01')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -25,9 +25,9 @@ describe 'sendmail::mc::versionid' do
       it {
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-versionid') \
-          .with_content(%r{^VERSIONID\(`bar'\)dnl$}) \
-          .with_order('01') \
+        is_expected.to contain_concat__fragment('sendmail_mc-versionid')
+          .with_content(%r{^VERSIONID\(`bar'\)dnl$})
+          .with_order('01')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
