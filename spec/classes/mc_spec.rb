@@ -214,18 +214,6 @@ describe 'sendmail::mc' do
       it { is_expected.to compile.and_raise_error(%r{must be numeric}) }
     end
 
-    context "on #{os} with dont_probe_interfaces => foo" do
-      let(:facts) { facts }
-      let(:params) do
-        { dont_probe_interfaces: 'foo' }
-      end
-
-      it {
-        is_expected.to contain_sendmail__mc__define('confDONT_PROBE_INTERFACES')
-          .with_expansion('foo')
-      }
-    end
-
     context "on #{os} with enable_ipv4_daemon => true" do
       let(:facts) { facts }
       let(:params) do

@@ -96,7 +96,7 @@ class sendmail::mc (
   $domain_name           = undef,
   $max_message_size      = undef,
   $log_level             = undef,
-  $dont_probe_interfaces = undef,
+  Optional[Boolean] $dont_probe_interfaces = undef,
   Boolean $enable_ipv4_daemon    = true,
   Boolean $enable_ipv6_daemon    = true,
   $mailers               = $::sendmail::params::mailers,
@@ -199,7 +199,7 @@ class sendmail::mc (
     }
   }
 
-  if ($dont_probe_interfaces != undef) {
+  if $dont_probe_interfaces {
     ::sendmail::mc::define { 'confDONT_PROBE_INTERFACES':
       expansion => bool2str($dont_probe_interfaces),
     }

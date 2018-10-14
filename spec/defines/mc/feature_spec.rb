@@ -1,4 +1,4 @@
-requirespec_helper'
+require 'spec_helper'
 
 describe 'sendmail::mc::feature' do
   on_supported_os.each do |os, facts|
