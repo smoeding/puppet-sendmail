@@ -1,8 +1,0 @@
-FEATURE(`enhdnsbl', `<%= @blacklist -%>'<%# no newline -%>
-<%- if @commas.to_i > 1 -%>, <% end -%>
-<%- if @reject_message -%>`<%= @reject_message -%>'<% end -%>
-<%- if @commas.to_i > 2 -%>, <% end -%>
-<%- if @temporary_failure -%>`<%= @temporary_failure -%>'<% end -%>
-<%- if @commas.to_i > 3 -%>, <% end -%>
-<%- if @lookup_result -%>`<%= @lookup_result -%>'<% end -%>
-)dnl

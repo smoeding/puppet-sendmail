@@ -7,13 +7,13 @@
 # [*blacklist*]
 #   The DNS name to query the blacklist.
 #
-# [*reject_message*]
-#   The error message used when rejecting a message.
-#
 # [*allow_temporary_failure*]
 #   Determine what happens when a temporary failure of the DNS lookup
 #   occurs. The message is accepted when this parameter is set to 'false'
 #   (the default). A temporary error is signaled when this is set to 'true'.
+#
+# [*reject_message*]
+#   The error message used when rejecting a message.
 #
 # [*lookup_result*]
 #   Check the DNS lookup for this result. Leave this parameter unset to
@@ -33,36 +33,30 @@
 #
 #
 define sendmail::mc::enhdnsbl (
-  String  $blacklist               = $title,
-  String  $reject_message          = undef,
-  Boolean $allow_temporary_failure = false,
-  String  $lookup_result           = undef,
+  String           $blacklist               = $title,
+  Boolean          $allow_temporary_failure = false,
+  Optional[String] $reject_message          = undef,
+  Optional[String] $lookup_result           = undef,
 ) {
+  include ::sendmail::makeall
 
-  # The parameter for temporary_failure must be `t' or empty
-  $temporary_failure = $allow_temporary_failure ? {
-    true  => 't',
-    false => undef,
-  }
+  $_reject_message =
 
-  # Find out how many commas to separate the parameters we need
-  if ($lookup_result != undef) {
-    $commas = 4
-  }
-  elsif ($temporary_failure == 't') {
-    $commas = 3
-  }
-  elsif ($reject_message != undef) {
-    $commas = 2
-  }
-  else {
-    $commas = 1
-  }
+  $args_array = [
+    "`enhdnsbl'",
+    "`${blacklist}'",
+    $reject_message ? { undef => '', default => "`${reject_message}'" },
+    bool2str($allow_temporary_failure, "`t'", ''),
+    $lookup_result ? { undef => '', default => "`${lookup_result}'" },
+  ]
+
+  # Join array to string and remove trailing empty parameters
+  $args = regsubst(join($args_array, ', '), '[, ]+$', '')
 
   concat::fragment { "sendmail_mc-enhdnsbl_${blacklist}":
     target  => 'sendmail.mc',
     order   => '51',
-    content => template('sendmail/enhdnsbl.m4.erb'),
+    content => "FEATURE(${args})dnl\n",
     notify  => Class['::sendmail::makeall'],
   }
 
