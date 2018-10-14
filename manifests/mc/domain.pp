@@ -4,7 +4,7 @@
 #
 # == Parameters:
 #
-# [*domain*]
+# [*domainname*]
 #   The name of the sendmail domain file as a string. The value is used as
 #   argument to the 'DOMAIN' macro to the generated sendmail.mc file. This
 #   will include the m4 file with domain specific settings.
@@ -19,14 +19,14 @@
 #
 #
 define sendmail::mc::domain (
-  String $domain = $title,
+  String $domainname = $title,
 ) {
   include ::sendmail::makeall
 
-  concat::fragment { "sendmail_mc-domain-${domain}":
+  concat::fragment { "sendmail_mc-domain-${domainname}":
     target  => 'sendmail.mc',
     order   => '07',
-    content => inline_template("DOMAIN(`<%= @domain -%>')dnl\n"),
+    content => "DOMAIN(`${domainname}')dnl\n",
     notify  => Class['::sendmail::makeall'],
   }
 }

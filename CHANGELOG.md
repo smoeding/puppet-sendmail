@@ -1,3 +1,7 @@
+### Bugfixes
+
+- Rename parameter domain to domainname for sendmail::mc::domain to prevent clash with fact.
+
 ## 2018-06-24 - Release 1.5.0
 
 ### Summary
