@@ -11,14 +11,14 @@ describe 'sendmail::mc::define' do
         is_expected.to contain_class('sendmail::mc::define_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-define-foobar') \
-          .with_content(%r{^define\(`foobar', `'\)dnl$}) \
-          .with_order('12') \
+        is_expected.to contain_concat__fragment('sendmail_mc-define-foobar')
+          .with_content(%r{^define\(`foobar', `'\)dnl$})
+          .with_order('12')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
 
-    context "on #{os} with one argument" do
+    context "on #{os} with one string argument" do
       let(:params) do
         { expansion: 'foo' }
       end
@@ -27,9 +27,25 @@ describe 'sendmail::mc::define' do
         is_expected.to contain_class('sendmail::mc::define_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-define-foobar') \
-          .with_content(%r{^define\(`foobar', `foo'\)dnl$}) \
-          .with_order('12') \
+        is_expected.to contain_concat__fragment('sendmail_mc-define-foobar')
+          .with_content(%r{^define\(`foobar', `foo'\)dnl$})
+          .with_order('12')
+          .that_notifies('Class[sendmail::makeall]')
+      }
+    end
+
+    context "on #{os} with one numeric argument" do
+      let(:params) do
+        { expansion: 42 }
+      end
+
+      it {
+        is_expected.to contain_class('sendmail::mc::define_section')
+        is_expected.to contain_class('sendmail::makeall')
+
+        is_expected.to contain_concat__fragment('sendmail_mc-define-foobar')
+          .with_content(%r{^define\(`foobar', `42'\)dnl$})
+          .with_order('12')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -43,9 +59,9 @@ describe 'sendmail::mc::define' do
         is_expected.to contain_class('sendmail::mc::define_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-define-foobar') \
-          .with_content(%r{^define\(`baz', `foo'\)dnl$}) \
-          .with_order('12') \
+        is_expected.to contain_concat__fragment('sendmail_mc-define-foobar')
+          .with_content(%r{^define\(`baz', `foo'\)dnl$})
+          .with_order('12')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -59,9 +75,9 @@ describe 'sendmail::mc::define' do
         is_expected.to contain_class('sendmail::mc::define_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-define-foobar') \
-          .with_content(%r{^define\(`foobar', `foo'\)dnl$}) \
-          .with_order('12') \
+        is_expected.to contain_concat__fragment('sendmail_mc-define-foobar')
+          .with_content(%r{^define\(`foobar', `foo'\)dnl$})
+          .with_order('12')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -75,9 +91,9 @@ describe 'sendmail::mc::define' do
         is_expected.to contain_class('sendmail::mc::define_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-define-foobar') \
-          .with_content(%r{^define\(`foobar', foo\)dnl$}) \
-          .with_order('12') \
+        is_expected.to contain_concat__fragment('sendmail_mc-define-foobar')
+          .with_content(%r{^define\(`foobar', foo\)dnl$})
+          .with_order('12')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -91,9 +107,9 @@ describe 'sendmail::mc::define' do
         is_expected.to contain_class('sendmail::mc::define_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-define-foobar') \
-          .with_content(%r{^define\(`foobar', `'\)dnl$}) \
-          .with_order('12') \
+        is_expected.to contain_concat__fragment('sendmail_mc-define-foobar')
+          .with_content(%r{^define\(`foobar', `'\)dnl$})
+          .with_order('12')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -105,9 +121,9 @@ describe 'sendmail::mc::define' do
         is_expected.to contain_class('sendmail::mc::define_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-define-confLDAP_FOO') \
-          .with_content(%r{^define\(`confLDAP_FOO', `'\)dnl$}) \
-          .with_order('19') \
+        is_expected.to contain_concat__fragment('sendmail_mc-define-confLDAP_FOO')
+          .with_content(%r{^define\(`confLDAP_FOO', `'\)dnl$})
+          .with_order('19')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -119,9 +135,9 @@ describe 'sendmail::mc::define' do
         is_expected.to contain_class('sendmail::mc::milter_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-define-confMILTER_FOO') \
-          .with_content(%r{^define\(`confMILTER_FOO', `'\)dnl$}) \
-          .with_order('56') \
+        is_expected.to contain_concat__fragment('sendmail_mc-define-confMILTER_FOO')
+          .with_content(%r{^define\(`confMILTER_FOO', `'\)dnl$})
+          .with_order('56')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -133,9 +149,9 @@ describe 'sendmail::mc::define' do
         is_expected.to contain_class('sendmail::mc::milter_section')
         is_expected.to contain_class('sendmail::makeall')
 
-        is_expected.to contain_concat__fragment('sendmail_mc-define-confINPUT_MAIL_FILTERS') \
-          .with_content(%r{^define\(`confINPUT_MAIL_FILTERS', `'\)dnl$}) \
-          .with_order('56') \
+        is_expected.to contain_concat__fragment('sendmail_mc-define-confINPUT_MAIL_FILTERS')
+          .with_content(%r{^define\(`confINPUT_MAIL_FILTERS', `'\)dnl$})
+          .with_order('56')
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -155,9 +171,9 @@ describe 'sendmail::mc::define' do
           is_expected.to contain_class('sendmail::mc::define_section')
           is_expected.to contain_class('sendmail::makeall')
 
-          is_expected.to contain_concat__fragment("sendmail_mc-define-#{arg}") \
-            .with_content(%r{^define\(`#{arg}', `foo'\)dnl$}) \
-            .with_order('12') \
+          is_expected.to contain_concat__fragment("sendmail_mc-define-#{arg}")
+            .with_content(%r{^define\(`#{arg}', `foo'\)dnl$})
+            .with_order('12')
             .that_notifies('Class[sendmail::makeall]')
         }
       end
@@ -177,9 +193,9 @@ describe 'sendmail::mc::define' do
           is_expected.not_to contain_class('sendmail::mc::define_section')
           is_expected.to contain_class('sendmail::makeall')
 
-          is_expected.to contain_concat__fragment("sendmail_mc-define-#{arg}") \
-            .with_content(%r{^define\(`#{arg}', `foo'\)dnl$}) \
-            .with_order('48') \
+          is_expected.to contain_concat__fragment("sendmail_mc-define-#{arg}")
+            .with_content(%r{^define\(`#{arg}', `foo'\)dnl$})
+            .with_order('48')
             .that_notifies('Class[sendmail::makeall]')
         }
       end
