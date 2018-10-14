@@ -198,7 +198,7 @@ class sendmail (
   $domain_name              = undef,
   $max_message_size         = undef,
   $log_level                = undef,
-  $dont_probe_interfaces    = undef,
+  Boolean $dont_probe_interfaces    = undef,
   $enable_ipv4_daemon       = true,
   $enable_ipv6_daemon       = true,
   $features                 = {},

@@ -201,7 +201,7 @@ class sendmail::mc (
 
   if ($dont_probe_interfaces != undef) {
     ::sendmail::mc::define { 'confDONT_PROBE_INTERFACES':
-      expansion => $dont_probe_interfaces,
+      expansion => bool2str($dont_probe_interfaces),
     }
   }
 
