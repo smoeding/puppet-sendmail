@@ -21,7 +21,7 @@ class sendmail::mc::ldap_section {
   concat::fragment { 'sendmail_mc-ldap_header':
     target  => 'sendmail.mc',
     order   => '18',
-    content => inline_template("dnl #\ndnl # LDAP\ndnl #\n"),
+    content => "dnl #\ndnl # LDAP\ndnl #\n",
     notify  => Class['::sendmail::makeall'],
   }
 }

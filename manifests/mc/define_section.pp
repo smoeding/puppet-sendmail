@@ -21,7 +21,7 @@ class sendmail::mc::define_section {
   concat::fragment { 'sendmail_mc-define_header':
     target  => 'sendmail.mc',
     order   => '10',
-    content => inline_template("dnl #\ndnl # Defines\ndnl #\n"),
+    content => "dnl #\ndnl # Defines\ndnl #\n",
     notify  => Class['::sendmail::makeall'],
   }
 }

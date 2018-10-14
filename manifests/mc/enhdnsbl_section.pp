@@ -21,7 +21,7 @@ class sendmail::mc::enhdnsbl_section {
   concat::fragment { 'sendmail_mc-enhdnsbl_header':
     target  => 'sendmail.mc',
     order   => '50',
-    content => inline_template("dnl #\ndnl # DNS Blacklists\ndnl #\n"),
+    content => "dnl #\ndnl # DNS Blacklists\ndnl #\n",
     notify  => Class['::sendmail::makeall'],
   }
 }

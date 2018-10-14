@@ -21,7 +21,7 @@ class sendmail::mc::milter_section {
   concat::fragment { 'sendmail_mc-milter_header':
     target  => 'sendmail.mc',
     order   => '55',
-    content => inline_template("dnl #\ndnl # Milter\ndnl #\n"),
+    content => "dnl #\ndnl # Milter\ndnl #\n",
     notify  => Class['::sendmail::makeall'],
   }
 }
