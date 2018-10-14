@@ -16,12 +16,9 @@
 #
 #
 class sendmail::mc::macro_section {
-  include ::sendmail::makeall
-
   concat::fragment { 'sendmail_mc-macro_header':
     target  => 'sendmail.mc',
     order   => '35',
     content => "dnl #\ndnl # Macros\ndnl #\n",
-    notify  => Class['::sendmail::makeall'],
   }
 }

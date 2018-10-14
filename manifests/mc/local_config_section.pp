@@ -16,12 +16,9 @@
 #
 #
 class sendmail::mc::local_config_section {
-  include ::sendmail::makeall
-
   concat::fragment { 'sendmail_mc-local_config_header':
     target  => 'sendmail.mc',
     order   => '80',
     content => "dnl #\nLOCAL_CONFIG\n",
-    notify  => Class['::sendmail::makeall'],
   }
 }

@@ -8,12 +8,9 @@ describe 'sendmail::mc::feature_section' do
       let(:facts) { facts }
 
       it {
-        is_expected.to contain_class('sendmail::makeall')
-
-        is_expected.to contain_concat__fragment('sendmail_mc-feature_header') \
-          .with_content(%r{^dnl # Features$}) \
-          .with_order('20') \
-          .that_notifies('Class[sendmail::makeall]')
+        is_expected.to contain_concat__fragment('sendmail_mc-feature_header')
+          .with_content(%r{^dnl # Features$})
+          .with_order('20')
       }
     end
   end

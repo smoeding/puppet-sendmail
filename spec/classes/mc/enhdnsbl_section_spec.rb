@@ -8,12 +8,9 @@ describe 'sendmail::mc::enhdnsbl_section' do
       let(:facts) { facts }
 
       it {
-        is_expected.to contain_class('sendmail::makeall')
-
-        is_expected.to contain_concat__fragment('sendmail_mc-enhdnsbl_header') \
-          .with_content(%r{^dnl # DNS Blacklists$}) \
-          .with_order('50') \
-          .that_notifies('Class[sendmail::makeall]')
+        is_expected.to contain_concat__fragment('sendmail_mc-enhdnsbl_header')
+          .with_content(%r{^dnl # DNS Blacklists$})
+          .with_order('50')
       }
     end
   end

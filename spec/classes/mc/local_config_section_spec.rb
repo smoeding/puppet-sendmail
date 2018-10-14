@@ -8,12 +8,10 @@ describe 'sendmail::mc::local_config_section' do
       let(:facts) { facts }
 
       it {
-        is_expected.to contain_class('sendmail::makeall')
-
-        is_expected.to contain_concat__fragment('sendmail_mc-local_config_header') \
-          .with_content(%r{^LOCAL_CONFIG}) \
-          .with_target('sendmail.mc') \
-          .with_order('80') \
+        is_expected.to contain_concat__fragment('sendmail_mc-local_config_header')
+          .with_content(%r{^LOCAL_CONFIG})
+          .with_target('sendmail.mc')
+          .with_order('80')
           .that_notifies('Class[sendmail::makeall]')
       }
     end

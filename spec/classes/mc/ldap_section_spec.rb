@@ -8,12 +8,9 @@ describe 'sendmail::mc::ldap_section' do
       let(:facts) { facts }
 
       it {
-        is_expected.to contain_class('sendmail::makeall')
-
-        is_expected.to contain_concat__fragment('sendmail_mc-ldap_header') \
-          .with_content(%r{^dnl # LDAP$}) \
-          .with_order('18') \
-          .that_notifies('Class[sendmail::makeall]')
+        is_expected.to contain_concat__fragment('sendmail_mc-ldap_header')
+          .with_content(%r{^dnl # LDAP$})
+          .with_order('18')
       }
     end
   end

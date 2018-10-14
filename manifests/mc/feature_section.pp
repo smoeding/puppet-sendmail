@@ -16,12 +16,9 @@
 #
 #
 class sendmail::mc::feature_section {
-  include ::sendmail::makeall
-
   concat::fragment { 'sendmail_mc-feature_header':
     target  => 'sendmail.mc',
     order   => '20',
     content => "dnl #\ndnl # Features\ndnl #\n",
-    notify  => Class['::sendmail::makeall'],
   }
 }

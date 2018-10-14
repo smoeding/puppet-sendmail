@@ -8,12 +8,9 @@ describe 'sendmail::mc::macro_section' do
       let(:facts) { facts }
 
       it {
-        is_expected.to contain_class('sendmail::makeall')
-
-        is_expected.to contain_concat__fragment('sendmail_mc-macro_header') \
-          .with_content(%r{^dnl # Macros$}) \
-          .with_order('35') \
-          .that_notifies('Class[sendmail::makeall]')
+        is_expected.to contain_concat__fragment('sendmail_mc-macro_header')
+          .with_content(%r{^dnl # Macros$})
+          .with_order('35')
       }
     end
   end

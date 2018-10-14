@@ -16,12 +16,9 @@
 #
 #
 class sendmail::mc::milter_section {
-  include ::sendmail::makeall
-
   concat::fragment { 'sendmail_mc-milter_header':
     target  => 'sendmail.mc',
     order   => '55',
     content => "dnl #\ndnl # Milter\ndnl #\n",
-    notify  => Class['::sendmail::makeall'],
   }
 }
