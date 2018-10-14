@@ -12,7 +12,6 @@ describe 'sendmail::mc::local_config_section' do
           .with_content(%r{^LOCAL_CONFIG})
           .with_target('sendmail.mc')
           .with_order('80')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
   end
