@@ -97,9 +97,9 @@ class sendmail::nullclient (
   $mail_hub,
   $port                     = '587',
   $port_option_modify       = undef,
-  $enable_ipv4_msa          = true,
-  $enable_ipv6_msa          = true,
-  $enable_msp_trusted_users = false,
+  Boolean $enable_ipv4_msa          = true,
+  Boolean $enable_ipv6_msa          = true,
+  Boolean $enable_msp_trusted_users = false,
   $trusted_users            = [],
   $domain_name              = undef,
   $max_message_size         = undef,
@@ -117,9 +117,6 @@ class sendmail::nullclient (
   $server_ssl_options       = undef,
   $client_ssl_options       = undef,
 ) {
-
-  validate_bool($enable_ipv4_msa)
-  validate_bool($enable_ipv6_msa)
 
   if ((!$enable_ipv4_msa) and (!$enable_ipv6_msa)) {
     fail('The MSA must be enabled for IPv4 or IPv6 or both')

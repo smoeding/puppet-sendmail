@@ -72,21 +72,15 @@ define sendmail::mc::masquerade_as (
   $masquerade_domain_file    = undef,
   $masquerade_exception      = [],
   $masquerade_exception_file = undef,
-  $masquerade_envelope       = false,
-  $allmasquerade             = false,
-  $limited_masquerade        = false,
-  $local_no_masquerade       = false,
-  $masquerade_entire_domain  = false,
+  Boolean $masquerade_envelope       = false,
+  Boolean $allmasquerade             = false,
+  Boolean $limited_masquerade        = false,
+  Boolean $local_no_masquerade       = false,
+  Boolean $masquerade_entire_domain  = false,
   $exposed_user              = [],
   $exposed_user_file         = undef,
 ) {
   include ::sendmail::makeall
-
-  validate_bool($masquerade_envelope)
-  validate_bool($allmasquerade)
-  validate_bool($limited_masquerade)
-  validate_bool($local_no_masquerade)
-  validate_bool($masquerade_entire_domain)
 
   concat::fragment { 'sendmail_mc-masquerade':
     target  => 'sendmail.mc',

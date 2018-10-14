@@ -81,40 +81,23 @@
 #
 #
 class sendmail::mc::privacy_flags (
-  $authwarnings      = false,
-  $goaway            = false,
-  $needexpnhelo      = false,
-  $needmailhelo      = false,
-  $needvrfyhelo      = false,
-  $noactualrecipient = false,
-  $nobodyreturn      = false,
-  $noetrn            = false,
-  $noexpn            = false,
-  $noreceipts        = false,
-  $noverb            = false,
-  $novrfy            = false,
-  $public            = false,
-  $restrictexpand    = false,
-  $restrictmailq     = false,
-  $restrictqrun      = false,
+  Boolean $authwarnings      = false,
+  Boolean $goaway            = false,
+  Boolean $needexpnhelo      = false,
+  Boolean $needmailhelo      = false,
+  Boolean $needvrfyhelo      = false,
+  Boolean $noactualrecipient = false,
+  Boolean $nobodyreturn      = false,
+  Boolean $noetrn            = false,
+  Boolean $noexpn            = false,
+  Boolean $noreceipts        = false,
+  Boolean $noverb            = false,
+  Boolean $novrfy            = false,
+  Boolean $public            = false,
+  Boolean $restrictexpand    = false,
+  Boolean $restrictmailq     = false,
+  Boolean $restrictqrun      = false,
 ) {
-
-  validate_bool($authwarnings)
-  validate_bool($goaway)
-  validate_bool($needexpnhelo)
-  validate_bool($needmailhelo)
-  validate_bool($needvrfyhelo)
-  validate_bool($noactualrecipient)
-  validate_bool($nobodyreturn)
-  validate_bool($noetrn)
-  validate_bool($noexpn)
-  validate_bool($noreceipts)
-  validate_bool($noverb)
-  validate_bool($novrfy)
-  validate_bool($public)
-  validate_bool($restrictexpand)
-  validate_bool($restrictmailq)
-  validate_bool($restrictqrun)
 
   $flags = [
     bool2str($authwarnings,      'authwarnings',      ''),

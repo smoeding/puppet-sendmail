@@ -31,10 +31,8 @@
 class sendmail::package (
   $auxiliary_packages = $::sendmail::params::auxiliary_packages,
   $package_ensure     = 'present',
-  $package_manage     = $::sendmail::params::package_manage,
+  Boolean $package_manage     = $::sendmail::params::package_manage,
 ) inherits ::sendmail::params {
-
-  validate_bool($package_manage)
 
   if $package_manage {
     package { $::sendmail::params::package_name:

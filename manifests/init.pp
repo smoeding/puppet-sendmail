@@ -223,22 +223,18 @@ class sendmail (
   $version_id               = undef,
   $msp_host                 = '[127.0.0.1]',
   $msp_port                 = 'MSA',
-  $enable_msp_trusted_users = false,
-  $manage_sendmail_mc       = true,
-  $manage_submit_mc         = true,
+  Boolean $enable_msp_trusted_users = false,
+  Boolean $manage_sendmail_mc       = true,
+  Boolean $manage_submit_mc         = true,
   $auxiliary_packages       = $::sendmail::params::auxiliary_packages,
   $package_ensure           = 'present',
   $package_manage           = $::sendmail::params::package_manage,
   $service_name             = $::sendmail::params::service_name,
-  $service_enable           = true,
-  $service_manage           = true,
+  Boolean $service_enable           = true,
+  Boolean $service_manage           = true,
   $service_ensure           = 'running',
   $service_hasstatus        = $::sendmail::params::service_hasstatus,
 ) inherits ::sendmail::params {
-
-  validate_bool($manage_sendmail_mc)
-  validate_bool($manage_submit_mc)
-  validate_bool($enable_msp_trusted_users)
 
   validate_array($local_host_names)
   validate_array($relay_domains)

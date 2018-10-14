@@ -39,16 +39,14 @@
 define sendmail::mc::define (
   $macro_name = $title,
   $expansion  = undef,
-  $use_quotes = true,
+  Boolean $use_quotes = true,
 ) {
   include ::sendmail::makeall
 
-  validate_bool($use_quotes)
-
   # Add quotes to the expansion if needed
   $exp_arg = $use_quotes ? {
-    true  => "`${expansion}'",
-    false => $expansion,
+    true    => "`${expansion}'",
+    default => $expansion,
   }
 
   $arr = [ "`${macro_name}'", $exp_arg ]

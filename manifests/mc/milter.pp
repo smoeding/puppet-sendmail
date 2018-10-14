@@ -84,7 +84,7 @@ define sendmail::mc::milter (
   $connect_timeout = undef,
   $order           = '00',
   $milter_name     = $title,
-  $enable          = true,
+  Boolean $enable          = true,
 ) {
 
   include ::sendmail::makeall
@@ -167,8 +167,6 @@ define sendmail::mc::milter (
   #
   # Decide which macro to use
   #
-  validate_bool($enable)
-
   $macro_name = $enable ? {
     true    => 'INPUT_MAIL_FILTER',
     default => 'MAIL_FILTER',

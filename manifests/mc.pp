@@ -97,17 +97,14 @@ class sendmail::mc (
   $max_message_size      = undef,
   $log_level             = undef,
   $dont_probe_interfaces = undef,
-  $enable_ipv4_daemon    = true,
-  $enable_ipv6_daemon    = true,
+  Boolean $enable_ipv4_daemon    = true,
+  Boolean $enable_ipv6_daemon    = true,
   $mailers               = $::sendmail::params::mailers,
   $trust_auth_mech       = undef,
   $version_id            = undef,
 ) inherits ::sendmail::params {
 
   include ::sendmail::makeall
-
-  validate_bool($enable_ipv4_daemon)
-  validate_bool($enable_ipv6_daemon)
 
   # Order of fragments
   # -------------------------

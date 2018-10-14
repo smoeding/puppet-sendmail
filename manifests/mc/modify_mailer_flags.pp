@@ -36,11 +36,9 @@
 define sendmail::mc::modify_mailer_flags (
   $flags,
   $mailer_name = $title,
-  $use_quotes  = true,
+  Boolean $use_quotes  = true,
 ) {
   include ::sendmail::makeall
-
-  validate_bool($use_quotes)
 
   # Add quotes to the expansion if needed
   $exp_arg = $use_quotes ? {

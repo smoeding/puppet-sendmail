@@ -32,7 +32,7 @@
 #   sendmail::mc::feature { 'mailertable': }
 #
 #   sendmail::mc::feature { 'mailertable':
-#     args => [ 'hash /etc/mail/mailertable' ],
+#     args       => [ 'hash /etc/mail/mailertable' ],
 #   }
 #
 #   sendmail::mc::feature { 'mailertable':
@@ -44,7 +44,7 @@
 define sendmail::mc::feature (
   $feature_name = $title,
   $args         = [],
-  $use_quotes   = true,
+  Boolean $use_quotes   = true,
 ) {
   include ::sendmail::makeall
 
@@ -52,7 +52,6 @@ define sendmail::mc::feature (
   $args_array = any2array($args)
 
   validate_array($args_array)
-  validate_bool($use_quotes)
 
   # Gracefully handle misspelled feature names
   $feature = $feature_name ? {

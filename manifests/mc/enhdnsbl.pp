@@ -35,11 +35,9 @@
 define sendmail::mc::enhdnsbl (
   $blacklist               = $title,
   $reject_message          = undef,
-  $allow_temporary_failure = false,
+  Boolean $allow_temporary_failure = false,
   $lookup_result           = undef,
 ) {
-
-  validate_bool($allow_temporary_failure)
 
   # The parameter for temporary_failure must be `t' or empty
   $temporary_failure = $allow_temporary_failure ? {
