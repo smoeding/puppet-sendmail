@@ -69,7 +69,7 @@ describe 'sendmail::package' do
         { auxiliary_packages: ['foo', 'bar'] }
       end
 
-      case facts[:os#family]
+      case facts[:osfamily]
       when 'Debian', 'RedHat'
         it {
           is_expected.to contain_package('foo')
