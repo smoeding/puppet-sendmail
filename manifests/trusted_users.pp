@@ -21,18 +21,16 @@
 #
 #
 class sendmail::trusted_users (
-  $trusted_users = [],
+  Array[String] $trusted_users = [],
 ) {
   include ::sendmail::params
-
-  validate_array($trusted_users)
 
   file { $::sendmail::params::trusted_users_file:
     ensure  => file,
     owner   => 'root',
     group   => $::sendmail::params::sendmail_group,
     mode    => '0644',
-    content => inline_template('<%= @trusted_users.reject{ |x| x.to_s.strip.empty? }.sort.map{ |x| "#{x}\n"}.join %>'),
+    content => join(suffix(sendmail::canonify_array($trusted_users), "\n")),
     notify  => Class['::sendmail::service'],
   }
 }
