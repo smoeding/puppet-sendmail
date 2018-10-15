@@ -29,9 +29,9 @@
 #
 #
 class sendmail::package (
-  $auxiliary_packages = $::sendmail::params::auxiliary_packages,
-  $package_ensure     = 'present',
-  Boolean $package_manage     = $::sendmail::params::package_manage,
+  Array[String] $auxiliary_packages = $::sendmail::params::auxiliary_packages,
+  String        $package_ensure     = 'present',
+  Boolean       $package_manage     = $::sendmail::params::package_manage,
 ) inherits ::sendmail::params {
 
   if $package_manage {
@@ -39,8 +39,7 @@ class sendmail::package (
       ensure => $package_ensure,
     }
 
-    if !empty($auxiliary_packages) {
-      validate_array($auxiliary_packages)
+    unless empty($auxiliary_packages) {
       ensure_packages($auxiliary_packages)
     }
   }
