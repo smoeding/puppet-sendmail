@@ -55,36 +55,20 @@
 #
 #
 class sendmail::mc::starttls (
-  $ca_cert_file       = undef,
-  $ca_cert_path       = undef,
-  $server_cert_file   = undef,
-  $server_key_file    = undef,
-  $client_cert_file   = undef,
-  $client_key_file    = undef,
-  $crl_file           = undef,
-  $dh_params          = undef,
-  $tls_srv_options    = undef,
+  Optional[Stdlib::Absolutepath] $ca_cert_file       = undef,
+  Optional[Stdlib::Absolutepath] $ca_cert_path       = undef,
+  Optional[Stdlib::Absolutepath] $server_cert_file   = undef,
+  Optional[Stdlib::Absolutepath] $server_key_file    = undef,
+  Optional[Stdlib::Absolutepath] $client_cert_file   = undef,
+  Optional[Stdlib::Absolutepath] $client_key_file    = undef,
+  Optional[Stdlib::Absolutepath] $crl_file           = undef,
+  Variant[Enum['512','1024','2048'],Stdlib::Absolutepath,Undef] $dh_params          = undef,
+  Variant[Enum['V'],Undef]       $tls_srv_options    = undef,
   $cipher_list        = undef,
   $server_ssl_options = undef,
   $client_ssl_options = undef,
 ) {
   include ::sendmail::makeall
-
-  if $ca_cert_file     { validate_absolute_path($ca_cert_file) }
-  if $ca_cert_path     { validate_absolute_path($ca_cert_path) }
-  if $server_cert_file { validate_absolute_path($server_cert_file) }
-  if $server_key_file  { validate_absolute_path($server_key_file) }
-  if $client_cert_file { validate_absolute_path($client_cert_file) }
-  if $client_key_file  { validate_absolute_path($client_key_file) }
-  if $crl_file         { validate_absolute_path($crl_file) }
-
-  if $dh_params {
-    validate_re($dh_params, ['^512$', '^1024$', '^2048$', '^/.+'])
-  }
-
-  if $tls_srv_options {
-    validate_re($tls_srv_options, [ '^V$', '^$', ])
-  }
 
   concat::fragment { 'sendmail_mc-starttls':
     target  => 'sendmail.mc',
