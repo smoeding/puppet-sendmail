@@ -41,9 +41,9 @@
 #
 #
 class sendmail::authinfo (
-  $content = undef,
-  $source  = undef,
-  $entries = {},
+  Optional[String]  $content = undef,
+  Optional[String]  $source  = undef,
+  Hash[String,Data] $entries = {},
 ) {
 
   if ($content and $source) {
@@ -61,7 +61,6 @@ class sendmail::authinfo (
     }
   }
   elsif !empty($entries) {
-    validate_hash($entries)
     create_resources('sendmail::authinfo::entry', $entries)
   }
 }

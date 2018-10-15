@@ -4,12 +4,12 @@
 #
 # == Parameters:
 #
-# [*recipient*]
-#   The recipient where the mail is redirected to.
-#
 # [*ensure*]
 #   Used to create or remove the alias entry.
 #   Valid options: 'present', 'absent'. Default: 'present'
+#
+# [*recipient*]
+#   The recipient where the mail is redirected to.
 #
 # == Requires:
 #
@@ -23,14 +23,12 @@
 #
 #
 define sendmail::aliases::entry (
-  $recipient = undef,
-  $ensure    = 'present',
+  Enum['present','absent'] $ensure    = 'present',
+  Optional[String]         $recipient = undef,
 ) {
   include ::sendmail::params
   include ::sendmail::aliases::file
   include ::sendmail::aliases::newaliases
-
-  validate_re($ensure, [ 'present', 'absent' ])
 
   if ($ensure == 'present' and empty($recipient)) {
     fail('recipient must be set when creating an alias')

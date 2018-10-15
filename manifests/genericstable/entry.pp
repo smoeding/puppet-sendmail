@@ -4,17 +4,17 @@
 #
 # == Parameters:
 #
-# [*value*]
-#   The value for the given key. For the genericstable map this is typically
-#   something like 'user@example.org'.
+# [*ensure*]
+#   Used to create or remove the genericstable db entry.
+#   Valid options: 'present', 'absent'. Default: 'present'
 #
 # [*key*]
 #   The key used by Sendmail for the lookup. This is normally a username or
 #   a user and domain name. Default is the resource title.
 #
-# [*ensure*]
-#   Used to create or remove the genericstable db entry.
-#   Valid options: 'present', 'absent'. Default: 'present'
+# [*value*]
+#   The value for the given key. For the genericstable map this is typically
+#   something like 'user@example.org'.
 #
 # == Requires:
 #
@@ -32,15 +32,13 @@
 #
 #
 define sendmail::genericstable::entry (
-  $value  = undef,
-  $key    = $title,
-  $ensure = 'present',
+  Enum['present','absent'] $ensure = 'present',
+  String                   $key    = $title,
+  Optional[String]         $value  = undef,
 ) {
   include ::sendmail::params
   include ::sendmail::makeall
   include ::sendmail::genericstable::file
-
-  validate_re($ensure, [ 'present', 'absent' ])
 
   if ($ensure == 'present' and empty($value)) {
     fail('value must be set when creating a genericstable entry')

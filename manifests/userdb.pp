@@ -41,9 +41,9 @@
 #
 #
 class sendmail::userdb (
-  $content = undef,
-  $source  = undef,
-  $entries = {},
+  Optional[String]  $content = undef,
+  Optional[String]  $source  = undef,
+  Hash[String,Data] $entries = {},
 ) {
 
   if ($content and $source) {
@@ -61,7 +61,6 @@ class sendmail::userdb (
     }
   }
   elsif !empty($entries) {
-    validate_hash($entries)
     create_resources('sendmail::userdb::entry', $entries)
   }
 }

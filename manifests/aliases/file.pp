@@ -20,8 +20,8 @@
 #
 #
 class sendmail::aliases::file (
-  $content = undef,
-  $source  = undef,
+  Optional[String] $content = undef,
+  Optional[String] $source  = undef,
 ){
   include ::sendmail::params
   include ::sendmail::aliases::newaliases

@@ -4,17 +4,17 @@
 #
 # == Parameters:
 #
-# [*value*]
-#   The value for the given key. For the virtusertable map this is typically
-#   a local username or a remote mail address.
+# [*ensure*]
+#   Used to create or remove the virtusertable db entry.
+#   Valid options: 'present', 'absent'. Default: 'present'
 #
 # [*key*]
 #   The key used by Sendmail for the lookup. This is normally a mail address
 #   or a mail address without the user part. Default is the resource title.
 #
-# [*ensure*]
-#   Used to create or remove the virtusertable db entry.
-#   Valid options: 'present', 'absent'. Default: 'present'
+# [*value*]
+#   The value for the given key. For the virtusertable map this is typically
+#   a local username or a remote mail address.
 #
 # == Requires:
 #
@@ -32,15 +32,13 @@
 #
 #
 define sendmail::virtusertable::entry (
-  $value  = undef,
-  $key    = $title,
-  $ensure = 'present',
+  Enum['present','absent'] $ensure = 'present',
+  String                   $key    = $title,
+  Optional[String]         $value  = undef,
 ) {
   include ::sendmail::params
   include ::sendmail::makeall
   include ::sendmail::virtusertable::file
-
-  validate_re($ensure, [ 'present', 'absent' ])
 
   if ($ensure == 'present' and empty($value)) {
     fail('value must be set when creating a virtusertable entry')

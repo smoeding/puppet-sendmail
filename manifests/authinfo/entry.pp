@@ -4,6 +4,20 @@
 #
 # == Parameters:
 #
+# [*ensure*]
+#   Used to create or remove the authinfo db entry. Default value: 'present'
+#
+# [*mechanisms*]
+#   The list of preferred authentication mechanisms. Default value: '[]'
+#
+# [*address*]
+#   The key used by Sendmail for the database lookup. This can be an IPv4
+#   address (e.g. '192.168.67.89'), an IPv6 address (e.g.
+#   'IPv6:2001:DB18::23f4'), a hostname (e.g. 'www.example.org') or a domain
+#   name (e.g. 'example.com'). The database key requires to start with the
+#   literal expression 'AuthInfo:'. This prefix will be added automatically
+#   if necessary. Default value is the resource title.
+#
 # [*password*]
 #   The password used for remote authentication in clear text.
 #   Exactly one of 'password' or 'password_base64' must be set.
@@ -24,20 +38,6 @@
 # [*realm*]
 #   The administrative realm to use. Default value: 'undef'
 #
-# [*mechanisms*]
-#   The list of preferred authentication mechanisms. Default value: '[]'
-#
-# [*address*]
-#   The key used by Sendmail for the database lookup. This can be an IPv4
-#   address (e.g. '192.168.67.89'), an IPv6 address (e.g.
-#   'IPv6:2001:DB18::23f4'), a hostname (e.g. 'www.example.org') or a domain
-#   name (e.g. 'example.com'). The database key requires to start with the
-#   literal expression 'AuthInfo:'. This prefix will be added automatically
-#   if necessary. Default value is the resource title.
-#
-# [*ensure*]
-#   Used to create or remove the authinfo db entry. Default value: 'present'
-#
 # == Requires:
 #
 # Nothing.
@@ -51,21 +51,18 @@
 #
 #
 define sendmail::authinfo::entry (
-  $password          = undef,
-  $password_base64   = undef,
-  $authorization_id  = undef,
-  $authentication_id = undef,
-  $realm             = undef,
-  $mechanisms        = [],
-  $address           = $title,
-  $ensure            = 'present',
+  Enum['present','absent'] $ensure            = 'present',
+  Array[String]            $mechanisms        = [],
+  String                   $address           = $title,
+  Optional[String]         $password          = undef,
+  Optional[String]         $password_base64   = undef,
+  Optional[String]         $authorization_id  = undef,
+  Optional[String]         $authentication_id = undef,
+  Optional[String]         $realm             = undef,
 ) {
   include ::sendmail::params
   include ::sendmail::makeall
   include ::sendmail::authinfo::file
-
-  validate_re($ensure, [ 'present', 'absent' ])
-  validate_array($mechanisms)
 
   if $address == undef {
     fail('The address parameter must be defined')

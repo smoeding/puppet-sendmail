@@ -88,15 +88,5 @@ describe 'sendmail::virtusertable' do
         is_expected.to compile
       }
     end
-
-    context "on #{os} with wrong parameter type" do
-      let(:params) do
-        { entries: 'example.com' }
-      end
-
-      it {
-        is_expected.to compile.and_raise_error(%r{is not a Hash})
-      }
-    end
   end
 end

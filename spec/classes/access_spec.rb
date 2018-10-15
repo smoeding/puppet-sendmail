@@ -99,17 +99,5 @@ describe 'sendmail::access' do
 
       it { is_expected.to compile }
     end
-
-    context "on #{os} with wrong parameter type" do
-      let(:facts) { facts }
-
-      let(:params) do
-        { entries: 'example.com' }
-      end
-
-      it {
-        is_expected.to compile.and_raise_error(%r{is not a Hash})
-      }
-    end
   end
 end

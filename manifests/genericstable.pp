@@ -41,9 +41,9 @@
 #
 #
 class sendmail::genericstable (
-  $content = undef,
-  $source  = undef,
-  $entries = {},
+  Optional[String]  $content = undef,
+  Optional[String]  $source  = undef,
+  Hash[String,Data] $entries = {},
 ) {
 
   if ($content and $source) {
@@ -61,7 +61,6 @@ class sendmail::genericstable (
     }
   }
   elsif !empty($entries) {
-    validate_hash($entries)
     create_resources('sendmail::genericstable::entry', $entries)
   }
 }

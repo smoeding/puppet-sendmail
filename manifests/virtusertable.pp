@@ -41,9 +41,9 @@
 #
 #
 class sendmail::virtusertable (
-  $content = undef,
-  $source  = undef,
-  $entries = {},
+  Optional[String]  $content = undef,
+  Optional[String]  $source  = undef,
+  Hash[String,Data] $entries = {},
 ) {
 
   if ($content and $source) {
@@ -61,8 +61,6 @@ class sendmail::virtusertable (
     }
   }
   elsif !empty($entries) {
-    validate_hash($entries)
-
     create_resources('sendmail::virtusertable::entry', $entries)
   }
 }

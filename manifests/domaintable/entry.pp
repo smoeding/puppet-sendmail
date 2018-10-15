@@ -4,17 +4,17 @@
 #
 # == Parameters:
 #
-# [*value*]
-#   The value for the given key. For the domaintable map this is typically
-#   another domain name.
+# [*ensure*]
+#   Used to create or remove the domaintable db entry.
+#   Valid options: 'present', 'absent'. Default: 'present'
 #
 # [*key*]
 #   The key used by Sendmail for the lookup. This should normally be a
 #   domain name. Default is the resource title.
 #
-# [*ensure*]
-#   Used to create or remove the domaintable db entry.
-#   Valid options: 'present', 'absent'. Default: 'present'
+# [*value*]
+#   The value for the given key. For the domaintable map this is typically
+#   another domain name.
 #
 # == Requires:
 #
@@ -28,15 +28,13 @@
 #
 #
 define sendmail::domaintable::entry (
-  $value  = undef,
-  $key    = $title,
-  $ensure = 'present',
+  Enum['present','absent'] $ensure = 'present',
+  String                   $key    = $title,
+  Optional[String]         $value  = undef,
 ) {
   include ::sendmail::params
   include ::sendmail::makeall
   include ::sendmail::domaintable::file
-
-  validate_re($ensure, [ 'present', 'absent' ])
 
   if ($ensure == 'present' and empty($value)) {
     fail('value must be set when creating a domaintable entry')
