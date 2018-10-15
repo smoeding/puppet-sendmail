@@ -41,15 +41,6 @@ describe 'sendmail::relay_domains' do
       end
     end
 
-    context "on #{os} with string parameter type" do
-      let(:facts) { facts }
-      let(:params) do
-        { relay_domains: 'example.org' }
-      end
-
-      it { is_expected.to compile.and_raise_error(%r{is not an Array}) }
-    end
-
     context "on #{os} with empty parameter" do
       let(:facts) { facts }
       let(:params) do

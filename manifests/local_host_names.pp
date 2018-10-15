@@ -21,18 +21,16 @@
 #
 #
 class sendmail::local_host_names (
-  $local_host_names = [],
+  Array[String] $local_host_names = [],
 ) {
   include ::sendmail::params
-
-  validate_array($local_host_names)
 
   file { $::sendmail::params::local_host_names_file:
     ensure  => file,
     owner   => 'root',
     group   => $::sendmail::params::sendmail_group,
     mode    => '0644',
-    content => inline_template('<%= @local_host_names.reject{ |x| x.to_s.strip.empty? }.sort.map{ |x| "#{x}\n"}.join %>'),
+    content => join(suffix(sendmail::canonify_array($local_host_names), "\n")),
     notify  => Class['::sendmail::service'],
   }
 }

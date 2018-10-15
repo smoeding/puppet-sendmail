@@ -38,16 +38,6 @@ describe 'sendmail::local_host_names' do
       end
     end
 
-    context "on #{os} with string parameter type" do
-      let(:facts) { facts }
-
-      let(:params) do
-        { local_host_names: 'localhost' }
-      end
-
-      it { is_expected.to compile.and_raise_error(%r{is not an Array}) }
-    end
-
     context "on #{os} with empty parameter" do
       let(:facts) { facts }
 
