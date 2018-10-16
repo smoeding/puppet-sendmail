@@ -41,15 +41,6 @@ describe 'sendmail::trusted_users' do
       end
     end
 
-    context "on #{os} with string parameter type" do
-      let(:facts) { facts }
-      let(:params) do
-        { trusted_users: 'root' }
-      end
-
-      it { is_expected.to compile.and_raise_error(%r{is not an Array}) }
-    end
-
     context "on #{os} with empty parameter" do
       let(:facts) { facts }
       let(:params) do
