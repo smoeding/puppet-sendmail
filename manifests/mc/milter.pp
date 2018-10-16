@@ -77,14 +77,14 @@
 define sendmail::mc::milter (
   $socket_type,
   $socket_spec,
-  $flags           = 'T',
-  $send_timeout    = undef,
-  $receive_timeout = undef,
-  $eom_timeout     = undef,
-  $connect_timeout = undef,
-  $order           = '00',
-  String  $milter_name     = $title,
-  Boolean $enable          = true,
+  Enum['R','T','4','']        $flags           = 'T',
+  Optional[Sendmail::Timeout] $send_timeout    = undef,
+  Optional[Sendmail::Timeout] $receive_timeout = undef,
+  Optional[Sendmail::Timeout] $eom_timeout     = undef,
+  Optional[Sendmail::Timeout] $connect_timeout = undef,
+  String                      $order           = '00',
+  String                      $milter_name     = $title,
+  Boolean                     $enable          = true,
 ) {
 
   include ::sendmail::makeall
@@ -108,74 +108,50 @@ define sendmail::mc::milter (
   #
   # Flags parameter
   #
-  if $flags {
-    validate_re($flags, [ '^R$', '^T$', '^4$', '^$' ])
-
-    $opt_flags = $flags
-  }
-  else {
-    $opt_flags = undef
-  }
+  $opt_flags = $flags
 
   #
   # Timout parameter
   #
-  if $send_timeout {
-    validate_re($send_timeout, '^[0-9]+(s|m)?$')
-  }
-  if $receive_timeout {
-    validate_re($receive_timeout, '^[0-9]+(s|m)?$')
-  }
-  if $eom_timeout {
-    validate_re($eom_timeout, '^[0-9]+(s|m)?$')
-  }
-  if $connect_timeout {
-    validate_re($connect_timeout, '^[0-9]+(s|m)?$')
-  }
 
-  $sparse_timeouts = [
-    "S:${send_timeout}",
-    "R:${receive_timeout}",
-    "E:${eom_timeout}",
-    "C:${connect_timeout}",
-  ]
+  $sparse_timeouts = {
+    'S' => $send_timeout,
+    'R' => $receive_timeout,
+    'E' => $eom_timeout,
+    'C' => $connect_timeout,
+  }
 
   # Remove unset options
-  $real_timeouts = delete(regsubst($sparse_timeouts, '^.*:$', '='), '=')
+  $real_timeouts = $sparse_timeouts.filter |$key,$val| { $val != undef }
 
-  if count($real_timeouts) > 0 {
-    $opt_timeouts = join($real_timeouts, ';')
-  }
-  else {
-    $opt_timeouts = undef
+  $opt_timeouts = empty($real_timeouts) ? {
+    true    => undef,
+    default => join(join_keys_to_values($real_timeouts, ':'), ';'),
   }
 
   #
   # Put everything together
   #
-  $sparse_opts_all = [
-    "S=${opt_socket}",
-    "F=${opt_flags}",
-    "T=${opt_timeouts}",
-  ]
+  $sparse_opts_all = {
+    'S' => $opt_socket,
+    'F' => $opt_flags,
+    'T' => $opt_timeouts,
+  }
 
   # Remove unset options
-  $real_opts_all = delete(regsubst($sparse_opts_all, '^[ST]=$', '='), '=')
+  $real_opts_all = $sparse_opts_all.filter |$key,$val| { $val != undef }
 
-  $opts = join($real_opts_all, ', ')
+  $opts = join(join_keys_to_values($real_opts_all, '='), ', ')
 
   #
   # Decide which macro to use
   #
-  $macro_name = $enable ? {
-    true    => 'INPUT_MAIL_FILTER',
-    default => 'MAIL_FILTER',
-  }
+  $macro_name = bool2str($enable, 'INPUT_MAIL_FILTER', 'MAIL_FILTER')
 
   concat::fragment { "sendmail_mc-milter-${milter_name}":
     target  => 'sendmail.mc',
     order   => "56-${order}",
-    content => inline_template("${macro_name}(`${milter_name}', `${opts}')dnl\n"),
+    content => "${macro_name}(`${milter_name}', `${opts}')dnl\n",
     notify  => Class['::sendmail::makeall'],
   }
 
