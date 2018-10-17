@@ -75,16 +75,16 @@
 #
 #
 define sendmail::mc::milter (
-  $socket_type,
-  $socket_spec,
-  Enum['R','T','4','']        $flags           = 'T',
-  Optional[Sendmail::Timeout] $send_timeout    = undef,
-  Optional[Sendmail::Timeout] $receive_timeout = undef,
-  Optional[Sendmail::Timeout] $eom_timeout     = undef,
-  Optional[Sendmail::Timeout] $connect_timeout = undef,
-  String                      $order           = '00',
-  String                      $milter_name     = $title,
-  Boolean                     $enable          = true,
+  Enum['local','unix','inet','inet6'] $socket_type,
+  String                              $socket_spec,
+  Enum['R','T','4','']                $flags           = 'T',
+  Optional[Sendmail::Timeout]         $send_timeout    = undef,
+  Optional[Sendmail::Timeout]         $receive_timeout = undef,
+  Optional[Sendmail::Timeout]         $eom_timeout     = undef,
+  Optional[Sendmail::Timeout]         $connect_timeout = undef,
+  String                              $order           = '00',
+  String                              $milter_name     = $title,
+  Boolean                             $enable          = true,
 ) {
 
   include ::sendmail::makeall
@@ -94,8 +94,8 @@ define sendmail::mc::milter (
   #
   if $socket_type != undef {
     case $socket_type {
-      /^(local|unix)$/: { validate_absolute_path($socket_spec) }
-      /^inet6?$/: { validate_re($socket_spec, '^[0-9]+@.') }
+      /^(local|unix)$/: { assert_type(Stdlib::Absolutepath, $socket_spec) }
+      /^inet6?$/: { assert_type(Pattern[/^[0-9]+@./], $socket_spec) }
       default: { fail('Invalid socket type') }
     }
 
