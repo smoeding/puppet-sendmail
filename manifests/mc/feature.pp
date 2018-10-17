@@ -42,16 +42,17 @@
 #
 #
 define sendmail::mc::feature (
-  String $feature_name = $title,
-  $args         = [],
-  Boolean $use_quotes   = true,
+  String                        $feature_name = $title,
+  Variant[String,Array[String]] $args         = [],
+  Boolean                       $use_quotes   = true,
 ) {
   include ::sendmail::makeall
 
   # Make sure arguments are really an array
-  $args_array = any2array($args)
-
-  validate_array($args_array)
+  $args_array = $args ? {
+    Array   => $args,
+    default => [ $args ],
+  }
 
   # Gracefully handle misspelled feature names
   $feature = $feature_name ? {
@@ -65,7 +66,7 @@ define sendmail::mc::feature (
     false => $args_array,
   }
 
-  $arr = concat([ "`${feature}'" ], $exp_arg)
+  $arg = join(concat([ "`${feature}'" ], $exp_arg), ', ')
 
   $order = $feature ? {
     'ldap_routing' => '19',
@@ -78,7 +79,7 @@ define sendmail::mc::feature (
   concat::fragment { "sendmail_mc-feature-${title}":
     target  => 'sendmail.mc',
     order   => $order,
-    content => inline_template("FEATURE(<%= @arr.join(', ') -%>)dnl\n"),
+    content => "FEATURE(${arg})dnl\n",
     notify  => Class['::sendmail::makeall'],
   }
 

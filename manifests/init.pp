@@ -201,11 +201,11 @@ class sendmail (
   Optional[Boolean] $dont_probe_interfaces    = undef,
   $enable_ipv4_daemon       = true,
   $enable_ipv6_daemon       = true,
-  $features                 = {},
+  Hash[String,Data] $features                 = {},
   $mailers                  = $::sendmail::params::mailers,
-  $local_host_names         = [ $::fqdn ],
-  $relay_domains            = [],
-  $trusted_users            = [],
+  Array[String]     $local_host_names         = [ $::fqdn ],
+  Array[String]     $relay_domains            = [],
+  Array[String]     $trusted_users            = [],
   $trust_auth_mech          = undef,
   $ca_cert_file             = undef,
   $ca_cert_path             = undef,
@@ -235,10 +235,6 @@ class sendmail (
   $service_ensure           = 'running',
   $service_hasstatus        = $::sendmail::params::service_hasstatus,
 ) inherits ::sendmail::params {
-
-  validate_array($local_host_names)
-  validate_array($relay_domains)
-  validate_array($trusted_users)
 
   anchor { 'sendmail::begin': }
 
@@ -320,7 +316,6 @@ class sendmail (
   }
 
   unless empty($features) {
-    validate_hash($features)
     create_resources('sendmail::mc::feature', $features)
   }
 
