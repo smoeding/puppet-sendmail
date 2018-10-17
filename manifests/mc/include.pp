@@ -25,17 +25,15 @@
 #
 #
 define sendmail::mc::include (
-  $filename = $title,
-  $order    = '59',
+  Stdlib::Absolutepath $filename = $title,
+  String               $order    = '59',
 ) {
   include ::sendmail::makeall
-
-  validate_absolute_path($filename)
 
   concat::fragment { "sendmail_mc-include-${title}":
     target  => 'sendmail.mc',
     order   => $order,
-    content => inline_template("include(`<%= @filename -%>')dnl\n"),
+    content => "include(`${filename}')dnl\n",
     notify  => Class['::sendmail::makeall'],
   }
 }

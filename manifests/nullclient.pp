@@ -95,11 +95,11 @@
 #
 class sendmail::nullclient (
   $mail_hub,
-  $port                     = '587',
-  $port_option_modify       = undef,
-  Boolean $enable_ipv4_msa          = true,
-  Boolean $enable_ipv6_msa          = true,
-  Boolean $enable_msp_trusted_users = false,
+  Pattern[/^[0-9]+$/]                    $port                     = '587',
+  Optional[Pattern[/^[abcfhruACEOS]*$/]] $port_option_modify       = undef,
+  Boolean                                $enable_ipv4_msa          = true,
+  Boolean                                $enable_ipv6_msa          = true,
+  Boolean                                $enable_msp_trusted_users = false,
   $trusted_users            = [],
   $domain_name              = undef,
   $max_message_size         = undef,
@@ -118,14 +118,8 @@ class sendmail::nullclient (
   $client_ssl_options       = undef,
 ) {
 
-  if ((!$enable_ipv4_msa) and (!$enable_ipv6_msa)) {
+  unless ($enable_ipv4_msa or $enable_ipv6_msa) {
     fail('The MSA must be enabled for IPv4 or IPv6 or both')
-  }
-
-  validate_re($port, '^[0-9]+$')
-
-  if $port_option_modify {
-    validate_re($port_option_modify, '^[abcfhruACEOS]*$')
   }
 
   class { '::sendmail':

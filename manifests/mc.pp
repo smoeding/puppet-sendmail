@@ -94,11 +94,11 @@ class sendmail::mc (
   $cf_version            = undef,
   $smart_host            = undef,
   $domain_name           = undef,
-  $max_message_size      = undef,
-  $log_level             = undef,
-  Optional[Boolean] $dont_probe_interfaces = undef,
-  Boolean $enable_ipv4_daemon    = true,
-  Boolean $enable_ipv6_daemon    = true,
+  Optional[Pattern[/^[0-9]*\s*([kM][bB])?$/]] $max_message_size      = undef,
+  Optional[Pattern[/^\d+$/]]                  $log_level             = undef,
+  Optional[Boolean]                           $dont_probe_interfaces = undef,
+  Boolean                                     $enable_ipv4_daemon    = true,
+  Boolean                                     $enable_ipv6_daemon    = true,
   $mailers               = $::sendmail::params::mailers,
   $trust_auth_mech       = undef,
   $version_id            = undef,
@@ -185,15 +185,12 @@ class sendmail::mc (
   }
 
   if ($log_level != undef) {
-    validate_re($log_level, '^\d+$', 'log_level must be numeric')
     ::sendmail::mc::define { 'confLOG_LEVEL':
       expansion => $log_level,
     }
   }
 
   if ($max_message_size != undef) {
-    validate_re($max_message_size, '^[0-9]*\s*([kM][bB])?$',
-                'max_message_size must be numeric')
     ::sendmail::mc::define { 'confMAX_MESSAGE_SIZE':
       expansion => to_bytes($max_message_size),
     }

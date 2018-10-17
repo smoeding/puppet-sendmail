@@ -89,13 +89,21 @@ describe 'sendmail::submit' do
       }
     end
 
-    context "on #{os} with msp_port => foo" do
+    context "on #{os} with msp_port => MSA" do
       let(:facts) { facts }
       let(:params) do
-        { msp_port: 'foo' }
+        { msp_port: 'MSA' }
       end
 
-      it { is_expected.to compile.and_raise_error(%r{must be a numeric}) }
+      file = case facts[:osfamily]
+             when 'FreeBSD' then '/etc/mail/foo.submit.mc'
+             else '/etc/mail/submit.mc'
+             end
+
+      it {
+        is_expected.to contain_file(file)
+          .with_content(%r{^FEATURE\(`msp', `\[127.0.0.1\]', `MSA'\)dnl$})
+      }
     end
 
     context "on #{os} with masquerade_as => example.org" do

@@ -148,15 +148,6 @@ describe 'sendmail::mc' do
       }
     end
 
-    context "on #{os} with log_level => foo" do
-      let(:facts) { facts }
-      let(:params) do
-        { log_level: 'foo' }
-      end
-
-      it { is_expected.to compile.and_raise_error(%r{must be numeric}) }
-    end
-
     context "on #{os} with domain_name => smtp.example.com" do
       let(:facts) { facts }
       let(:params) do
@@ -203,15 +194,6 @@ describe 'sendmail::mc' do
         is_expected.to contain_sendmail__mc__define('confMAX_MESSAGE_SIZE')
           .with_expansion('1048576')
       }
-    end
-
-    context "on #{os} with max_message_size => foo" do
-      let(:facts) { facts }
-      let(:params) do
-        { max_message_size: 'foo' }
-      end
-
-      it { is_expected.to compile.and_raise_error(%r{must be numeric}) }
     end
 
     context "on #{os} with enable_ipv4_daemon => true" do

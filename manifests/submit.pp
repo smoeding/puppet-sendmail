@@ -52,14 +52,12 @@ class sendmail::submit (
   $ostype                   = $::sendmail::params::submit_mc_ostype,
   $submit_mc_domain         = $::sendmail::params::submit_mc_domain,
   $msp_host                 = '[127.0.0.1]',
-  $msp_port                 = 'MSA',
-  Boolean $enable_msp_trusted_users = false,
+  Pattern[/^(MSA)|([0-9]+)$/] $msp_port                 = 'MSA',
+  Boolean                     $enable_msp_trusted_users = false,
   $masquerade_as            = undef,
 ) inherits sendmail::params {
 
   include ::sendmail::makeall
-
-  validate_re($msp_port, [ '^[0-9]+$', '^MSA$' ], 'msp_port must be a numeric port number or the literal "MSA"')
 
   file { $::sendmail::params::submit_mc_file:
     ensure  => file,

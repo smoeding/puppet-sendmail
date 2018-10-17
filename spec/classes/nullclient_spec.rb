@@ -108,17 +108,6 @@ describe 'sendmail::nullclient' do
       }
     end
 
-    context "on #{os} with port => foo" do
-      let(:facts) { facts }
-      let(:params) do
-        { port: 'foo', mail_hub: 'example.com' }
-      end
-
-      it {
-        is_expected.to compile.and_raise_error(%r{does not match})
-      }
-    end
-
     context "on #{os} with port_option_modify => S" do
       let(:facts) { facts }
       let(:params) do
@@ -131,14 +120,15 @@ describe 'sendmail::nullclient' do
       }
     end
 
-    context "on #{os} with port_option_modify => X" do
+    context "on #{os} with port_option_modify => Sa" do
       let(:facts) { facts }
       let(:params) do
-        { port_option_modify: 'X', mail_hub: 'example.com' }
+        { port_option_modify: 'Sa', mail_hub: 'example.com' }
       end
 
       it {
-        is_expected.to compile.and_raise_error(%r{does not match})
+        is_expected.to contain_sendmail__mc__daemon_options('MSA-v4').with_modify('Sa')
+        is_expected.to contain_sendmail__mc__daemon_options('MSA-v6').with_modify('Sa')
       }
     end
 
