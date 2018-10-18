@@ -94,15 +94,15 @@
 #
 #
 class sendmail::nullclient (
-  $mail_hub,
+  String                                 $mail_hub,
   Pattern[/^[0-9]+$/]                    $port                     = '587',
   Optional[Pattern[/^[abcfhruACEOS]*$/]] $port_option_modify       = undef,
   Boolean                                $enable_ipv4_msa          = true,
   Boolean                                $enable_ipv6_msa          = true,
   Boolean                                $enable_msp_trusted_users = false,
-  Array[String]    $trusted_users            = [],
-  Optional[String] $domain_name              = undef,
-  $max_message_size         = undef,
+  Array[String]                          $trusted_users            = [],
+  Optional[String]                       $domain_name              = undef,
+  Optional[Sendmail::Messagesize]        $max_message_size         = undef,
   Optional[Pattern[/^\d+$/]]             $log_level                = undef,
   Optional[Stdlib::Absolutepath]         $ca_cert_file             = undef,
   Optional[Stdlib::Absolutepath]         $ca_cert_path             = undef,
