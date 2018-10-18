@@ -25,7 +25,7 @@ define sendmail::mc::generics_domain (
   concat::fragment { "sendmail_mc-generics_domain-${domain}":
     target  => 'sendmail.mc',
     order   => '32',
-    content => inline_template("GENERICS_DOMAIN(`<%= @domain -%>')dnl\n"),
+    content => "GENERICS_DOMAIN(`${domain}')dnl\n",
     notify  => Class['::sendmail::makeall'],
   }
 }

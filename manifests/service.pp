@@ -35,11 +35,11 @@
 #
 #
 class sendmail::service (
-  $service_name      = $::sendmail::params::service_name,
-  Boolean $service_enable    = true,
-  Boolean $service_manage    = true,
-  $service_ensure    = 'running',
-  $service_hasstatus = $::sendmail::params::service_hasstatus,
+  String                  $service_name      = $::sendmail::params::service_name,
+  Boolean                 $service_enable    = true,
+  Boolean                 $service_manage    = true,
+  Stdlib::Ensure::Service $service_ensure    = 'running',
+  Boolean                 $service_hasstatus = $::sendmail::params::service_hasstatus,
 ) inherits ::sendmail::params {
 
   case $service_ensure {

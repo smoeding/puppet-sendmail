@@ -24,7 +24,7 @@ define sendmail::mc::versionid (
   concat::fragment { 'sendmail_mc-versionid':
     target  => 'sendmail.mc',
     order   => '01',
-    content => inline_template("VERSIONID(`<%= @versionid -%>')dnl\n"),
+    content => "VERSIONID(`${versionid}')dnl\n",
     notify  => Class['::sendmail::makeall'],
   }
 }

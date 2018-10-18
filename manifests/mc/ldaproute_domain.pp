@@ -25,7 +25,7 @@ define sendmail::mc::ldaproute_domain (
   concat::fragment { "sendmail_mc-ldaproute_domain-${domain}":
     target  => 'sendmail.mc',
     order   => '19',
-    content => inline_template("LDAPROUTE_DOMAIN(`<%= @domain -%>')dnl\n"),
+    content => "LDAPROUTE_DOMAIN(`${domain}')dnl\n",
     notify  => Class['::sendmail::makeall'],
   }
 

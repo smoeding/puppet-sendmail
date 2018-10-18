@@ -34,24 +34,21 @@
 #
 #
 define sendmail::mc::modify_mailer_flags (
-  $flags,
+  String  $flags,
   String  $mailer_name = $title,
   Boolean $use_quotes  = true,
 ) {
   include ::sendmail::makeall
 
   # Add quotes to the expansion if needed
-  $exp_arg = $use_quotes ? {
-    true  => "`${flags}'",
-    false => $flags,
-  }
+  $exp_arg = bool2str($use_quotes, "`${flags}'", $flags)
 
-  $arr = [ "`${mailer_name}'", $exp_arg ]
+  $arg = join([ "`${mailer_name}'", $exp_arg ], ', ')
 
   concat::fragment { "sendmail_mc-modify_mailer_flags-${title}":
     target  => 'sendmail.mc',
     order   => '38',
-    content => inline_template("MODIFY_MAILER_FLAGS(<%= @arr.join(', ') -%>)dnl\n"),
+    content => "MODIFY_MAILER_FLAGS(${arg})dnl\n",
     notify  => Class['::sendmail::makeall'],
   }
 

@@ -49,12 +49,12 @@
 #
 #
 class sendmail::submit (
-  $ostype                   = $::sendmail::params::submit_mc_ostype,
-  $submit_mc_domain         = $::sendmail::params::submit_mc_domain,
-  $msp_host                 = '[127.0.0.1]',
+  Optional[String]            $ostype                   = $::sendmail::params::submit_mc_ostype,
+  Optional[String]            $submit_mc_domain         = $::sendmail::params::submit_mc_domain,
+  String                      $msp_host                 = '[127.0.0.1]',
   Pattern[/^(MSA)|([0-9]+)$/] $msp_port                 = 'MSA',
   Boolean                     $enable_msp_trusted_users = false,
-  $masquerade_as            = undef,
+  Optional[String]            $masquerade_as            = undef,
 ) inherits sendmail::params {
 
   include ::sendmail::makeall

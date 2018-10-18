@@ -92,23 +92,12 @@ define sendmail::mc::milter (
   #
   # Socket parameter
   #
-  if $socket_type != undef {
-    case $socket_type {
-      /^(local|unix)$/: { assert_type(Stdlib::Absolutepath, $socket_spec) }
-      /^inet6?$/: { assert_type(Pattern[/^[0-9]+@./], $socket_spec) }
-      default: { fail('Invalid socket type') }
-    }
 
-    $opt_socket = "${socket_type}:${socket_spec}"
+  case $socket_type {
+    /^(local|unix)$/: { assert_type(Stdlib::Absolutepath, $socket_spec) }
+    /^inet6?$/: { assert_type(Pattern[/^[0-9]+@./], $socket_spec) }
+    default: { fail('Invalid socket type') }
   }
-  else {
-    $opt_socket = undef
-  }
-
-  #
-  # Flags parameter
-  #
-  $opt_flags = $flags
 
   #
   # Timout parameter
@@ -121,7 +110,6 @@ define sendmail::mc::milter (
     'C' => $connect_timeout,
   }
 
-  # Remove unset options
   $real_timeouts = $sparse_timeouts.filter |$key,$val| { $val != undef }
 
   $opt_timeouts = empty($real_timeouts) ? {
@@ -132,13 +120,13 @@ define sendmail::mc::milter (
   #
   # Put everything together
   #
+
   $sparse_opts_all = {
-    'S' => $opt_socket,
-    'F' => $opt_flags,
+    'S' => "${socket_type}:${socket_spec}",
+    'F' => $flags,
     'T' => $opt_timeouts,
   }
 
-  # Remove unset options
   $real_opts_all = $sparse_opts_all.filter |$key,$val| { $val != undef }
 
   $opts = join(join_keys_to_values($real_opts_all, '='), ', ')

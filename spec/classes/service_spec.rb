@@ -54,24 +54,6 @@ describe 'sendmail::service' do
       it { is_expected.to contain_service('sendmail').with_ensure('running') }
     end
 
-    context "on #{os} with service_ensure => true" do
-      let(:facts) { facts }
-      let(:params) do
-        { service_ensure: true }
-      end
-
-      it { is_expected.to contain_service('sendmail').with_ensure('running') }
-    end
-
-    context "on #{os} with service_ensure => false" do
-      let(:facts) { facts }
-      let(:params) do
-        { service_ensure: false }
-      end
-
-      it { is_expected.to contain_service('sendmail').with_ensure('stopped') }
-    end
-
     context "on #{os} with service_enable => true" do
       let(:facts) { facts }
       let(:params) do
@@ -102,19 +84,19 @@ describe 'sendmail::service' do
     context "on #{os} with service_hasstatus => true" do
       let(:facts) { facts }
       let(:params) do
-        { service_hasstatus: 'true' }
+        { service_hasstatus: true }
       end
 
-      it { is_expected.to contain_service('sendmail').with_hasstatus('true') }
+      it { is_expected.to contain_service('sendmail').with_hasstatus(true) }
     end
 
     context "on #{os} with service_hasstatus => false" do
       let(:facts) { facts }
       let(:params) do
-        { service_hasstatus: 'false' }
+        { service_hasstatus: false }
       end
 
-      it { is_expected.to contain_service('sendmail').with_hasstatus('false') }
+      it { is_expected.to contain_service('sendmail').with_hasstatus(false) }
     end
   end
 end

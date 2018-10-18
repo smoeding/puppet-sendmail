@@ -18,19 +18,19 @@
 #   sendmail::mc::trust_auth_mech { 'PLAIN': }
 #
 define sendmail::mc::trust_auth_mech (
-  $trust_auth_mech = $title,
+  Variant[String,Array[String]] $trust_auth_mech = $title,
 ) {
   include ::sendmail::makeall
 
-  $mech = is_array($trust_auth_mech) ? {
-    true    => join(strip($trust_auth_mech), ' '),
+  $mech = $trust_auth_mech ? {
+    Array => join(strip($trust_auth_mech), ' '),
     default => strip($trust_auth_mech),
   }
 
   concat::fragment { 'sendmail_mc-trust_auth_mech':
     target  => 'sendmail.mc',
     order   => '45',
-    content => inline_template("TRUST_AUTH_MECH(`<%= @mech -%>')dnl\n"),
+    content => "TRUST_AUTH_MECH(`${mech}')dnl\n",
     notify  => Class['::sendmail::makeall'],
   }
 

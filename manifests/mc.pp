@@ -89,19 +89,19 @@
 #
 #
 class sendmail::mc (
-  $ostype                = $::sendmail::params::sendmail_mc_ostype,
-  $sendmail_mc_domain    = $::sendmail::params::sendmail_mc_domain,
-  $cf_version            = undef,
-  $smart_host            = undef,
-  $domain_name           = undef,
+  String                                      $ostype                = $::sendmail::params::sendmail_mc_ostype,
+  Optional[String]                            $sendmail_mc_domain    = $::sendmail::params::sendmail_mc_domain,
+  Optional[String]                            $cf_version            = undef,
+  Optional[String]                            $smart_host            = undef,
+  Optional[String]                            $domain_name           = undef,
   Optional[Pattern[/^[0-9]*\s*([kM][bB])?$/]] $max_message_size      = undef,
   Optional[Pattern[/^\d+$/]]                  $log_level             = undef,
   Optional[Boolean]                           $dont_probe_interfaces = undef,
   Boolean                                     $enable_ipv4_daemon    = true,
   Boolean                                     $enable_ipv6_daemon    = true,
-  $mailers               = $::sendmail::params::mailers,
-  $trust_auth_mech       = undef,
-  $version_id            = undef,
+  Array[String]                               $mailers               = $::sendmail::params::mailers,
+  Variant[String,Array[String]]               $trust_auth_mech       = [],
+  Optional[String]                            $version_id            = undef,
 ) inherits ::sendmail::params {
 
   include ::sendmail::makeall
@@ -154,43 +154,43 @@ class sendmail::mc (
     notify  => Class['::sendmail::makeall'],
   }
 
-  if ($cf_version != undef) {
+  if $cf_version {
     ::sendmail::mc::define { 'confCF_VERSION':
       expansion => $cf_version,
     }
   }
 
-  if ($version_id != undef) {
+  if $version_id {
     ::sendmail::mc::versionid { $version_id: }
   }
 
-  if ($ostype != undef) {
+  if $ostype {
     ::sendmail::mc::ostype { $ostype: }
   }
 
-  if ($sendmail_mc_domain != undef) {
+  if $sendmail_mc_domain {
     ::sendmail::mc::domain { $sendmail_mc_domain: }
   }
 
-  if ($smart_host != undef) {
+  if $smart_host {
     ::sendmail::mc::define { 'SMART_HOST':
       expansion => $smart_host,
     }
   }
 
-  if ($domain_name != undef) {
+  if $domain_name {
     ::sendmail::mc::define { 'confDOMAIN_NAME':
       expansion => $domain_name,
     }
   }
 
-  if ($log_level != undef) {
+  if $log_level {
     ::sendmail::mc::define { 'confLOG_LEVEL':
       expansion => $log_level,
     }
   }
 
-  if ($max_message_size != undef) {
+  if $max_message_size {
     ::sendmail::mc::define { 'confMAX_MESSAGE_SIZE':
       expansion => to_bytes($max_message_size),
     }
@@ -202,14 +202,14 @@ class sendmail::mc (
     }
   }
 
-  if ($enable_ipv4_daemon) {
+  if $enable_ipv4_daemon {
     ::sendmail::mc::daemon_options { 'MTA-v4':
       family => 'inet',
       port   => 'smtp',
     }
   }
 
-  if ($enable_ipv6_daemon) {
+  if $enable_ipv6_daemon {
     ::sendmail::mc::daemon_options { 'MTA-v6':
       family => 'inet6',
       port   => 'smtp',
@@ -222,7 +222,7 @@ class sendmail::mc (
     }
   }
 
-  if $trust_auth_mech {
+  if $trust_auth_mech and !empty($trust_auth_mech) {
     ::sendmail::mc::trust_auth_mech { 'trust_auth_mech':
       trust_auth_mech => $trust_auth_mech,
     }

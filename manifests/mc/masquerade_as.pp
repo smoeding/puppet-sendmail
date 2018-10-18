@@ -67,18 +67,18 @@
 #
 #
 define sendmail::mc::masquerade_as (
-  String $masquerade_as             = $title,
-  $masquerade_domain         = [],
-  $masquerade_domain_file    = undef,
-  $masquerade_exception      = [],
-  $masquerade_exception_file = undef,
-  Boolean $masquerade_envelope       = false,
-  Boolean $allmasquerade             = false,
-  Boolean $limited_masquerade        = false,
-  Boolean $local_no_masquerade       = false,
-  Boolean $masquerade_entire_domain  = false,
-  $exposed_user              = [],
-  $exposed_user_file         = undef,
+  String                         $masquerade_as             = $title,
+  Array[String]                  $masquerade_domain         = [],
+  Optional[Stdlib::Absolutepath] $masquerade_domain_file    = undef,
+  Array[String]                  $masquerade_exception      = [],
+  Optional[Stdlib::Absolutepath] $masquerade_exception_file = undef,
+  Boolean                        $masquerade_envelope       = false,
+  Boolean                        $allmasquerade             = false,
+  Boolean                        $limited_masquerade        = false,
+  Boolean                        $local_no_masquerade       = false,
+  Boolean                        $masquerade_entire_domain  = false,
+  Array[String]                  $exposed_user              = [],
+  Optional[Stdlib::Absolutepath] $exposed_user_file         = undef,
 ) {
   include ::sendmail::makeall
 

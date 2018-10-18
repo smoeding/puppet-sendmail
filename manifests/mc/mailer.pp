@@ -41,7 +41,7 @@ define sendmail::mc::mailer (
   concat::fragment { "sendmail_mc-mailer-${mailer}":
     target  => 'sendmail.mc',
     order   => $order,
-    content => inline_template("MAILER(`<%= @mailer -%>')dnl\n"),
+    content => "MAILER(`${mailer}')dnl\n",
     notify  => Class['::sendmail::makeall'],
   }
 

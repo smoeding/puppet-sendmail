@@ -62,11 +62,11 @@ class sendmail::mc::starttls (
   Optional[Stdlib::Absolutepath] $client_cert_file   = undef,
   Optional[Stdlib::Absolutepath] $client_key_file    = undef,
   Optional[Stdlib::Absolutepath] $crl_file           = undef,
-  Variant[Enum['512','1024','2048'],Stdlib::Absolutepath,Undef] $dh_params          = undef,
-  Variant[Enum['V'],Undef]       $tls_srv_options    = undef,
-  $cipher_list        = undef,
-  $server_ssl_options = undef,
-  $client_ssl_options = undef,
+  Optional[Sendmail::DHParam]    $dh_params          = undef,
+  Optional[Enum['V']]            $tls_srv_options    = undef,
+  Optional[String]               $cipher_list        = undef,
+  Optional[String]               $server_ssl_options = undef,
+  Optional[String]               $client_ssl_options = undef,
 ) {
   include ::sendmail::makeall
 
