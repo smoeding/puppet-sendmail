@@ -70,7 +70,7 @@
 #
 define sendmail::mc::daemon_options (
   String                                  $daemon_name      = $title,
-  Optional[Sendmail::Protocolfamily]      $family           = undef,
+  Optional[Enum['inet', 'inet6', 'iso']]  $family           = undef,
   Optional[String]                        $addr             = undef,
   Optional[String]                        $port             = undef,
   Optional[String]                        $children         = undef,
