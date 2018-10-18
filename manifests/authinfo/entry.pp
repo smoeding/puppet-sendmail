@@ -64,10 +64,6 @@ define sendmail::authinfo::entry (
   include ::sendmail::makeall
   include ::sendmail::authinfo::file
 
-  if $address == undef {
-    fail('The address parameter must be defined')
-  }
-
   if $ensure == 'present' {
     if ($password == undef) and ($password_base64 == undef) {
       fail('Either password or password_base64 must be set')
@@ -104,11 +100,11 @@ define sendmail::authinfo::entry (
     "M:${mech}",
   ]
 
-  # Remove unset values by mapping them to a single '=' and deleting it
-  $real_values = delete(regsubst($values, '^.[:=]$', '='), '=')
+  # Remove unset values
+  $real_values = $values.filter |$item| { length($item) > 2 }
 
   # Add quotes to each array element
-  $value = join(regsubst($real_values, '^.*$', '"\0"'), ' ')
+  $value = join(suffix(prefix($real_values, '"'), '"'), ' ')
 
   $changes = $ensure ? {
     'present' => [
