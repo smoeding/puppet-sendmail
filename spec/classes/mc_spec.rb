@@ -19,6 +19,10 @@ describe 'sendmail::mc' do
             .with_mode('0644')
             .that_notifies('Class[sendmail::makeall]')
 
+          is_expected.to contain_concat__fragment('sendmail_mc-header')
+            .with_content(%r{include\(`/usr/share/sendmail/cf/m4/cf.m4'\)})
+            .with_order('00')
+
           is_expected.to contain_sendmail__mc__ostype('debian')
           is_expected.to contain_sendmail__mc__domain('debian-mta')
 
@@ -33,6 +37,11 @@ describe 'sendmail::mc' do
             .with_owner('root')
             .with_group('root')
             .with_mode('0644')
+            .that_notifies('Class[sendmail::makeall]')
+
+          is_expected.to contain_concat__fragment('sendmail_mc-header')
+            .with_content(%r{include\(`/usr/share/sendmail-cf/m4/cf.m4'\)})
+            .with_order('00')
 
           is_expected.to contain_sendmail__mc__ostype('linux')
 
@@ -47,6 +56,11 @@ describe 'sendmail::mc' do
             .with_owner('root')
             .with_group('wheel')
             .with_mode('0644')
+            .that_notifies('Class[sendmail::makeall]')
+
+          is_expected.to contain_concat__fragment('sendmail_mc-header')
+            .without_content(%r{^include})
+            .with_order('00')
 
           is_expected.to contain_sendmail__mc__ostype('freebsd6')
 
