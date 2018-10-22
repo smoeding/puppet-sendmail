@@ -1,0 +1,6 @@
+dnl #
+dnl # Timeouts
+dnl #
+<% $timeouts.each |$t| { -%>
+define(<%= $t -%>)dnl
+<% } -%>

@@ -118,38 +118,42 @@ class sendmail::mc::timeouts (
   Optional[String] $rset       = undef,
   Optional[String] $starttls   = undef,
 ) {
-  $sparse_timeouts = [
-    "`confTO_ACONNECT', `${aconnect}'",
-    "`confTO_AUTH', `${auth}'",
-    "`confTO_COMMAND', `${command}'",
-    "`confTO_CONNECT', `${connect}'",
-    "`confTO_CONTROL', `${control}'",
-    "`confTO_DATABLOCK', `${datablock}'",
-    "`confTO_DATAFINAL', `${datafinal}'",
-    "`confTO_DATAINIT', `${datainit}'",
-    "`confTO_FILEOPEN', `${fileopen}'",
-    "`confTO_HELO', `${helo}'",
-    "`confTO_HOSTSTATUS', `${hoststatus}'",
-    "`confTO_ICONNECT', `${iconnect}'",
-    "`confTO_IDENT', `${ident}'",
-    "`confTO_INITIAL', `${initial}'",
-    "`confTO_LHLO', `${lhlo}'",
-    "`confTO_MAIL', `${mail}'",
-    "`confTO_MISC', `${misc}'",
-    "`confTO_QUIT', `${quit}'",
-    "`confTO_RCPT', `${rcpt}'",
-    "`confTO_RSET', `${rset}'",
-    "`confTO_STARTTLS', `${starttls}'",
-  ]
+  $sparse_timeouts = {
+    'ACONNECT'   => $aconnect,
+    'AUTH'       => $auth,
+    'COMMAND'    => $command,
+    'CONNECT'    => $connect,
+    'CONTROL'    => $control,
+    'DATABLOCK'  => $datablock,
+    'DATAFINAL'  => $datafinal,
+    'DATAINIT'   => $datainit,
+    'FILEOPEN'   => $fileopen,
+    'HELO'       => $helo,
+    'HOSTSTATUS' => $hoststatus,
+    'ICONNECT'   => $iconnect,
+    'IDENT'      => $ident,
+    'INITIAL'    => $initial,
+    'LHLO'       => $lhlo,
+    'MAIL'       => $mail,
+    'MISC'       => $misc,
+    'QUIT'       => $quit,
+    'RCPT'       => $rcpt,
+    'RSET'       => $rset,
+    'STARTTLS'   => $starttls,
+  }
 
   # Remove unset options
-  $timeouts = delete(regsubst($sparse_timeouts, "^.*, `'$", '='), '=')
+  $timeouts = $sparse_timeouts.filter |$key,$val| { !empty($val) }
 
   if ($timeouts and !empty($timeouts)) {
+    $params = {
+      'timeouts' => $timeouts.map |$key,$val| { "`confTO_${key}', `${val}'" }
+    }
+
     concat::fragment { 'sendmail_mc-timeouts':
       target  => 'sendmail.mc',
       order   => '16',
-      content => template('sendmail/timeouts.m4.erb'),
+      content => epp('sendmail/timeouts.m4.epp', $params),
     }
   }
 }
