@@ -20,7 +20,9 @@ describe 'sendmail::mc' do
             .that_notifies('Class[sendmail::makeall]')
 
           is_expected.to contain_concat__fragment('sendmail_mc-header')
-            .with_content(%r{include\(`/usr/share/sendmail/cf/m4/cf.m4'\)})
+            .with_content(%r{^include\(`/usr/share/sendmail/cf/m4/cf\.m4'\)})
+            .with_content(%r{^# Host: foo\.example\.com$})
+            .with_content(%r{^define\(`_USE_ETC_MAIL_'\)dnl})
             .with_order('00')
 
           is_expected.to contain_sendmail__mc__ostype('debian')
@@ -40,7 +42,9 @@ describe 'sendmail::mc' do
             .that_notifies('Class[sendmail::makeall]')
 
           is_expected.to contain_concat__fragment('sendmail_mc-header')
-            .with_content(%r{include\(`/usr/share/sendmail-cf/m4/cf.m4'\)})
+            .with_content(%r{^include\(`/usr/share/sendmail-cf/m4/cf\.m4'\)})
+            .with_content(%r{^# Host: foo\.example\.com$})
+            .with_content(%r{^define\(`_USE_ETC_MAIL_'\)dnl})
             .with_order('00')
 
           is_expected.to contain_sendmail__mc__ostype('linux')
@@ -60,6 +64,8 @@ describe 'sendmail::mc' do
 
           is_expected.to contain_concat__fragment('sendmail_mc-header')
             .without_content(%r{^include})
+            .with_content(%r{^# Host: foo\.example\.com$})
+            .with_content(%r{^define\(`_USE_ETC_MAIL_'\)dnl})
             .with_order('00')
 
           is_expected.to contain_sendmail__mc__ostype('freebsd6')

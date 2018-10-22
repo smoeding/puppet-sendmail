@@ -151,7 +151,7 @@ class sendmail::mc (
   concat::fragment { 'sendmail_mc-header':
     target  => 'sendmail.mc',
     order   => '00',
-    content => template('sendmail/header.m4.erb'),
+    content => epp('sendmail/header.m4.epp'),
   }
 
   if $cf_version {
