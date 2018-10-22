@@ -5,16 +5,17 @@ describe 'sendmail::mc::starttls' do
     context "on #{os} with defaults" do
       let(:facts) { facts }
 
-      case facts[:operatingsystem]
+      case facts[:osfamily]
       when 'Debian'
         it {
           is_expected.to contain_concat__fragment('sendmail_mc-starttls')
-            .with_content(%r{^include.*starttls.m4})
+            .with_content(%r{^include.*starttls\.m4})
             .with_order('47')
         }
       else
         it {
           is_expected.to contain_concat__fragment('sendmail_mc-starttls')
+            .without_content(%r{^include.*starttls\.m4})
             .with_order('47')
         }
       end
