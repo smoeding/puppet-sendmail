@@ -4,17 +4,14 @@ describe 'sendmail::mc::enhdnsbl' do
   on_supported_os.each do |os, facts|
     let(:facts) { facts }
     let(:title) { 'bl.example.com' }
-    let(:pre_condition) { 'include sendmail::service' }
 
     context "on #{os} with defaults" do
       it {
         is_expected.to contain_class('sendmail::mc::enhdnsbl_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com')
           .with_content(%r{^FEATURE\(`enhdnsbl', `bl.example.com'\)dnl$})
           .with_order('51')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -25,7 +22,6 @@ describe 'sendmail::mc::enhdnsbl' do
 
       it {
         is_expected.to contain_class('sendmail::mc::enhdnsbl_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com')
           .with_content(%r{`bl.example.com', `foo'\)dnl$})
@@ -39,7 +35,6 @@ describe 'sendmail::mc::enhdnsbl' do
 
       it {
         is_expected.to contain_class('sendmail::mc::enhdnsbl_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com')
           .with_content(%r{`bl.example.com', , `t'\)dnl$})
@@ -53,7 +48,6 @@ describe 'sendmail::mc::enhdnsbl' do
 
       it {
         is_expected.to contain_class('sendmail::mc::enhdnsbl_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-enhdnsbl_bl.example.com')
           .with_content(%r{`bl.example.com', , , `foo'\)dnl$})

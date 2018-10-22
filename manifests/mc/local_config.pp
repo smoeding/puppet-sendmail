@@ -27,7 +27,7 @@ define sendmail::mc::local_config (
   Optional[String] $content = undef,
   Optional[String] $source  = undef,
 ) {
-  include ::sendmail::makeall
+  include ::sendmail::mc::local_config_section
 
   if $content and $source {
     fail('sendmail::mc::local_config cannot have both content and source')
@@ -42,9 +42,5 @@ define sendmail::mc::local_config (
     order   => '81',
     content => $content,
     source  => $source,
-    notify  => Class['::sendmail::makeall'],
   }
-
-  # Also add the section header
-  include ::sendmail::mc::local_config_section
 }

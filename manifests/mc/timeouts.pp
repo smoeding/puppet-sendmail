@@ -118,8 +118,6 @@ class sendmail::mc::timeouts (
   Optional[String] $rset       = undef,
   Optional[String] $starttls   = undef,
 ) {
-  include ::sendmail::makeall
-
   $sparse_timeouts = [
     "`confTO_ACONNECT', `${aconnect}'",
     "`confTO_AUTH', `${auth}'",
@@ -152,7 +150,6 @@ class sendmail::mc::timeouts (
       target  => 'sendmail.mc',
       order   => '16',
       content => template('sendmail/timeouts.m4.erb'),
-      notify  => Class['::sendmail::makeall'],
     }
   }
 }

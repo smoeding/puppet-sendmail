@@ -19,12 +19,9 @@
 define sendmail::mc::versionid (
   String $versionid = $title,
 ) {
-  include ::sendmail::makeall
-
   concat::fragment { 'sendmail_mc-versionid':
     target  => 'sendmail.mc',
     order   => '01',
     content => "VERSIONID(`${versionid}')dnl\n",
-    notify  => Class['::sendmail::makeall'],
   }
 }

@@ -80,12 +80,9 @@ define sendmail::mc::masquerade_as (
   Array[String]                  $exposed_user              = [],
   Optional[Stdlib::Absolutepath] $exposed_user_file         = undef,
 ) {
-  include ::sendmail::makeall
-
   concat::fragment { 'sendmail_mc-masquerade':
     target  => 'sendmail.mc',
     order   => '30',
     content => template('sendmail/masquerade.m4.erb'),
-    notify  => Class['::sendmail::makeall'],
   }
 }

@@ -4,7 +4,6 @@ describe 'sendmail::mc::local_config' do
   on_supported_os.each do |os, facts|
     let(:facts) { facts }
     let(:title) { 'local_config' }
-    let(:pre_condition) { 'include sendmail::service' }
 
     context "on #{os} without source or content" do
       it {
@@ -19,12 +18,10 @@ describe 'sendmail::mc::local_config' do
 
       it {
         is_expected.to contain_class('sendmail::mc::local_config_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-local_config-local_config')
           .with_source('foo')
           .with_order('81')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -35,12 +32,10 @@ describe 'sendmail::mc::local_config' do
 
       it {
         is_expected.to contain_class('sendmail::mc::local_config_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-local_config-local_config')
           .with_content('foo')
           .with_order('81')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -63,12 +58,10 @@ describe 'sendmail::mc::local_config' do
 
       it {
         is_expected.to contain_class('sendmail::mc::local_config_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-local_config-CipherList')
           .with_content('foo')
           .with_order('81')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -81,12 +74,10 @@ describe 'sendmail::mc::local_config' do
 
       it {
         is_expected.to contain_class('sendmail::mc::local_config_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-local_config-ClientSSLOptions')
           .with_content('foo')
           .with_order('81')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -99,12 +90,10 @@ describe 'sendmail::mc::local_config' do
 
       it {
         is_expected.to contain_class('sendmail::mc::local_config_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-local_config-ServerSSLOptions')
           .with_content('foo')
           .with_order('81')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
   end

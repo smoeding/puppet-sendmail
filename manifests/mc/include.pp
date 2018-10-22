@@ -28,12 +28,9 @@ define sendmail::mc::include (
   Stdlib::Absolutepath $filename = $title,
   String               $order    = '59',
 ) {
-  include ::sendmail::makeall
-
   concat::fragment { "sendmail_mc-include-${title}":
     target  => 'sendmail.mc',
     order   => $order,
     content => "include(`${filename}')dnl\n",
-    notify  => Class['::sendmail::makeall'],
   }
 }

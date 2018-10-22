@@ -38,7 +38,7 @@ define sendmail::mc::modify_mailer_flags (
   String  $mailer_name = $title,
   Boolean $use_quotes  = true,
 ) {
-  include ::sendmail::makeall
+  include ::sendmail::mc::macro_section
 
   # Add quotes to the expansion if needed
   $exp_arg = bool2str($use_quotes, "`${flags}'", $flags)
@@ -49,9 +49,5 @@ define sendmail::mc::modify_mailer_flags (
     target  => 'sendmail.mc',
     order   => '38',
     content => "MODIFY_MAILER_FLAGS(${arg})dnl\n",
-    notify  => Class['::sendmail::makeall'],
   }
-
-  # Also add the section header
-  include ::sendmail::mc::macro_section
 }

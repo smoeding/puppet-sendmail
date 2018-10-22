@@ -21,12 +21,9 @@
 define sendmail::mc::domain (
   String $domainname = $title,
 ) {
-  include ::sendmail::makeall
-
   concat::fragment { "sendmail_mc-domain-${domainname}":
     target  => 'sendmail.mc',
     order   => '07',
     content => "DOMAIN(`${domainname}')dnl\n",
-    notify  => Class['::sendmail::makeall'],
   }
 }

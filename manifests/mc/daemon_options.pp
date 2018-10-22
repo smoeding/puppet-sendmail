@@ -84,8 +84,7 @@ define sendmail::mc::daemon_options (
   Optional[String]                        $send_buf_size    = undef,
   Optional[String]                        $receive_buf_size = undef,
 ) {
-
-  include ::sendmail::makeall
+  include ::sendmail::mc::macro_section
 
   # Get the first character
   $delivery = $delivery_mode ? {
@@ -126,9 +125,5 @@ define sendmail::mc::daemon_options (
     target  => 'sendmail.mc',
     order   => '40',
     content => "DAEMON_OPTIONS(`${opts}')dnl\n",
-    notify  => Class['::sendmail::makeall'],
   }
-
-  # Also add the section header
-  include ::sendmail::mc::macro_section
 }

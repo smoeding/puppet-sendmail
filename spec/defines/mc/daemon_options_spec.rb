@@ -4,17 +4,14 @@ describe 'sendmail::mc::daemon_options' do
   on_supported_os.each do |os, facts|
     let(:facts) { facts }
     let(:title) { 'MSA' }
-    let(:pre_condition) { 'include sendmail::service' }
 
     context "on #{os} with default arguments" do
       it {
         is_expected.to contain_class('sendmail::mc::macro_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-daemon_options-MSA')
           .with_content(%r{^DAEMON_OPTIONS\(`Name=MSA'\)dnl$})
           .with_order('40')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -24,12 +21,10 @@ describe 'sendmail::mc::daemon_options' do
 
         it {
           is_expected.to contain_class('sendmail::mc::macro_section')
-          is_expected.to contain_class('sendmail::makeall')
 
           is_expected.to contain_concat__fragment("sendmail_mc-daemon_options-#{title}")
             .with_content(%r{^DAEMON_OPTIONS\(`Name=#{title}'\)dnl$})
             .with_order('40')
-            .that_notifies('Class[sendmail::makeall]')
         }
       end
     end
@@ -41,12 +36,10 @@ describe 'sendmail::mc::daemon_options' do
 
       it {
         is_expected.to contain_class('sendmail::mc::macro_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-daemon_options-MSA')
           .with_content(%r{^DAEMON_OPTIONS\(`Name=MTA'\)dnl$})
           .with_order('40')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -59,12 +52,10 @@ describe 'sendmail::mc::daemon_options' do
 
       it {
         is_expected.to contain_class('sendmail::mc::macro_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-daemon_options-MTA-v4')
           .with_content(%r{^DAEMON_OPTIONS\(`Name=MTA-v4, Family=inet'\)dnl$})
           .with_order('40')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -77,12 +68,10 @@ describe 'sendmail::mc::daemon_options' do
 
       it {
         is_expected.to contain_class('sendmail::mc::macro_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-daemon_options-MTA-v6')
           .with_content(%r{^DAEMON_OPTIONS\(`Name=MTA-v6, Family=inet6'\)dnl$})
           .with_order('40')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -93,12 +82,10 @@ describe 'sendmail::mc::daemon_options' do
 
       it {
         is_expected.to contain_class('sendmail::mc::macro_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-daemon_options-MSA')
           .with_content(%r{^DAEMON_OPTIONS\(`Name=MSA, DeliveryMode=b'\)dnl$})
           .with_order('40')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -109,12 +96,10 @@ describe 'sendmail::mc::daemon_options' do
 
       it {
         is_expected.to contain_class('sendmail::mc::macro_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-daemon_options-MSA')
           .with_content(%r{^DAEMON_OPTIONS\(`Name=MSA, DeliveryMode=b'\)dnl$})
           .with_order('40')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -125,12 +110,10 @@ describe 'sendmail::mc::daemon_options' do
 
       it {
         is_expected.to contain_class('sendmail::mc::macro_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-daemon_options-MSA')
           .with_content(%r{^DAEMON_OPTIONS\(`Name=MSA, DeliveryMode=d'\)dnl$})
           .with_order('40')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -141,12 +124,10 @@ describe 'sendmail::mc::daemon_options' do
 
       it {
         is_expected.to contain_class('sendmail::mc::macro_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-daemon_options-MSA')
           .with_content(%r{^DAEMON_OPTIONS\(`Name=MSA, DeliveryMode=d'\)dnl$})
           .with_order('40')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -157,12 +138,10 @@ describe 'sendmail::mc::daemon_options' do
 
       it {
         is_expected.to contain_class('sendmail::mc::macro_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-daemon_options-MSA')
           .with_content(%r{^DAEMON_OPTIONS\(`Name=MSA, DeliveryMode=i'\)dnl$})
           .with_order('40')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -173,12 +152,10 @@ describe 'sendmail::mc::daemon_options' do
 
       it {
         is_expected.to contain_class('sendmail::mc::macro_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-daemon_options-MSA')
           .with_content(%r{^DAEMON_OPTIONS\(`Name=MSA, DeliveryMode=i'\)dnl$})
           .with_order('40')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -189,12 +166,10 @@ describe 'sendmail::mc::daemon_options' do
 
       it {
         is_expected.to contain_class('sendmail::mc::macro_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-daemon_options-MSA')
           .with_content(%r{^DAEMON_OPTIONS\(`Name=MSA, DeliveryMode=q'\)dnl$})
           .with_order('40')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -205,12 +180,10 @@ describe 'sendmail::mc::daemon_options' do
 
       it {
         is_expected.to contain_class('sendmail::mc::macro_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-daemon_options-MSA')
           .with_content(%r{^DAEMON_OPTIONS\(`Name=MSA, DeliveryMode=q'\)dnl$})
           .with_order('40')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -221,12 +194,10 @@ describe 'sendmail::mc::daemon_options' do
 
       it {
         is_expected.to contain_class('sendmail::mc::macro_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-daemon_options-MSA')
           .with_content(%r{^DAEMON_OPTIONS\(`Name=MSA, Addr=localhost'\)dnl$})
           .with_order('40')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -237,12 +208,10 @@ describe 'sendmail::mc::daemon_options' do
 
       it {
         is_expected.to contain_class('sendmail::mc::macro_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-daemon_options-MSA')
           .with_content(%r{^DAEMON_OPTIONS\(`Name=MSA, Port=smtp'\)dnl$})
           .with_order('40')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -253,12 +222,10 @@ describe 'sendmail::mc::daemon_options' do
 
       it {
         is_expected.to contain_class('sendmail::mc::macro_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-daemon_options-MSA')
           .with_content(%r{^DAEMON_OPTIONS\(`Name=MSA, Port=25'\)dnl$})
           .with_order('40')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -269,12 +236,10 @@ describe 'sendmail::mc::daemon_options' do
 
       it {
         is_expected.to contain_class('sendmail::mc::macro_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-daemon_options-MSA')
           .with_content(%r{^DAEMON_OPTIONS\(`Name=MSA, Family=inet, Port=25'\)dnl$})
           .with_order('40')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -285,7 +250,6 @@ describe 'sendmail::mc::daemon_options' do
 
       it {
         is_expected.to contain_class('sendmail::mc::macro_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-daemon_options-MSA')
           .with_content(%r{^DAEMON_OPTIONS\(`Name=MSA, InputFilter=foo'\)dnl$})
@@ -299,7 +263,6 @@ describe 'sendmail::mc::daemon_options' do
 
       it {
         is_expected.to contain_class('sendmail::mc::macro_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-daemon_options-MSA')
           .with_content(%r{^DAEMON_OPTIONS\(`Name=MSA, InputFilter=foo'\)dnl$})
@@ -313,7 +276,6 @@ describe 'sendmail::mc::daemon_options' do
 
       it {
         is_expected.to contain_class('sendmail::mc::macro_section')
-        is_expected.to contain_class('sendmail::makeall')
 
         is_expected.to contain_concat__fragment('sendmail_mc-daemon_options-MSA')
           .with_content(%r{^DAEMON_OPTIONS\(`Name=MSA, InputFilter=foo;bar'\)dnl$})

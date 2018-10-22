@@ -17,6 +17,7 @@ describe 'sendmail::mc' do
             .with_owner('root')
             .with_group('smmsp')
             .with_mode('0644')
+            .that_notifies('Class[sendmail::makeall]')
 
           is_expected.to contain_sendmail__mc__ostype('debian')
           is_expected.to contain_sendmail__mc__domain('debian-mta')
@@ -59,7 +60,6 @@ describe 'sendmail::mc' do
         is_expected.to contain_concat__fragment('sendmail_mc-header')
           .with_target('sendmail.mc')
           .with_order('00')
-          .that_notifies('Class[sendmail::makeall]')
 
         is_expected.not_to contain_sendmail__mc__define('SMART_HOST')
         is_expected.not_to contain_sendmail__mc__define('confCF_VERSION')

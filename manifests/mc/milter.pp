@@ -86,8 +86,7 @@ define sendmail::mc::milter (
   String                              $milter_name     = $title,
   Boolean                             $enable          = true,
 ) {
-
-  include ::sendmail::makeall
+  include ::sendmail::mc::milter_section
 
   #
   # Socket parameter
@@ -140,9 +139,5 @@ define sendmail::mc::milter (
     target  => 'sendmail.mc',
     order   => "56-${order}",
     content => "${macro_name}(`${milter_name}', `${opts}')dnl\n",
-    notify  => Class['::sendmail::makeall'],
   }
-
-  # Also add the section header
-  include ::sendmail::mc::milter_section
 }

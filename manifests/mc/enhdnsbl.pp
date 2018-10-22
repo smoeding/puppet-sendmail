@@ -38,9 +38,7 @@ define sendmail::mc::enhdnsbl (
   Optional[String] $reject_message          = undef,
   Optional[String] $lookup_result           = undef,
 ) {
-  include ::sendmail::makeall
-
-  $_reject_message =
+  include ::sendmail::mc::enhdnsbl_section
 
   $args_array = [
     "`enhdnsbl'",
@@ -57,9 +55,5 @@ define sendmail::mc::enhdnsbl (
     target  => 'sendmail.mc',
     order   => '51',
     content => "FEATURE(${args})dnl\n",
-    notify  => Class['::sendmail::makeall'],
   }
-
-  # Also add the section header
-  include ::sendmail::mc::enhdnsbl_section
 }

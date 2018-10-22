@@ -41,8 +41,6 @@ define sendmail::mc::define (
   Boolean                 $use_quotes = true,
   Variant[String,Integer] $expansion  = '',
 ) {
-  include ::sendmail::makeall
-
   case $macro_name {
     /^confLDAP/: {
       include ::sendmail::mc::define_section
@@ -68,6 +66,5 @@ define sendmail::mc::define (
     target  => 'sendmail.mc',
     order   => $order,
     content => "define(`${macro_name}', ${exp})dnl\n",
-    notify  => Class['::sendmail::makeall'],
   }
 }

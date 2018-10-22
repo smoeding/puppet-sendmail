@@ -20,15 +20,11 @@
 define sendmail::mc::ldaproute_domain (
   String $domain = $title,
 ) {
-  include ::sendmail::makeall
+  include ::sendmail::mc::ldap_section
 
   concat::fragment { "sendmail_mc-ldaproute_domain-${domain}":
     target  => 'sendmail.mc',
     order   => '19',
     content => "LDAPROUTE_DOMAIN(`${domain}')dnl\n",
-    notify  => Class['::sendmail::makeall'],
   }
-
-  # Also add the section header
-  include ::sendmail::mc::ldap_section
 }

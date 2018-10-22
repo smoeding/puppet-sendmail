@@ -145,13 +145,13 @@ class sendmail::mc (
     owner  => 'root',
     group  => $::sendmail::params::sendmail_group,
     mode   => '0644',
+    notify => Class['::sendmail::makeall'],
   }
 
   concat::fragment { 'sendmail_mc-header':
     target  => 'sendmail.mc',
     order   => '00',
     content => template('sendmail/header.m4.erb'),
-    notify  => Class['::sendmail::makeall'],
   }
 
   if $cf_version {

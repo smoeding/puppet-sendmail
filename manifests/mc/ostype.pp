@@ -21,12 +21,9 @@
 define sendmail::mc::ostype (
   String $ostype = $title,
 ) {
-  include ::sendmail::makeall
-
   concat::fragment { "sendmail_mc-ostype-${ostype}":
     target  => 'sendmail.mc',
     order   => '05',
     content => "OSTYPE(`${ostype}')dnl\n",
-    notify  => Class['::sendmail::makeall'],
   }
 }

@@ -68,13 +68,10 @@ class sendmail::mc::starttls (
   Optional[String]               $server_ssl_options = undef,
   Optional[String]               $client_ssl_options = undef,
 ) {
-  include ::sendmail::makeall
-
   concat::fragment { 'sendmail_mc-starttls':
     target  => 'sendmail.mc',
     order   => '47',
     content => template('sendmail/starttls.m4.erb'),
-    notify  => Class['::sendmail::makeall'],
   }
 
   if $::sendmail_version != undef {

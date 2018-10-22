@@ -22,7 +22,7 @@
 define sendmail::mc::mailer (
   String $mailer = $title,
 ) {
-  include ::sendmail::makeall
+  include ::sendmail::mc::mailer_section
 
   # Some mailers must be defined before others according to the Bat Book
   $order = $title ? {
@@ -42,9 +42,5 @@ define sendmail::mc::mailer (
     target  => 'sendmail.mc',
     order   => $order,
     content => "MAILER(`${mailer}')dnl\n",
-    notify  => Class['::sendmail::makeall'],
   }
-
-  # Also add the section header
-  include ::sendmail::mc::mailer_section
 }

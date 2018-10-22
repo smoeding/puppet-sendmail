@@ -46,7 +46,7 @@ define sendmail::mc::feature (
   Variant[String,Array[String]] $args         = [],
   Boolean                       $use_quotes   = true,
 ) {
-  include ::sendmail::makeall
+  include ::sendmail::mc::feature_section
 
   # Make sure arguments are really an array
   $args_array = $args ? {
@@ -80,9 +80,5 @@ define sendmail::mc::feature (
     target  => 'sendmail.mc',
     order   => $order,
     content => "FEATURE(${arg})dnl\n",
-    notify  => Class['::sendmail::makeall'],
   }
-
-  # Also add the section header
-  include ::sendmail::mc::feature_section
 }

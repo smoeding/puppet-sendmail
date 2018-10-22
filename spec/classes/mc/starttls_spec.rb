@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe 'sendmail::mc::starttls' do
-  let(:pre_condition) { 'include sendmail::service' }
-
   on_supported_os.each do |os, facts|
     context "on #{os} with defaults" do
       let(:facts) { facts }
@@ -10,18 +8,14 @@ describe 'sendmail::mc::starttls' do
       case facts[:operatingsystem]
       when 'Debian'
         it {
-          is_expected.to contain_class('sendmail::makeall')
           is_expected.to contain_concat__fragment('sendmail_mc-starttls')
             .with_content(%r{^include.*starttls.m4})
             .with_order('47')
-            .that_notifies('Class[sendmail::makeall]')
         }
       else
         it {
-          is_expected.to contain_class('sendmail::makeall')
           is_expected.to contain_concat__fragment('sendmail_mc-starttls')
             .with_order('47')
-            .that_notifies('Class[sendmail::makeall]')
         }
       end
     end
@@ -34,12 +28,9 @@ describe 'sendmail::mc::starttls' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::makeall')
-
         is_expected.to contain_concat__fragment('sendmail_mc-starttls')
           .with_content(%r{^define\(`confCACERT', `\/foo'\)dnl})
           .with_order('47')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -51,12 +42,9 @@ describe 'sendmail::mc::starttls' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::makeall')
-
         is_expected.to contain_concat__fragment('sendmail_mc-starttls')
           .with_content(%r{^define\(`confCACERT_PATH', `\/foo'\)dnl})
           .with_order('47')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -68,13 +56,10 @@ describe 'sendmail::mc::starttls' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::makeall')
-
         is_expected.to contain_concat__fragment('sendmail_mc-starttls')
           .with_content(%r{^define\(`confSERVER_CERT', `\/foo'\)dnl})
           .with_content(%r{^define\(`confSERVER_KEY', `\/bar'\)dnl})
           .with_order('47')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -86,13 +71,10 @@ describe 'sendmail::mc::starttls' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::makeall')
-
         is_expected.to contain_concat__fragment('sendmail_mc-starttls')
           .with_content(%r{^define\(`confCLIENT_CERT', `\/foo'\)dnl})
           .with_content(%r{^define\(`confCLIENT_KEY', `\/bar'\)dnl})
           .with_order('47')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -104,12 +86,9 @@ describe 'sendmail::mc::starttls' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::makeall')
-
         is_expected.to contain_concat__fragment('sendmail_mc-starttls')
           .with_content(%r{^define\(`confCRL', `\/foo'\)dnl})
           .with_order('47')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -121,12 +100,9 @@ describe 'sendmail::mc::starttls' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::makeall')
-
         is_expected.to contain_concat__fragment('sendmail_mc-starttls')
           .with_content(%r{^define\(`confDH_PARAMETERS', `512'\)dnl})
           .with_order('47')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -138,12 +114,9 @@ describe 'sendmail::mc::starttls' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::makeall')
-
         is_expected.to contain_concat__fragment('sendmail_mc-starttls')
           .with_content(%r{^define\(`confDH_PARAMETERS', `1024'\)dnl})
           .with_order('47')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -155,12 +128,9 @@ describe 'sendmail::mc::starttls' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::makeall')
-
         is_expected.to contain_concat__fragment('sendmail_mc-starttls')
           .with_content(%r{^define\(`confDH_PARAMETERS', `2048'\)dnl})
           .with_order('47')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -172,12 +142,9 @@ describe 'sendmail::mc::starttls' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::makeall')
-
         is_expected.to contain_concat__fragment('sendmail_mc-starttls')
           .with_content(%r{^define\(`confDH_PARAMETERS', `\/foo'\)dnl})
           .with_order('47')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -189,12 +156,9 @@ describe 'sendmail::mc::starttls' do
       end
 
       it {
-        is_expected.to contain_class('sendmail::makeall')
-
         is_expected.to contain_concat__fragment('sendmail_mc-starttls')
           .with_content(%r{^define\(`confTLS_SRV_OPTIONS', `V'\)dnl})
           .with_order('47')
-          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
