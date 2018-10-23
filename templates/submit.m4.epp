@@ -2,45 +2,48 @@ divert(0)dnl
 #
 # This file is managed by Puppet. DO NOT EDIT.
 #
-# Host: <%= @fqdn %>
+# Host: <%= $fqdn %>
 #
 define(`_USE_ETC_MAIL_')dnl
 define(`confCF_VERSION', `Submit')dnl
 define(`confTIME_ZONE', `USE_TZ')dnl
 define(`confDONT_INIT_GROUPS', `True')dnl
-<% case @osfamily -%>
-<% when 'Debian' -%>
+<% case $facts['os']['family'] { -%>
+<%   'Debian': { -%>
 dnl #
 include(`/usr/share/sendmail/cf/m4/cf.m4')dnl
 dnl #
-<% when 'FreeBSD' -%>
+<%   } -%>
+<%   'FreeBSD': { -%>
 define(`confBIND_OPTS', `WorkAroundBrokenAAAA')dnl
 dnl #
-<% when 'RedHat' -%>
+<%   } -%>
+<%   'RedHat': { -%>
 dnl #
 include(`/usr/share/sendmail-cf/m4/cf.m4')dnl
 define(`__OSTYPE__',`')dnl dirty hack to keep proto.m4 from complaining
 define(`confPID_FILE', `/var/run/sm-client.pid')dnl
 dnl #
-<% end -%>
-<% if @ostype -%>
-OSTYPE(`<%= @ostype -%>')dnl
-<% end -%>
-<% if @submit_mc_domain -%>
-DOMAIN(`<%= @submit_mc_domain -%>')dnl
-<% end -%>
+<%   } -%>
+<% } -%>
+<% if $ostype { -%>
+OSTYPE(`<%= $ostype -%>')dnl
+<% } -%>
+<% if $submit_mc_domain { -%>
+DOMAIN(`<%= $submit_mc_domain -%>')dnl
+<% } -%>
 dnl #
-<% if @masquerade_as -%>
+<% if $masquerade_as { -%>
 dnl # Masquerading
-MASQUERADE_AS(`<%= @masquerade_as -%>')dnl
+MASQUERADE_AS(`<%= $masquerade_as -%>')dnl
 FEATURE(`masquerade_envelope')dnl
 dnl #
-<% end -%>
-<% if @enable_msp_trusted_users -%>
+<% } -%>
+<% if $enable_msp_trusted_users { -%>
 dnl # Use trusted users file
 FEATURE(`use_ct_file')dnl
 dnl #
-<% end -%>
+<% } -%>
 dnl # Feature MSP
-FEATURE(`msp', `<%= @msp_host -%>', `<%= @msp_port -%>')dnl
+FEATURE(`msp', `<%= $msp_host -%>', `<%= $msp_port -%>')dnl
 dnl #

@@ -80,9 +80,24 @@ define sendmail::mc::masquerade_as (
   Array[String]                  $exposed_user              = [],
   Optional[Stdlib::Absolutepath] $exposed_user_file         = undef,
 ) {
+  $params = {
+    'masquerade_as'             => $masquerade_as,
+    'masquerade_domain'         => $masquerade_domain,
+    'masquerade_domain_file'    => $masquerade_domain_file,
+    'masquerade_exception'      => $masquerade_exception,
+    'masquerade_exception_file' => $masquerade_exception_file,
+    'exposed_user'              => $exposed_user,
+    'exposed_user_file'         => $exposed_user_file,
+    'masquerade_envelope'       => $masquerade_envelope,
+    'allmasquerade'             => $allmasquerade,
+    'limited_masquerade'        => $limited_masquerade,
+    'local_no_masquerade'       => $local_no_masquerade,
+    'masquerade_entire_domain'  => $masquerade_entire_domain,
+  }
+
   concat::fragment { 'sendmail_mc-masquerade':
     target  => 'sendmail.mc',
     order   => '30',
-    content => template('sendmail/masquerade.m4.erb'),
+    content => epp('sendmail/masquerade.m4', $params),
   }
 }

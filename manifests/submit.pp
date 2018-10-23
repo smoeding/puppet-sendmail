@@ -56,15 +56,23 @@ class sendmail::submit (
   Boolean                     $enable_msp_trusted_users = false,
   Optional[String]            $masquerade_as            = undef,
 ) inherits sendmail::params {
-
   include ::sendmail::makeall
+
+  $params = {
+    'ostype'                   => $ostype,
+    'submit_mc_domain'         => $submit_mc_domain,
+    'masquerade_as'            => $masquerade_as,
+    'enable_msp_trusted_users' => $enable_msp_trusted_users,
+    'msp_host'                 => $msp_host,
+    'msp_port'                 => $msp_port,
+  }
 
   file { $::sendmail::params::submit_mc_file:
     ensure  => file,
     owner   => 'root',
     group   => $sendmail::params::sendmail_group,
     mode    => '0644',
-    content => template('sendmail/submit.m4.erb'),
+    content => epp('sendmail/submit.m4', $params),
     notify  => [ Class['::sendmail::makeall'], Class['::sendmail::service'], ],
   }
 

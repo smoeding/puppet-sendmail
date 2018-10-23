@@ -1,0 +1,41 @@
+dnl #
+dnl # Masquerade
+dnl #
+MASQUERADE_AS(`<%= $masquerade_as -%>')dnl
+<% if !empty($masquerade_domain) { -%>
+MASQUERADE_DOMAIN(`<%= join($masquerade_domain, ' ') -%>')dnl
+<% } -%>
+<% if $masquerade_domain_file { -%>
+MASQUERADE_DOMAIN_FILE(`<%= $masquerade_domain_file -%>')dnl
+<% } -%>
+<% if !empty($masquerade_exception) { -%>
+MASQUERADE_EXCEPTION(`<%= join($masquerade_exception, ' ') -%>')dnl
+<% } -%>
+<% if $masquerade_exception_file { -%>
+MASQUERADE_EXCEPTION_FILE(`<%= $masquerade_exception_file -%>')dnl
+<% } -%>
+<% if !empty($exposed_user) { -%>
+EXPOSED_USER(`<%= join($exposed_user, ' ') -%>')dnl
+<% } -%>
+<% if $exposed_user_file { -%>
+EXPOSED_USER_FILE(`<%= $exposed_user_file -%>')dnl
+<% } -%>
+<% if $masquerade_envelope or $allmasquerade or $limited_masquerade or $local_no_masquerade or $masquerade_entire_domain { -%>
+dnl #
+<% } -%>
+<% if $masquerade_envelope { -%>
+FEATURE(`masquerade_envelope')dnl
+<% } -%>
+<% if $allmasquerade { -%>
+FEATURE(`allmasquerade')dnl
+<% } -%>
+<% if $limited_masquerade { -%>
+FEATURE(`limited_masquerade')dnl
+<% } -%>
+<% if $local_no_masquerade { -%>
+FEATURE(`local_no_masquerade')dnl
+<% } -%>
+<% if $masquerade_entire_domain { -%>
+FEATURE(`masquerade_entire_domain')dnl
+<% } -%>
+dnl #

@@ -1,0 +1,35 @@
+dnl #
+dnl # TLS
+dnl #
+<% if $include_starttls_m4 { -%>
+include(`/etc/mail/tls/starttls.m4')dnl
+dnl #
+<% } -%>
+<% if $ca_cert_file { -%>
+define(`confCACERT', `<%= $ca_cert_file -%>')dnl
+<% } -%>
+<% if $ca_cert_path { -%>
+define(`confCACERT_PATH', `<%= $ca_cert_path -%>')dnl
+<% } -%>
+<% if $server_cert_file { -%>
+define(`confSERVER_CERT', `<%= $server_cert_file -%>')dnl
+<% } -%>
+<% if $server_key_file { -%>
+define(`confSERVER_KEY', `<%= $server_key_file -%>')dnl
+<% } -%>
+<% if $client_cert_file { -%>
+define(`confCLIENT_CERT', `<%= $client_cert_file -%>')dnl
+<% } -%>
+<% if $client_key_file { -%>
+define(`confCLIENT_KEY', `<%= $client_key_file -%>')dnl
+<% } -%>
+<% if $dh_params { -%>
+define(`confDH_PARAMETERS', `<%= $dh_params -%>')dnl
+<% } -%>
+<% if $crl_file { -%>
+define(`confCRL', `<%= $crl_file -%>')dnl
+<% } -%>
+<% if $tls_srv_options { -%>
+define(`confTLS_SRV_OPTIONS', `<%= $tls_srv_options -%>')dnl
+<% } -%>
+dnl #

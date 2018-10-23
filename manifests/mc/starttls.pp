@@ -68,10 +68,24 @@ class sendmail::mc::starttls (
   Optional[String]               $server_ssl_options = undef,
   Optional[String]               $client_ssl_options = undef,
 ) {
+
+  $params = {
+    'include_starttls_m4' => $::os['family'] in [ 'Debian' ],
+    'ca_cert_file'        => $ca_cert_file,
+    'ca_cert_path'        => $ca_cert_path,
+    'server_cert_file'    => $server_cert_file,
+    'server_key_file'     => $server_key_file,
+    'client_cert_file'    => $client_cert_file,
+    'client_key_file'     => $client_key_file,
+    'dh_params'           => $dh_params,
+    'crl_file'            => $crl_file,
+    'tls_srv_options'     => $tls_srv_options,
+  }
+
   concat::fragment { 'sendmail_mc-starttls':
     target  => 'sendmail.mc',
     order   => '47',
-    content => template('sendmail/starttls.m4.erb'),
+    content => epp('sendmail/starttls.m4', $params),
   }
 
   if $::sendmail_version != undef {
