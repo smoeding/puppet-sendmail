@@ -100,11 +100,14 @@ define sendmail::authinfo::entry (
     "M:${mech}",
   ]
 
-  # Remove unset values
+  # Remove unset values (value containing only 2 characters)
   $real_values = $values.filter |$item| { length($item) > 2 }
 
   # Add quotes to each array element
-  $value = join(suffix(prefix($real_values, '"'), '"'), ' ')
+  $quoted_values = $real_values.map |$item| { "`${item}'" }
+
+  # Join to a single string
+  $value = join($quoted_values, ' ')
 
   $changes = $ensure ? {
     'present' => [

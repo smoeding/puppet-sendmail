@@ -62,7 +62,7 @@ define sendmail::mc::feature (
 
   # Add quotes to the args if needed
   $exp_arg = $use_quotes ? {
-    true  => suffix(prefix($args_array, '`'), '\''),
+    true  => $args_array.map |$item| { "`${item}'" },
     false => $args_array,
   }
 
