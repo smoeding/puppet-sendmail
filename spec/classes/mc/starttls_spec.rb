@@ -163,6 +163,20 @@ describe 'sendmail::mc::starttls' do
       }
     end
 
+    context "on #{os} with tls_srv_options => ''" do
+      let(:facts) { facts }
+
+      let(:params) do
+        { tls_srv_options: '' }
+      end
+
+      it {
+        is_expected.to contain_concat__fragment('sendmail_mc-starttls')
+          .with_content(%r{^define\(`confTLS_SRV_OPTIONS', `'\)dnl})
+          .with_order('47')
+      }
+    end
+
     context "on #{os} for sendmail 8.14 with cipher_list => foo" do
       let(:facts) { facts.merge(sendmail_version: '8.14.1') }
 

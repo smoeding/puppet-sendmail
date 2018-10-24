@@ -63,7 +63,7 @@ class sendmail::mc::starttls (
   Optional[Stdlib::Absolutepath] $client_key_file    = undef,
   Optional[Stdlib::Absolutepath] $crl_file           = undef,
   Optional[Sendmail::DHParam]    $dh_params          = undef,
-  Optional[Enum['V']]            $tls_srv_options    = undef,
+  Optional[Enum['V','']]         $tls_srv_options    = undef,
   Optional[String]               $cipher_list        = undef,
   Optional[String]               $server_ssl_options = undef,
   Optional[String]               $client_ssl_options = undef,
