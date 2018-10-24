@@ -4,7 +4,7 @@ describe 'sendmail::mc::domain' do
   on_supported_os.each do |os, facts|
     let(:facts) { facts }
 
-    context "on #{os} with domainname foobar" do
+    context "on #{os} with domain_name foobar" do
       let(:title) { 'foobar' }
 
       it {
@@ -14,7 +14,7 @@ describe 'sendmail::mc::domain' do
       }
     end
 
-    context "on #{os} with domainname debian-mta" do
+    context "on #{os} with domain_name debian-mta" do
       let(:title) { 'debian-mta' }
 
       it {
@@ -24,10 +24,10 @@ describe 'sendmail::mc::domain' do
       }
     end
 
-    context "on #{os} with domainname foobar as parameter" do
+    context "on #{os} with domain_name foobar as parameter" do
       let(:title) { 'debian-mta' }
       let(:params) do
-        { domainname: 'foobar' }
+        { domain_name: 'foobar' }
       end
 
       it {

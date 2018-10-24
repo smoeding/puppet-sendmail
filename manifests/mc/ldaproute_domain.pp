@@ -4,7 +4,7 @@
 #
 # == Parameters:
 #
-# [*domain*]
+# [*domain_name*]
 #   The name of the domain for which LDAP routing is enabled.
 #   Default value is the resource title.
 #
@@ -18,13 +18,13 @@
 #
 #
 define sendmail::mc::ldaproute_domain (
-  String $domain = $title,
+  String $domain_name = $title,
 ) {
   include ::sendmail::mc::ldap_section
 
-  concat::fragment { "sendmail_mc-ldaproute_domain-${domain}":
+  concat::fragment { "sendmail_mc-ldaproute_domain_name-${domain_name}":
     target  => 'sendmail.mc',
     order   => '19',
-    content => "LDAPROUTE_DOMAIN(`${domain}')dnl\n",
+    content => "LDAPROUTE_DOMAIN(`${domain_name}')dnl\n",
   }
 }

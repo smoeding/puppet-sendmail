@@ -19,11 +19,11 @@
 #
 #
 define sendmail::mc::domain (
-  String $domainname = $title,
+  String $domain_name = $title,
 ) {
-  concat::fragment { "sendmail_mc-domain-${domainname}":
+  concat::fragment { "sendmail_mc-domain-${domain_name}":
     target  => 'sendmail.mc',
     order   => '07',
-    content => "DOMAIN(`${domainname}')dnl\n",
+    content => "DOMAIN(`${domain_name}')dnl\n",
   }
 }

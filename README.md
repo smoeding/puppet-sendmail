@@ -1417,7 +1417,7 @@ sendmail::mc::domain { 'generic': }
 
 **Parameters for the `sendmail::mc::domain` type:**
 
-##### `domain`
+##### `domain_name`
 
 The name of the sendmail domain file as a string. The value is used as argument to the `DOMAIN` macro to the generated `sendmail.mc` file. This will include the m4 file with domain specific settings. Default is the resource title.
 
@@ -1500,7 +1500,7 @@ sendmail::mc::generics_domain { 'example.net': }
 
 **Parameters for the `sendmail::mc::generics_domain` type:**
 
-##### `domain`
+##### `domain_name`
 
 The name of the domain for use with [sendmail::genericstable](#class-sendmailgenericstable). Default value is the resource title.
 
@@ -1534,7 +1534,7 @@ sendmail::mc::ldaproute_domain { 'example.net': }
 
 **Parameters for the `sendmail::mc::ldaproute_domain` type:**
 
-##### `domain`
+##### `domain_name`
 
 The name of the domain for which LDAP routing is enabled. Default value is the resource title.
 
