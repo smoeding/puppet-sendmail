@@ -159,12 +159,12 @@ describe 'sendmail::mc' do
     context "on #{os} with log_level => 7" do
       let(:facts) { facts }
       let(:params) do
-        { log_level: '7' }
+        { log_level: 7 }
       end
 
       it {
         is_expected.to contain_sendmail__mc__define('confLOG_LEVEL')
-          .with_expansion('7')
+          .with_expansion(7)
       }
     end
 
