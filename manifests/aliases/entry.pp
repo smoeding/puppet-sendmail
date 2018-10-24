@@ -23,8 +23,8 @@
 #
 #
 define sendmail::aliases::entry (
-  Enum['present','absent'] $ensure    = 'present',
-  Optional[String]         $recipient = undef,
+  Enum['present','absent']                $ensure    = 'present',
+  Optional[Variant[String,Array[String]]] $recipient = undef,
 ) {
   include ::sendmail::params
   include ::sendmail::aliases::file

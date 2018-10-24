@@ -5,7 +5,7 @@ describe 'sendmail::aliases::entry' do
     let(:facts) { facts }
     let(:title) { 'fred' }
 
-    context "on #{os} with recipient" do
+    context "on #{os} with one recipient" do
       let(:params) do
         { recipient: 'fred@example.org' }
       end
@@ -21,6 +21,25 @@ describe 'sendmail::aliases::entry' do
         is_expected.to contain_mailalias('fred')
           .with_ensure('present')
           .with_recipient('fred@example.org')
+      }
+    end
+
+    context "on #{os} with multiple recipients" do
+      let(:params) do
+        { recipient: ['fred@example.org', 'barney@example.org'] }
+      end
+
+      it {
+        is_expected.to contain_class('sendmail::params')
+        is_expected.to contain_class('sendmail::aliases::file')
+        is_expected.to contain_class('sendmail::aliases::newaliases')
+        is_expected.to contain_mailalias('fred')
+          .that_requires('Class[sendmail::aliases::file]')
+          .that_notifies('Class[sendmail::aliases::newaliases]')
+
+        is_expected.to contain_mailalias('fred')
+          .with_ensure('present')
+          .with_recipient(['fred@example.org', 'barney@example.org'])
       }
     end
 

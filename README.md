@@ -1094,7 +1094,7 @@ sendmail::aliases::entry { 'fred':
 
 ##### `recipient`
 
-The recipient where the mail is redirected to.
+The recipient where the mail is redirected to. This can be a string for one recipient or an array of strings for multiple recipients.
 
 ##### `ensure`
 
