@@ -315,8 +315,10 @@ class sendmail (
     }
   }
 
-  unless empty($features) {
-    create_resources('sendmail::mc::feature', $features)
+  $features.each |$feature,$attributes| {
+    ::sendmail::mc::feature { $feature:
+      * => $attributes,
+    }
   }
 
   anchor { 'sendmail::config': }

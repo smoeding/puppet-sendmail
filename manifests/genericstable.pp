@@ -61,6 +61,10 @@ class sendmail::genericstable (
     }
   }
   elsif !empty($entries) {
-    create_resources('sendmail::genericstable::entry', $entries)
+    $entries.each |$entry,$attributes| {
+      ::sendmail::genericstable::entry { $entry:
+        * => $attributes,
+      }
+    }
   }
 }

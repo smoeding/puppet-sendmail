@@ -59,6 +59,10 @@ class sendmail::aliases (
     }
   }
   elsif !empty($entries) {
-    create_resources('sendmail::aliases::entry', $entries)
+    $entries.each |$entry,$attributes| {
+      ::sendmail::aliases::entry { $entry:
+        * => $attributes,
+      }
+    }
   }
 }

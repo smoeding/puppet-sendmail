@@ -61,6 +61,10 @@ class sendmail::virtusertable (
     }
   }
   elsif !empty($entries) {
-    create_resources('sendmail::virtusertable::entry', $entries)
+    $entries.each |$entry,$attributes| {
+      ::sendmail::virtusertable::entry { $entry:
+        * => $attributes,
+      }
+    }
   }
 }

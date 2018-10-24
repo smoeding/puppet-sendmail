@@ -63,6 +63,10 @@ class sendmail::mailertable (
     }
   }
   elsif !empty($entries) {
-    create_resources('sendmail::mailertable::entry', $entries)
+    $entries.each |$entry,$attributes| {
+      ::sendmail::mailertable::entry { $entry:
+        * => $attributes,
+      }
+    }
   }
 }

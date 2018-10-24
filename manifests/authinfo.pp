@@ -61,6 +61,10 @@ class sendmail::authinfo (
     }
   }
   elsif !empty($entries) {
-    create_resources('sendmail::authinfo::entry', $entries)
+    $entries.each |$entry,$attributes| {
+      ::sendmail::authinfo::entry { $entry:
+        * => $attributes,
+      }
+    }
   }
 }

@@ -61,6 +61,10 @@ class sendmail::domaintable (
     }
   }
   elsif !empty($entries) {
-    create_resources('sendmail::domaintable::entry', $entries)
+    $entries.each |$entry,$attributes| {
+      ::sendmail::domaintable::entry { $entry:
+        * => $attributes,
+      }
+    }
   }
 }

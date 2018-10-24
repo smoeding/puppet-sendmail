@@ -61,6 +61,10 @@ class sendmail::access (
     }
   }
   elsif !empty($entries) {
-    create_resources('sendmail::access::entry', $entries)
+    $entries.each |$entry,$attributes| {
+      ::sendmail::access::entry { $entry:
+        * => $attributes,
+      }
+    }
   }
 }

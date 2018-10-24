@@ -61,6 +61,10 @@ class sendmail::userdb (
     }
   }
   elsif !empty($entries) {
-    create_resources('sendmail::userdb::entry', $entries)
+    $entries.each |$entry,$attributes| {
+      ::sendmail::userdb::entry { $entry:
+        * => $attributes,
+      }
+    }
   }
 }
