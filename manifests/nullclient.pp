@@ -103,7 +103,7 @@ class sendmail::nullclient (
   Array[String]                          $trusted_users            = [],
   Optional[String]                       $domain_name              = undef,
   Optional[Sendmail::Messagesize]        $max_message_size         = undef,
-  Optional[Integer]                      $log_level                = undef,
+  Optional[Sendmail::Loglevel]           $log_level                = undef,
   Optional[Stdlib::Absolutepath]         $ca_cert_file             = undef,
   Optional[Stdlib::Absolutepath]         $ca_cert_path             = undef,
   Optional[Stdlib::Absolutepath]         $server_cert_file         = undef,

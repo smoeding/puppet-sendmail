@@ -95,7 +95,7 @@ class sendmail::mc (
   Optional[String]                            $smart_host            = undef,
   Optional[String]                            $domain_name           = undef,
   Optional[Pattern[/^[0-9]*\s*([kM][bB])?$/]] $max_message_size      = undef,
-  Optional[Integer]                           $log_level             = undef,
+  Optional[Sendmail::Loglevel]                $log_level             = undef,
   Optional[Boolean]                           $dont_probe_interfaces = undef,
   Boolean                                     $enable_ipv4_daemon    = true,
   Boolean                                     $enable_ipv6_daemon    = true,

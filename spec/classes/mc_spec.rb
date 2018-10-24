@@ -168,6 +168,18 @@ describe 'sendmail::mc' do
       }
     end
 
+    context "on #{os} with log_level => '7'" do
+      let(:facts) { facts }
+      let(:params) do
+        { log_level: '7' }
+      end
+
+      it {
+        is_expected.to contain_sendmail__mc__define('confLOG_LEVEL')
+          .with_expansion('7')
+      }
+    end
+
     context "on #{os} with domain_name => smtp.example.com" do
       let(:facts) { facts }
       let(:params) do
