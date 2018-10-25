@@ -1,4 +1,4 @@
-# = Define: sendmail::mc::trust_auth_mech
+# = Class: sendmail::mc::trust_auth_mech
 #
 # Add the TRUST_AUTH_MECH macro to the sendmail.mc file.
 #
@@ -15,10 +15,13 @@
 #
 # == Sample Usage:
 #
-#   sendmail::mc::trust_auth_mech { 'PLAIN': }
+#   class { '::sendmail::mc::trust_auth_mech':
+#     trust_auth_mech => 'PLAIN',
+#   }
 #
-define sendmail::mc::trust_auth_mech (
-  Variant[String,Array[String]] $trust_auth_mech = $title,
+#
+class sendmail::mc::trust_auth_mech (
+  Variant[String,Array[String]] $trust_auth_mech,
 ) {
   include ::sendmail::mc::macro_section
 

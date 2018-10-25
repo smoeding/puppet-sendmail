@@ -220,6 +220,7 @@ sendmail::mc::feature { 'virtusertable':
   - [Class: sendmail::params](#class-sendmailparams)
   - [Class: sendmail::service](#class-sendmailservice)
   - [Class: sendmail::mc::starttls](#class-sendmailmcstarttls)
+  - [Class: sendmail::mc::trust_auth_mech](#class-sendmailmctrust_auth_mech)
   - [Classes: sendmail::*::file](#classes-sendmailfile)
   - [Classes: sendmail::mc::*_section](#classes-sendmailmc_section)
 - [**Public Defined Types**](#public-defined-types)
@@ -245,7 +246,6 @@ sendmail::mc::feature { 'virtusertable':
   - [Define: sendmail::mc::milter](#define-sendmailmcmilter)
   - [Define: sendmail::mc::modify_mailer_flags](#define-sendmailmcmodify_mailer_flags)
   - [Define: sendmail::mc::ostype](#define-sendmailmcostype)
-  - [Define: sendmail::mc::trust_auth_mech](#define-sendmailmctrust_auth_mech)
   - [Define: sendmail::mc::versionid](#define-sendmailmcversionid)
 - [**Augeas Lenses**](#augeas-lenses)
   - [Augeas Lens: sendmail_map](#augeas-lens-sendmail_map)
@@ -1070,6 +1070,28 @@ Manages the Sendmail service.
 
 Manage the `STARTTLS` configuration for Sendmail. This class is included by the main [`sendmail`](#class-sendmail) class and should not be used directly.
 
+#### Class: `sendmail::mc::trust_auth_mech`
+
+Add the `TRUST_AUTH_MECH` macro to the `sendmail.mc` file.
+
+```puppet
+class { 'sendmail::mc::trust_auth_mech':
+  trust_auth_mech => 'PLAIN DIGEST-MD5',
+}
+```
+
+```puppet
+class { 'sendmail::mc::trust_auth_mech':
+  trust_auth_mech => [ 'PLAIN', 'DIGEST-MD5', ],
+}
+```
+
+**Parameters for the `sendmail::mc::trust_auth_mech` class:**
+
+##### `trust_auth_mech`
+
+The value of the `TRUST_AUTH_MECH` macro to set. If this is a string it is used as-is. For an array the value will be concatenated into a string.
+
 #### Classes: `sendmail::*::file`
 
 These classes manage the various Sendmail database files and ensure correct owner, group and permissions. Modifications of the files also trigger a rebuild of the corresponding database file.
@@ -1730,26 +1752,6 @@ sendmail::mc::ostype { 'Debian': }
 ##### `ostype`
 
 The type of operating system as a string. The value is used to add the `OSTYPE` macro to the generated `sendmail.mc` file. This will include the m4 file with operating system specific settings.
-
-#### Define: `sendmail::mc::trust_auth_mech`
-
-Add the `TRUST_AUTH_MECH` macro to the `sendmail.mc` file.
-
-```puppet
-sendmail::mc::trust_auth_mech { 'PLAIN DIGEST-MD5': }
-```
-
-```puppet
-sendmail::mc::trust_auth_mech { 'trust_auth_mech':
-  trust_auth_mech => [ 'PLAIN', 'DIGEST-MD5', ],
-}
-```
-
-**Parameters for the `sendmail::mc::trust_auth_mech` type:**
-
-##### `trust_auth_mech`
-
-The value of the `TRUST_AUTH_MECH` macro to set. If this is a string it is used as-is. For an array the value will be concatenated into a string. Default is the resource title.
 
 #### Define: `sendmail::mc::versionid`
 

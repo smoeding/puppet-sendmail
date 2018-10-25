@@ -87,7 +87,8 @@ describe 'sendmail::mc' do
         is_expected.not_to contain_sendmail__mc__define('confDOMAIN_NAME')
         is_expected.not_to contain_sendmail__mc__define('confMAX_MESSAGE_SIZE')
         is_expected.not_to contain_sendmail__mc__define('confDONT_PROBE_INTERFACES')
-        is_expected.not_to contain_sendmail__mc__trust_auth_mech('trust_auth_mech')
+
+        is_expected.not_to contain_class('sendmail::mc::trust_auth_mech')
 
         is_expected.to contain_sendmail__mc__daemon_options('MTA-v4')
           .with_family('inet')
@@ -292,7 +293,7 @@ describe 'sendmail::mc' do
       end
 
       it {
-        is_expected.to contain_sendmail__mc__trust_auth_mech('trust_auth_mech')
+        is_expected.to contain_class('sendmail::mc::trust_auth_mech')
           .with_trust_auth_mech('PLAIN')
       }
     end
@@ -304,7 +305,7 @@ describe 'sendmail::mc' do
       end
 
       it {
-        is_expected.to contain_sendmail__mc__trust_auth_mech('trust_auth_mech')
+        is_expected.to contain_class('sendmail::mc::trust_auth_mech')
           .with_trust_auth_mech(['PLAIN', 'LOGIN'])
       }
     end

@@ -223,7 +223,7 @@ class sendmail::mc (
   }
 
   if $trust_auth_mech and !empty($trust_auth_mech) {
-    ::sendmail::mc::trust_auth_mech { 'trust_auth_mech':
+    class { '::sendmail::mc::trust_auth_mech':
       trust_auth_mech => $trust_auth_mech,
     }
   }
