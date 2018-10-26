@@ -2,7 +2,7 @@
 
 ### Summary
 
-This is a major update that adds support for Puppet 6 and drops Puppet 3 support. Legacy code for Puppet 3 has been replaced and all classes/types use data types for validation now.
+This is a major update that adds support for Puppet 6 and drops support for Puppet 3. Legacy code for Puppet 3 has been removed.  Classes and defined types use data types for validation now.
 
 ### Breaking changes
 
@@ -10,6 +10,10 @@ This is a major update that adds support for Puppet 6 and drops Puppet 3 support
 - Rename parameter `domain` to `domain_name` for `sendmail::mc::generics_domain` to prevent clash with fact.
 - Rename parameter `domain` to `domain_name` for `sendmail::mc::ldaproute_domain` to prevent clash with fact.
 - The defined type `sendmail::mc::trust_auth_mech` has been removed and a class with the same name has been added.
+
+### Fixed
+
+- Sendmail on Ubuntu now correctly includes the `starttls.m4` file where some TLS related defaults are set.
 - The previously missing documentation for the `tls_srv_options` parameter has been added.
 
 ### Removed
