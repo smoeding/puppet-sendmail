@@ -29,6 +29,11 @@
 #   The DH parameters used for encryption. This can be one of the numbers
 #   '512', '1024', '2048' or a filename with generated parameters.
 #
+# [*tls_srv_options*]
+#   The parameter adjusts the server TLS settings. This can currently be
+#   either the letter 'V' or the empty string. Setting this parameter to 'V'
+#   disables the request for a client certificate.
+#
 # [*cipher_list*]
 #   Set the available ciphers for encrypted connections.
 #
