@@ -1,6 +1,21 @@
-### Bugfixes
+## 2018-xx-yy - Release 2.0.0
 
-- Rename parameter domain to domainname for sendmail::mc::domain to prevent clash with fact.
+### Summary
+
+This is a major update that adds support for Puppet 6 and drops Puppet 3 support. Legacy code for Puppet 3 has been replaced and all classes/types use data types for validation now.
+
+### Breaking changes
+
+- Rename parameter `domain` to `domain_name` for `sendmail::mc::domain` to prevent clash with fact.
+- Rename parameter `domain` to `domain_name` for `sendmail::mc::generics_domain` to prevent clash with fact.
+- Rename parameter `domain` to `domain_name` for `sendmail::mc::ldaproute_domain` to prevent clash with fact.
+- The defined type `sendmail::mc::trust_auth_mech` has been removed and a class with the same name has been added.
+- The previously missing documentation for the `tls_srv_options` parameter has been added.
+
+### Removed
+
+- Support for Puppet 3 has been removed.
+- Support for Debian 7 and Ubuntu 17.10	has been removed.
 
 ## 2018-06-24 - Release 1.5.0
 
