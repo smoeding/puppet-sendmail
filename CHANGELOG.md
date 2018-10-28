@@ -1,4 +1,4 @@
-## 2018-xx-yy - Release 2.0.0
+## 2018-10-28 - Release 2.0.0
 
 ### Summary
 
@@ -16,10 +16,13 @@ This is a major update that adds support for Puppet 6 and drops support for Pupp
 - Sendmail on Ubuntu now correctly includes the `starttls.m4` file where some TLS related defaults are set.
 - The previously missing documentation for the `tls_srv_options` parameter has been added.
 
+### Updated
+
+- The version dependencies for the `stdlib` and `concat` modules have been updated to reflect the usage of newer Puppet versions.
 ### Removed
 
 - Support for Puppet 3 has been removed.
-- Support for Debian 7 and Ubuntu 17.10	has been removed.
+- Support for Debian 7 and Ubuntu 17.10	have been removed.
 
 ## 2018-06-24 - Release 1.5.0
 
