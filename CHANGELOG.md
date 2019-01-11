@@ -19,6 +19,7 @@ This is a major update that adds support for Puppet 6 and drops support for Pupp
 ### Updated
 
 - The version dependencies for the `stdlib` and `concat` modules have been updated to reflect the usage of newer Puppet versions.
+
 ### Removed
 
 - Support for Puppet 3 has been removed.
