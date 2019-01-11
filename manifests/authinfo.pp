@@ -62,7 +62,7 @@ class sendmail::authinfo (
   }
   elsif !empty($entries) {
     $entries.each |$entry,$attributes| {
-      ::sendmail::authinfo::entry { $entry:
+      sendmail::authinfo::entry { $entry:
         * => $attributes,
       }
     }

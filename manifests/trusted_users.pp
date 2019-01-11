@@ -23,7 +23,7 @@
 class sendmail::trusted_users (
   Array[String] $trusted_users = [],
 ) {
-  include ::sendmail::params
+  include sendmail::params
 
   file { $::sendmail::params::trusted_users_file:
     ensure  => file,
@@ -31,6 +31,6 @@ class sendmail::trusted_users (
     group   => $::sendmail::params::sendmail_group,
     mode    => '0644',
     content => join(suffix(sendmail::canonify_array($trusted_users), "\n")),
-    notify  => Class['::sendmail::service'],
+    notify  => Class['sendmail::service'],
   }
 }

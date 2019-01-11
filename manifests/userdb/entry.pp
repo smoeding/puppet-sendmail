@@ -34,9 +34,9 @@ define sendmail::userdb::entry (
   String                   $key    = $title,
   Optional[String]         $value  = undef,
 ) {
-  include ::sendmail::params
-  include ::sendmail::makeall
-  include ::sendmail::userdb::file
+  include sendmail::params
+  include sendmail::makeall
+  include sendmail::userdb::file
 
   if ($ensure == 'present' and empty($value)) {
     fail('value must be set when creating an userdb entry')
@@ -54,7 +54,7 @@ define sendmail::userdb::entry (
     lens    => 'Sendmail_Map.lns',
     incl    => $::sendmail::params::userdb_file,
     changes => $changes,
-    require => Class['::sendmail::userdb::file'],
-    notify  => Class['::sendmail::makeall'],
+    require => Class['sendmail::userdb::file'],
+    notify  => Class['sendmail::makeall'],
   }
 }

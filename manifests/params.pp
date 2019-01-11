@@ -12,7 +12,7 @@
 #
 # == Sample Usage:
 #
-#   include ::sendmail::params
+#   include sendmail::params
 #
 #
 class sendmail::params {

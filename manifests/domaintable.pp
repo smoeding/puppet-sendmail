@@ -62,7 +62,7 @@ class sendmail::domaintable (
   }
   elsif !empty($entries) {
     $entries.each |$entry,$attributes| {
-      ::sendmail::domaintable::entry { $entry:
+      sendmail::domaintable::entry { $entry:
         * => $attributes,
       }
     }

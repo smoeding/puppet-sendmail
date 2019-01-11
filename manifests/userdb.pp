@@ -62,7 +62,7 @@ class sendmail::userdb (
   }
   elsif !empty($entries) {
     $entries.each |$entry,$attributes| {
-      ::sendmail::userdb::entry { $entry:
+      sendmail::userdb::entry { $entry:
         * => $attributes,
       }
     }

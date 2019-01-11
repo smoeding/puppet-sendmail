@@ -36,9 +36,9 @@ define sendmail::genericstable::entry (
   String                   $key    = $title,
   Optional[String]         $value  = undef,
 ) {
-  include ::sendmail::params
-  include ::sendmail::makeall
-  include ::sendmail::genericstable::file
+  include sendmail::params
+  include sendmail::makeall
+  include sendmail::genericstable::file
 
   if ($ensure == 'present' and empty($value)) {
     fail('value must be set when creating a genericstable entry')
@@ -56,7 +56,7 @@ define sendmail::genericstable::entry (
     lens    => 'Sendmail_Map.lns',
     incl    => $::sendmail::params::genericstable_file,
     changes => $changes,
-    require => Class['::sendmail::genericstable::file'],
-    notify  => Class['::sendmail::makeall'],
+    require => Class['sendmail::genericstable::file'],
+    notify  => Class['sendmail::makeall'],
   }
 }

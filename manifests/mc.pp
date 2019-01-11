@@ -85,7 +85,7 @@
 #
 # == Sample Usage:
 #
-#   class { '::sendmail::mc': }
+#   class { 'sendmail::mc': }
 #
 #
 class sendmail::mc (
@@ -102,9 +102,9 @@ class sendmail::mc (
   Array[String]                               $mailers               = $::sendmail::params::mailers,
   Variant[String,Array[String]]               $trust_auth_mech       = [],
   Optional[String]                            $version_id            = undef,
-) inherits ::sendmail::params {
+) inherits sendmail::params {
 
-  include ::sendmail::makeall
+  include sendmail::makeall
 
   # Order of fragments
   # -------------------------
@@ -145,7 +145,7 @@ class sendmail::mc (
     owner  => 'root',
     group  => $::sendmail::params::sendmail_group,
     mode   => '0644',
-    notify => Class['::sendmail::makeall'],
+    notify => Class['sendmail::makeall'],
   }
 
   concat::fragment { 'sendmail_mc-header':
@@ -155,62 +155,62 @@ class sendmail::mc (
   }
 
   if $cf_version {
-    ::sendmail::mc::define { 'confCF_VERSION':
+    sendmail::mc::define { 'confCF_VERSION':
       expansion => $cf_version,
     }
   }
 
   if $version_id {
-    ::sendmail::mc::versionid { $version_id: }
+    sendmail::mc::versionid { $version_id: }
   }
 
   if $ostype {
-    ::sendmail::mc::ostype { $ostype: }
+    sendmail::mc::ostype { $ostype: }
   }
 
   if $sendmail_mc_domain {
-    ::sendmail::mc::domain { $sendmail_mc_domain: }
+    sendmail::mc::domain { $sendmail_mc_domain: }
   }
 
   if $smart_host {
-    ::sendmail::mc::define { 'SMART_HOST':
+    sendmail::mc::define { 'SMART_HOST':
       expansion => $smart_host,
     }
   }
 
   if $domain_name {
-    ::sendmail::mc::define { 'confDOMAIN_NAME':
+    sendmail::mc::define { 'confDOMAIN_NAME':
       expansion => $domain_name,
     }
   }
 
   if $log_level {
-    ::sendmail::mc::define { 'confLOG_LEVEL':
+    sendmail::mc::define { 'confLOG_LEVEL':
       expansion => $log_level,
     }
   }
 
   if $max_message_size {
-    ::sendmail::mc::define { 'confMAX_MESSAGE_SIZE':
+    sendmail::mc::define { 'confMAX_MESSAGE_SIZE':
       expansion => to_bytes($max_message_size),
     }
   }
 
   if $dont_probe_interfaces {
-    ::sendmail::mc::define { 'confDONT_PROBE_INTERFACES':
+    sendmail::mc::define { 'confDONT_PROBE_INTERFACES':
       expansion => bool2str($dont_probe_interfaces),
     }
   }
 
   if $enable_ipv4_daemon {
-    ::sendmail::mc::daemon_options { 'MTA-v4':
+    sendmail::mc::daemon_options { 'MTA-v4':
       family => 'inet',
       port   => 'smtp',
     }
   }
 
   if $enable_ipv6_daemon {
-    ::sendmail::mc::daemon_options { 'MTA-v6':
+    sendmail::mc::daemon_options { 'MTA-v6':
       family => 'inet6',
       port   => 'smtp',
       modify => 'O',
@@ -218,12 +218,12 @@ class sendmail::mc (
   }
 
   if ($mailers and !empty($mailers)) {
-    ::sendmail::mc::mailer { $mailers:
+    sendmail::mc::mailer { $mailers:
     }
   }
 
   if $trust_auth_mech and !empty($trust_auth_mech) {
-    class { '::sendmail::mc::trust_auth_mech':
+    class { 'sendmail::mc::trust_auth_mech':
       trust_auth_mech => $trust_auth_mech,
     }
   }

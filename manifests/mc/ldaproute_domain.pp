@@ -20,7 +20,7 @@
 define sendmail::mc::ldaproute_domain (
   String $domain_name = $title,
 ) {
-  include ::sendmail::mc::ldap_section
+  include sendmail::mc::ldap_section
 
   concat::fragment { "sendmail_mc-ldaproute_domain_name-${domain_name}":
     target  => 'sendmail.mc',

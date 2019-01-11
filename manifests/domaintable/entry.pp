@@ -32,9 +32,9 @@ define sendmail::domaintable::entry (
   String                   $key    = $title,
   Optional[String]         $value  = undef,
 ) {
-  include ::sendmail::params
-  include ::sendmail::makeall
-  include ::sendmail::domaintable::file
+  include sendmail::params
+  include sendmail::makeall
+  include sendmail::domaintable::file
 
   if ($ensure == 'present' and empty($value)) {
     fail('value must be set when creating a domaintable entry')
@@ -52,7 +52,7 @@ define sendmail::domaintable::entry (
     lens    => 'Sendmail_Map.lns',
     incl    => $::sendmail::params::domaintable_file,
     changes => $changes,
-    require => Class['::sendmail::domaintable::file'],
-    notify  => Class['::sendmail::makeall'],
+    require => Class['sendmail::domaintable::file'],
+    notify  => Class['sendmail::makeall'],
   }
 }

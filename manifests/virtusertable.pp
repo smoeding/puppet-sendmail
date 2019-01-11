@@ -62,7 +62,7 @@ class sendmail::virtusertable (
   }
   elsif !empty($entries) {
     $entries.each |$entry,$attributes| {
-      ::sendmail::virtusertable::entry { $entry:
+      sendmail::virtusertable::entry { $entry:
         * => $attributes,
       }
     }

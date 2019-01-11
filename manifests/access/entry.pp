@@ -32,9 +32,9 @@ define sendmail::access::entry (
   String                   $key    = $title,
   Optional[String]         $value  = undef,
 ) {
-  include ::sendmail::params
-  include ::sendmail::makeall
-  include ::sendmail::access::file
+  include sendmail::params
+  include sendmail::makeall
+  include sendmail::access::file
 
   if ($ensure == 'present' and empty($value)) {
     fail('value must be set when creating an access entry')
@@ -52,7 +52,7 @@ define sendmail::access::entry (
     lens    => 'Sendmail_Map.lns',
     incl    => $::sendmail::params::access_file,
     changes => $changes,
-    require => Class['::sendmail::access::file'],
-    notify  => Class['::sendmail::makeall'],
+    require => Class['sendmail::access::file'],
+    notify  => Class['sendmail::makeall'],
   }
 }

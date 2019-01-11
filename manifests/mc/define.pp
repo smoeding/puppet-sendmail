@@ -43,18 +43,18 @@ define sendmail::mc::define (
 ) {
   case $macro_name {
     /^confLDAP/: {
-      include ::sendmail::mc::define_section
+      include sendmail::mc::define_section
       $order = '19'
     }
     /^conf(MILTER|INPUT_MAIL_FILTERS)/: {
-      include ::sendmail::mc::milter_section
+      include sendmail::mc::milter_section
       $order = '56'
     }
     /^conf(CIPHER_LIST|CLIENT_SSL_OPTIONS|SERVER_SSL_OPTIONS)$/: {
       $order = '48'
     }
     default: {
-      include ::sendmail::mc::define_section
+      include sendmail::mc::define_section
       $order = '12'
     }
   }

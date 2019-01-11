@@ -32,7 +32,7 @@ class sendmail::package (
   Array[String] $auxiliary_packages = $::sendmail::params::auxiliary_packages,
   String        $package_ensure     = 'present',
   Boolean       $package_manage     = $::sendmail::params::package_manage,
-) inherits ::sendmail::params {
+) inherits sendmail::params {
 
   if $package_manage {
     package { $::sendmail::params::package_name:

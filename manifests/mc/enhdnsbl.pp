@@ -38,7 +38,7 @@ define sendmail::mc::enhdnsbl (
   Optional[String] $reject_message          = undef,
   Optional[String] $lookup_result           = undef,
 ) {
-  include ::sendmail::mc::enhdnsbl_section
+  include sendmail::mc::enhdnsbl_section
 
   $args_array = [
     "`enhdnsbl'",

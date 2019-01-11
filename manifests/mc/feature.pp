@@ -46,7 +46,7 @@ define sendmail::mc::feature (
   Variant[String,Array[String]] $args         = [],
   Boolean                       $use_quotes   = true,
 ) {
-  include ::sendmail::mc::feature_section
+  include sendmail::mc::feature_section
 
   # Make sure arguments are really an array
   $args_array = $args ? {

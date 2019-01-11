@@ -15,7 +15,7 @@
 #
 # == Sample Usage:
 #
-#   class { '::sendmail::local_host_names:
+#   class { 'sendmail::local_host_names:
 #     local_host_names => [ 'example.org', 'mail.example.org', ],
 #   }
 #
@@ -23,7 +23,7 @@
 class sendmail::local_host_names (
   Array[String] $local_host_names = [],
 ) {
-  include ::sendmail::params
+  include sendmail::params
 
   file { $::sendmail::params::local_host_names_file:
     ensure  => file,
@@ -31,6 +31,6 @@ class sendmail::local_host_names (
     group   => $::sendmail::params::sendmail_group,
     mode    => '0644',
     content => join(suffix(sendmail::canonify_array($local_host_names), "\n")),
-    notify  => Class['::sendmail::service'],
+    notify  => Class['sendmail::service'],
   }
 }

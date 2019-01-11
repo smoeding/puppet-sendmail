@@ -62,7 +62,7 @@ class sendmail::genericstable (
   }
   elsif !empty($entries) {
     $entries.each |$entry,$attributes| {
-      ::sendmail::genericstable::entry { $entry:
+      sendmail::genericstable::entry { $entry:
         * => $attributes,
       }
     }

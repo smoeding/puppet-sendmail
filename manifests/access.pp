@@ -62,7 +62,7 @@ class sendmail::access (
   }
   elsif !empty($entries) {
     $entries.each |$entry,$attributes| {
-      ::sendmail::access::entry { $entry:
+      sendmail::access::entry { $entry:
         * => $attributes,
       }
     }

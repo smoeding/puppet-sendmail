@@ -26,9 +26,9 @@ define sendmail::aliases::entry (
   Enum['present','absent']                $ensure    = 'present',
   Optional[Variant[String,Array[String]]] $recipient = undef,
 ) {
-  include ::sendmail::params
-  include ::sendmail::aliases::file
-  include ::sendmail::aliases::newaliases
+  include sendmail::params
+  include sendmail::aliases::file
+  include sendmail::aliases::newaliases
 
   if ($ensure == 'present' and empty($recipient)) {
     fail('recipient must be set when creating an alias')
@@ -37,7 +37,7 @@ define sendmail::aliases::entry (
   mailalias { $title:
     ensure    => $ensure,
     recipient => $recipient,
-    notify    => Class['::sendmail::aliases::newaliases'],
-    require   => Class['::sendmail::aliases::file'],
+    notify    => Class['sendmail::aliases::newaliases'],
+    require   => Class['sendmail::aliases::file'],
   }
 }

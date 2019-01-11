@@ -40,7 +40,7 @@ class sendmail::service (
   Boolean                 $service_manage    = true,
   Stdlib::Ensure::Service $service_ensure    = 'running',
   Boolean                 $service_hasstatus = $::sendmail::params::service_hasstatus,
-) inherits ::sendmail::params {
+) inherits sendmail::params {
 
   if $service_manage {
     service { 'sendmail':

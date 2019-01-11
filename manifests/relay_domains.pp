@@ -15,7 +15,7 @@
 #
 # == Sample Usage:
 #
-#   class { '::sendmail::relay_domains':
+#   class { 'sendmail::relay_domains':
 #     relay_domains => [ 'example.com', 'example.net', ],
 #   }
 #
@@ -23,7 +23,7 @@
 class sendmail::relay_domains (
   Array[String] $relay_domains = [],
 ) {
-  include ::sendmail::params
+  include sendmail::params
 
   file { $::sendmail::params::relay_domains_file:
     ensure  => file,
@@ -31,6 +31,6 @@ class sendmail::relay_domains (
     group   => $::sendmail::params::sendmail_group,
     mode    => '0644',
     content => join(suffix(sendmail::canonify_array($relay_domains), "\n")),
-    notify  => Class['::sendmail::service'],
+    notify  => Class['sendmail::service'],
   }
 }

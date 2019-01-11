@@ -23,8 +23,8 @@ class sendmail::genericstable::file (
   Optional[String] $content = undef,
   Optional[String] $source  = undef,
 ) {
-  include ::sendmail::params
-  include ::sendmail::makeall
+  include sendmail::params
+  include sendmail::makeall
 
   file { $::sendmail::params::genericstable_file:
     ensure  => file,
@@ -33,6 +33,6 @@ class sendmail::genericstable::file (
     owner   => $::sendmail::params::sendmail_user,
     group   => $::sendmail::params::sendmail_group,
     mode    => '0640',
-    notify  => Class['::sendmail::makeall'],
+    notify  => Class['sendmail::makeall'],
   }
 }

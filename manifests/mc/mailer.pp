@@ -22,7 +22,7 @@
 define sendmail::mc::mailer (
   String $mailer = $title,
 ) {
-  include ::sendmail::mc::mailer_section
+  include sendmail::mc::mailer_section
 
   # Some mailers must be defined before others according to the Bat Book
   $order = $title ? {

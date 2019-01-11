@@ -64,7 +64,7 @@ class sendmail::mailertable (
   }
   elsif !empty($entries) {
     $entries.each |$entry,$attributes| {
-      ::sendmail::mailertable::entry { $entry:
+      sendmail::mailertable::entry { $entry:
         * => $attributes,
       }
     }

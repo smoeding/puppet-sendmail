@@ -239,11 +239,11 @@ class sendmail (
   Boolean                                 $service_manage           = true,
   Stdlib::Ensure::Service                 $service_ensure           = 'running',
   Boolean                                 $service_hasstatus        = $::sendmail::params::service_hasstatus,
-) inherits ::sendmail::params {
+) inherits sendmail::params {
 
   anchor { 'sendmail::begin': }
 
-  class { '::sendmail::package':
+  class { 'sendmail::package':
     auxiliary_packages => $auxiliary_packages,
     package_ensure     => $package_ensure,
     package_manage     => $package_manage,
@@ -251,23 +251,23 @@ class sendmail (
     require            => Anchor['sendmail::begin'],
   }
 
-  class { '::sendmail::local_host_names':
+  class { 'sendmail::local_host_names':
     local_host_names => $local_host_names,
     require          => Class['sendmail::package'],
   }
 
-  class { '::sendmail::relay_domains':
+  class { 'sendmail::relay_domains':
     relay_domains => $relay_domains,
     require       => Class['sendmail::package'],
   }
 
-  class { '::sendmail::trusted_users':
+  class { 'sendmail::trusted_users':
     trusted_users => $trusted_users,
     require       => Class['sendmail::package'],
   }
 
   if ($manage_sendmail_mc) {
-    class { '::sendmail::mc':
+    class { 'sendmail::mc':
       cf_version            => $cf_version,
       domain_name           => $domain_name,
       smart_host            => $smart_host,
@@ -280,8 +280,8 @@ class sendmail (
       trust_auth_mech       => $trust_auth_mech,
       version_id            => $version_id,
       before                => Anchor['sendmail::config'],
-      require               => Class['::sendmail::package'],
-      notify                => Class['::sendmail::service'],
+      require               => Class['sendmail::package'],
+      notify                => Class['sendmail::service'],
     }
 
     # Include STARTTLS settings if any of the options is defined
@@ -310,25 +310,25 @@ class sendmail (
   }
 
   if ($manage_submit_mc) {
-    class { '::sendmail::submit':
+    class { 'sendmail::submit':
       msp_host                 => $msp_host,
       msp_port                 => $msp_port,
       enable_msp_trusted_users => $enable_msp_trusted_users,
       before                   => Anchor['sendmail::config'],
-      require                  => Class['::sendmail::package'],
-      notify                   => Class['::sendmail::service'],
+      require                  => Class['sendmail::package'],
+      notify                   => Class['sendmail::service'],
     }
   }
 
   $features.each |$feature,$attributes| {
-    ::sendmail::mc::feature { $feature:
+    sendmail::mc::feature { $feature:
       * => $attributes,
     }
   }
 
   anchor { 'sendmail::config': }
 
-  class { '::sendmail::service':
+  class { 'sendmail::service':
     service_name      => $service_name,
     service_enable    => $service_enable,
     service_manage    => $service_manage,

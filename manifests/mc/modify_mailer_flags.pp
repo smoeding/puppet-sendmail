@@ -38,7 +38,7 @@ define sendmail::mc::modify_mailer_flags (
   String  $mailer_name = $title,
   Boolean $use_quotes  = true,
 ) {
-  include ::sendmail::mc::macro_section
+  include sendmail::mc::macro_section
 
   # Add quotes to the expansion if needed
   $exp_arg = bool2str($use_quotes, "`${flags}'", $flags)

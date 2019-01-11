@@ -60,7 +60,7 @@ class sendmail::aliases (
   }
   elsif !empty($entries) {
     $entries.each |$entry,$attributes| {
-      ::sendmail::aliases::entry { $entry:
+      sendmail::aliases::entry { $entry:
         * => $attributes,
       }
     }

@@ -296,7 +296,7 @@ Some features (e.g. `mailertable`, `access_db`, ...) may need to be managed indi
 The following two code blocks are equivalent:
 
 ``` puppet
-class { '::sendmail':
+class { 'sendmail':
   ...
   features => {
     'delay_checks' => {},
@@ -308,7 +308,7 @@ class { '::sendmail':
 ```
 
 ``` puppet
-class { '::sendmail':
+class { 'sendmail':
   ...
 }
 

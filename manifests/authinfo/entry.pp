@@ -60,9 +60,9 @@ define sendmail::authinfo::entry (
   Optional[String]         $authentication_id = undef,
   Optional[String]         $realm             = undef,
 ) {
-  include ::sendmail::params
-  include ::sendmail::makeall
-  include ::sendmail::authinfo::file
+  include sendmail::params
+  include sendmail::makeall
+  include sendmail::authinfo::file
 
   if $ensure == 'present' {
     if ($password == undef) and ($password_base64 == undef) {
@@ -121,7 +121,7 @@ define sendmail::authinfo::entry (
     lens    => 'Sendmail_Map.lns',
     incl    => $::sendmail::params::authinfo_file,
     changes => $changes,
-    require => Class['::sendmail::authinfo::file'],
-    notify  => Class['::sendmail::makeall'],
+    require => Class['sendmail::authinfo::file'],
+    notify  => Class['sendmail::makeall'],
   }
 }

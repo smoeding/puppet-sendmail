@@ -23,8 +23,8 @@ class sendmail::authinfo::file (
   Optional[String] $content = undef,
   Optional[String] $source  = undef,
 ) {
-  include ::sendmail::params
-  include ::sendmail::makeall
+  include sendmail::params
+  include sendmail::makeall
 
   file { $::sendmail::params::authinfo_file:
     ensure  => file,
@@ -33,6 +33,6 @@ class sendmail::authinfo::file (
     owner   => 'root',
     group   => $::sendmail::params::sendmail_group,
     mode    => '0600',
-    notify  => Class['::sendmail::makeall'],
+    notify  => Class['sendmail::makeall'],
   }
 }

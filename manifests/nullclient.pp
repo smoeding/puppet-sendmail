@@ -127,7 +127,7 @@ class sendmail::nullclient (
     fail('The MSA must be enabled for IPv4 or IPv6 or both')
   }
 
-  class { '::sendmail':
+  class { 'sendmail':
     domain_name              => $domain_name,
     max_message_size         => $max_message_size,
     log_level                => $log_level,
@@ -151,10 +151,10 @@ class sendmail::nullclient (
     client_ssl_options       => $client_ssl_options,
   }
 
-  ::sendmail::mc::feature { 'no_default_msa': }
+  sendmail::mc::feature { 'no_default_msa': }
 
   if ($enable_ipv4_msa) {
-    ::sendmail::mc::daemon_options { 'MSA-v4':
+    sendmail::mc::daemon_options { 'MSA-v4':
       daemon_name => 'MSA',
       family      => 'inet',
       addr        => '127.0.0.1',
@@ -164,7 +164,7 @@ class sendmail::nullclient (
   }
 
   if ($enable_ipv6_msa) {
-    ::sendmail::mc::daemon_options { 'MSA-v6':
+    sendmail::mc::daemon_options { 'MSA-v6':
       daemon_name => 'MSA',
       family      => 'inet6',
       addr        => '::1',
@@ -173,7 +173,7 @@ class sendmail::nullclient (
     }
   }
 
-  ::sendmail::mc::feature { 'nullclient':
+  sendmail::mc::feature { 'nullclient':
     args => [ $mail_hub ],
   }
 }

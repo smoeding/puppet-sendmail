@@ -84,7 +84,7 @@ define sendmail::mc::daemon_options (
   Optional[String]                        $send_buf_size    = undef,
   Optional[String]                        $receive_buf_size = undef,
 ) {
-  include ::sendmail::mc::macro_section
+  include sendmail::mc::macro_section
 
   # Get the first character
   $delivery = $delivery_mode ? {

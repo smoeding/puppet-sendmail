@@ -121,7 +121,7 @@ class sendmail::mc::privacy_flags (
   # Remove empty flags
   $real_flags = filter($flags) |$f| { !empty($f) }
 
-  ::sendmail::mc::define { 'confPRIVACY_FLAGS':
+  sendmail::mc::define { 'confPRIVACY_FLAGS':
     expansion => join($real_flags, ','),
   }
 }

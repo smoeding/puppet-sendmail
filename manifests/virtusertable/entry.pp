@@ -36,9 +36,9 @@ define sendmail::virtusertable::entry (
   String                   $key    = $title,
   Optional[String]         $value  = undef,
 ) {
-  include ::sendmail::params
-  include ::sendmail::makeall
-  include ::sendmail::virtusertable::file
+  include sendmail::params
+  include sendmail::makeall
+  include sendmail::virtusertable::file
 
   if ($ensure == 'present' and empty($value)) {
     fail('value must be set when creating a virtusertable entry')
@@ -56,7 +56,7 @@ define sendmail::virtusertable::entry (
     lens    => 'Sendmail_Map.lns',
     incl    => $::sendmail::params::virtusertable_file,
     changes => $changes,
-    require => Class['::sendmail::virtusertable::file'],
-    notify  => Class['::sendmail::makeall'],
+    require => Class['sendmail::virtusertable::file'],
+    notify  => Class['sendmail::makeall'],
   }
 }

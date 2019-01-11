@@ -15,7 +15,7 @@
 #
 # == Sample Usage:
 #
-#   class { '::sendmail::mc::trust_auth_mech':
+#   class { 'sendmail::mc::trust_auth_mech':
 #     trust_auth_mech => 'PLAIN',
 #   }
 #
@@ -23,7 +23,7 @@
 class sendmail::mc::trust_auth_mech (
   Variant[String,Array[String]] $trust_auth_mech,
 ) {
-  include ::sendmail::mc::macro_section
+  include sendmail::mc::macro_section
 
   $mech = $trust_auth_mech ? {
     Array => join(strip($trust_auth_mech), ' '),

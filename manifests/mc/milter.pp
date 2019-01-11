@@ -86,7 +86,7 @@ define sendmail::mc::milter (
   String                              $milter_name     = $title,
   Boolean                             $enable          = true,
 ) {
-  include ::sendmail::mc::milter_section
+  include sendmail::mc::milter_section
 
   #
   # Socket parameter
