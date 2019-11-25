@@ -42,7 +42,7 @@ define sendmail::mc::queue_group (
 
   concat::fragment { "sendmail_mc-queue_group-${title}":
     target  => 'sendmail.mc',
-    order   => 30,
+    order   => 32,
     content => "QUEUE_GROUP(`${queue_name}', ${exp})dnl\n",
   }
 }
