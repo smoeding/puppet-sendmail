@@ -34,13 +34,15 @@ define sendmail::mc::queue_group (
   Boolean $use_quotes = true,
   String  $args  = '',
 ) {
+  # Include section
+  include sendmail::mc::queue_group_section
 
   # Add quotes to the expansion if needed
   $exp = bool2str($use_quotes, "`${args}'", String($args))
 
-  concat::fragment { "sendmail_mc-define-${title}":
+  concat::fragment { "sendmail_mc-queue_group-${title}":
     target  => 'sendmail.mc',
-    order   => 30,
-    content => "QUEUE_GROUP(`${queue_name}', ${args})dnl\n",
+    order   => 32,
+    content => "QUEUE_GROUP(`${queue_name}', ${exp})dnl\n",
   }
 }
