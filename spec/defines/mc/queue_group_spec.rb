@@ -66,7 +66,7 @@ describe 'sendmail::mc::queue_group' do
         is_expected.to contain_class('sendmail::mc::queue_group_section')
 
         is_expected.to contain_concat__fragment('sendmail_mc-queue_group-foobar')
-          .with_content(%r{^define\(`foobar', `'\)dnl$})
+          .with_content(%r{^QUEUE_GROUP\(`foobar', `'\)dnl$})
           .with_order('32')
       }
     end
