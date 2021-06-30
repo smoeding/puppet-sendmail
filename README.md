@@ -1773,7 +1773,8 @@ sendmail::mc::queue_group { 'gmailcom':
 ##### `queue_name`
 
 The name of the queue.
-**Note**: The macro name should not be quoted as it will always be quoted in the template.
+
+> **Note**: The macro name should not be quoted as it will always be quoted in the template.
 
 ##### `args`
 
@@ -1782,7 +1783,8 @@ The expansion defined for the macro.
 ##### `use_quotes`
 
 A boolean that indicates if the expansion should be quoted (using m4 quotes). If this argument is 'true', then the expansion will be enclosed in ` and ' symbols in the generated output file.
-**Note**: The name of the defined macro will always be quoted. Valid options: 'true' or 'false'. Default value: 'true'.queue_group`
+
+> **Note**: The name of the defined macro will always be quoted. Valid options: 'true' or 'false'. Default value: 'true'.queue_group`
 
 #### Define: `sendmail::mc::versionid`
 
