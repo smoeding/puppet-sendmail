@@ -138,7 +138,6 @@ describe 'sendmail::mc::define' do
     ['SMART_HOST', 'confCF_VERSION', 'confDONT_PROBE_INTERFACES',
      'confLOG_LEVEL', 'confMAX_MESSAGE_SIZE', 'confPRIVACY_FLAGS',
      'confDOMAIN_NAME'].each do |arg|
-
       context "on #{os} with argument #{arg}" do
         let(:title) { arg }
 
@@ -158,7 +157,6 @@ describe 'sendmail::mc::define' do
 
     ['confCIPHER_LIST', 'confCLIENT_SSL_OPTIONS',
      'confSERVER_SSL_OPTIONS'].each do |arg|
-
       context "on #{os} with argument #{arg}" do
         let(:title) { arg }
 

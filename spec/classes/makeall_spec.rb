@@ -7,20 +7,18 @@ describe 'sendmail::makeall' do
     context "on #{os}" do
       let(:facts) { facts }
 
-      case facts[:osfamily]
-      when 'Debian', 'RedHat'
-        it {
+      it {
+        case facts[:osfamily]
+        when 'Debian', 'RedHat'
           is_expected.to contain_exec('sendmail::makeall')
             .with_command('make -C /etc/mail all')
             .that_requires('Class[sendmail::package]')
-        }
-      when 'FreeBSD'
-        it {
+        when 'FreeBSD'
           is_expected.to contain_exec('sendmail::makeall')
             .with_command('make -C /etc/mail all install')
             .that_requires('Class[sendmail::package]')
-        }
-      end
+        end
+      }
     end
   end
 end

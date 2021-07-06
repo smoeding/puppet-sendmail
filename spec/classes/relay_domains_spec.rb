@@ -7,9 +7,9 @@ describe 'sendmail::relay_domains' do
     context "on #{os} with default parameters" do
       let(:facts) { facts }
 
-      case facts[:osfamily]
-      when 'Debian'
-        it {
+      it {
+        case facts[:osfamily]
+        when 'Debian'
           is_expected.to contain_class('sendmail::relay_domains')
           is_expected.to contain_file('/etc/mail/relay-domains')
             .with_ensure('file')
@@ -17,9 +17,7 @@ describe 'sendmail::relay_domains' do
             .with_group('smmsp')
             .with_mode('0644')
             .with_content('')
-        }
-      when 'RedHat'
-        it {
+        when 'RedHat'
           is_expected.to contain_class('sendmail::relay_domains')
           is_expected.to contain_file('/etc/mail/relay-domains')
             .with_ensure('file')
@@ -27,9 +25,7 @@ describe 'sendmail::relay_domains' do
             .with_group('root')
             .with_mode('0644')
             .with_content('')
-        }
-      when 'FreeBSD'
-        it {
+        when 'FreeBSD'
           is_expected.to contain_class('sendmail::relay_domains')
           is_expected.to contain_file('/etc/mail/relay-domains')
             .with_ensure('file')
@@ -37,8 +33,8 @@ describe 'sendmail::relay_domains' do
             .with_group('wheel')
             .with_mode('0644')
             .with_content('')
-        }
-      end
+        end
+      }
     end
 
     context "on #{os} with empty parameter" do

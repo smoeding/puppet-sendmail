@@ -7,9 +7,9 @@ describe 'sendmail::access::file' do
     context "on #{os} with default parameters" do
       let(:facts) { facts }
 
-      case facts[:osfamily]
-      when 'Debian'
-        it {
+      it {
+        case facts[:osfamily]
+        when 'Debian'
           is_expected.to contain_class('sendmail::access::file')
           is_expected.to contain_file('/etc/mail/access').with(
             'ensure'  => 'file',
@@ -19,9 +19,7 @@ describe 'sendmail::access::file' do
             'content' => nil,
             'source'  => nil,
           ).that_notifies('Class[sendmail::makeall]')
-        }
-      when 'RedHat'
-        it {
+        when 'RedHat'
           is_expected.to contain_class('sendmail::access::file')
           is_expected.to contain_file('/etc/mail/access').with(
             'ensure'  => 'file',
@@ -31,9 +29,7 @@ describe 'sendmail::access::file' do
             'content' => nil,
             'source'  => nil,
           ).that_notifies('Class[sendmail::makeall]')
-        }
-      when 'FreeBSD'
-        it {
+        when 'FreeBSD'
           is_expected.to contain_class('sendmail::access::file')
           is_expected.to contain_file('/etc/mail/access').with(
             'ensure'  => 'file',
@@ -43,8 +39,8 @@ describe 'sendmail::access::file' do
             'content' => nil,
             'source'  => nil,
           ).that_notifies('Class[sendmail::makeall]')
-        }
-      end
+        end
+      }
     end
 
     context "on #{os} with content => foo" do

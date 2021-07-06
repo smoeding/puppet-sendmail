@@ -28,7 +28,6 @@ describe 'sendmail::mc::timeouts' do
      'datafinal', 'datainit', 'fileopen', 'helo', 'hoststatus', 'iconnect',
      'ident', 'initial', 'lhlo', 'mail', 'misc', 'quit', 'rcpt', 'rset',
      'starttls'].each do |param|
-
       context "on #{os} with parameter #{param}" do
         let(:facts) { facts }
 

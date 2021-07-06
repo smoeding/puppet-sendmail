@@ -5,26 +5,24 @@ describe 'sendmail::service' do
     context "on #{os} with default parameters" do
       let(:facts) { facts }
 
-      case facts[:osfamily]
-      when 'Debian'
-        it {
+      it {
+        case facts[:osfamily]
+        when 'Debian'
           is_expected.to contain_class('sendmail::service')
           is_expected.to contain_service('sendmail')
             .with_ensure('running')
             .with_name('sendmail')
             .with_enable(true)
             .with_hasstatus(false)
-        }
-      when 'RedHat', 'FreeBSD'
-        it {
+        when 'RedHat', 'FreeBSD'
           is_expected.to contain_class('sendmail::service')
           is_expected.to contain_service('sendmail')
             .with_ensure('running')
             .with_name('sendmail')
             .with_enable(true)
             .with_hasstatus(true)
-        }
-      end
+        end
+      }
     end
 
     context "on #{os} with service_manage => false" do

@@ -7,35 +7,31 @@ describe 'sendmail::local_host_names' do
     context "on #{os} with default parameters" do
       let(:facts) { facts }
 
-      case facts[:osfamily]
-      when 'Debian'
-        it {
+      it {
+        case facts[:osfamily]
+        when 'Debian'
           is_expected.to contain_file('/etc/mail/local-host-names')
             .with_ensure('file')
             .with_owner('root')
             .with_group('smmsp')
             .with_mode('0644')
             .with_content('')
-        }
-      when 'RedHat'
-        it {
+        when 'RedHat'
           is_expected.to contain_file('/etc/mail/local-host-names')
             .with_ensure('file')
             .with_owner('root')
             .with_group('root')
             .with_mode('0644')
             .with_content('')
-        }
-      when 'FreeBSD'
-        it {
+        when 'FreeBSD'
           is_expected.to contain_file('/etc/mail/local-host-names')
             .with_ensure('file')
             .with_owner('root')
             .with_group('wheel')
             .with_mode('0644')
             .with_content('')
-        }
-      end
+        end
+      }
     end
 
     context "on #{os} with empty parameter" do

@@ -7,9 +7,9 @@ describe 'sendmail::submit' do
     context "on #{os} with default parameters" do
       let(:facts) { facts }
 
-      case facts[:osfamily]
-      when 'Debian'
-        it {
+      it {
+        case facts[:osfamily]
+        when 'Debian'
           is_expected.to contain_class('sendmail::submit')
           is_expected.to contain_file('/etc/mail/submit.mc')
             .with_ensure('file')
@@ -21,9 +21,7 @@ describe 'sendmail::submit' do
             .with_content(%r{^FEATURE\(`msp', `\[127.0.0.1\]', `MSA'\)dnl$})
 
           is_expected.not_to contain_file('/etc/mail/foo.example.com.submit.mc')
-        }
-      when 'RedHat'
-        it {
+        when 'RedHat'
           is_expected.to contain_class('sendmail::submit')
           is_expected.to contain_file('/etc/mail/submit.mc')
             .with_ensure('file')
@@ -35,9 +33,7 @@ describe 'sendmail::submit' do
             .with_content(%r{^FEATURE\(`msp', `\[127.0.0.1\]', `MSA'\)dnl$})
 
           is_expected.not_to contain_file('/etc/mail/foo.example.com.submit.mc')
-        }
-      when 'FreeBSD'
-        it {
+        when 'FreeBSD'
           is_expected.to contain_class('sendmail::submit')
           is_expected.to contain_file('/etc/mail/foo.submit.mc')
             .with_ensure('file')
@@ -51,8 +47,8 @@ describe 'sendmail::submit' do
           is_expected.to contain_file('/etc/mail/foo.example.com.submit.mc')
             .with_ensure('link')
             .with_target('foo.submit.mc')
-        }
-      end
+        end
+      }
     end
 
     context "on #{os} with msp_host => localhost" do

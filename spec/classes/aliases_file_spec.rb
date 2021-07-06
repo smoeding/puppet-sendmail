@@ -5,9 +5,9 @@ describe 'sendmail::aliases::file' do
     context "on #{os} with default parameters" do
       let(:facts) { facts }
 
-      case facts[:osfamily]
-      when 'Debian', 'RedHat'
-        it {
+      it {
+        case facts[:osfamily]
+        when 'Debian', 'RedHat'
           is_expected.to contain_class('sendmail::aliases::file')
           is_expected.to contain_class('sendmail::aliases::newaliases')
           is_expected.to contain_file('/etc/aliases').with(
@@ -18,9 +18,7 @@ describe 'sendmail::aliases::file' do
             'content' => nil,
             'source'  => nil,
           ).that_notifies('Class[sendmail::aliases::newaliases]')
-        }
-      when 'FreeBSD'
-        it {
+        when 'FreeBSD'
           is_expected.to contain_class('sendmail::aliases::file')
           is_expected.to contain_class('sendmail::aliases::newaliases')
           is_expected.to contain_file('/etc/aliases').with(
@@ -31,8 +29,8 @@ describe 'sendmail::aliases::file' do
             'content' => nil,
             'source'  => nil,
           ).that_notifies('Class[sendmail::aliases::newaliases]')
-        }
-      end
+        end
+      }
     end
 
     context "on #{os} with content => foo" do

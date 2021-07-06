@@ -5,20 +5,18 @@ describe 'sendmail::mc::starttls' do
     context "on #{os} with defaults" do
       let(:facts) { facts }
 
-      case facts[:osfamily]
-      when 'Debian'
-        it {
+      it {
+        case facts[:osfamily]
+        when 'Debian'
           is_expected.to contain_concat__fragment('sendmail_mc-starttls')
             .with_content(%r{^include.*starttls\.m4})
             .with_order('47')
-        }
-      else
-        it {
+        else
           is_expected.to contain_concat__fragment('sendmail_mc-starttls')
             .without_content(%r{^include.*starttls\.m4})
             .with_order('47')
-        }
-      end
+        end
+      }
     end
 
     context "on #{os} with ca_cert_file => /foo" do

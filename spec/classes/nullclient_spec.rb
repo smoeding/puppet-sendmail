@@ -192,7 +192,6 @@ describe 'sendmail::nullclient' do
      'client_cert_file', 'client_key_file',
      'crl_file', 'dh_params', 'cipher_list',
      'server_ssl_options', 'client_ssl_options'].each do |parameter|
-
       context "on #{os} with #{parameter} defined" do
         let(:facts) { facts }
         let(:params) do
