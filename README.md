@@ -246,6 +246,7 @@ sendmail::mc::feature { 'virtusertable':
   - [Define: sendmail::mc::milter](#define-sendmailmcmilter)
   - [Define: sendmail::mc::modify_mailer_flags](#define-sendmailmcmodify_mailer_flags)
   - [Define: sendmail::mc::ostype](#define-sendmailmcostype)
+  - [Define: sendmail::mc::queue_group](#define-sendmailmcqueue_group)
   - [Define: sendmail::mc::versionid](#define-sendmailmcversionid)
 - [**Augeas Lenses**](#augeas-lenses)
   - [Augeas Lens: sendmail_map](#augeas-lens-sendmail_map)
@@ -1756,6 +1757,34 @@ sendmail::mc::ostype { 'Debian': }
 ##### `ostype`
 
 The type of operating system as a string. The value is used to add the `OSTYPE` macro to the generated `sendmail.mc` file. This will include the m4 file with operating system specific settings.
+
+#### Define: `sendmail::mc::queue_group`
+
+Add the `QUEUE_GROUP` macro to the `sendmail.mc` file.
+
+```puppet
+sendmail::mc::queue_group { 'gmailcom':
+  args  => 'foo'
+}
+```
+
+**Parameters for the `sendmail::mc::queue_group` type:**
+
+##### `queue_name`
+
+The name of the queue.
+
+> **Note**: The macro name should not be quoted as it will always be quoted in the template.
+
+##### `args`
+
+The expansion defined for the macro.
+
+##### `use_quotes`
+
+A boolean that indicates if the expansion should be quoted (using m4 quotes). If this argument is 'true', then the expansion will be enclosed in ` and ' symbols in the generated output file.
+
+> **Note**: The name of the defined macro will always be quoted. Valid options: 'true' or 'false'. Default value: 'true'.queue_group`
 
 #### Define: `sendmail::mc::versionid`
 
