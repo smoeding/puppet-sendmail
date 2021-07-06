@@ -21,7 +21,6 @@ class sendmail::params {
   $mail_settings_dir = '/etc/mail'
 
   # File locations
-  $alias_file            = '/etc/aliases'
   $access_file           = "${mail_settings_dir}/access"
   $authinfo_file         = "${mail_settings_dir}/authinfo"
   $bitdomain_file        = "${mail_settings_dir}/bitdomain"
@@ -61,6 +60,8 @@ class sendmail::params {
       $configure_command = "make -C ${mail_settings_dir} all"
       $sendmail_mc_file  = "${mail_settings_dir}/sendmail.mc"
       $submit_mc_file    = "${mail_settings_dir}/submit.mc"
+
+      $alias_file = '/etc/aliases'
     }
 
     'RedHat': {
@@ -79,6 +80,8 @@ class sendmail::params {
       $configure_command = "make -C ${mail_settings_dir} all"
       $sendmail_mc_file  = "${mail_settings_dir}/sendmail.mc"
       $submit_mc_file    = "${mail_settings_dir}/submit.mc"
+
+      $alias_file = '/etc/aliases'
     }
 
     'FreeBSD': {
@@ -97,6 +100,8 @@ class sendmail::params {
       $configure_command = "make -C ${mail_settings_dir} all install"
       $sendmail_mc_file  = "${mail_settings_dir}/${::hostname}.mc"
       $submit_mc_file    = "${mail_settings_dir}/${::hostname}.submit.mc"
+
+      $alias_file = '/etc/mail/aliases'
     }
 
     default: {

@@ -21,7 +21,7 @@ describe 'sendmail::aliases::file' do
         when 'FreeBSD'
           is_expected.to contain_class('sendmail::aliases::file')
           is_expected.to contain_class('sendmail::aliases::newaliases')
-          is_expected.to contain_file('/etc/aliases').with(
+          is_expected.to contain_file('/etc/mail/aliases').with(
             'ensure'  => 'file',
             'owner'   => 'root',
             'group'   => 'wheel',
@@ -40,11 +40,20 @@ describe 'sendmail::aliases::file' do
       end
 
       it {
-        is_expected.to contain_file('/etc/aliases').with(
-          'ensure'  => 'file',
-          'content' => 'foo',
-          'source'  => nil,
-        ).that_notifies('Class[sendmail::aliases::newaliases]')
+        case facts[:osfamily]
+        when 'Debian', 'RedHat'
+          is_expected.to contain_file('/etc/aliases').with(
+            'ensure'  => 'file',
+            'content' => 'foo',
+            'source'  => nil,
+          ).that_notifies('Class[sendmail::aliases::newaliases]')
+        when 'FreeBSD'
+          is_expected.to contain_file('/etc/mail/aliases').with(
+            'ensure'  => 'file',
+            'content' => 'foo',
+            'source'  => nil,
+          ).that_notifies('Class[sendmail::aliases::newaliases]')
+        end
       }
     end
 
@@ -55,11 +64,20 @@ describe 'sendmail::aliases::file' do
       end
 
       it {
-        is_expected.to contain_file('/etc/aliases').with(
-          'ensure'  => 'file',
-          'content' => nil,
-          'source'  => 'foo',
-        ).that_notifies('Class[sendmail::aliases::newaliases]')
+        case facts[:osfamily]
+        when 'Debian', 'RedHat'
+          is_expected.to contain_file('/etc/aliases').with(
+            'ensure'  => 'file',
+            'content' => nil,
+            'source'  => 'foo',
+          ).that_notifies('Class[sendmail::aliases::newaliases]')
+        when 'FreeBSD'
+          is_expected.to contain_file('/etc/mail/aliases').with(
+            'ensure'  => 'file',
+            'content' => nil,
+            'source'  => 'foo',
+          ).that_notifies('Class[sendmail::aliases::newaliases]')
+        end
       }
     end
   end
