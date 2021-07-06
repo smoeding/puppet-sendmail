@@ -21,8 +21,7 @@
 #
 # [*service_hasstatus*]
 #   Define whether the service type can rely on a functional status.
-#   Valid options: 'true' or 'false'. Default value depends on
-#   the operating system and release.
+#   Valid options: 'true' or 'false'. Default value: 'true'
 #
 # == Requires:
 #
@@ -39,7 +38,7 @@ class sendmail::service (
   Boolean                 $service_enable    = true,
   Boolean                 $service_manage    = true,
   Stdlib::Ensure::Service $service_ensure    = 'running',
-  Boolean                 $service_hasstatus = $::sendmail::params::service_hasstatus,
+  Boolean                 $service_hasstatus = true,
 ) inherits sendmail::params {
 
   if $service_manage {

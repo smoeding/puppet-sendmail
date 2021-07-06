@@ -49,10 +49,6 @@ class sendmail::params {
       $package_manage = true
       $auxiliary_packages = [ ]
 
-      # Unfortunately the /etc/init.d/sendmail script does
-      # not provide a useful status exit code on wheezy.
-      $service_hasstatus = false
-
       $sendmail_user    = 'smmta'
       $sendmail_group   = 'smmsp'
       $alias_file_group = 'root'
@@ -71,8 +67,6 @@ class sendmail::params {
       $package_manage = true
       $auxiliary_packages = [ 'sendmail-cf', ]
 
-      $service_hasstatus = true
-
       $sendmail_user    = 'root'
       $sendmail_group   = 'root'
       $alias_file_group = 'root'
@@ -90,8 +84,6 @@ class sendmail::params {
     'FreeBSD': {
       $package_manage = false
       $auxiliary_packages = []
-
-      $service_hasstatus = true
 
       $sendmail_user    = 'root'
       $sendmail_group   = 'wheel'
