@@ -1764,27 +1764,46 @@ Add the `QUEUE_GROUP` macro to the `sendmail.mc` file.
 
 ```puppet
 sendmail::mc::queue_group { 'gmailcom':
-  args  => 'foo'
+  flags      => 'f',
+  interval   => '60m',
+  path       => '/var/spool/mqueues/gmail',
+  recipients => 1,
 }
 ```
 
 **Parameters for the `sendmail::mc::queue_group` type:**
 
-##### `queue_name`
+##### `queue_group`
 
-The name of the queue.
+The name of the queue. Defaults to the resource title.
 
-> **Note**: The macro name should not be quoted as it will always be quoted in the template.
+##### `flags`
 
-##### `args`
+Flags for the queue group. Currently only the `f` flag is supported and causes Sendmail to create one queue process for each queue directory in the group.
 
-The expansion defined for the macro.
+##### `interval`
 
-##### `use_quotes`
+The interval specifies the time interval between queue runs for the queue group. The parameter value should be an integer and a letter (e.g. `10m`). The letters `w` (week), `d` (day), `h` (hour), `m` (minute) and `s` (second) are allowed.
 
-A boolean that indicates if the expansion should be quoted (using m4 quotes). If this argument is 'true', then the expansion will be enclosed in ` and ' symbols in the generated output file.
+##### `jobs`
 
-> **Note**: The name of the defined macro will always be quoted. Valid options: 'true' or 'false'. Default value: 'true'.queue_group`
+This parameter limits the number of queue entries that will be processed in a single queue run.
+
+##### `nice`
+
+Set the nice-level for the queue group processor. Using a positive number will increase the nice-level by the given number. This results in the process to run with a reduced priority.
+
+##### `recipients`
+
+The number of recipients that are processed in a single delivery before splitting.
+
+##### `runners`
+
+The number of queue runners to lauch for this queue group.
+
+##### `path`
+
+The location of the queue directory for this queue group. The parameter must be an absolute path and must be a subdirectory of the default queue directory configured by the `QueueDirectory` option.
 
 #### Define: `sendmail::mc::versionid`
 

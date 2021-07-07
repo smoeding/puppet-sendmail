@@ -1,23 +1,43 @@
 # = Define: sendmail::mc::queue_group
 #
-# Add m4 macro queue_group to the sendmail.mc file.
+# Add the QUEUE_GROUP macro to the sendmail.mc file.
 #
 # == Parameters:
 #
-# [*queue_name*]
-#   The name of the queue.
-#   **Note**: The macro name should not be quoted as it will always be
-#   quoted in the template.
+# [*queue_group*]
+#   The name of the queue group. Defaults to the resource title.
 #
-# [*args*]
-#   The expansion defined for the macro.
+# [*flags*]
+#   Flags for the queue group. Currently only the 'f' flag is supported and
+#   causes Sendmail to create one queue process for each queue directory in
+#   the group.
 #
-# [*use_quotes*]
-#   A boolean that indicates if the expansion should be quoted (using
-#   m4 quotes). If this argument is 'true', then the expansion will be
-#   enclosed in ` and ' symbols in the generated output file.
-#   **Note**: The name of the defined macro will always be quoted.
-#   Valid options: 'true' or 'false'. Default value: 'true'.
+# [*interval*]
+#   The interval specifies the time interval between queue runs for the queue
+#   group. The parameter value should be an integer and a letter
+#   (e.g. '10m'). The letters 'w' (week), 'd' (day), 'h' (hour), 'm' (minute)
+#   and 's' (second) are allowed.
+#
+# [*jobs*]
+#   This parameter limits the number of queue entries that will be processed
+#   in a single queue run.
+#
+# [*nice*]
+#   Set the nice-level for the queue group processor. Using a positive number
+#   will increase the nice-level by the given number. This results in the
+#   process to run with a reduced priority.
+#
+# [*recipients*]
+#   The number of recipients that are processed in a single delivery before
+#   splitting.
+#
+# [*runners*]
+#   The number of queue runners to lauch for this queue group.
+#
+# [*path*]
+#   The location of the queue directory for this queue group. The parameter
+#   must be an absolute path and must be a subdirectory of the default queue
+#   directory configured by the 'QueueDirectory' option.
 #
 # == Requires:
 #
@@ -26,23 +46,43 @@
 # == Sample Usage:
 #
 #   sendmail::mc::queue_group { 'gmailcom':
-#     args  => 'foo',
+#     flags      => 'f',
+#     interval   => '60m',
+#     path       => '/var/spool/mqueues/gmail',
+#     recipients => 1,
 #   }
 #
 define sendmail::mc::queue_group (
-  String  $queue_name = $title,
-  Boolean $use_quotes = true,
-  String  $args  = '',
+  String                         $queue_group = $title,
+  Optional[String]               $flags       = undef,
+  Optional[String]               $interval    = undef,
+  Optional[Integer]              $jobs        = undef,
+  Optional[Integer]              $nice        = undef,
+  Optional[Integer]              $recipients  = undef,
+  Optional[Integer]              $runners     = undef,
+  Optional[Stdlib::Absolutepath] $path        = undef,
 ) {
   # Include section
   include sendmail::mc::queue_group_section
 
-  # Add quotes to the expansion if needed
-  $exp = bool2str($use_quotes, "`${args}'", String($args))
+  $sparse_opts = {
+    'F' => $flags,
+    'I' => $interval,
+    'J' => $jobs,
+    'N' => $nice,
+    'r' => $recipients,
+    'R' => $runners,
+    'P' => $path,
+  }
+
+  # Remove unset options
+  $real_opts = $sparse_opts.filter |$key,$val| { !empty($val) }
+
+  $opts = join(join_keys_to_values($real_opts, '='), ', ')
 
   concat::fragment { "sendmail_mc-queue_group-${title}":
     target  => 'sendmail.mc',
     order   => 32,
-    content => "QUEUE_GROUP(`${queue_name}', ${exp})dnl\n",
+    content => "QUEUE_GROUP(`${queue_group}', `${opts}')dnl\n",
   }
 }
