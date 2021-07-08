@@ -1,6 +1,6 @@
 # sendmail
 
-[![Build Status](https://travis-ci.org/smoeding/puppet-sendmail.svg?branch=master)](https://travis-ci.org/smoeding/puppet-sendmail)
+[![Build Status](https://github.com/smoeding/puppet-sendmail/actions/workflows/CI.yaml/badge.svg)](https://github.com/smoeding/puppet-sendmail/actions/workflows/CI.yaml)
 [![Puppet Forge](http://img.shields.io/puppetforge/v/stm/sendmail.svg)](https://forge.puppetlabs.com/stm/sendmail)
 [![License](https://img.shields.io/github/license/smoeding/puppet-sendmail.svg)](https://raw.githubusercontent.com/smoeding/puppet-sendmail/master/LICENSE)
 
