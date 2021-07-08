@@ -11,7 +11,7 @@ describe 'sendmail::mc::queue_group' do
 
         is_expected.to contain_concat__fragment('sendmail_mc-queue_group-foobar')
           .with_content(%r{^QUEUE_GROUP\(`foobar', `'\)dnl$})
-          .with_order('32')
+          .with_order('34')
       }
     end
 
@@ -25,7 +25,7 @@ describe 'sendmail::mc::queue_group' do
 
         is_expected.to contain_concat__fragment('sendmail_mc-queue_group-foobar')
           .with_content(%r{^QUEUE_GROUP\(`foobar', `F=f'\)dnl$})
-          .with_order('32')
+          .with_order('34')
       }
     end
 
@@ -39,7 +39,7 @@ describe 'sendmail::mc::queue_group' do
 
         is_expected.to contain_concat__fragment('sendmail_mc-queue_group-foobar')
           .with_content(%r{^QUEUE_GROUP\(`foobar', `I=10m'\)dnl$})
-          .with_order('32')
+          .with_order('34')
       }
     end
 
@@ -53,7 +53,7 @@ describe 'sendmail::mc::queue_group' do
 
         is_expected.to contain_concat__fragment('sendmail_mc-queue_group-foobar')
           .with_content(%r{^QUEUE_GROUP\(`foobar', `J=42'\)dnl$})
-          .with_order('32')
+          .with_order('34')
       }
     end
 
@@ -67,7 +67,7 @@ describe 'sendmail::mc::queue_group' do
 
         is_expected.to contain_concat__fragment('sendmail_mc-queue_group-foobar')
           .with_content(%r{^QUEUE_GROUP\(`foobar', `N=-10'\)dnl$})
-          .with_order('32')
+          .with_order('34')
       }
     end
 
@@ -81,7 +81,7 @@ describe 'sendmail::mc::queue_group' do
 
         is_expected.to contain_concat__fragment('sendmail_mc-queue_group-foobar')
           .with_content(%r{^QUEUE_GROUP\(`foobar', `P=/var/spool/queue'\)dnl$})
-          .with_order('32')
+          .with_order('34')
       }
     end
 
@@ -95,7 +95,7 @@ describe 'sendmail::mc::queue_group' do
 
         is_expected.to contain_concat__fragment('sendmail_mc-queue_group-foobar')
           .with_content(%r{^QUEUE_GROUP\(`foobar', `r=1'\)dnl$})
-          .with_order('32')
+          .with_order('34')
       }
     end
 
@@ -109,7 +109,7 @@ describe 'sendmail::mc::queue_group' do
 
         is_expected.to contain_concat__fragment('sendmail_mc-queue_group-foobar')
           .with_content(%r{^QUEUE_GROUP\(`foobar', `R=2'\)dnl$})
-          .with_order('32')
+          .with_order('34')
       }
     end
 
@@ -123,7 +123,7 @@ describe 'sendmail::mc::queue_group' do
 
         is_expected.to contain_concat__fragment('sendmail_mc-queue_group-foobar')
           .with_content(%r{^QUEUE_GROUP\(`foobar', `F=f, J=10, R=2, P=/var/spool/q'\)dnl$})
-          .with_order('32')
+          .with_order('34')
       }
     end
   end

@@ -123,6 +123,8 @@ class sendmail::mc (
   # 29    FEATURE (nullclient)
   # 30    MASQUERADE_AS
   # 32    GENERICS_DOMAIN, GENERICS_DOMAIN_FILE
+  # 33    # queue group header
+  # 34    QUEUE_GROUP
   # 35    # macro header
   # 38    MODIFY_MAILER_FLAGS
   # 40    DAEMON_OPTIONS

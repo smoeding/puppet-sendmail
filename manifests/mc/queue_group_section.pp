@@ -18,7 +18,7 @@
 class sendmail::mc::queue_group_section {
   concat::fragment { 'sendmail_mc-queue_group_header':
     target  => 'sendmail.mc',
-    order   => '30',
+    order   => '33',
     content => "dnl #\ndnl # Queue Group\ndnl #\n",
   }
 }

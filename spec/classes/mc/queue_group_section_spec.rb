@@ -10,7 +10,7 @@ describe 'sendmail::mc::queue_group_section' do
       it {
         is_expected.to contain_concat__fragment('sendmail_mc-queue_group_header')
           .with_content(%r{^dnl # Queue Group$})
-          .with_order('30')
+          .with_order('33')
       }
     end
   end
