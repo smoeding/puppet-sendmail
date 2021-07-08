@@ -99,7 +99,7 @@ class sendmail::mc::starttls (
 ) {
 
   $multi = ('sendmail_version' in $facts) and
-           (versioncmp($facts['sendmail_version'], '8.15.1') >= 0)
+    (versioncmp($facts['sendmail_version'], '8.15.1') >= 0)
 
   $_server_cert_file = ($multi and $server_cert_file and $server_cert_file2) ? {
     true    => "${server_cert_file},${server_cert_file2}",
