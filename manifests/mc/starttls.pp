@@ -22,6 +22,26 @@
 # [*client_key_file*]
 #   The filename of the SSL client key for outbound connections.
 #
+# [*server_cert_file2*]
+#   The filename of the secondary SSL server certificate for inbound
+#   connections. The parameter is only valid on Sendmail 8.15.1 or later and
+#   when 'server_cert_file' is set.
+#
+# [*server_key_file2*]
+#   The filename of the secondary SSL server key for inbound connections. The
+#   parameter is only valid on Sendmail 8.15.1 or later and when
+#   'server_key_file' is set.
+#
+# [*client_cert_file2*]
+#   The filename of the secondary SSL client certificate for outbound
+#   connections. The parameter is only valid on Sendmail 8.15.1 or later and
+#   when 'client_cert_file' is set.
+#
+# [*client_key_file2*]
+#   The filename of the secondary SSL client key for outbound
+#   connections. The parameter is only valid on Sendmail 8.15.1 or later and
+#   when 'client_key_file' is set.
+#
 # [*crl_file*]
 #   The filename with a list of revoked certificates.
 #
@@ -66,6 +86,10 @@ class sendmail::mc::starttls (
   Optional[Stdlib::Absolutepath] $server_key_file    = undef,
   Optional[Stdlib::Absolutepath] $client_cert_file   = undef,
   Optional[Stdlib::Absolutepath] $client_key_file    = undef,
+  Optional[Stdlib::Absolutepath] $server_cert_file2  = undef,
+  Optional[Stdlib::Absolutepath] $server_key_file2   = undef,
+  Optional[Stdlib::Absolutepath] $client_cert_file2  = undef,
+  Optional[Stdlib::Absolutepath] $client_key_file2   = undef,
   Optional[Stdlib::Absolutepath] $crl_file           = undef,
   Optional[Sendmail::DHParam]    $dh_params          = undef,
   Optional[Enum['V','']]         $tls_srv_options    = undef,
@@ -74,14 +98,37 @@ class sendmail::mc::starttls (
   Optional[String]               $client_ssl_options = undef,
 ) {
 
+  $multi = ('sendmail_version' in $facts) and
+           (versioncmp($facts['sendmail_version'], '8.15.1') >= 0)
+
+  $_server_cert_file = ($multi and $server_cert_file and $server_cert_file2) ? {
+    true    => "${server_cert_file},${server_cert_file2}",
+    default => $server_cert_file,
+  }
+
+  $_server_key_file = ($multi and $server_key_file and $server_key_file2) ? {
+    true    => "${server_key_file},${server_key_file2}",
+    default => $server_key_file,
+  }
+
+  $_client_cert_file = ($multi and $client_cert_file and $client_cert_file2) ? {
+    true    => "${client_cert_file},${client_cert_file2}",
+    default => $client_cert_file,
+  }
+
+  $_client_key_file = ($multi and $client_key_file and $client_key_file2) ? {
+    true    => "${client_key_file},${client_key_file2}",
+    default => $client_key_file,
+  }
+
   $params = {
     'include_starttls_m4' => $::os['family'] in [ 'Debian' ],
     'ca_cert_file'        => $ca_cert_file,
     'ca_cert_path'        => $ca_cert_path,
-    'server_cert_file'    => $server_cert_file,
-    'server_key_file'     => $server_key_file,
-    'client_cert_file'    => $client_cert_file,
-    'client_key_file'     => $client_key_file,
+    'server_cert_file'    => $_server_cert_file,
+    'server_key_file'     => $_server_key_file,
+    'client_cert_file'    => $_client_cert_file,
+    'client_key_file'     => $_client_key_file,
     'dh_params'           => $dh_params,
     'crl_file'            => $crl_file,
     'tls_srv_options'     => $tls_srv_options,

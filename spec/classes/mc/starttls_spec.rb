@@ -28,7 +28,7 @@ describe 'sendmail::mc::starttls' do
 
       it {
         is_expected.to contain_concat__fragment('sendmail_mc-starttls')
-          .with_content(%r{^define\(`confCACERT', `\/foo'\)dnl})
+          .with_content(%r{^define\(`confCACERT', `/foo'\)dnl})
           .with_order('47')
       }
     end
@@ -42,7 +42,7 @@ describe 'sendmail::mc::starttls' do
 
       it {
         is_expected.to contain_concat__fragment('sendmail_mc-starttls')
-          .with_content(%r{^define\(`confCACERT_PATH', `\/foo'\)dnl})
+          .with_content(%r{^define\(`confCACERT_PATH', `/foo'\)dnl})
           .with_order('47')
       }
     end
@@ -56,8 +56,36 @@ describe 'sendmail::mc::starttls' do
 
       it {
         is_expected.to contain_concat__fragment('sendmail_mc-starttls')
-          .with_content(%r{^define\(`confSERVER_CERT', `\/foo'\)dnl})
-          .with_content(%r{^define\(`confSERVER_KEY', `\/bar'\)dnl})
+          .with_content(%r{^define\(`confSERVER_CERT', `/foo'\)dnl})
+          .with_content(%r{^define\(`confSERVER_KEY', `/bar'\)dnl})
+          .with_order('47')
+      }
+    end
+
+    context "on #{os} with server_cert_file => /foo and server_cert_file2 => /bar" do
+      let(:facts) { facts.merge(sendmail_version: '8.15.1') }
+
+      let(:params) do
+        { server_cert_file: '/foo', server_cert_file2: '/bar' }
+      end
+
+      it {
+        is_expected.to contain_concat__fragment('sendmail_mc-starttls')
+          .with_content(%r{^define\(`confSERVER_CERT', `/foo,/bar'\)dnl})
+          .with_order('47')
+      }
+    end
+
+    context "on #{os} with server_key_file => /foo and server_key_file2 => /bar" do
+      let(:facts) { facts.merge(sendmail_version: '8.15.1') }
+
+      let(:params) do
+        { server_key_file: '/foo', server_key_file2: '/bar' }
+      end
+
+      it {
+        is_expected.to contain_concat__fragment('sendmail_mc-starttls')
+          .with_content(%r{^define\(`confSERVER_KEY', `/foo,/bar'\)dnl})
           .with_order('47')
       }
     end
@@ -71,8 +99,36 @@ describe 'sendmail::mc::starttls' do
 
       it {
         is_expected.to contain_concat__fragment('sendmail_mc-starttls')
-          .with_content(%r{^define\(`confCLIENT_CERT', `\/foo'\)dnl})
-          .with_content(%r{^define\(`confCLIENT_KEY', `\/bar'\)dnl})
+          .with_content(%r{^define\(`confCLIENT_CERT', `/foo'\)dnl})
+          .with_content(%r{^define\(`confCLIENT_KEY', `/bar'\)dnl})
+          .with_order('47')
+      }
+    end
+
+    context "on #{os} with client_cert_file => /foo and client_cert_file2 => /bar" do
+      let(:facts) { facts.merge(sendmail_version: '8.15.1') }
+
+      let(:params) do
+        { client_cert_file: '/foo', client_cert_file2: '/bar' }
+      end
+
+      it {
+        is_expected.to contain_concat__fragment('sendmail_mc-starttls')
+          .with_content(%r{^define\(`confCLIENT_CERT', `/foo,/bar'\)dnl})
+          .with_order('47')
+      }
+    end
+
+    context "on #{os} with client_key_file => /foo and client_key_file2 => /bar" do
+      let(:facts) { facts.merge(sendmail_version: '8.15.1') }
+
+      let(:params) do
+        { client_key_file: '/foo', client_key_file2: '/bar' }
+      end
+
+      it {
+        is_expected.to contain_concat__fragment('sendmail_mc-starttls')
+          .with_content(%r{^define\(`confCLIENT_KEY', `/foo,/bar'\)dnl})
           .with_order('47')
       }
     end
@@ -86,7 +142,7 @@ describe 'sendmail::mc::starttls' do
 
       it {
         is_expected.to contain_concat__fragment('sendmail_mc-starttls')
-          .with_content(%r{^define\(`confCRL', `\/foo'\)dnl})
+          .with_content(%r{^define\(`confCRL', `/foo'\)dnl})
           .with_order('47')
       }
     end
@@ -142,7 +198,7 @@ describe 'sendmail::mc::starttls' do
 
       it {
         is_expected.to contain_concat__fragment('sendmail_mc-starttls')
-          .with_content(%r{^define\(`confDH_PARAMETERS', `\/foo'\)dnl})
+          .with_content(%r{^define\(`confDH_PARAMETERS', `/foo'\)dnl})
           .with_order('47')
       }
     end

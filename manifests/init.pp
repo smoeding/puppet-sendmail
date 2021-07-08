@@ -95,6 +95,26 @@
 # [*client_key_file*]
 #   The filename of the SSL client key for outbound connections.
 #
+# [*server_cert_file2*]
+#   The filename of the secondary SSL server certificate for inbound
+#   connections. The parameter is only valid on Sendmail 8.15.1 or later and
+#   when 'server_cert_file' is set.
+#
+# [*server_key_file2*]
+#   The filename of the secondary SSL server key for inbound connections. The
+#   parameter is only valid on Sendmail 8.15.1 or later and when
+#   'server_key_file' is set.
+#
+# [*client_cert_file2*]
+#   The filename of the secondary SSL client certificate for outbound
+#   connections. The parameter is only valid on Sendmail 8.15.1 or later and
+#   when 'client_cert_file' is set.
+#
+# [*client_key_file2*]
+#   The filename of the secondary SSL client key for outbound
+#   connections. The parameter is only valid on Sendmail 8.15.1 or later and
+#   when 'client_key_file' is set.
+#
 # [*crl_file*]
 #   The filename with a list of revoked certificates.
 #
@@ -217,6 +237,10 @@ class sendmail (
   Optional[Stdlib::Absolutepath]          $server_key_file          = undef,
   Optional[Stdlib::Absolutepath]          $client_cert_file         = undef,
   Optional[Stdlib::Absolutepath]          $client_key_file          = undef,
+  Optional[Stdlib::Absolutepath]          $server_cert_file2        = undef,
+  Optional[Stdlib::Absolutepath]          $server_key_file2         = undef,
+  Optional[Stdlib::Absolutepath]          $client_cert_file2        = undef,
+  Optional[Stdlib::Absolutepath]          $client_key_file2         = undef,
   Optional[Stdlib::Absolutepath]          $crl_file                 = undef,
   Optional[Sendmail::DHParam]             $dh_params                = undef,
   Optional[Enum['V','']]                  $tls_srv_options          = undef,
@@ -298,6 +322,10 @@ class sendmail (
         server_key_file    => $server_key_file,
         client_cert_file   => $client_cert_file,
         client_key_file    => $client_key_file,
+        server_cert_file2  => $server_cert_file2,
+        server_key_file2   => $server_key_file2,
+        client_cert_file2  => $client_cert_file2,
+        client_key_file2   => $client_key_file2,
         crl_file           => $crl_file,
         dh_params          => $dh_params,
         tls_srv_options    => $tls_srv_options,
