@@ -1,3 +1,20 @@
+## 2021-07-09 - Release 3.0.0
+
+### Fixed
+
+- For FreeBSD the path of the aliases file has been updated to `/etc/mail/aliases` to reflect the system standard.
+
+### Updated
+
+- Support for Puppet 7 has been added.
+- The version dependencies for the `stdlib` and `concat` modules have been updated to reflect the usage of newer Puppet versions.
+- Sendmail queue groups are implemented with `sendmail::mc::queue_group`.
+
+### Removed
+
+- Support for Puppet 5 has been removed.
+- Support for Debian 8, Ubuntu 14.04, RedHat 6, CentOS 6, Oracle Linux 6 and FreeBSD 10 has been removed.
+
 ## 2018-10-28 - Release 2.0.0
 
 ### Summary

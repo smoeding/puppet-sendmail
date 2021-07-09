@@ -3,4 +3,4 @@ spec/spec_helper.rb:
   mock_with: ':rspec'
 .pdkignore:
   paths:
-    - .github/
+    - /.github/
