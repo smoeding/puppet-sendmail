@@ -262,7 +262,7 @@ Performs the basic setup and installation of Sendmail on the system.
 
 ##### `smart_host`
 
-Servers behind a firewall may not be able to deliver mail directly to the outside world. In this case the host may need to forward the mail to a gateway machine defined by this parameter. All nonlocal mail is forwarded to this gateway. Default value: `undef`
+Servers behind a firewall may not be able to deliver mail directly to the outside world. In this case the host may need to forward the mail to a gateway machine defined by this parameter. All non-local mail is forwarded to this gateway. Default value: `undef`
 
 ##### `domain_name`
 
@@ -282,11 +282,11 @@ Sendmail normally probes all network interfaces to get all hostnames that the se
 
 ##### `enable_ipv4_daemon`
 
-Should the host accept mail on all IPv4 network adresses. Valid options: `true` or `false`. Default value: `true`
+Should the host accept mail on all IPv4 network addresses. Valid options: `true` or `false`. Default value: `true`
 
 ##### `enable_ipv6_daemon`
 
-Should the host accept mail on all IPv6 network adresses. Valid options: `true` or `false`. Default value: `true`
+Should the host accept mail on all IPv6 network addresses. Valid options: `true` or `false`. Default value: `true`
 
 ##### `features`
 
@@ -1384,7 +1384,7 @@ The length of the listen queue used by the operating system.
 
 ##### `modify`
 
-Single letter flags to modify the daemon behaviour. See the Sendmail documention for details.
+Single letter flags to modify the daemon behavior. See the Sendmail documentation for details.
 
 ##### `delay_la`
 
@@ -1799,7 +1799,7 @@ The number of recipients that are processed in a single delivery before splittin
 
 ##### `runners`
 
-The number of queue runners to lauch for this queue group.
+The number of queue runners to launch for this queue group.
 
 ##### `path`
 
