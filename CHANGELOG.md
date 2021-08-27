@@ -1,3 +1,10 @@
+## 2021-08-27 - Release 3.0.1
+
+### Updated
+
+- Add support for Debian 11
+- Allow stdlib 8.0.0
+
 ## 2021-07-09 - Release 3.0.0
 
 ### Fixed

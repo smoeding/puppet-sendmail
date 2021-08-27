@@ -1,6 +1,6 @@
 {
   "name": "stm-sendmail",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "author": "stm",
   "summary": "Install and manage the Sendmail MTA.",
   "license": "BSD-2-Clause",
@@ -22,7 +22,8 @@
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
         "9",
-        "10"
+        "10",
+        "11"
       ]
     },
     {
@@ -59,7 +60,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 6.0.0 < 8.0.0"
+      "version_requirement": ">= 6.0.0 < 9.0.0"
     }
   ],
   "tags": [
