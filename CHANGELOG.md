@@ -1,3 +1,9 @@
+## 2021-09-30 - Release 3.0.2
+
+## Fixed
+
+- Fix stdlib 8.x requirement
+
 ## 2021-08-27 - Release 3.0.1
 
 ### Updated
