@@ -1,3 +1,9 @@
+## 2021-11-27 - Release 3.1.0
+
+### Features
+
+- New defined type `sendmail::mc::virtuser_domain` to manage the domains to use with FEATURE(virtusertable).
+
 ## 2021-09-30 - Release 3.0.2
 
 ## Fixed
