@@ -5,10 +5,10 @@ describe 'sendmail::mc::virtuser_domain' do
     let(:title) { 'example.net' }
 
     it {
-      should contain_concat__fragment('sendmail_mc-virtuser_domain-example.net') \
-              .with_content(/^VIRTUSER_DOMAIN\(`example.net'\)dnl$/) \
-              .with_order('37')
-      should contain_class('sendmail::mc::macro_section')
+      is_expected.to contain_concat__fragment('sendmail_mc-virtuser_domain-example.net') \
+        .with_content(%r{^VIRTUSER_DOMAIN\(`example.net'\)dnl$}) \
+        .with_order('37')
+      is_expected.to contain_class('sendmail::mc::macro_section')
     }
   end
 end
