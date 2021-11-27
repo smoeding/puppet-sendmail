@@ -126,6 +126,7 @@ class sendmail::mc (
   # 33    # queue group header
   # 34    QUEUE_GROUP
   # 35    # macro header
+  # 37    VIRTUSER_DOMAIN
   # 38    MODIFY_MAILER_FLAGS
   # 40    DAEMON_OPTIONS
   # 45    TRUST_AUTH_MECH
