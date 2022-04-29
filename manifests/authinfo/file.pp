@@ -1,22 +1,11 @@
-# = Class: sendmail::authinfo::file
+# @summary Create the Sendmail authinfo db file.
 #
-# Create the Sendmail authinfo db file.
-#
-# == Parameters:
-#
-# [*content*]
-#   The content of the file resource.
-#
-# [*source*]
-#   The source of the file resource.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example
 #   class { 'sendmail::authinfo::file': }
+#
+# @param content The content of the file resource.
+#
+# @param source The source of the file resource.
 #
 #
 class sendmail::authinfo::file (

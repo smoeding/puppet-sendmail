@@ -1,30 +1,18 @@
-# = Define: sendmail::domaintable::entry
+# @summary Manage an entry in the Sendmail domaintable file.
 #
-# Manage an entry in the Sendmail domaintable db file.
-#
-# == Parameters:
-#
-# [*ensure*]
-#   Used to create or remove the domaintable db entry.
-#   Valid options: 'present', 'absent'. Default: 'present'
-#
-# [*key*]
-#   The key used by Sendmail for the lookup. This should normally be a
-#   domain name. Default is the resource title.
-#
-# [*value*]
-#   The value for the given key. For the domaintable map this is typically
-#   another domain name.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example Add an entry to the domaintable
 #   sendmail::domaintable::entry { 'example.com':
 #     value => 'example.org',
 #   }
+#
+# @param ensure Used to create or remove the domaintable db entry.  Valid
+#   options: `present`, `absent`.
+#
+# @param key The key used by Sendmail for the lookup.  This should normally
+#   be a domain name.
+#
+# @param value The value for the given key.  For the domaintable map this is
+#   typically another domain name.
 #
 #
 define sendmail::domaintable::entry (

@@ -1,22 +1,11 @@
-# = Class: sendmail::userdb::file
+# @summary Manage the Sendmail userdb file.
 #
-# Manage the Sendmail userdb db file.
-#
-# == Parameters:
-#
-# [*content*]
-#   The content of the file resource.
-#
-# [*source*]
-#   The source of the file resource.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example
 #   class { 'sendmail::userdb::file': }
+#
+# @param content The content of the file resource.
+#
+# @param source The source of the file resource.
 #
 #
 class sendmail::userdb::file (

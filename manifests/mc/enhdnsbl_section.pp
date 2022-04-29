@@ -1,18 +1,6 @@
-# = Class: sendmail::mc::enhdnsbl_section
+# @summary Add a section header to improve readability of the config file
 #
-# Add a section header above the enhdnsbl FEATURE macros
-#
-# == Parameters:
-#
-# None.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::mc::enhdnsbl_section': }
+# @api private
 #
 #
 class sendmail::mc::enhdnsbl_section {

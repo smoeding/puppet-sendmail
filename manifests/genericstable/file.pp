@@ -1,22 +1,11 @@
-# = Class: sendmail::genericstable::file
+# @summary Manage the Sendmail genericstable db file.
 #
-# Manage the Sendmail genericstable db file.
-#
-# == Parameters:
-#
-# [*content*]
-#   The content of the file resource.
-#
-# [*source*]
-#   The source of the file resource.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example
 #   class { 'sendmail::genericstable::file': }
+#
+# @param content The content of the file resource.
+#
+# @param source The source of the file resource.
 #
 #
 class sendmail::genericstable::file (

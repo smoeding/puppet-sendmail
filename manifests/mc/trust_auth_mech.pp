@@ -1,23 +1,18 @@
-# = Class: sendmail::mc::trust_auth_mech
+# @summary Add the `TRUST_AUTH_MECH` macro to the sendmail.mc file.
 #
-# Add the TRUST_AUTH_MECH macro to the sendmail.mc file.
-#
-# == Parameters:
-#
-# [*trust_auth_mech*]
-#   The value of the TRUST_AUTH_MECH macro to set. If this is a string it
-#   is used as-is. For an array the value will be concatenated into a
-#   string. Default is the resource title.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example Activate `PLAIN` authentication
 #   class { 'sendmail::mc::trust_auth_mech':
 #     trust_auth_mech => 'PLAIN',
 #   }
+#
+# @example Activate `PLAIN` and `DIGEST-MD5` authentication
+#   class { 'sendmail::mc::trust_auth_mech':
+#     trust_auth_mech => [ 'PLAIN', 'DIGEST-MD5', ],
+#   }
+#
+# @param trust_auth_mech The value of the `TRUST_AUTH_MECH` macro to set.  If
+#   this is a string it is used as-is.  For an array the value will be
+#   concatenated into a string.
 #
 #
 class sendmail::mc::trust_auth_mech (

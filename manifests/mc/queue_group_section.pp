@@ -1,18 +1,6 @@
-# = Class: sendmail::mc::queue_group_section
+# @summary Add a section header to improve readability of the config file
 #
-# Add a section header above the queue_group statements
-#
-# == Parameters:
-#
-# None.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::mc::queue_group_section': }
+# @api private
 #
 #
 class sendmail::mc::queue_group_section {

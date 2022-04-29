@@ -1,20 +1,10 @@
-# = Define: sendmail::mc::ldaproute_domain
+# @summary Add the `LDAPROUTE_DOMAIN` macro to the sendmail.mc file.
 #
-# Add the LDAPROUTE_DOMAIN macro to the sendmail.mc file.
-#
-# == Parameters:
-#
-# [*domain_name*]
-#   The name of the domain for which LDAP routing is enabled.
-#   Default value is the resource title.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example Enable LDAP routing for `example.net`
 #   sendmail::mc::ldaproute_domain { 'example.net': }
+#
+# @param domain_name The name of the domain for which LDAP routing is
+#   enabled.
 #
 #
 define sendmail::mc::ldaproute_domain (

@@ -1,18 +1,6 @@
-# = Class: sendmail::mc::ldap_section
+# @summary Add a section header above the ldap settings
 #
-# Add a section header above the ldap settings
-#
-# == Parameters:
-#
-# None.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::mc::ldap_section': }
+# @api private
 #
 #
 class sendmail::mc::ldap_section {

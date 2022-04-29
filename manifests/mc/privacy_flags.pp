@@ -1,83 +1,61 @@
-# = Class: sendmail::mc::privacy_flags
+# @summary Manage privacy flags for the Sendmail MTA
 #
-# Manage privacy flags for the Sendmail MTA
+# Each option is enabled by setting the associated boolean parameter to
+# `true`. See the Sendmail documentation for the meaning of the flags.
 #
-# == Parameters:
-#
-# [*authwarnings*]
-#   Whether the privacy option of the same name should be enabled. Valid
-#   options: 'true' or 'false'. Default value: 'false'
-#
-# [*goaway*]
-#   Whether the privacy option of the same name should be enabled. Valid
-#   options: 'true' or 'false'. Default value: 'false'
-#
-# [*needexpnhelo*]
-#   Whether the privacy option of the same name should be enabled. Valid
-#   options: 'true' or 'false'. Default value: 'false'
-#
-# [*needmailhelo*]
-#   Whether the privacy option of the same name should be enabled. Valid
-#   options: 'true' or 'false'. Default value: 'false'
-#
-# [*needvrfyhelo*]
-#   Whether the privacy option of the same name should be enabled. Valid
-#   options: 'true' or 'false'. Default value: 'false'
-#
-# [*noactualrecipient*]
-#   Whether the privacy option of the same name should be enabled. Valid
-#   options: 'true' or 'false'. Default value: 'false'
-#
-# [*nobodyreturn*]
-#   Whether the privacy option of the same name should be enabled. Valid
-#   options: 'true' or 'false'. Default value: 'false'
-#
-# [*noetrn*]
-#   Whether the privacy option of the same name should be enabled. Valid
-#   options: 'true' or 'false'. Default value: 'false'
-#
-# [*noexpn*]
-#   Whether the privacy option of the same name should be enabled. Valid
-#   options: 'true' or 'false'. Default value: 'false'
-#
-# [*noreceipts*]
-#   Whether the privacy option of the same name should be enabled. Valid
-#   options: 'true' or 'false'. Default value: 'false'
-#
-# [*noverb*]
-#   Whether the privacy option of the same name should be enabled. Valid
-#   options: 'true' or 'false'. Default value: 'false'
-#
-# [*novrfy*]
-#   Whether the privacy option of the same name should be enabled. Valid
-#   options: 'true' or 'false'. Default value: 'false'
-#
-# [*public*]
-#   Whether the privacy option of the same name should be enabled. Valid
-#   options: 'true' or 'false'. Default value: 'false'
-#
-# [*restrictexpand*]
-#   Whether the privacy option of the same name should be enabled. Valid
-#   options: 'true' or 'false'. Default value: 'false'
-#
-# [*restrictmailq*]
-#   Whether the privacy option of the same name should be enabled. Valid
-#   options: 'true' or 'false'. Default value: 'false'
-#
-# [*restrictqrun*]
-#   Whether the privacy option of the same name should be enabled. Valid
-#   options: 'true' or 'false'. Default value: 'false'
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example Enable two specific privacy flags
 #   class { 'sendmail::mc::privacy_flags':
-#     authwarnings => true,
-#     noetrn       => true,
+#     goaway => true,
+#     noetrn => true,
 #   }
+#
+# @param authwarnings Whether the privacy option of the same name should be
+#   enabled.  Valid options: `true` or `false`.
+#
+# @param goaway Whether the privacy option of the same name should be
+#   enabled.  Valid options: `true` or `false`.
+#
+# @param needexpnhelo Whether the privacy option of the same name should be
+#   enabled.  Valid options: `true` or `false`.
+#
+# @param needmailhelo Whether the privacy option of the same name should be
+#   enabled.  Valid options: `true` or `false`.
+#
+# @param needvrfyhelo Whether the privacy option of the same name should be
+#   enabled.  Valid options: `true` or `false`.
+#
+# @param noactualrecipient Whether the privacy option of the same name should
+#   be enabled.  Valid options: `true` or `false`.
+#
+# @param nobodyreturn Whether the privacy option of the same name should be
+#   enabled.  Valid options: `true` or `false`.
+#
+# @param noetrn Whether the privacy option of the same name should be
+#   enabled.  Valid options: `true` or `false`.
+#
+# @param noexpn Whether the privacy option of the same name should be
+#   enabled.  Valid options: `true` or `false`.
+#
+# @param noreceipts Whether the privacy option of the same name should be
+#   enabled.  Valid options: `true` or `false`.
+#
+# @param noverb Whether the privacy option of the same name should be
+#   enabled.  Valid options: `true` or `false`.
+#
+# @param novrfy Whether the privacy option of the same name should be
+#   enabled.  Valid options: `true` or `false`.
+#
+# @param public Whether the privacy option of the same name should be
+#   enabled.  Valid options: `true` or `false`.
+#
+# @param restrictexpand Whether the privacy option of the same name should be
+#   enabled.  Valid options: `true` or `false`.
+#
+# @param restrictmailq Whether the privacy option of the same name should be
+#   enabled.  Valid options: `true` or `false`.
+#
+# @param restrictqrun Whether the privacy option of the same name should be
+#   enabled.  Valid options: `true` or `false`.
 #
 #
 class sendmail::mc::privacy_flags (

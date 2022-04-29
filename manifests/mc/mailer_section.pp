@@ -1,18 +1,6 @@
-# = Class: sendmail::mc::mailer_section
+# @summary Add a section header to improve readability of the config file
 #
-# Add a section header above the mailer macros
-#
-# == Parameters:
-#
-# None.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::mc::mailer_section': }
+# @api private
 #
 #
 class sendmail::mc::mailer_section {

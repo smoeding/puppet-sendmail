@@ -1,18 +1,6 @@
-# = Class: sendmail::makeall
+# @summary Rebuild all config files for the Sendmail MTA using a Makefile
 #
-# Rebuild all config files for the Sendmail MTA using a provided Makefile
-#
-# == Parameters:
-#
-# None.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::makeall': }
+# @api privat
 #
 #
 class sendmail::makeall {

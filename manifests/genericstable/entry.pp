@@ -1,34 +1,23 @@
-# = Define: sendmail::genericstable::entry
+# @summary Manage an entry in the Sendmail genericstable file.
 #
-# Manage an entry in the Sendmail genericstable db file.
-#
-# == Parameters:
-#
-# [*ensure*]
-#   Used to create or remove the genericstable db entry.
-#   Valid options: 'present', 'absent'. Default: 'present'
-#
-# [*key*]
-#   The key used by Sendmail for the lookup. This is normally a username or
-#   a user and domain name. Default is the resource title.
-#
-# [*value*]
-#   The value for the given key. For the genericstable map this is typically
-#   something like 'user@example.org'.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example Override the recipient `fred@example.com` with another address
 #   sendmail::genericstable::entry { 'fred@example.com':
 #     value => 'fred@example.org',
 #   }
 #
+# @example Forward local mail to `barney` to a remote address
 #   sendmail::genericstable::entry { 'barney':
 #     value => 'barney@example.org',
 #   }
+#
+# @param ensure Used to create or remove the genericstable db entry.  Valid
+#   options: `present`, `absent`.
+#
+# @param key The key used by Sendmail for the lookup.  This is normally
+#   a username or a user and domain name.
+#
+# @param value The value for the given key.  For the genericstable map this
+#   is typically something like `user@example.org`.
 #
 #
 define sendmail::genericstable::entry (

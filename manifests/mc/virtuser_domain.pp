@@ -1,21 +1,11 @@
-# = Define: sendmail::mc::virtuser_domain
+# @summary Add the `VIRTUSER_DOMAIN` macro to the sendmail.mc file.
 #
-# Add the VIRTUSER_DOMAIN macro to the sendmail.mc file.
-#
-# == Parameters:
-#
-# [*domainname*]
-#   The name of the domain to use with 'FEATURE(virtusertable)'. This can be
-#   used multiple times to set more than one domain name.  Default value is
-#   the resource title.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example
 #   sendmail::mc::virtuser_domain { 'example.net': }
+#
+# @param domainname The name of the domain to use with
+#   `FEATURE(virtusertable)`.  This can be used multiple times to set more
+#   than one domain name.
 #
 #
 define sendmail::mc::virtuser_domain (

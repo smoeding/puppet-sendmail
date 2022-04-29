@@ -1,23 +1,13 @@
-# = Class: sendmail::relay_domains
+# @summary Manage entries in the Sendmail relay-domains file.
 #
-# Manage entries in the Sendmail relay-domains file.
+# Do not declare this class directly. Use the `relay_domains` parameter of
+# the `sendmail` class instead.
 #
-# == Parameters:
+# @api private
 #
-# [*relay_domains*]
-#   An array of domain names that will be written into the relay domains
-#   file. Leading or trailing whitespace is ignored. Empty entries are also
-#   ignored. Default value: []
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::relay_domains':
-#     relay_domains => [ 'example.com', 'example.net', ],
-#   }
+# @param relay_domains An array of domain names that will be written into the
+#   relay domains file.  Leading or trailing whitespace is ignored.  Empty
+#   entries are also ignored.
 #
 #
 class sendmail::relay_domains (

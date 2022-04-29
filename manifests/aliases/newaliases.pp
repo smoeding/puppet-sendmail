@@ -1,18 +1,9 @@
-# = Class: sendmail::aliases::newaliases
+# @summary Rebuild the Sendmail aliases file.
 #
-# Rebuild the Sendmail aliases file.
+# This class is notified automatically when an alias is managed using the
+# `sendmail::aliases::entry` defined type.
 #
-# == Parameters:
-#
-# None.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::aliases::newaliases': }
+# @api private
 #
 #
 class sendmail::aliases::newaliases {

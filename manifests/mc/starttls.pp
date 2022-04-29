@@ -1,74 +1,11 @@
-# = Class sendmail::mc::starttls
+# @summary Manage `STARTTLS` parameters in the 'sendmail.mc' file.
 #
-# Manage STARTTLS parameters in the 'sendmail.mc' file.
+# This class is included by the main `sendmail` class and should not be used
+# directly.
 #
-# == Parameters:
+# @api private
 #
-# [*ca_cert_file*]
-#   The filename of the SSL CA certificate.
-#
-# [*ca_cert_path*]
-#   The directory where SSL CA certificates are kept.
-#
-# [*server_cert_file*]
-#   The filename of the SSL server certificate for inbound connections.
-#
-# [*server_key_file*]
-#   The filename of the SSL server key for inbound connections.
-#
-# [*client_cert_file*]
-#   The filename of the SSL client certificate for outbound connections.
-#
-# [*client_key_file*]
-#   The filename of the SSL client key for outbound connections.
-#
-# [*server_cert_file2*]
-#   The filename of the secondary SSL server certificate for inbound
-#   connections. The parameter is only valid on Sendmail 8.15.1 or later and
-#   when 'server_cert_file' is set.
-#
-# [*server_key_file2*]
-#   The filename of the secondary SSL server key for inbound connections. The
-#   parameter is only valid on Sendmail 8.15.1 or later and when
-#   'server_key_file' is set.
-#
-# [*client_cert_file2*]
-#   The filename of the secondary SSL client certificate for outbound
-#   connections. The parameter is only valid on Sendmail 8.15.1 or later and
-#   when 'client_cert_file' is set.
-#
-# [*client_key_file2*]
-#   The filename of the secondary SSL client key for outbound
-#   connections. The parameter is only valid on Sendmail 8.15.1 or later and
-#   when 'client_key_file' is set.
-#
-# [*crl_file*]
-#   The filename with a list of revoked certificates.
-#
-# [*dh_params*]
-#   The DH parameters used for encryption. This can be one of the numbers
-#   '512', '1024', '2048' or a filename with generated parameters.
-#
-# [*tls_srv_options*]
-#   The parameter adjusts the server TLS settings. This can currently be
-#   either the letter 'V' or the empty string. Setting this parameter to 'V'
-#   disables the request for a client certificate.
-#
-# [*cipher_list*]
-#   Set the available ciphers for encrypted connections.
-#
-# [*server_ssl_options*]
-#   Configure the SSL connection flags for inbound connections.
-#
-# [*client_ssl_options*]
-#   Configure the SSL connection flags for outbound connections.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example
 #   class { sendmail::mc::starttls':
 #     ca_cert_file     => '/etc/mail/tls/my-ca-cert.pem',
 #     server_cert_file => '/etc/mail/tls/server.pem',
@@ -77,6 +14,56 @@
 #     client_key_file  => '/etc/mail/tls/server.key',
 #     cipher_list      => 'HIGH:!MD5:!eNULL'
 #   }
+#
+# @param ca_cert_file The filename of the SSL CA certificate.
+#
+# @param ca_cert_path The directory where SSL CA certificates are kept.
+#
+# @param server_cert_file The filename of the SSL server certificate for
+#   inbound connections.
+#
+# @param server_key_file The filename of the SSL server key for inbound
+#   connections.
+#
+# @param client_cert_file The filename of the SSL client certificate for
+#   outbound connections.
+#
+# @param client_key_file The filename of the SSL client key for outbound
+#   connections.
+#
+# @param server_cert_file2 The filename of the secondary SSL server
+#   certificate for inbound connections.  The parameter is only valid on
+#   Sendmail 8.15.1 or later and when `server_cert_file` is set.
+#
+# @param server_key_file2 The filename of the secondary SSL server key for
+#   inbound connections.  The parameter is only valid on Sendmail 8.15.1 or
+#   later and when `server_key_file` is set.
+#
+# @param client_cert_file2 The filename of the secondary SSL client
+#   certificate for outbound connections.  The parameter is only valid on
+#   Sendmail 8.15.1 or later and when `client_cert_file` is set.
+#
+# @param client_key_file2 The filename of the secondary SSL client key for
+#   outbound connections.  The parameter is only valid on Sendmail 8.15.1 or
+#   later and when `client_key_file` is set.
+#
+# @param crl_file The filename with a list of revoked certificates.
+#
+# @param dh_params The DH parameters used for encryption.  This can be one of
+#   the numbers `512`, `1024`, `2048` or a filename with generated
+#   parameters.
+#
+# @param tls_srv_options The parameter adjusts the server TLS settings.  This
+#   can currently be either the letter `V` or the empty string.  Setting this
+#   parameter to `V` disables the request for a client certificate.
+#
+# @param cipher_list Set the available ciphers for encrypted connections.
+#
+# @param server_ssl_options Configure the SSL connection flags for inbound
+#   connections.
+#
+# @param client_ssl_options Configure the SSL connection flags for outbound
+#   connections.
 #
 #
 class sendmail::mc::starttls (

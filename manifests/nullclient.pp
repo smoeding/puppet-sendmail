@@ -1,101 +1,91 @@
-# = Class: sendmail::nullclient
+# @summary Create a simple Sendmail nullclient configuration.
 #
-# Create a simple Sendmail nullclient configuration. No mail can be received
-# from the outside. All local mail is forwarded to a given mail hub.
+# No mail can be received from the outside since the Sendmail daemon only
+# listens on the localhost address `127.0.0.1`. All local mail is forwarded
+# to a given mail hub.
 #
-# == Parameters:
+# This is a convenience class to make the configuration simple. Internally it
+# declares the `sendmail` class using appropriate parameters. Normally no
+# other configuration should be necessary.
 #
-# [*mail_hub*]
-#   The hostname or IP address of the mail hub where all mail is forwarded
-#   to. It can be enclosed in brackets to prevent MX lookups.
-#
-# [*max_message_size*]
-#   Define the maximum message size that will be accepted. This can be a pure
-#   numerical value given in bytes (e.g. 33554432) or a number with a
-#   prefixed byte unit (e.g. 32MB). The conversion is done using the 1024
-#   convention (see the 'to_bytes' function in the 'stdlib' module), so valid
-#   prefixes are either 'k' for 1024 bytes or 'M' for 1048576 bytes. Default
-#   value: undef.
-#
-# [*log_level*]
-#   The loglevel for the sendmail process.
-#   Valid options: a numeric value. Default value: undef.
-#
-# [*enable_ipv4_msa*]
-#   Enable the local message submission agent on the IPv4 loopback address
-#   (127.0.0.1). Valid options: 'true' or 'false'. Default value: 'true'.
-#
-# [*enable_ipv6_msa*]
-#   Enable the local message submission agent on the IPv6 loopback address
-#   (::1). Valid options: 'true' or 'false'. Default value: 'true'.
-#
-# [*port*]
-#   The port used for the local message submission agent. Default value:
-#   '587'.
-#
-# [*port_option_modify*]
-#   Port option modifiers for the local message submission agent. This
-#   parameter is used to set the 'daemon_port_options'. Default value: undef
-#
-# [*enable_msp_trusted_users*]
-#   Whether the trusted users file feature is enabled for the message
-#   submission program. This may be necessary if you want to allow certain
-#   users to change the sender address using 'sendmail -f'. Valid options:
-#   'true' or 'false'. Default value: 'false'.
-#
-# [*trusted_users*]
-#   An array of user names that will be written into the trusted users file.
-#   Leading or trailing whitespace is ignored. Empty entries are also
-#   ignored. Default value: []
-#
-# [*ca_cert_file*]
-#   The filename of the SSL CA certificate.
-#
-# [*ca_cert_path*]
-#   The directory where SSL CA certificates are kept.
-#
-# [*server_cert_file*]
-#   The filename of the SSL server certificate for inbound connections.
-#
-# [*server_key_file*]
-#   The filename of the SSL server key for inbound connections.
-#
-# [*client_cert_file*]
-#   The filename of the SSL client certificate for outbound connections.
-#
-# [*client_key_file*]
-#   The filename of the SSL client key for outbound connections.
-#
-# [*crl_file*]
-#   The filename with a list of revoked certificates.
-#
-# [*dh_params*]
-#   The DH parameters used for encryption. This can be one of the numbers
-#   '512', '1024', '2048' or a filename with generated parameters.
-#
-# [*tls_srv_options*]
-#   The parameter adjusts the server TLS settings. This can currently be
-#   either the letter 'V' or the empty string. Setting this parameter to 'V'
-#   disables the request for a client certificate.
-#
-# [*cipher_list*]
-#   Set the available ciphers for encrypted connections.
-#
-# [*server_ssl_options*]
-#   Configure the SSL connection flags for inbound connections.
-#
-# [*client_ssl_options*]
-#   Configure the SSL connection flags for outbound connections.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example Create a nullclient config forwarding to a given hub
 #   class { 'sendmail::nullclient':
 #     mail_hub => '[192.168.1.1]',
 #   }
+#
+# @param mail_hub The hostname or IP address of the mail hub where all mail
+#   is forwarded to.  It can be enclosed in brackets to prevent MX lookups.
+#
+# @param port The port used for the local message submission agent.
+#
+# @param port_option_modify Port option modifiers for the local message
+#   submission agent.  The parameter is used to set the
+#   `daemon_port_options`.  A useful value for the nullclient configuration
+#   might be `S` to prevent offering STARTTLS on the MSA port.
+#
+# @param enable_ipv4_msa Enable the local message submission agent on the
+#   IPv4 loopback address (`127.0.0.1`).  Valid options: `true` or `false`.
+#
+# @param enable_ipv6_msa Enable the local message submission agent on the
+#   IPv6 loopback address (`::1`).  Valid options: `true` or `false`.
+#
+# @param enable_msp_trusted_users Whether the trusted users file feature is
+#   enabled for the message submission program.  This may be necessary if you
+#   want to allow certain users to change the sender address using `sendmail
+#   -f`.  Valid options: `true` or `false`.
+#
+# @param trusted_users An array of user names that will be written into the
+#   trusted users file.  Leading or trailing whitespace is ignored.  Empty
+#   entries are also ignored.
+#
+# @param domain_name Sets the official canonical name of the local machine.
+#   Normally this parameter is not required as Sendmail uses the fully
+#   qualified domain name by default.  Setting this parameter will override
+#   the value of the `$j` macro in the sendmail.cf file.
+#
+# @param max_message_size Define the maximum message size that will be
+#   accepted.  This can be a pure numerical value given in bytes
+#   (e.g. 33554432) or a number with a prefixed byte unit (e.g. 32MB).  The
+#   conversion is done using the 1024 convention (see the `to_bytes` function
+#   in the `stdlib` module), so valid prefixes are either `k` for 1024 bytes
+#   or `M` for 1048576 bytes.
+#
+# @param log_level The loglevel for the sendmail process.  Valid options:
+#   a numeric value.
+#
+# @param ca_cert_file The filename of the SSL CA certificate.
+#
+# @param ca_cert_path The directory where SSL CA certificates are kept.
+#
+# @param server_cert_file The filename of the SSL server certificate for
+#   inbound connections.
+#
+# @param server_key_file The filename of the SSL server key for inbound
+#   connections.
+#
+# @param client_cert_file The filename of the SSL client certificate for
+#   outbound connections.
+#
+# @param client_key_file The filename of the SSL client key for outbound
+#   connections.
+#
+# @param crl_file The filename with a list of revoked certificates.
+#
+# @param dh_params The DH parameters used for encryption.  This can be one of
+#   the numbers `512`, `1024`, `2048` or a filename with generated
+#   parameters.
+#
+# @param tls_srv_options The parameter adjusts the server TLS settings.  This
+#   can currently be either the letter `V` or the empty string.  Setting this
+#   parameter to `V` disables the request for a client certificate.
+#
+# @param cipher_list Set the available ciphers for encrypted connections.
+#
+# @param server_ssl_options Configure the SSL connection flags for inbound
+#   connections.
+#
+# @param client_ssl_options Configure the SSL connection flags for outbound
+#  connections.
 #
 #
 class sendmail::nullclient (

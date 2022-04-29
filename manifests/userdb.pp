@@ -1,43 +1,38 @@
-# = Class: sendmail::userdb
+# @summary Manage the Sendmail userdb db file.
 #
-# Manage the Sendmail userdb db file.
+# The class manages the file either as a single file resource or each entry
+# in the file separately.  The file is managed as a whole using the `source`
+# or `content` parameters.  The `entries` parameter is used to manage each
+# entry separately. Preferable this is done with hiera using automatic
+# parameter lookup.
 #
-# == Parameters:
+# @example Manage the userdb using hiera
+#   class { 'sendmail::userdb': }
 #
-# [*content*]
-#   The desired contents of the userdb file. This allows managing the userdb
-#   file as a whole. Changes to the file automatically triggers a rebuild of
-#   the userdb database file. This attribute is mutually exclusive with
-#   'source'.
+# @example Manage the userdb using the provided file
+#   class { 'sendmail::userdb':
+#     source => 'puppet:///modules/sendmail/userdb',
+#   }
 #
-# [*source*]
-#   A source file for the userdb file. This allows managing the userdb file
-#   as a whole. Changes to the file automatically triggers a rebuild of the
-#   userdb database file. This attribute is mutually exclusive with
-#   'content'.
+# @param content The desired contents of the userdb file.  This allows
+#   managing the userdb file as a whole.  Changes to the file automatically
+#   triggers a rebuild of the userdb database file.  This attribute is
+#   mutually exclusive with `source` and `entries`.
 #
-# [*entries*]
-#   A hash that will be used to create sendmail::userdb::entry resources.
-#   This class can be used to create userdb entries defined in hiera. The
-#   hiera hash should look like this:
+# @param source A source file for the userdb file.  This allows managing the
+#   userdb file as a whole.  Changes to the file automatically triggers
+#   a rebuild of the userdb database file.  This attribute is mutually
+#   exclusive with `content` and `entries`.
+#
+# @param entries A hash that will be used to create `sendmail::userdb::entry`
+#   resources.  This class can be used to create userdb entries defined in
+#   hiera.  The hiera hash should look like this:
 #
 #   sendmail::userdb::entries:
 #     'fred:maildrop':
 #       value: 'fred@example.org'
 #     'barney:maildrop':
 #       value: 'barney@example.org'
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::userdb': }
-#
-#   class { 'sendmail::userdb':
-#     source => 'puppet:///modules/sendmail/userdb',
-#   }
 #
 #
 class sendmail::userdb (

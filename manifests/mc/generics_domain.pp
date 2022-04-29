@@ -1,20 +1,10 @@
-# = Define: sendmail::mc::generics_domain
+# @summary Add the `GENERICS_DOMAIN` macro to the sendmail.mc file.
 #
-# Add the GENERICS_DOMAIN macro to the sendmail.mc file.
-#
-# == Parameters:
-#
-# [*domain_name*]
-#   The name of the domain for which LDAP routing is enabled.
-#   Default value is the resource title.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example Enable genericstable processing for the domain `example.net`
 #   sendmail::mc::generics_domain { 'example.net': }
+#
+# @param domain_name The name of the domain for which the genericstable is
+#   enabled.
 #
 #
 define sendmail::mc::generics_domain (

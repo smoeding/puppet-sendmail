@@ -1,25 +1,33 @@
-# = Class: sendmail::mailertable
+# @summary Manage the Sendmail mailertable db file.
 #
-# Manage the Sendmail mailertable db file.
+# The class manages the file either as a single file resource or each entry
+# in the file separately.  The file is managed as a whole using the `source`
+# or `content` parameters.  The `entries` parameter is used to manage each
+# entry separately. Preferable this is done with hiera using automatic
+# parameter lookup.
 #
-# == Parameters:
+# @example Manage the mailertable using hiera
+#   class { 'sendmail::mailertable': }
 #
-# [*content*]
-#   The desired contents of the mailertable file. This allows managing the
-#   mailertable file as a whole. Changes to the file automatically triggers a
-#   rebuild of the mailertable database file. This attribute is mutually
-#   exclusive with 'source'.
+# @example Manage the mailertable using the provided file
+#   class { 'sendmail::mailertable':
+#     source => 'puppet:///modules/sendmail/mailertable',
+#   }
 #
-# [*source*]
-#   A source file for the mailertable file. This allows managing the
-#   mailertable file as a whole. Changes to the file automatically triggers a
-#   rebuild of the mailertable database file. This attribute is mutually
-#   exclusive with 'content'.
+# @param content The desired contents of the mailertable file.  This allows
+#   managing the mailertable file as a whole.  Changes to the file
+#   automatically triggers a rebuild of the mailertable database file.  This
+#   attribute is mutually exclusive with `source` and `entries`.
 #
-# [*entries*]
-#   A hash that will be used to create sendmail::mailertable::entry
-#   resources. This class can be used to create mailertable entries defined
-#   in hiera. The hiera hash should look like this:
+# @param source A source file for the mailertable file.  This allows managing
+#   the mailertable file as a whole.  Changes to the file automatically
+#   triggers a rebuild of the mailertable database file.  This attribute is
+#   mutually exclusive with `content` and `entries`.
+#
+# @param entries A hash that will be used to create
+#   `sendmail::mailertable::entry` resources.  This class can be used to
+#   create mailertable entries defined in hiera.  The hiera hash should look
+#   like this:
 #
 #   sendmail::mailertable::entries:
 #     '.example.com':
@@ -28,18 +36,6 @@
 #       value: 'relay:relay.example.com'
 #     '.example.net':
 #       value: 'error:5.7.0:550 mail is not accepted'
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::mailertable': }
-#
-#   class { 'sendmail::mailertable':
-#     source => 'puppet:///modules/sendmail/mailertable',
-#   }
 #
 #
 class sendmail::mailertable (

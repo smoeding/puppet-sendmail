@@ -1,26 +1,15 @@
-# = Define: local_config
+# @summary Add a `LOCAL_CONFIG` section into the sendmail.mc file.
 #
-# Add a LOCAL_CONFIG section into the sendmail.mc file.
-#
-# == Parameters:
-#
-# [*content*]
-#   The desired contents of the local config section. This attribute is
-#   mutually exclusive with 'source'.
-#
-# [*source*]
-#   A source file included as the local config section. This attribute is
-#   mutually exclusive with 'content'.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example Add the X-AuthUser header to each mail
 #   sendmail::mc::local_config { 'X-AuthUser':
 #     content => 'HX-AuthUser: ${auth_authen}',
 #   }
+#
+# @param content The desired contents of the local config section.  This
+#   attribute is mutually exclusive with `source`.
+#
+# @param source A source file included as the local config section.  This
+#   attribute is mutually exclusive with `content`.
 #
 #
 define sendmail::mc::local_config (

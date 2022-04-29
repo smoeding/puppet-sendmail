@@ -1,18 +1,6 @@
-# = Class: sendmail::mc::local_config_section
+# @summary Add a section header to improve readability of the config file
 #
-# Add a section header for the LOCAL_CONFIG macro
-#
-# == Parameters:
-#
-# None.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::mc::local_config_section': }
+# @api private
 #
 #
 class sendmail::mc::local_config_section {

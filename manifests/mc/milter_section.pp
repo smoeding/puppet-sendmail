@@ -1,18 +1,6 @@
-# = Class: sendmail::mc::milter_section
+# @summary Add a section header to improve readability of the config file
 #
-# Add a section header above the sendmail milters
-#
-# == Parameters:
-#
-# None.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::mc::milter_section': }
+# @api private
 #
 #
 class sendmail::mc::milter_section {

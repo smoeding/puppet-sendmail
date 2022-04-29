@@ -1,22 +1,11 @@
-# = Class: sendmail::mailertable::file
+# @summary Manage the Sendmail mailertable db file.
 #
-# Manage the Sendmail mailertable db file.
-#
-# == Parameters:
-#
-# [*content*]
-#   The content of the file resource.
-#
-# [*source*]
-#   The source of the file resource.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example
 #   class { 'sendmail::mailertable::file': }
+#
+# @param content The content of the file resource.
+#
+# @param source The source of the file resource.
 #
 #
 class sendmail::mailertable::file (

@@ -1,91 +1,70 @@
-# = Class: sendmail::mc
+# @summary Manage the sendmail.mc file
 #
-# Manage the sendmail.mc file
+# This class uses the `concat` module to create configuration fragments to
+# assemble the final configuration file.
 #
-# == Parameters:
+# On FreeBSD the daemon configuration file is named after the hostname of the
+# server. In this case the class also manages a symbolic link in `/etc/mail`
+# to reference the file.
 #
-# [*ostype*]
-#   The value for the OSTYPE macro in the sendmail.mc file.
-#   Default value: operating system specific.
+# @api private
 #
-# [*sendmail_mc_domain*]
-#   The name of the m4 file that holds common data for a domain. This is an
-#   optional configuration item. It may be used by large sites to gather
-#   shared data into one file. Some Linux distributions (e.g. Debian) use
-#   this setting to provide defaults for certain features.
-#   Default value: operating system specific.
+# @param ostype The value for the `OSTYPE` macro in the sendmail.mc file.
+#   The default is operating system specific.
 #
-# [*cf_version*]
-#   The configuration version string for Sendmail. This string will be
-#   appended to the Sendmail version in the HELO message. If unset, no
-#   configuration version will be used.
-#   Default value: undef.
+# @param sendmail_mc_domain The name of the m4 file that holds common data
+#   for a domain.  This is an optional configuration item.  It may be used by
+#   large sites to gather shared data into one file.  Some Linux
+#   distributions (e.g. Debian) use this setting to provide defaults for
+#   certain features.  The default is operating system specific.
 #
-# [*smart_host*]
-#   Servers that are behind a firewall may not be able to deliver mail
-#   directly to the outside world. In this case the host may need to forward
-#   the mail to the gateway machine defined by this parameter. All nonlocal
-#   mail is forwarded to this gateway.
-#   Default value: undef.
+# @param cf_version The configuration version string for Sendmail.  This
+#   string will be appended to the Sendmail version in the HELO message.  If
+#   unset, no configuration version will be used.
 #
-# [*domain_name*]
-#   Sets the official canonical name of the local machine. Normally this
-#   parameter is not required as Sendmail uses the fully qualified domain
-#   name by default. Setting this parameter will override the value of the
-#   '$j' macro in the sendmail.cf file.
-#   Default value: undef.
+# @param smart_host Servers that are behind a firewall may not be able to
+#   deliver mail directly to the outside world.  In this case the host may
+#   need to forward the mail to the gateway machine defined by this
+#   parameter.  All nonlocal mail is forwarded to this gateway.
 #
-# [*max_message_size*]
-#   Define the maximum message size that will be accepted. This can be a pure
-#   numerical value given in bytes (e.g. 33554432) or a number with a
-#   prefixed byte unit (e.g. 32MB). The conversion is done using the 1024
-#   convention (see the 'to_bytes' function in the 'stdlib' module), so valid
-#   prefixes are either 'k' for 1024 bytes or 'M' for 1048576 bytes. Default
-#   value: undef.
+# @param domain_name Sets the official canonical name of the local machine.
+#   Normally this parameter is not required as Sendmail uses the fully
+#   qualified domain name by default.  Setting this parameter will override
+#   the value of the `$j` macro in the sendmail.cf file.
 #
-# [*log_level*]
-#   The loglevel for the sendmail process.
-#   Valid options: a numeric value. Default value: undef.
+# @param max_message_size Define the maximum message size that will be
+#   accepted.  This can be a pure numerical value given in bytes
+#   (e.g. 33554432) or a number with a prefixed byte unit (e.g. 32MB).  The
+#   conversion is done using the 1024 convention (see the `to_bytes` function
+#   in the `stdlib` module), so valid prefixes are either `k` for 1024 bytes
+#   or `M` for 1048576 bytes.
 #
-# [*dont_probe_interfaces*]
-#   Sendmail normally probes all network interfaces to get the hostnames that
-#   the server may have. These hostnames are then considered local. This
-#   option can be used to prevent the reverse lookup of the network addresses.
-#   If this option is set to 'localhost' then all network interfaces except
-#   for the loopback interface is probed.
-#   Valid options: the strings 'true', 'false' or 'localhost'.
-#   Default value: undef.
+# @param log_level The loglevel for the sendmail process.  Valid options:
+#   a numeric value.
 #
-# [*enable_ipv4_daemon*]
-#   Should the host accept mail on all IPv4 network adresses.
-#   Valid options: 'true' or 'false'. Default value: 'true'.
+# @param dont_probe_interfaces Sendmail normally probes all network
+#   interfaces to get the hostnames that the server may have.  These
+#   hostnames are then considered local.  This option can be used to prevent
+#   the reverse lookup of the network addresses.  If this option is set to
+#   `localhost` then all network interfaces except for the loopback interface
+#   is probed.  Valid options: the strings `true`, `false` or `localhost`.
 #
-# [*enable_ipv6_daemon*]
-#   Should the host accept mail on all IPv6 network adresses.
-#   Valid options: 'true' or 'false'. Default value: 'true'.
+# @param enable_ipv4_daemon Should the host accept mail on all IPv4 network
+#   adresses.  Valid options: `true` or `false`.
 #
-# [*mailers*]
-#   An array of mailers to add to the configuration.
-#   Default value: [ 'smtp', 'local' ]
+# @param enable_ipv6_daemon Should the host accept mail on all IPv6 network
+#   adresses.  Valid options: `true` or `false`.
 #
-# [*trust_auth_mech*]
-#   The value of the TRUST_AUTH_MECH macro to set. If this is a string it
-#   is used as-is. For an array the value will be concatenated into a
-#   string. Default value: undef
+# @param mailers An array of mailers to add to the configuration.  The
+#   default is `[ 'smtp', 'local' ]`.
 #
-# [*version_id*]
-#   The version id string included in the sendmail.mc file. This has no
-#   practical meaning other than having a used defined identifier in the
-#   file.
-#   Default value: undef.
+# @param trust_auth_mech The value of the TRUST_AUTH_MECH macro to set.  If
+#   this is a string it is used as-is.  For an array the value will be
+#   concatenated into a string.
 #
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::mc': }
+# @param version_id The version id string included in the sendmail.mc file.
+#   This has no practical meaning other than having a used defined identifier
+#   in the file.
 #
 #
 class sendmail::mc (

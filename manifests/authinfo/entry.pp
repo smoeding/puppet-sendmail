@@ -1,53 +1,36 @@
-# = Define: sendmail::authinfo::entry
+# @summary Manage an entry in the Sendmail authinfo db file.
 #
-# Manage an entry in the Sendmail authinfo db file.
-#
-# == Parameters:
-#
-# [*ensure*]
-#   Used to create or remove the authinfo db entry. Default value: 'present'
-#
-# [*mechanisms*]
-#   The list of preferred authentication mechanisms. Default value: '[]'
-#
-# [*address*]
-#   The key used by Sendmail for the database lookup. This can be an IPv4
-#   address (e.g. '192.168.67.89'), an IPv6 address (e.g.
-#   'IPv6:2001:DB18::23f4'), a hostname (e.g. 'www.example.org') or a domain
-#   name (e.g. 'example.com'). The database key requires to start with the
-#   literal expression 'AuthInfo:'. This prefix will be added automatically
-#   if necessary. Default value is the resource title.
-#
-# [*password*]
-#   The password used for remote authentication in clear text.
-#   Exactly one of 'password' or 'password_base64' must be set.
-#
-# [*password_base64*]
-#   The password used for remote authentication in Base64 encoding.
-#   Exactly one of 'password' or 'password_base64' must be set.
-#
-# [*authorization_id*]
-#   The user (authorization) identifier. One of the parameters
-#   'authorization_id' or 'authentication_id' or both must be set. Default
-#   value: 'undef'
-#
-# [*authentication_id*]
-#   The authentication identifier. One of the parameters 'authorization_id'
-#   or 'authentication_id' or both must be set. Default value: 'undef'
-#
-# [*realm*]
-#   The administrative realm to use. Default value: 'undef'
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example Add an authinfo entry
 #   sendmail::authinfo::entry { 'example.com':
 #     password         => 'secret',
 #     authorization_id => 'auth',
 #   }
+#
+# @param ensure Used to create or remove the authinfo db entry.
+#
+# @param mechanisms The list of preferred authentication mechanisms.
+#
+# @param address The key used by Sendmail for the database lookup.  This can
+#   be an IPv4 address (e.g. `192.168.67.89`), an IPv6 address (e.g.
+#   `IPv6:2001:DB18::23f4`), a hostname (e.g. `www.example.org`) or a domain
+#   name (e.g. `example.com`).  The database key is required to start with
+#   the literal expression `AuthInfo:`.  This prefix will be added
+#   automatically if necessary.
+#
+# @param password The password used for remote authentication in clear text.
+#   Exactly one of `password` or `password_base64` must be set.
+#
+# @param password_base64 The password used for remote authentication in
+#   Base64 encoding.  Exactly one of `password` or `password_base64` must be
+#   set.
+#
+# @param authorization_id The user (authorization) identifier.  One of the
+#   parameters `authorization_id` or `authentication_id` or both must be set.
+#
+# @param authentication_id The authentication identifier.  One of the
+#   parameters `authorization_id` or `authentication_id` or both must be set.
+#
+# @param realm The administrative realm to use.
 #
 #
 define sendmail::authinfo::entry (

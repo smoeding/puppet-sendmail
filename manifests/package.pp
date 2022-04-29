@@ -1,31 +1,17 @@
-# = Class: sendmail::package
+# @summary Manage the Sendmail MTA package.
 #
-# Manage the Sendmail MTA package.
+# @api private
 #
-# == Parameters:
+# @param auxiliary_packages Additional packages that will be installed by the
+#   Sendmail module.  Valid options: array of strings.  The default varies by
+#   operating system.
 #
-# [*auxiliary_packages*]
-#   Additional packages that will be installed by the Sendmail module.
-#   Valid options: array of strings.
-#   Default value: varies by operating system.
+# @param package_ensure Configure whether the Sendmail package should be
+#   installed, and what version.  Valid options: `present`, `latest`, or
+#   a specific version number.
 #
-# [*package_ensure*]
-#   Configure whether the Sendmail package should be installed, and what
-#   version.
-#   Valid options: 'present', 'latest', or a specific version number.
-#   Default value: 'present'
-#
-# [*package_manage*]
-#   Configure whether Puppet should manage the Sendmail package(s).
-#   Valid options: 'true' or 'false'. Default value: 'true'.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::package': }
+# @param package_manage Configure whether Puppet should manage the Sendmail
+#   package(s).  Valid options: `true` or `false`.  The default is `true`.
 #
 #
 class sendmail::package (

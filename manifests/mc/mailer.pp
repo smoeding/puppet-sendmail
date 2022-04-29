@@ -1,22 +1,14 @@
-# = Define: sendmail::mc::mailer
+# @summary Add a `MAILER` macro to the sendmail.mc file.
 #
-# Add a MAILER macro to the sendmail.mc file.
-#
-# == Parameters:
-#
-# [*mailer*]
-#   The name of the mailer to add to the configuration. Default is the
-#   resource title.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example Add the local mailer to the configuration
 #   sendmail::mc::mailer { 'local': }
 #
+# @example Add the SMTP mailer to the configuration
 #   sendmail::mc::mailer { 'smtp': }
+#
+# @param mailer The name of the mailer to add to the configuration.  The
+#   position of the mailer in the configuration file is determined according
+#   to the Bat Book.
 #
 #
 define sendmail::mc::mailer (

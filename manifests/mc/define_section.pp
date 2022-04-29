@@ -1,18 +1,6 @@
-# = Class: sendmail::mc::define_section
+# @summary Add a section header to improve readability of the config file
 #
-# Add a section header above the define statements
-#
-# == Parameters:
-#
-# None.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::mc::define_section': }
+# @api private
 #
 #
 class sendmail::mc::define_section {

@@ -1,22 +1,11 @@
-# = Class: sendmail::aliases::file
+# @summary Create the Sendmail aliases file.
 #
-# Create the Sendmail aliases file.
-#
-# == Parameters:
-#
-# [*content*]
-#   The content of the file resource.
-#
-# [*source*]
-#   The source of the file resource.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example
 #   class { 'sendmail::aliases::file': }
+#
+# @param content The content of the file resource.
+#
+# @param source The source of the file resource.
 #
 #
 class sendmail::aliases::file (

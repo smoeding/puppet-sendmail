@@ -1,23 +1,13 @@
-# = Class: sendmail::trusted_users
+# @summary Manage entries in the Sendmail trusted-users file.
 #
-# Manage entries in the Sendmail trusted-users file.
+# Do not declare this class directly. Use the `trusted_users` parameter of
+# the `sendmail` class instead.
 #
-# == Parameters:
+# @api private
 #
-# [*trusted_users*]
-#   An array of user names that will be written into the trusted users file.
-#   Leading or trailing whitespace is ignored. Empty entries are also
-#   ignored. Default value: []
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::trusted_users':
-#     trusted_users => [ 'root', 'fred', ],
-#   }
+# @param trusted_users An array of user names that will be written into the
+#   trusted users file.  Leading or trailing whitespace is ignored.  Empty
+#   entries are also ignored.
 #
 #
 class sendmail::trusted_users (

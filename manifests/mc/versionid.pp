@@ -1,19 +1,9 @@
-# = Define: sendmail::mc::versionid
+# @summary Add the `VERSIONID` macro to the sendmail.mc file.
 #
-# Add the VERSIONID macro to the sendmail.mc file.
-#
-# == Parameters:
-#
-# [*versionid*]
-#   The identifier (a string) to set in the sendmail.mc file.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example Set the `VERSIONID` to the value `generic`
 #   sendmail::mc::versionid { 'generic': }
+#
+# @param versionid The identifier (a string) to set in the sendmail.mc file.
 #
 #
 define sendmail::mc::versionid (

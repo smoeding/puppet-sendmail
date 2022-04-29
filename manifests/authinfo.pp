@@ -1,43 +1,31 @@
-# = Class: sendmail::authinfo
+# @summary Manage the Sendmail authinfo db file.
 #
-# Manage the Sendmail authinfo db file.
+# @example
+#   class { 'sendmail::authinfo': }
 #
-# == Parameters:
+#   class { 'sendmail::authinfo':
+#     source => 'puppet:///modules/sendmail/authinfo',
+#   }
 #
-# [*content*]
-#   The desired contents of the authinfo file. This allows managing the
-#   authinfo file as a whole. Changes to the file automatically triggers a
-#   rebuild of the authinfo database file. This attribute is mutually
-#   exclusive with 'source'.
+# @param content The desired contents of the authinfo file.  This allows
+#   managing the authinfo file as a whole.  Changes to the file automatically
+#   triggers a rebuild of the authinfo database file.  This attribute is
+#   mutually exclusive with `source`.
 #
-# [*source*]
-#   A source file for the authinfo file. This allows managing the authinfo
-#   file as a whole. Changes to the file automatically triggers a rebuild of
-#   the authinfo database file. This attribute is mutually exclusive with
-#   'content'.
+# @param source A source file for the authinfo file.  This allows managing
+#   the authinfo file as a whole.  Changes to the file automatically triggers
+#   a rebuild of the authinfo database file.  This attribute is mutually
+#   exclusive with `content`.
 #
-# [*entries*]
-#   A hash that will be used to create sendmail::authinfo::entry resources.
-#   This class can be used to create authinfo entries defined in hiera. The
-#   hiera hash should look like this:
+# @param entries A hash that will be used to create sendmail::authinfo::entry
+#   resources.  This class can be used to create authinfo entries defined in
+#   hiera.  The hiera hash should look like this:
 #
 #   sendmail::authinfo::entries:
 #     'AuthInfo:example.com':
 #       value: '"U=auth" "P=secret"'
 #     'AuthInfo:192.168.67.89':
 #       value: '"U=fred" "P=wilma"'
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::authinfo': }
-#
-#   class { 'sendmail::authinfo':
-#     source => 'puppet:///modules/sendmail/authinfo',
-#   }
 #
 #
 class sendmail::authinfo (

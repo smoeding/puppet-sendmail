@@ -1,27 +1,14 @@
-# = Define: sendmail::mc::include
+# @summary Add include fragments to the sendmail.mc file.
 #
-# Add include fragments to the sendmail.mc file.
-#
-# == Parameters:
-#
-# [*filename*]
-#   The absolute path of the file to include.
-#   Defaults to the resource title.
-#
-# [*order*]
-#   The position in the sendmail.mc file where the include statement will
-#   appear. This requires some internal knowledge of the sendmail module.
-#   See the Puppet class 'sendmail::mc' for details.
-#   Default: '59'. This generates the include statements just before the
-#   MAILER section.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example Include a milter setup file to the configuration
 #   sendmail::mc::include { '/etc/mail/m4/clamav-milter.m4': }
+#
+# @param filename The absolute path of the file to include.
+#
+# @param order The position in the sendmail.mc file where the include
+#   statement will appear.  This requires internal knowledge of the sendmail
+#   module.  See the Puppet class `sendmail::mc` for details.  The default
+#   generates the include statements just before the `MAILER` section.
 #
 #
 define sendmail::mc::include (

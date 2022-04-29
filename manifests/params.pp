@@ -1,18 +1,6 @@
-# = Class: sendmail::params
+# @summary The parameters used when setting up the Sendmail MTA.
 #
-# The parameters used when setting up the Sendmail MTA.
-#
-# == Parameters:
-#
-# None.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   include sendmail::params
+# @api private
 #
 #
 class sendmail::params {

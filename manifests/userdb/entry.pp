@@ -1,32 +1,22 @@
-# = Define: sendmail::userdb::entry
+# @summary Manage an entry in the Sendmail userdb file.
 #
-# Manage an entry in the Sendmail userdb db file.
+# The type has an internal dependency to rebuild the database file.
 #
-# == Parameters:
-#
-# [*ensure*]
-#   Used to create or remove the userdb db entry.
-#   Valid options: 'present', 'absent'. Default: 'present'
-#
-# [*key*]
-#   The key used by Sendmail for the lookup. This normally is in the format
-#   'user:maildrop' or 'user:mailname' where user is the a local username.
-#   Default is the resource title.
-#
-# [*value*]
-#   The value for the given key. For the userdb map this is typically
-#   a single mailaddress or a compound list of addresses separated
-#   by commas.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example Add an entry to the userdb
 #   sendmail::userdb::entry { 'fred:maildrop':
 #     value => 'fred@example.org',
 #   }
+#
+# @param ensure Used to create or remove the userdb db entry.  Valid options:
+#   `present`, `absent`.
+#
+# @param key The key used by Sendmail for the lookup.  This normally is in
+#   the format `user:maildrop` or `user:mailname` where user is the a local
+#   username.
+#
+# @param value The value for the given key.  For the userdb map this is
+#   typically a single mailaddress or a compound list of addresses separated
+#   by commas.
 #
 #
 define sendmail::userdb::entry (

@@ -1,23 +1,13 @@
-# = Class: sendmail::local_host_names
+# @summary Manage entries in the Sendmail local-host-names file.
 #
-# Manage entries in the Sendmail local-host-names file.
+# Do not declare this class directly. Use the `local_host_names` parameter of
+# the `sendmail` class instead.
 #
-# == Parameters:
+# @api private
 #
-# [*local_host_names*]
-#   An array of host names that will be written into the local host names
-#   file. Leading or trailing whitespace is ignored. Empty entries are also
-#   ignored. Default value: []
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::local_host_names:
-#     local_host_names => [ 'example.org', 'mail.example.org', ],
-#   }
+# @param local_host_names An array of host names that will be written into
+#   the local host names file.  Leading or trailing whitespace is ignored.
+#   Empty entries are also ignored.
 #
 #
 class sendmail::local_host_names (

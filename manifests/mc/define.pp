@@ -1,39 +1,24 @@
-# = Define: sendmail::mc::define
+# @summary Add m4 macro defines to the sendmail.mc file.
 #
-# Add m4 macro defines to the sendmail.mc file.
-#
-# == Parameters:
-#
-# [*macro_name*]
-#   The name of the macro that will be defined. This will be the first
-#   argument of the m4 define builtin.
-#   **Note**: The macro name should not be quoted as it will always be
-#   quoted in the template.
-#
-# [*expansion*]
-#   The expansion defined for the macro.
-#
-# [*use_quotes*]
-#   A boolean that indicates if the expansion should be quoted (using
-#   m4 quotes). If this argument is 'true', then the expansion will be
-#   enclosed in ` and ' symbols in the generated output file.
-#   **Note**: The name of the defined macro will always be quoted.
-#   Valid options: 'true' or 'false'. Default value: 'true'.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example Set a configuration item using m4 quotes
 #   sendmail::mc::define { 'confFOO':
 #     expansion  => 'foo',
 #   }
 #
+# @example Set a configuration item without m4 quotes
 #   sendmail::mc::define { 'confBAR':
 #     expansion  => 'foo',
 #     use_quotes => false,
 #   }
+#
+# @param macro_name The name of the macro that will be defined.  This will be
+#   the first argument of the m4 define builtin.  **Note**: The macro name
+#   should not be quoted as it will always be quoted in the template.
+#
+# @param expansion The expansion defined for the macro.
+#
+# @param use_quotes A boolean that indicates if the expansion should be
+#   quoted (using m4 quotes).  Valid options: `true` or `false`.
 #
 #
 define sendmail::mc::define (

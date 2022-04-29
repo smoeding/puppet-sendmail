@@ -1,25 +1,16 @@
-# = Define: sendmail::aliases::entry
+# @summary Manage an entry in the Sendmail alias file.
 #
-# Manage an entry in the Sendmail alias file.
-#
-# == Parameters:
-#
-# [*ensure*]
-#   Used to create or remove the alias entry.
-#   Valid options: 'present', 'absent'. Default: 'present'
-#
-# [*recipient*]
-#   The recipient where the mail is redirected to.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example Add a local alias for `fred`
 #   sendmail::aliases::entry { 'fred':
 #     recipient => 'barney@example.org',
 #   }
+#
+# @param ensure Used to create or remove the alias entry.  Valid options:
+#   `present`, `absent`.
+#
+# @param recipient The recipient where the mail is redirected to.  This can
+#   be a string for one recipient or an array of strings for multiple
+#   recipients.
 #
 #
 define sendmail::aliases::entry (

@@ -1,220 +1,175 @@
-# = Class: sendmail
+# @summary Manage the Sendmail MTA.
 #
-# Manage the Sendmail MTA.
+# Perform the basic setup and installation of Sendmail on the system.
 #
-# == Parameters:
+# @example
+#   class { 'sendmail': }
 #
-# [*smart_host*]
-#   Servers that are behind a firewall may not be able to deliver mail
-#   directly to the outside world. In this case the host may need to forward
-#   the mail to the gateway machine defined by this parameter. All nonlocal
-#   mail is forwarded to this gateway.
-#   Default value: undef.
+# @param smart_host Servers that are behind a firewall may not be able to
+#   deliver mail directly to the outside world.  In this case the host may
+#   need to forward the mail to the gateway machine defined by this
+#   parameter.  All nonlocal mail is forwarded to this gateway.
 #
-# [*domain_name*]
-#   Sets the official canonical name of the local machine. Normally this
-#   parameter is not required as Sendmail uses the fully qualified domain
-#   name by default. Setting this parameter will override the value of the
-#   '$j' macro in the sendmail.cf file.
-#   Default value: undef.
+# @param domain_name Sets the official canonical name of the local machine.
+#   Normally this parameter is not required as Sendmail uses the fully
+#   qualified domain name by default.  Setting this parameter will override
+#   the value of the `$j` macro in the sendmail.cf file.
 #
-# [*max_message_size*]
-#   Define the maximum message size that will be accepted. This can be a pure
-#   numerical value given in bytes (e.g. 33554432) or a number with a
-#   prefixed byte unit (e.g. 32MB). The conversion is done using the 1024
-#   convention (see the 'to_bytes' function in the 'stdlib' module), so valid
-#   prefixes are either 'k' for 1024 bytes or 'M' for 1048576 bytes. Default
-#   value: undef.
+# @param max_message_size Define the maximum message size that will be
+#   accepted.  This can be a pure numerical value given in bytes
+#   (e.g. 33554432) or a number with a prefixed byte unit (e.g. 32MB).  The
+#   conversion is done using the 1024 convention (see the `to_bytes` function
+#   in the `stdlib` module), so valid prefixes are either `k` for 1024 bytes
+#   or `M` for 1048576 bytes.
 #
-# [*log_level*]
-#   The loglevel for the sendmail process.
-#   Valid options: a numeric value. Default value: undef.
+# @param log_level The loglevel for the sendmail process.  Valid options:
+#   a numeric value.
 #
-# [*dont_probe_interfaces*]
-#   Sendmail normally probes all network interfaces to get the hostnames that
-#   the server may have. These hostnames are then considered local. This
-#   option can be used to prevent the reverse lookup of the network addresses.
-#   If this option is set to 'localhost' then all network interfaces except
-#   for the loopback interface is probed.
-#   Valid options: the strings 'true', 'false' or 'localhost'.
-#   Default value: undef.
+# @param dont_probe_interfaces Sendmail normally probes all network
+#   interfaces to get the hostnames that the server may have.  These
+#   hostnames are then considered local.  This option can be used to prevent
+#   the reverse lookup of the network addresses.  If this option is set to
+#   `localhost` then all network interfaces except for the loopback interface
+#   is probed.  Valid options: the strings `true`, `false` or `localhost`.
 #
-# [*features*]
-#   A hash of features to include in the configuration. Each hash key should
-#   be a feature name while the value should be a hash itself. The value hash
-#   is used as parameters for the 'sendmail::mc::feature' defined type. Check
-#   the documentation of this type for details.
-#   Default value: {}
+# @param features A hash of features to include in the configuration.  Each
+#   hash key should be a feature name while the value should be a hash
+#   itself.  The value hash is used as parameters for the
+#   `sendmail::mc::feature` defined type.  Check the documentation of this
+#   type for details.
 #
-# [*enable_ipv4_daemon*]
-#   Should the host accept mail on all IPv4 network adresses.
-#   Valid options: 'true' or 'false'. Default value: 'true'.
+#   Some features (e.g. `mailertable`, `access_db`, ...) may need to be
+#   managed individually. So the `mailertable` feature could be enabled using
+#   this parameter but that does not manage the mailertable file itself. So
+#   in addition you would have to use the `sendmail::mailertable` class or
+#   the `sendmail::mailertable::entry` defined type.
 #
-# [*enable_ipv6_daemon*]
-#   Should the host accept mail on all IPv6 network adresses.
-#   Valid options: 'true' or 'false'. Default value: 'true'.
+# @param enable_ipv4_daemon Should the host accept mail on all IPv4 network
+#   adresses.  Valid options: `true` or `false`.
 #
-# [*mailers*]
-#   An array of mailers to add to the configuration.
-#   Default value: [ 'smtp', 'local' ]
+# @param enable_ipv6_daemon Should the host accept mail on all IPv6 network
+#   adresses.  Valid options: `true` or `false`.
 #
-# [*local_host_names*]
-#   An array of hostnames that Sendmail considers for a local delivery.
-#   Default values: [ $::fqdn ]
+# @param mailers An array of mailers to add to the configuration.  The
+#   default is `[ 'smtp', 'local' ]`.
 #
-# [*relay_domains*]
-#   An array of domains that Sendmail accepts as relay target. This
-#   setting is required for secondary MX setups.
-#   Default value: []
+# @param local_host_names An array of hostnames that Sendmail considers for
+#   a local delivery.
 #
-# [*trusted_users*]
-#   An array of user names that will be written into the trusted users file.
-#   Leading or trailing whitespace is ignored. Empty entries are also
-#   ignored. Default value: []
+# @param relay_domains An array of domains that Sendmail accepts as relay
+#   target.  This setting is required for secondary MX setups.
 #
-# [*trust_auth_mech*]
-#   The value of the TRUST_AUTH_MECH macro to set. If this is a string it
-#   is used as-is. For an array the value will be concatenated into a
-#   string. Default value: undef
+# @param trusted_users An array of user names that will be written into the
+#   trusted users file.  Leading or trailing whitespace is ignored.  Empty
+#   entries are also ignored.
 #
-# [*ca_cert_file*]
-#   The filename of the SSL CA certificate.
+# @param trust_auth_mech The value of the `TRUST_AUTH_MECH` macro to set.  If
+#   this is a string it is used as-is.  For an array the value will be
+#   concatenated into a string.
 #
-# [*ca_cert_path*]
-#   The directory where SSL CA certificates are kept.
+# @param ca_cert_file The filename of the SSL CA certificate.
 #
-# [*server_cert_file*]
-#   The filename of the SSL server certificate for inbound connections.
+# @param ca_cert_path The directory where SSL CA certificates are kept.
 #
-# [*server_key_file*]
-#   The filename of the SSL server key for inbound connections.
+# @param server_cert_file The filename of the SSL server certificate for
+#   inbound connections.
 #
-# [*client_cert_file*]
-#   The filename of the SSL client certificate for outbound connections.
+# @param server_key_file The filename of the SSL server key for inbound
+#   connections.
 #
-# [*client_key_file*]
-#   The filename of the SSL client key for outbound connections.
+# @param client_cert_file The filename of the SSL client certificate for
+#   outbound connections.
 #
-# [*server_cert_file2*]
-#   The filename of the secondary SSL server certificate for inbound
-#   connections. The parameter is only valid on Sendmail 8.15.1 or later and
-#   when 'server_cert_file' is set.
+# @param client_key_file The filename of the SSL client key for outbound
+#   connections.
 #
-# [*server_key_file2*]
-#   The filename of the secondary SSL server key for inbound connections. The
-#   parameter is only valid on Sendmail 8.15.1 or later and when
-#   'server_key_file' is set.
+# @param server_cert_file2 The filename of the secondary SSL server
+#   certificate for inbound connections.  The parameter is only valid on
+#   Sendmail 8.15.1 or later and when `server_cert_file` is set.
 #
-# [*client_cert_file2*]
-#   The filename of the secondary SSL client certificate for outbound
-#   connections. The parameter is only valid on Sendmail 8.15.1 or later and
-#   when 'client_cert_file' is set.
+# @param server_key_file2 The filename of the secondary SSL server key for
+#   inbound connections.  The parameter is only valid on Sendmail 8.15.1 or
+#   later and when `server_key_file` is set.
 #
-# [*client_key_file2*]
-#   The filename of the secondary SSL client key for outbound
-#   connections. The parameter is only valid on Sendmail 8.15.1 or later and
-#   when 'client_key_file' is set.
+# @param client_cert_file2 The filename of the secondary SSL client
+#   certificate for outbound connections.  The parameter is only valid on
+#   Sendmail 8.15.1 or later and when `client_cert_file` is set.
 #
-# [*crl_file*]
-#   The filename with a list of revoked certificates.
+# @param client_key_file2 The filename of the secondary SSL client key for
+#   outbound connections.  The parameter is only valid on Sendmail 8.15.1 or
+#   later and when `client_key_file` is set.
 #
-# [*dh_params*]
-#   The DH parameters used for encryption. This can be one of the numbers
-#   '512', '1024', '2048' or a filename with generated parameters.
+# @param crl_file The filename with a list of revoked certificates.
 #
-# [*tls_srv_options*]
-#   The parameter adjusts the server TLS settings. This can currently be
-#   either the letter 'V' or the empty string. Setting this parameter to 'V'
-#   disables the request for a client certificate.
+# @param dh_params The DH parameters used for encryption.  This can be one of
+#   the numbers `512`, `1024`, `2048` or a filename with generated
+#   parameters.
 #
-# [*cipher_list*]
-#   Set the available ciphers for encrypted connections.
+# @param tls_srv_options The parameter adjusts the server TLS settings.  This
+#   can currently be either the letter `V` or the empty string.  Setting this
+#   parameter to `V` disables the request for a client certificate.
 #
-# [*server_ssl_options*]
-#   Configure the SSL connection flags for inbound connections.
+# @param cipher_list Set the available ciphers for encrypted connections.
 #
-# [*client_ssl_options*]
-#   Configure the SSL connection flags for outbound connections.
+# @param server_ssl_options Configure the SSL connection flags for inbound
+#   connections.
 #
-# [*cf_version*]
-#   The configuration version string for Sendmail. This string will be
-#   appended to the Sendmail version in the HELO message. If unset, no
-#   configuration version will be used.
-#   Default value: undef.
+# @param client_ssl_options Configure the SSL connection flags for outbound
+#   connections.
 #
-# [*version_id*]
-#   The version id string included in the sendmail.mc file. This has no
-#   practical meaning other than having a used defined identifier in the
-#   file.
-#   Default value: undef.
+# @param cf_version The configuration version string for Sendmail.  This
+#   string will be appended to the Sendmail version in the `HELO` message.
+#   If unset, no configuration version will be used.
 #
-# [*msp_host*]
-#   The host where the message submission program should deliver to. This
-#   can be a hostname or IP address. To prevent MX lookups for the host,
-#   put it in square brackets (e.g., [hostname]). Delivery to the local
-#   host would therefore use either [127.0.0.1] for IPv4 or [IPv6:::1]
-#   for IPv6. Default value: '[127.0.0.1]'
+# @param version_id The version id string included in the sendmail.mc file.
+#   This has no practical meaning other than having a used defined identifier
+#   in the file.
 #
-# [*msp_port*]
-#   The port used for the message submission program. Can be a port number
-#   (e.g., 25) or the literal 'MSA' for delivery to the message submission
-#   agent on port 587. Default value: 'MSA'
+# @param msp_host The host where the message submission program should
+#   deliver to.  This can be a hostname or IP address.  To prevent MX lookups
+#   for the host, put it in square brackets (e.g., `[hostname]`).  Delivery
+#   to the local host would therefore use either `[127.0.0.1]` for IPv4 or
+#   `[IPv6:::1]` for IPv6.
 #
-# [*enable_msp_trusted_users*]
-#   Whether the trusted users file feature is enabled for the message
-#   submission program. This may be necessary if you want to allow certain
-#   users to change the sender address using 'sendmail -f'. Valid options:
-#   'true' or 'false'. Default value: 'false'.
+# @param msp_port The port used for the message submission program.  Can be
+#   a port number (e.g., `25`) or the literal `MSA` for delivery to the
+#   message submission agent on port 587.
 #
-# [*manage_sendmail_mc*]
-#   Whether to automatically manage the 'sendmail.mc' file. Valid options:
-#   'true' or 'false'. Default value: 'true'
+# @param enable_msp_trusted_users Whether the trusted users file feature is
+#   enabled for the message submission program.  This may be necessary if you
+#   want to allow certain users to change the sender address using `sendmail
+#   -f`.  Valid options: `true` or `false`.
 #
-# [*manage_submit_mc*]
-#   Whether to automatically manage the 'submit.mc' file. Valid options:
-#   'true' or 'false'. Default value: 'true'
+# @param manage_sendmail_mc Whether to automatically manage the `sendmail.mc`
+#   file.  Valid options: `true` or `false`.
 #
-# [*auxiliary_packages*]
-#   Additional packages that will be installed by the Sendmail module.
-#   Valid options: array of strings.
-#   Default value: varies by operating system.
+# @param manage_submit_mc Whether to automatically manage the `submit.mc`
+#   file.  Valid options: `true` or `false`.
 #
-# [*package_ensure*]
-#   Configure whether the Sendmail package should be installed, and what
-#   version.
-#   Valid options: 'present', 'latest', or a specific version number.
-#   Default value: 'present'
+# @param auxiliary_packages Additional packages that will be installed by the
+#   Sendmail module.  Valid options: array of strings.  The default varies by
+#   operating system.
 #
-# [*package_manage*]
-#   Configure whether Puppet should manage the Sendmail package(s).
-#   Valid options: 'true' or 'false'. Default value: 'true'.
+# @param package_ensure Configure whether the Sendmail package should be
+#   installed, and what version.  Valid options: `present`, `latest`, or
+#   a specific version number.
 #
-# [*service_name*]
-#   The service name to use on this operating system.
+# @param package_manage Configure whether Puppet should manage the Sendmail
+#   package(s).  Valid options: `true` or `false`.
 #
-# [*service_enable*]
-#   Configure whether the Sendmail MTA should be enabled at boot.
-#   Valid options: 'true' or 'false'. Default value: 'true'.
+# @param service_name The service name to use on this operating system.
 #
-# [*service_manage*]
-#   Configure whether Puppet should manage the Sendmail service.
-#   Valid options: 'true' or 'false'. Default value: 'true'.
+# @param service_enable Configure whether the Sendmail MTA should be enabled
+#   at boot.  Valid options: `true` or `false`.
 #
-# [*service_ensure*]
-#   Configure whether the Sendmail service should be running.
-#   Valid options: 'running' or 'stopped'. Default value: 'running'.
+# @param service_manage Configure whether Puppet should manage the Sendmail
+#   service.  Valid options: `true` or `false`.
 #
-# [*service_hasstatus*]
-#   Define whether the service type can rely on a functional status.
-#   Valid options: 'true' or 'false'. Default value: 'true'
+# @param service_ensure Configure whether the Sendmail service should be
+#   running.  Valid options: `running` or `stopped`.
 #
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#  class { 'sendmail': }
+# @param service_hasstatus Define whether the service type can rely on
+#   a functional status.  Valid options: `true` or `false`.
 #
 #
 class sendmail (

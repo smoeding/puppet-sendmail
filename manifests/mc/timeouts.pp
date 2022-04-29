@@ -1,98 +1,70 @@
-# = Class: sendmail::mc::timeouts
+# @summary Manage various timeout settings in the 'sendmail.mc' file.
 #
-# Manage various timeout settings in the 'sendmail.mc' file.
+# This class allows setting various timeouts for Sendmail without having to
+# use the `sendmail::mc::define` macro individually for each entry.
 #
-# == Parameters:
+# @example Disable RFC1413 ident requests
+#   class { 'sendmail::mc::timeouts':
+#     ident => '0',
+#   }
 #
-# [*aconnect*]
-#   Timeout for all connection attempts when trying to reach one or multiple
-#   hosts for  sending a single mail. Default value: undef
+# @param aconnect Timeout for all connection attempts when trying to reach
+#   one or multiple hosts for sending a single mail.
 #
-# [*auth*]
-#   Timeout when waiting for AUTH negotiation. Default value: undef
+# @param auth Timeout when waiting for AUTH negotiation.
 #
-# [*command*]
-#   Timeout when waiting for the next SMTP command. Default value: undef
+# @param command Timeout when waiting for the next SMTP command.
 #
-# [*connect*]
-#   Timeout for one connection attempt when trying to establish a network
-#   connection. Also see then 'iconnect' parameter. Default value: undef
+# @param connect Timeout for one connection attempt when trying to establish
+#   a network connection.  Also see then `iconnect` parameter.
 #
-# [*control*]
-#   Timout when waiting for a command on the control socket.
-#   Default value: undef
+# @param control Timout when waiting for a command on the control socket.
 #
-# [*datablock*]
-#   Timeout when waiting on a read operation during the DATA phase.
-#   Default value: undef
+# @param datablock Timeout when waiting on a read operation during the DATA
+#   phase.
 #
-# [*datafinal*]
-#   Timeout when waiting for the acknowledgment after sending the final dot
-#   in the DATA phase. Default value: undef
+# @param datafinal Timeout when waiting for the acknowledgment after sending
+#   the final dot in the DATA phase.
 #
-# [*datainit*]
-#   Timeout when waiting for the acknowledgment of the DATA command.
-#   Default value: undef
+# @param datainit Timeout when waiting for the acknowledgment of the DATA
+#   command.
 #
-# [*fileopen*]
-#   Timeout when waiting for access to a local file. Default value: undef
+# @param fileopen Timeout when waiting for access to a local file.
 #
-# [*helo*]
-#   Timeout when waiting for the acknowledgment of the HELO or EHLO commands.
-#   Default value: undef
+# @param helo Timeout when waiting for the acknowledgment of the HELO or EHLO
+#   commands.
 #
-# [*hoststatus*]
-#   Timeout for invalidation of hoststatus information during a single queue
-#   run. Default value: undef
+# @param hoststatus Timeout for invalidation of hoststatus information during
+#   a single queue run.
 #
-# [*iconnect*]
-#   Timeout for the first connection attempt to a host when trying to
-#   establish a network connection. Also see then 'connect' parameter.
-#   Default value: undef
+# @param iconnect Timeout for the first connection attempt to a host when
+#   trying to establish a network connection.  Also see then `connect`
+#   parameter.
 #
-# [*ident*]
-#   Timeout when waiting to a response to a RFC1413 identification protocol
-#   query. Set this to '0' to disable the identification protocol.
-#   Default value: undef
+# @param ident Timeout when waiting to a response to a RFC1413 identification
+#   protocol query.  Set this to `0` to disable the identification protocol.
 #
-# [*initial*]
-#   Timeout when waiting for the initial greeting message.
-#   Default value: undef
+# @param initial Timeout when waiting for the initial greeting message.
 #
-# [*lhlo*]
-#   Timeout when waiting for the reply to the initial LHLO command on an
-#   LMTP connection. Default value: undef
+# @param lhlo Timeout when waiting for the reply to the initial LHLO command
+#   on an LMTP connection.
 #
-# [*mail*]
-#   Timeout when waiting for the acknowledgment of the MAIL command.
-#   Default value: undef
+# @param mail Timeout when waiting for the acknowledgment of the MAIL
+#   command.
 #
-# [*misc*]
-#   Timeout when waiting for the acknowledgment of various other commands
-#   (VERB, NOOP, ...). Default value: undef
+# @param misc Timeout when waiting for the acknowledgment of various other
+#   commands (VERB, NOOP, ...).
 #
-# [*quit*]
-#   Timeout when waiting for the acknowledgment of the QUIT command.
-#   Default value: undef
+# @param quit Timeout when waiting for the acknowledgment of the QUIT
+#   command.
 #
-# [*rcpt*]
-#   Timeout when waiting for the acknowledgment of the RCPT command.
-#   Default value: undef
+# @param rcpt Timeout when waiting for the acknowledgment of the RCPT
+#   command.
 #
-# [*rset*]
-#   Timeout when waiting for the acknowledgment of the RSET command.
-#   Default value: undef
+# @param rset Timeout when waiting for the acknowledgment of the RSET
+#   command.
 #
-# [*starttls*]
-#   Timeout when waiting for STARTTLS negotiation. Default value: undef
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::mc::timeouts': }
+# @param starttls Timeout when waiting for STARTTLS negotiation.
 #
 #
 class sendmail::mc::timeouts (

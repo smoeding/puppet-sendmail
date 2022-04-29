@@ -1,22 +1,11 @@
-# = Class: sendmail::virtusertable::file
+# @summary Manage the Sendmail virtusertable db file.
 #
-# Manage the Sendmail virtusertable db file.
-#
-# == Parameters:
-#
-# [*content*]
-#   The content of the file resource.
-#
-# [*source*]
-#   The source of the file resource.
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
+# @example
 #   class { 'sendmail::virtusertable::file': }
+#
+# @param content The content of the file resource.
+#
+# @param source The source of the file resource.
 #
 #
 class sendmail::virtusertable::file (

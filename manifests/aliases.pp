@@ -1,41 +1,38 @@
-# = Class: sendmail::aliases
+# @summary Manage the Sendmail aliases file.
 #
-# Manage the Sendmail aliases file.
+# The class manages the file either as a single file resource or each entry
+# in the file separately.  The file is managed as a whole using the `source`
+# or `content` parameters.  The `entries` parameter is used to manage each
+# entry separately. Preferable this is done with hiera using automatic
+# parameter lookup.
 #
-# == Parameters:
 #
-# [*content*]
-#   The desired contents of the aliases file. This allows managing the
-#   aliases file as a whole. Changes to the file automatically triggers a
-#   rebuild of the aliases database file. This attribute is mutually
-#   exclusive with 'source'.
+# @example Set up aliases using a configuration from hiera
+#   class { 'sendmail::aliases': }
 #
-# [*source*]
-#   A source file for the aliases file. This allows managing the aliases file
-#   as a whole. Changes to the file automatically triggers a rebuild of the
-#   aliases database file. This attribute is mutually exclusive with
-#   'content'.
+# @example Set up aliases using the given file
+#   class { 'sendmail::aliases':
+#     source => 'puppet:///modules/sendmail/aliases',
+#   }
 #
-# [*entries*]
-#   A hash that will be used to create sendmail::aliases::entry resources.
-#   The class can be used to create aliases defined in hiera. The hiera hash
-#   should look like this:
+# @param content The desired contents of the aliases file.  This allows
+#   managing the aliases file as a whole.  Changes to the file automatically
+#   triggers a rebuild of the aliases database file.  This attribute is
+#   mutually exclusive with `source` and `entries`.
+#
+# @param source A source file for the aliases file.  This allows managing the
+#   aliases file as a whole.  Changes to the file automatically triggers
+#   a rebuild of the aliases database file.  This attribute is mutually
+#   exclusive with `content` and `entries`.
+#
+# @param entries A hash that will be used to create sendmail::aliases::entry
+#   resources.  This attribute is mutually exclusive with `content` and
+#   `source`. The class can be used to create aliases defined in hiera.
+#   The hiera hash should look like this:
 #
 #   sendmail::aliases::entries:
 #     'fred':
 #       recipient: 'barney@example.org'
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::aliases': }
-#
-#   class { 'sendmail::aliases':
-#     source => 'puppet:///modules/sendmail/aliases',
-#   }
 #
 #
 class sendmail::aliases (

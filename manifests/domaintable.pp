@@ -1,43 +1,39 @@
-# = Class: sendmail::domaintable
+# @summary Manage the Sendmail domaintable db file.
 #
-# Manage the Sendmail domaintable db file.
+# The class manages the file either as a single file resource or each entry
+# in the file separately.  The file is managed as a whole using the `source`
+# or `content` parameters.  The `entries` parameter is used to manage each
+# entry separately. Preferable this is done with hiera using automatic
+# parameter lookup.
 #
-# == Parameters:
+# @example Manage the domaintable using hiera
+#   class { 'sendmail::domaintable': }
 #
-# [*content*]
-#   The desired contents of the domaintable file. This allows managing the
-#   domaintable file as a whole. Changes to the file automatically triggers a
-#   rebuild of the domaintable database file. This attribute is mutually
-#   exclusive with 'source'.
+# @example Manage the domaintable using the given file
+#   class { 'sendmail::domaintable':
+#     source => 'puppet:///modules/sendmail/domaintable',
+#   }
 #
-# [*source*]
-#   A source file for the domaintable file. This allows managing the
-#   domaintable file as a whole. Changes to the file automatically triggers a
-#   rebuild of the domaintable database file. This attribute is mutually
-#   exclusive with 'content'.
+# @param content The desired contents of the domaintable file.  This allows
+#   managing the domaintable file as a whole.  Changes to the file
+#   automatically triggers a rebuild of the domaintable database file.  This
+#   attribute is mutually exclusive with `source` and `entries`.
 #
-# [*entries*]
-#   A hash that will be used to create sendmail::domaintable::entry
-#   resources. This class can be used to create domaintable entries defined
-#   in hiera. The hiera hash should look like this:
+# @param source A source file for the domaintable file.  This allows managing
+#   the domaintable file as a whole.  Changes to the file automatically
+#   triggers a rebuild of the domaintable database file.  This attribute is
+#   mutually exclusive with `content` and `entries`.
+#
+# @param entries A hash that will be used to create
+#   `sendmail::domaintable::entry` resources.  This class can be used to
+#   create domaintable entries defined in hiera.  The hiera hash should look
+#   like this:
 #
 #   sendmail::domaintable::entries:
 #     'example.com':
 #       value: 'example.org'
 #     'example.net':
 #       value: 'example.org'
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::domaintable': }
-#
-#   class { 'sendmail::domaintable':
-#     source => 'puppet:///modules/sendmail/domaintable',
-#   }
 #
 #
 class sendmail::domaintable (

@@ -1,10 +1,14 @@
-# canonify_array.pp --- Canonify an array
+# @summary Canonify an array
 #
-# The function expects an array of strings as input.
-# It rewrites the input array the following way:
+# Rewrite the input array the following way:
 # - strip spaces from the beginning and end of each string
 # - remove duplicate entries
 # - sort the result
+#
+# @param arg array of strings to canonify
+#
+# @return array of canonified strings
+#
 #
 function sendmail::canonify_array(Array[String] $arg) >> Array[String] {
   # strip items and set to undef if empty

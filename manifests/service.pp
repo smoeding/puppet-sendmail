@@ -1,36 +1,21 @@
-# = Class: sendmail::service
+# @summary Manage the Sendmail service.
 #
-# Manage the Sendmail MTS service.
+# @api private
 #
-# == Parameters:
+# @param service_name The service name to use on this operating system.  The
+#   default is operating system specific.
 #
-# [*service_name*]
-#   The service name to use on this operating system.
+# @param service_enable Configure whether the Sendmail MTA should be enabled
+#   at boot.  Valid options: `true` or `false`.
 #
-# [*service_enable*]
-#   Configure whether the Sendmail MTA should be enabled at boot.
-#   Valid options: 'true' or 'false'. Default value: 'true'.
+# @param service_manage Configure whether Puppet should manage the Sendmail
+#   service.  Valid options: `true` or `false`.
 #
-# [*service_manage*]
-#   Configure whether Puppet should manage the Sendmail service.
-#   Valid options: 'true' or 'false'. Default value: 'true'.
+# @param service_ensure Configure whether the Sendmail service should be
+#   running.  Valid options: `running` or `stopped`.
 #
-# [*service_ensure*]
-#   Configure whether the Sendmail service should be running.
-#   Valid options: 'running' or 'stopped'. Default value: 'running'.
-#
-# [*service_hasstatus*]
-#   Define whether the service type can rely on a functional status.
-#   Valid options: 'true' or 'false'. Default value: 'true'
-#
-# == Requires:
-#
-# Nothing.
-#
-# == Sample Usage:
-#
-#   class { 'sendmail::service':
-#   }
+# @param service_hasstatus Define whether the service type can rely on
+#   a functional status.  Valid options: `true` or `false`.
 #
 #
 class sendmail::service (
