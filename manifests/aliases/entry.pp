@@ -5,6 +5,8 @@
 #     recipient => 'barney@example.org',
 #   }
 #
+# @param alias_name The name of the alias to create.
+#
 # @param ensure Used to create or remove the alias entry.  Valid options:
 #   `present`, `absent`.
 #
@@ -14,8 +16,9 @@
 #
 #
 define sendmail::aliases::entry (
-  Enum['present','absent']                $ensure    = 'present',
-  Optional[Variant[String,Array[String]]] $recipient = undef,
+  String                                  $alias_name = $name,
+  Enum['present','absent']                $ensure     = 'present',
+  Optional[Variant[String,Array[String]]] $recipient  = undef,
 ) {
   include sendmail::params
   include sendmail::aliases::file
@@ -25,7 +28,7 @@ define sendmail::aliases::entry (
     fail('recipient must be set when creating an alias')
   }
 
-  mailalias { $title:
+  mailalias { $alias_name:
     ensure    => $ensure,
     recipient => $recipient,
     notify    => Class['sendmail::aliases::newaliases'],

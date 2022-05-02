@@ -2213,8 +2213,17 @@ sendmail::aliases::entry { 'fred':
 
 The following parameters are available in the `sendmail::aliases::entry` defined type:
 
+* [`alias_name`](#alias_name)
 * [`ensure`](#ensure)
 * [`recipient`](#recipient)
+
+##### <a name="alias_name"></a>`alias_name`
+
+Data type: `String`
+
+The name of the alias to create.
+
+Default value: `$name`
 
 ##### <a name="ensure"></a>`ensure`
 
