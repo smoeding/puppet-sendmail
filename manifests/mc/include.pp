@@ -12,7 +12,7 @@
 #
 #
 define sendmail::mc::include (
-  Stdlib::Absolutepath $filename = $title,
+  Stdlib::Absolutepath $filename = $name,
   String               $order    = '59',
 ) {
   concat::fragment { "sendmail_mc-include-${title}":

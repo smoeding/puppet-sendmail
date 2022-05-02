@@ -65,7 +65,7 @@ define sendmail::mc::milter (
   Optional[Sendmail::Timeout]         $eom_timeout     = undef,
   Optional[Sendmail::Timeout]         $connect_timeout = undef,
   String                              $order           = '00',
-  String                              $milter_name     = $title,
+  String                              $milter_name     = $name,
   Boolean                             $enable          = true,
 ) {
   include sendmail::mc::milter_section

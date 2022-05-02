@@ -12,12 +12,12 @@
 #
 #
 define sendmail::mc::mailer (
-  String $mailer = $title,
+  String $mailer = $name,
 ) {
   include sendmail::mc::mailer_section
 
   # Some mailers must be defined before others according to the Bat Book
-  $order = $title ? {
+  $order = $mailer ? {
     'smtp'     => '61',
     'local'    => '65',
     'procmail' => '67',

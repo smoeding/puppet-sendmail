@@ -20,7 +20,7 @@
 #
 define sendmail::access::entry (
   Enum['present','absent'] $ensure = 'present',
-  String                   $key    = $title,
+  String                   $key    = $name,
   Optional[String]         $value  = undef,
 ) {
   include sendmail::params

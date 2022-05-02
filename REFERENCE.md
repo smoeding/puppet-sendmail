@@ -2184,7 +2184,7 @@ Data type: `String`
 The key used by Sendmail for the lookup.  This could for example
 be a domain name.
 
-Default value: `$title`
+Default value: `$name`
 
 ##### <a name="value"></a>`value`
 
@@ -2299,7 +2299,7 @@ name (e.g. `example.com`).  The database key is required to start with
 the literal expression `AuthInfo:`.  This prefix will be added
 automatically if necessary.
 
-Default value: `$title`
+Default value: `$name`
 
 ##### <a name="password"></a>`password`
 
@@ -2384,7 +2384,7 @@ Data type: `String`
 The key used by Sendmail for the lookup.  This should normally
 be a domain name.
 
-Default value: `$title`
+Default value: `$name`
 
 ##### <a name="value"></a>`value`
 
@@ -2441,7 +2441,7 @@ Data type: `String`
 The key used by Sendmail for the lookup.  This is normally
 a username or a user and domain name.
 
-Default value: `$title`
+Default value: `$name`
 
 ##### <a name="value"></a>`value`
 
@@ -2498,7 +2498,7 @@ Data type: `String`
 The key used by Sendmail for the lookup.  This should either be
 a fully qualified host name or a domain name with a leading dot.
 
-Default value: `$title`
+Default value: `$name`
 
 ##### <a name="value"></a>`value`
 
@@ -2552,7 +2552,7 @@ Data type: `String`
 The name of the daemon to use.  The logfile will contain
 this name to identify the daemon.
 
-Default value: `$title`
+Default value: `$name`
 
 ##### <a name="family"></a>`family`
 
@@ -2710,7 +2710,7 @@ The name of the macro that will be defined.  This will be
 the first argument of the m4 define builtin.  **Note**: The macro name
 should not be quoted as it will always be quoted in the template.
 
-Default value: `$title`
+Default value: `$name`
 
 ##### <a name="expansion"></a>`expansion`
 
@@ -2789,7 +2789,7 @@ Data type: `String`
 
 The DNS name to query the blacklist.
 
-Default value: `$title`
+Default value: `$name`
 
 ##### <a name="allow_temporary_failure"></a>`allow_temporary_failure`
 
@@ -2856,7 +2856,7 @@ The name of the feature that will be used.  This will
 be the first argument of the `FEATURE()`.  **Note**: The feature name
 should not be quoted as it will always be quoted in the template.
 
-Default value: `$title`
+Default value: `$name`
 
 ##### <a name="args"></a>`args`
 
@@ -2902,7 +2902,7 @@ Data type: `String`
 The name of the domain for which the genericstable is
 enabled.
 
-Default value: `$title`
+Default value: `$name`
 
 ### <a name="sendmailmcinclude"></a>`sendmail::mc::include`
 
@@ -2929,7 +2929,7 @@ Data type: `Stdlib::Absolutepath`
 
 The absolute path of the file to include.
 
-Default value: `$title`
+Default value: `$name`
 
 ##### <a name="order"></a>`order`
 
@@ -2967,7 +2967,7 @@ Data type: `String`
 The name of the domain for which LDAP routing is
 enabled.
 
-Default value: `$title`
+Default value: `$name`
 
 ### <a name="sendmailmclocal_config"></a>`sendmail::mc::local_config`
 
@@ -3040,7 +3040,7 @@ The name of the mailer to add to the configuration.  The
 position of the mailer in the configuration file is determined according
 to the Bat Book.
 
-Default value: `$title`
+Default value: `$name`
 
 ### <a name="sendmailmcmasquerade_as"></a>`sendmail::mc::masquerade_as`
 
@@ -3080,7 +3080,7 @@ Data type: `String`
 Mail being sent is rewritten as coming from the
 indicated address.
 
-Default value: `$title`
+Default value: `$name`
 
 ##### <a name="masquerade_domain"></a>`masquerade_domain`
 
@@ -3306,7 +3306,7 @@ Data type: `String`
 
 The name of the milter to create.
 
-Default value: `$title`
+Default value: `$name`
 
 ##### <a name="enable"></a>`enable`
 
@@ -3353,7 +3353,7 @@ changed.  This name is case-sensitive and must conform to the name of the
 mailer.  Usually this will be a name in uppercase (e.g. `SMTP` or
 `LOCAL`).
 
-Default value: `$title`
+Default value: `$name`
 
 ##### <a name="flags"></a>`flags`
 
@@ -3401,7 +3401,7 @@ The type of operating system as a string.  The value is used
 to add the `OSTYPE` macro to the generated sendmail.mc file.  This will
 include the m4 file with operating system specific settings.
 
-Default value: `$title`
+Default value: `$name`
 
 ### <a name="sendmailmcqueue_group"></a>`sendmail::mc::queue_group`
 
@@ -3439,7 +3439,7 @@ Data type: `String`
 
 The name of the queue group.
 
-Default value: `$title`
+Default value: `$name`
 
 ##### <a name="flags"></a>`flags`
 
@@ -3532,7 +3532,7 @@ Data type: `String`
 
 The identifier (a string) to set in the sendmail.mc file.
 
-Default value: `$title`
+Default value: `$name`
 
 ### <a name="sendmailmcvirtuser_domain"></a>`sendmail::mc::virtuser_domain`
 
@@ -3560,7 +3560,7 @@ The name of the domain to use with
 `FEATURE(virtusertable)`.  This can be used multiple times to set more
 than one domain name.
 
-Default value: `$title`
+Default value: `$name`
 
 ### <a name="sendmailuserdbentry"></a>`sendmail::userdb::entry`
 
@@ -3601,7 +3601,7 @@ The key used by Sendmail for the lookup.  This normally is in
 the format `user:maildrop` or `user:mailname` where user is the a local
 username.
 
-Default value: `$title`
+Default value: `$name`
 
 ##### <a name="value"></a>`value`
 
@@ -3659,7 +3659,7 @@ Data type: `String`
 The key used by Sendmail for the lookup.  This is normally
 a mail address or a mail address without the user part.
 
-Default value: `$title`
+Default value: `$name`
 
 ##### <a name="value"></a>`value`
 

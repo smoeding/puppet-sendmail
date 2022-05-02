@@ -23,7 +23,7 @@
 #
 define sendmail::mc::modify_mailer_flags (
   String  $flags,
-  String  $mailer_name = $title,
+  String  $mailer_name = $name,
   Boolean $use_quotes  = true,
 ) {
   include sendmail::mc::macro_section

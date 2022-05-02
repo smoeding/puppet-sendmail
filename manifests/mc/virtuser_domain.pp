@@ -9,7 +9,7 @@
 #
 #
 define sendmail::mc::virtuser_domain (
-  Stdlib::Fqdn $domainname = $title,
+  Stdlib::Fqdn $domainname = $name,
 ) {
   concat::fragment { "sendmail_mc-virtuser_domain-${domainname}":
     target  => 'sendmail.mc',

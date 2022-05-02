@@ -22,7 +22,7 @@
 #
 #
 define sendmail::mc::enhdnsbl (
-  String           $blacklist               = $title,
+  String           $blacklist               = $name,
   Boolean          $allow_temporary_failure = false,
   Optional[String] $reject_message          = undef,
   Optional[String] $lookup_result           = undef,

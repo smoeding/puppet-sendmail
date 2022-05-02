@@ -8,7 +8,7 @@
 #
 #
 define sendmail::mc::ldaproute_domain (
-  String $domain_name = $title,
+  String $domain_name = $name,
 ) {
   include sendmail::mc::ldap_section
 

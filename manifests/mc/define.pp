@@ -22,7 +22,7 @@
 #
 #
 define sendmail::mc::define (
-  String                  $macro_name = $title,
+  String                  $macro_name = $name,
   Boolean                 $use_quotes = true,
   Variant[String,Integer] $expansion  = '',
 ) {

@@ -37,7 +37,7 @@
 #
 #
 define sendmail::mc::queue_group (
-  String                         $queue_group = $title,
+  String                         $queue_group = $name,
   Optional[String]               $flags       = undef,
   Optional[String]               $interval    = undef,
   Optional[Integer]              $jobs        = undef,

@@ -8,7 +8,7 @@
 #
 #
 define sendmail::mc::generics_domain (
-  String $domain_name = $title,
+  String $domain_name = $name,
 ) {
   concat::fragment { "sendmail_mc-generics_domain_name-${domain_name}":
     target  => 'sendmail.mc',

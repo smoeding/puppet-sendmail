@@ -7,7 +7,7 @@
 #
 #
 define sendmail::mc::versionid (
-  String $versionid = $title,
+  String $versionid = $name,
 ) {
   concat::fragment { 'sendmail_mc-versionid':
     target  => 'sendmail.mc',

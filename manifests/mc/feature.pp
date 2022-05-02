@@ -21,7 +21,7 @@
 #
 #
 define sendmail::mc::feature (
-  String                        $feature_name = $title,
+  String                        $feature_name = $name,
   Variant[String,Array[String]] $args         = [],
   Boolean                       $use_quotes   = true,
 ) {

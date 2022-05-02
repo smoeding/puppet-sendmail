@@ -9,7 +9,7 @@
 #
 #
 define sendmail::mc::ostype (
-  String $ostype = $title,
+  String $ostype = $name,
 ) {
   concat::fragment { "sendmail_mc-ostype-${ostype}":
     target  => 'sendmail.mc',

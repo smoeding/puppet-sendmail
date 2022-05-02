@@ -46,7 +46,7 @@
 #
 #
 define sendmail::mc::masquerade_as (
-  String                         $masquerade_as             = $title,
+  String                         $masquerade_as             = $name,
   Array[String]                  $masquerade_domain         = [],
   Optional[Stdlib::Absolutepath] $masquerade_domain_file    = undef,
   Array[String]                  $masquerade_exception      = [],

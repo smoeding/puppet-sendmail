@@ -36,7 +36,7 @@
 define sendmail::authinfo::entry (
   Enum['present','absent'] $ensure            = 'present',
   Array[String]            $mechanisms        = [],
-  String                   $address           = $title,
+  String                   $address           = $name,
   Optional[String]         $password          = undef,
   Optional[String]         $password_base64   = undef,
   Optional[String]         $authorization_id  = undef,

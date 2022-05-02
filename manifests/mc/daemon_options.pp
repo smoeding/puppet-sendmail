@@ -51,7 +51,7 @@
 #
 #
 define sendmail::mc::daemon_options (
-  String                                  $daemon_name      = $title,
+  String                                  $daemon_name      = $name,
   Optional[Enum['inet', 'inet6', 'iso']]  $family           = undef,
   Optional[String]                        $addr             = undef,
   Optional[String]                        $port             = undef,
