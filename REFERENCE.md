@@ -652,11 +652,13 @@ A hash that will be used to create `sendmail::access::entry`
 resources.  The class can be used to create access entries defined in
 hiera.  The hiera hash should look like this:
 
+```yaml
 sendmail::access::entries:
   'example.com':
     value: 'OK'
   'example.org':
     value: 'REJECT'
+```
 
 Default value: `{}`
 
@@ -758,9 +760,11 @@ resources.  This attribute is mutually exclusive with `content` and
 `source`. The class can be used to create aliases defined in hiera.
 The hiera hash should look like this:
 
+```yaml
 sendmail::aliases::entries:
   'fred':
     recipient: 'barney@example.org'
+```
 
 Default value: `{}`
 
@@ -853,11 +857,13 @@ A hash that will be used to create sendmail::authinfo::entry
 resources.  This class can be used to create authinfo entries defined in
 hiera.  The hiera hash should look like this:
 
+```yaml
 sendmail::authinfo::entries:
   'AuthInfo:example.com':
     value: '"U=auth" "P=secret"'
   'AuthInfo:192.168.67.89':
     value: '"U=fred" "P=wilma"'
+```
 
 Default value: `{}`
 
@@ -959,11 +965,13 @@ A hash that will be used to create
 create domaintable entries defined in hiera.  The hiera hash should look
 like this:
 
+```yaml
 sendmail::domaintable::entries:
   'example.com':
     value: 'example.org'
   'example.net':
     value: 'example.org'
+```
 
 Default value: `{}`
 
@@ -1068,11 +1076,13 @@ A hash that will be used to create
 create genericstable entries defined in hiera.  The hiera hash should
 look like this:
 
+```yaml
 sendmail::genericstable::entries:
   'fred@example.com':
     value: 'fred@example.org'
   'barney':
     value: 'barney@example.org'
+```
 
 Default value: `{}`
 
@@ -1174,6 +1184,7 @@ A hash that will be used to create
 create mailertable entries defined in hiera.  The hiera hash should look
 like this:
 
+```yaml
 sendmail::mailertable::entries:
   '.example.com':
     value: 'smtp:relay.example.com'
@@ -1181,6 +1192,7 @@ sendmail::mailertable::entries:
     value: 'relay:relay.example.com'
   '.example.net':
     value: 'error:5.7.0:550 mail is not accepted'
+```
 
 Default value: `{}`
 
@@ -1978,11 +1990,13 @@ A hash that will be used to create `sendmail::userdb::entry`
 resources.  This class can be used to create userdb entries defined in
 hiera.  The hiera hash should look like this:
 
+```yaml
 sendmail::userdb::entries:
   'fred:maildrop':
     value: 'fred@example.org'
   'barney:maildrop':
     value: 'barney@example.org'
+```
 
 Default value: `{}`
 
@@ -2060,7 +2074,7 @@ Data type: `Optional[String]`
 The desired contents of the virtusertable file.  This allows
 managing the virtusertable file as a whole.  Changes to the file
 automatically triggers a rebuild of the virtusertable database file.
-This attribute is mutually exclusive with 'source' and `entries`.
+This attribute is mutually exclusive with `source` and `entries`.
 
 Default value: ``undef``
 
@@ -2071,7 +2085,7 @@ Data type: `Optional[String]`
 A source file for the virtusertable file.  This allows
 managing the virtusertable file as a whole.  Changes to the file
 automatically triggers a rebuild of the virtusertable database file.
-This attribute is mutually exclusive with 'content' and `entries`.
+This attribute is mutually exclusive with `content` and `entries`.
 
 Default value: ``undef``
 
@@ -2084,11 +2098,13 @@ A hash that will be used to create
 create virtusertable entries defined in hiera.  The hiera hash should
 look like this:
 
+```yaml
 sendmail::virtusertable::entries:
   'info@example.com':
     value: 'fred'
   '@example.org':
     value: 'barney'
+```
 
 Default value: `{}`
 

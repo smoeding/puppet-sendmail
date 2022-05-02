@@ -17,23 +17,25 @@
 # @param content The desired contents of the virtusertable file.  This allows
 #   managing the virtusertable file as a whole.  Changes to the file
 #   automatically triggers a rebuild of the virtusertable database file.
-#   This attribute is mutually exclusive with 'source' and `entries`.
+#   This attribute is mutually exclusive with `source` and `entries`.
 #
 # @param source A source file for the virtusertable file.  This allows
 #   managing the virtusertable file as a whole.  Changes to the file
 #   automatically triggers a rebuild of the virtusertable database file.
-#   This attribute is mutually exclusive with 'content' and `entries`.
+#   This attribute is mutually exclusive with `content` and `entries`.
 #
 # @param entries A hash that will be used to create
 #   `sendmail::virtusertable::entry` resources.  This class can be used to
 #   create virtusertable entries defined in hiera.  The hiera hash should
 #   look like this:
 #
+#   ```yaml
 #   sendmail::virtusertable::entries:
 #     'info@example.com':
 #       value: 'fred'
 #     '@example.org':
 #       value: 'barney'
+#   ```
 #
 #
 class sendmail::virtusertable (

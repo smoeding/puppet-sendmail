@@ -32,11 +32,13 @@
 #   resources.  The class can be used to create access entries defined in
 #   hiera.  The hiera hash should look like this:
 #
+#   ```yaml
 #   sendmail::access::entries:
 #     'example.com':
 #       value: 'OK'
 #     'example.org':
 #       value: 'REJECT'
+#   ```
 #
 #
 class sendmail::access (

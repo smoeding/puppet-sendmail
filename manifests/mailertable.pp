@@ -29,6 +29,7 @@
 #   create mailertable entries defined in hiera.  The hiera hash should look
 #   like this:
 #
+#   ```yaml
 #   sendmail::mailertable::entries:
 #     '.example.com':
 #       value: 'smtp:relay.example.com'
@@ -36,6 +37,7 @@
 #       value: 'relay:relay.example.com'
 #     '.example.net':
 #       value: 'error:5.7.0:550 mail is not accepted'
+#   ```
 #
 #
 class sendmail::mailertable (

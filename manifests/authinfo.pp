@@ -21,11 +21,13 @@
 #   resources.  This class can be used to create authinfo entries defined in
 #   hiera.  The hiera hash should look like this:
 #
+#   ```yaml
 #   sendmail::authinfo::entries:
 #     'AuthInfo:example.com':
 #       value: '"U=auth" "P=secret"'
 #     'AuthInfo:192.168.67.89':
 #       value: '"U=fred" "P=wilma"'
+#   ```
 #
 #
 class sendmail::authinfo (

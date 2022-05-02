@@ -30,9 +30,11 @@
 #   `source`. The class can be used to create aliases defined in hiera.
 #   The hiera hash should look like this:
 #
+#   ```yaml
 #   sendmail::aliases::entries:
 #     'fred':
 #       recipient: 'barney@example.org'
+#   ```
 #
 #
 class sendmail::aliases (

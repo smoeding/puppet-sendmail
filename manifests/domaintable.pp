@@ -29,11 +29,13 @@
 #   create domaintable entries defined in hiera.  The hiera hash should look
 #   like this:
 #
+#   ```yaml
 #   sendmail::domaintable::entries:
 #     'example.com':
 #       value: 'example.org'
 #     'example.net':
 #       value: 'example.org'
+#   ```
 #
 #
 class sendmail::domaintable (

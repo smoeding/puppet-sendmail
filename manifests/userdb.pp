@@ -28,11 +28,13 @@
 #   resources.  This class can be used to create userdb entries defined in
 #   hiera.  The hiera hash should look like this:
 #
+#   ```yaml
 #   sendmail::userdb::entries:
 #     'fred:maildrop':
 #       value: 'fred@example.org'
 #     'barney:maildrop':
 #       value: 'barney@example.org'
+#   ```
 #
 #
 class sendmail::userdb (

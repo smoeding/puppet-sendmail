@@ -32,11 +32,13 @@
 #   create genericstable entries defined in hiera.  The hiera hash should
 #   look like this:
 #
+#   ```yaml
 #   sendmail::genericstable::entries:
 #     'fred@example.com':
 #       value: 'fred@example.org'
 #     'barney':
 #       value: 'barney@example.org'
+#   ```
 #
 #
 class sendmail::genericstable (
