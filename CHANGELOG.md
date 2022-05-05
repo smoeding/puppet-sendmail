@@ -1,3 +1,13 @@
+## 2022-05-05 - Release 3.2.0
+
+### Fixed
+
+- The module dependencies on additional modules have been fixed.
+
+### Enhancements
+
+- The class documentation has been updated to Puppet Strings and a ``REFERENCE.md` is now included.
+
 ## 2021-11-27 - Release 3.1.0
 
 ### Features
