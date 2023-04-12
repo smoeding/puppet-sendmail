@@ -35,8 +35,8 @@
 #
 #
 class sendmail::submit (
-  Optional[String]            $ostype                   = $::sendmail::params::submit_mc_ostype,
-  Optional[String]            $submit_mc_domain         = $::sendmail::params::submit_mc_domain,
+  Optional[String]            $ostype                   = $sendmail::params::submit_mc_ostype,
+  Optional[String]            $submit_mc_domain         = $sendmail::params::submit_mc_domain,
   String                      $msp_host                 = '[127.0.0.1]',
   Pattern[/^(MSA)|([0-9]+)$/] $msp_port                 = 'MSA',
   Boolean                     $enable_msp_trusted_users = false,
@@ -53,7 +53,7 @@ class sendmail::submit (
     'msp_port'                 => $msp_port,
   }
 
-  file { $::sendmail::params::submit_mc_file:
+  file { $sendmail::params::submit_mc_file:
     ensure  => file,
     owner   => 'root',
     group   => $sendmail::params::sendmail_group,
@@ -62,17 +62,18 @@ class sendmail::submit (
     notify  => [ Class['sendmail::makeall'], Class['sendmail::service'], ],
   }
 
-  if ($::os['family'] == 'FreeBSD') {
+  if ($facts['os']['family'] == 'FreeBSD') {
     # FreeBSD uses a sendmail.mc file named after the hostname of the
-    # machine. Unfortunately Puppet doesn't know, if $::hostname or $::fqdn
-    # will be the correct fact to determine the file name that the makefile
-    # expects (the hostname command is used by the makefile). Therefore we
-    # use a symbolic link here to create the second alternative.
+    # machine. Unfortunately Puppet doesn't know, if
+    # $facts[networking][hostname] or $facts[networking][[fqdn] will be the
+    # correct fact to determine the file name that the makefile expects (the
+    # hostname command is used by the makefile). Therefore we use a symbolic
+    # link here to create the second alternative.
 
-    file { "${::sendmail::params::mail_settings_dir}/${::fqdn}.submit.mc":
+    file { "${sendmail::params::mail_settings_dir}/${facts[networking][fqdn]}.submit.mc":
       ensure => link,
-      target => "${::hostname}.submit.mc",
-      before => File[$::sendmail::params::submit_mc_file],
+      target => "${facts[networking][hostname]}.submit.mc",
+      before => File[$sendmail::params::submit_mc_file],
     }
   }
 }

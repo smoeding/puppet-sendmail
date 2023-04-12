@@ -40,9 +40,9 @@ define sendmail::userdb::entry (
     'absent'  => "rm key[ . = '${key}']",
   }
 
-  augeas { "${::sendmail::params::userdb_file}-${title}":
+  augeas { "${sendmail::params::userdb_file}-${title}":
     lens    => 'Sendmail_Map.lns',
-    incl    => $::sendmail::params::userdb_file,
+    incl    => $sendmail::params::userdb_file,
     changes => $changes,
     require => Class['sendmail::userdb::file'],
     notify  => Class['sendmail::makeall'],

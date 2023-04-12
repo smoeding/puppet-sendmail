@@ -15,13 +15,13 @@
 #
 #
 class sendmail::package (
-  Array[String] $auxiliary_packages = $::sendmail::params::auxiliary_packages,
+  Array[String] $auxiliary_packages = $sendmail::params::auxiliary_packages,
   String        $package_ensure     = 'present',
-  Boolean       $package_manage     = $::sendmail::params::package_manage,
+  Boolean       $package_manage     = $sendmail::params::package_manage,
 ) inherits sendmail::params {
 
   if $package_manage {
-    package { $::sendmail::params::package_name:
+    package { $sendmail::params::package_name:
       ensure => $package_ensure,
     }
 

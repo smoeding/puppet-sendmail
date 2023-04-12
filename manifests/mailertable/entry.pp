@@ -42,9 +42,9 @@ define sendmail::mailertable::entry (
     'absent'  => "rm key[ . = '${key}']",
   }
 
-  augeas { "${::sendmail::params::mailertable_file}-${title}":
+  augeas { "${sendmail::params::mailertable_file}-${title}":
     lens    => 'Sendmail_Map.lns',
-    incl    => $::sendmail::params::mailertable_file,
+    incl    => $sendmail::params::mailertable_file,
     changes => $changes,
     require => Class['sendmail::mailertable::file'],
     notify  => Class['sendmail::makeall'],

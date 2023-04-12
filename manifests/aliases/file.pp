@@ -15,12 +15,12 @@ class sendmail::aliases::file (
   include sendmail::params
   include sendmail::aliases::newaliases
 
-  file { $::sendmail::params::alias_file:
+  file { $sendmail::params::alias_file:
     ensure  => file,
     content => $content,
     source  => $source,
     owner   => 'root',
-    group   => $::sendmail::params::alias_file_group,
+    group   => $sendmail::params::alias_file_group,
     mode    => '0644',
     notify  => Class['sendmail::aliases::newaliases'],
   }

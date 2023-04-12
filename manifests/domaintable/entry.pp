@@ -36,9 +36,9 @@ define sendmail::domaintable::entry (
     'absent'  => "rm key[ . = '${key}']",
   }
 
-  augeas { "${::sendmail::params::domaintable_file}-${title}":
+  augeas { "${sendmail::params::domaintable_file}-${title}":
     lens    => 'Sendmail_Map.lns',
-    incl    => $::sendmail::params::domaintable_file,
+    incl    => $sendmail::params::domaintable_file,
     changes => $changes,
     require => Class['sendmail::domaintable::file'],
     notify  => Class['sendmail::makeall'],

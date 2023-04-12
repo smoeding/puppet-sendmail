@@ -41,9 +41,9 @@ define sendmail::genericstable::entry (
     'absent'  => "rm key[ . = '${key}']",
   }
 
-  augeas { "${::sendmail::params::genericstable_file}-${title}":
+  augeas { "${sendmail::params::genericstable_file}-${title}":
     lens    => 'Sendmail_Map.lns',
-    incl    => $::sendmail::params::genericstable_file,
+    incl    => $sendmail::params::genericstable_file,
     changes => $changes,
     require => Class['sendmail::genericstable::file'],
     notify  => Class['sendmail::makeall'],

@@ -43,9 +43,9 @@ define sendmail::virtusertable::entry (
     'absent'  => "rm key[ . = '${key}']",
   }
 
-  augeas { "${::sendmail::params::virtusertable_file}-${title}":
+  augeas { "${sendmail::params::virtusertable_file}-${title}":
     lens    => 'Sendmail_Map.lns',
-    incl    => $::sendmail::params::virtusertable_file,
+    incl    => $sendmail::params::virtusertable_file,
     changes => $changes,
     require => Class['sendmail::virtusertable::file'],
     notify  => Class['sendmail::makeall'],

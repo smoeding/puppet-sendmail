@@ -109,7 +109,7 @@ class sendmail::mc::starttls (
   }
 
   $params = {
-    'include_starttls_m4' => $::os['family'] in [ 'Debian' ],
+    'include_starttls_m4' => $facts['os']['family'] in [ 'Debian' ],
     'ca_cert_file'        => $ca_cert_file,
     'ca_cert_path'        => $ca_cert_path,
     'server_cert_file'    => $_server_cert_file,
@@ -127,8 +127,8 @@ class sendmail::mc::starttls (
     content => epp('sendmail/starttls.m4', $params),
   }
 
-  if $::sendmail_version != undef {
-    if versioncmp($::sendmail_version, '8.15.1') < 0 {
+  if $facts['sendmail_version'] != undef {
+    if versioncmp($facts['sendmail_version'], '8.15.1') < 0 {
       if $cipher_list {
         sendmail::mc::local_config { 'CipherList':
           content => "O CipherList=${cipher_list}\n",

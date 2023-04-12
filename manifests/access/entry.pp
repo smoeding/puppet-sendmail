@@ -39,9 +39,9 @@ define sendmail::access::entry (
     'absent'  => "rm key[ . = '${key}']",
   }
 
-  augeas { "${::sendmail::params::access_file}-${title}":
+  augeas { "${sendmail::params::access_file}-${title}":
     lens    => 'Sendmail_Map.lns',
-    incl    => $::sendmail::params::access_file,
+    incl    => $sendmail::params::access_file,
     changes => $changes,
     require => Class['sendmail::access::file'],
     notify  => Class['sendmail::makeall'],

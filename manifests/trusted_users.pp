@@ -15,10 +15,10 @@ class sendmail::trusted_users (
 ) {
   include sendmail::params
 
-  file { $::sendmail::params::trusted_users_file:
+  file { $sendmail::params::trusted_users_file:
     ensure  => file,
     owner   => 'root',
-    group   => $::sendmail::params::sendmail_group,
+    group   => $sendmail::params::sendmail_group,
     mode    => '0644',
     content => join(suffix(sendmail::canonify_array($trusted_users), "\n")),
     notify  => Class['sendmail::service'],

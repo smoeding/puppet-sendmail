@@ -15,12 +15,12 @@ class sendmail::genericstable::file (
   include sendmail::params
   include sendmail::makeall
 
-  file { $::sendmail::params::genericstable_file:
+  file { $sendmail::params::genericstable_file:
     ensure  => file,
     content => $content,
     source  => $source,
-    owner   => $::sendmail::params::sendmail_user,
-    group   => $::sendmail::params::sendmail_group,
+    owner   => $sendmail::params::sendmail_user,
+    group   => $sendmail::params::sendmail_group,
     mode    => '0640',
     notify  => Class['sendmail::makeall'],
   }

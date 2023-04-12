@@ -30,7 +30,7 @@ class sendmail::params {
 
   $mailers = [ 'smtp', 'local' ]
 
-  case $::os['family'] {
+  case $facts['os']['family'] {
 
     'Debian': {
       $package_manage = true
@@ -86,14 +86,14 @@ class sendmail::params {
       $submit_mc_domain   = undef
 
       $configure_command = "make -C ${mail_settings_dir} all install"
-      $sendmail_mc_file  = "${mail_settings_dir}/${::hostname}.mc"
-      $submit_mc_file    = "${mail_settings_dir}/${::hostname}.submit.mc"
+      $sendmail_mc_file  = "${mail_settings_dir}/${facts[networking][hostname]}.mc"
+      $submit_mc_file    = "${mail_settings_dir}/${facts[networking][hostname]}.submit.mc"
 
       $alias_file = '/etc/mail/aliases'
     }
 
     default: {
-      fail("Unsupported osfamily ${::os[family]}")
+      fail("Unsupported osfamily ${facts[os][family]}")
     }
   }
 }

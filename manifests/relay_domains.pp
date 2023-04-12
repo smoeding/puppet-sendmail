@@ -15,10 +15,10 @@ class sendmail::relay_domains (
 ) {
   include sendmail::params
 
-  file { $::sendmail::params::relay_domains_file:
+  file { $sendmail::params::relay_domains_file:
     ensure  => file,
     owner   => 'root',
-    group   => $::sendmail::params::sendmail_group,
+    group   => $sendmail::params::sendmail_group,
     mode    => '0644',
     content => join(suffix(sendmail::canonify_array($relay_domains), "\n")),
     notify  => Class['sendmail::service'],

@@ -100,9 +100,9 @@ define sendmail::authinfo::entry (
     'absent'  => "rm key[ . = '${key}']",
   }
 
-  augeas { "${::sendmail::params::authinfo_file}-${key}":
+  augeas { "${sendmail::params::authinfo_file}-${key}":
     lens    => 'Sendmail_Map.lns',
-    incl    => $::sendmail::params::authinfo_file,
+    incl    => $sendmail::params::authinfo_file,
     changes => $changes,
     require => Class['sendmail::authinfo::file'],
     notify  => Class['sendmail::makeall'],

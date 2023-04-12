@@ -68,8 +68,8 @@
 #
 #
 class sendmail::mc (
-  String                                      $ostype                = $::sendmail::params::sendmail_mc_ostype,
-  Optional[String]                            $sendmail_mc_domain    = $::sendmail::params::sendmail_mc_domain,
+  String                                      $ostype                = $sendmail::params::sendmail_mc_ostype,
+  Optional[String]                            $sendmail_mc_domain    = $sendmail::params::sendmail_mc_domain,
   Optional[String]                            $cf_version            = undef,
   Optional[String]                            $smart_host            = undef,
   Optional[String]                            $domain_name           = undef,
@@ -78,7 +78,7 @@ class sendmail::mc (
   Optional[Boolean]                           $dont_probe_interfaces = undef,
   Boolean                                     $enable_ipv4_daemon    = true,
   Boolean                                     $enable_ipv6_daemon    = true,
-  Array[String]                               $mailers               = $::sendmail::params::mailers,
+  Array[String]                               $mailers               = $sendmail::params::mailers,
   Variant[String,Array[String]]               $trust_auth_mech       = [],
   Optional[String]                            $version_id            = undef,
 ) inherits sendmail::params {
@@ -123,9 +123,9 @@ class sendmail::mc (
 
   concat { 'sendmail.mc':
     ensure => 'present',
-    path   => $::sendmail::params::sendmail_mc_file,
+    path   => $sendmail::params::sendmail_mc_file,
     owner  => 'root',
-    group  => $::sendmail::params::sendmail_group,
+    group  => $sendmail::params::sendmail_group,
     mode   => '0644',
     notify => Class['sendmail::makeall'],
   }
@@ -210,16 +210,17 @@ class sendmail::mc (
     }
   }
 
-  if ($::os['family'] == 'FreeBSD') {
+  if ($facts['os']['family'] == 'FreeBSD') {
     # FreeBSD uses a sendmail.mc file named after the hostname of the
-    # machine. Unfortunately Puppet doesn't know, if $::hostname or $::fqdn
-    # will be the correct fact to determine the file name that the makefile
-    # expects (the hostname command is used by the makefile). Therefore we
-    # use a symbolic link here to create the second alternative.
+    # machine. Unfortunately Puppet doesn't know, if
+    # $facts[networking][hostname] or $facts[networking][fqdn] will be the
+    # correct fact to determine the file name that the makefile expects (the
+    # hostname command is used by the makefile). Therefore we use a symbolic
+    # link here to create the second alternative.
 
-    file { "${::sendmail::params::mail_settings_dir}/${::fqdn}.mc":
+    file { "${sendmail::params::mail_settings_dir}/${facts[networking][fqdn]}.mc":
       ensure => link,
-      target => "${::hostname}.mc",
+      target => "${facts[networking][hostname]}.mc",
       before => Concat['sendmail.mc'],
     }
   }

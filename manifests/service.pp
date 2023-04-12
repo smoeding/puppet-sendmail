@@ -19,7 +19,7 @@
 #
 #
 class sendmail::service (
-  String                  $service_name      = $::sendmail::params::service_name,
+  String                  $service_name      = $sendmail::params::service_name,
   Boolean                 $service_enable    = true,
   Boolean                 $service_manage    = true,
   Stdlib::Ensure::Service $service_ensure    = 'running',

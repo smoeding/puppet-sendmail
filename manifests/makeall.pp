@@ -8,7 +8,7 @@ class sendmail::makeall {
   include sendmail::package
 
   exec { 'sendmail::makeall':
-    command     => $::sendmail::params::configure_command,
+    command     => $sendmail::params::configure_command,
     refreshonly => true,
     path        => '/bin:/sbin:/usr/bin:/usr/sbin',
     require     => Class['sendmail::package'],

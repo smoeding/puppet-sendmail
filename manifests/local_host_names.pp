@@ -15,10 +15,10 @@ class sendmail::local_host_names (
 ) {
   include sendmail::params
 
-  file { $::sendmail::params::local_host_names_file:
+  file { $sendmail::params::local_host_names_file:
     ensure  => file,
     owner   => 'root',
-    group   => $::sendmail::params::sendmail_group,
+    group   => $sendmail::params::sendmail_group,
     mode    => '0644',
     content => join(suffix(sendmail::canonify_array($local_host_names), "\n")),
     notify  => Class['sendmail::service'],
