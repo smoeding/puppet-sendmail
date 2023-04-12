@@ -84,9 +84,8 @@ class sendmail::mc::starttls (
   Optional[String]               $server_ssl_options = undef,
   Optional[String]               $client_ssl_options = undef,
 ) {
-
   $multi = ('sendmail_version' in $facts) and
-    (versioncmp($facts['sendmail_version'], '8.15.1') >= 0)
+  (versioncmp($facts['sendmail_version'], '8.15.1') >= 0)
 
   $_server_cert_file = ($multi and $server_cert_file and $server_cert_file2) ? {
     true    => "${server_cert_file},${server_cert_file2}",
@@ -109,7 +108,7 @@ class sendmail::mc::starttls (
   }
 
   $params = {
-    'include_starttls_m4' => $facts['os']['family'] in [ 'Debian' ],
+    'include_starttls_m4' => $facts['os']['family'] in ['Debian'],
     'ca_cert_file'        => $ca_cert_file,
     'ca_cert_path'        => $ca_cert_path,
     'server_cert_file'    => $_server_cert_file,

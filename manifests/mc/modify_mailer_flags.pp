@@ -31,7 +31,7 @@ define sendmail::mc::modify_mailer_flags (
   # Add quotes to the expansion if needed
   $exp_arg = bool2str($use_quotes, "`${flags}'", $flags)
 
-  $arg = join([ "`${mailer_name}'", $exp_arg ], ', ')
+  $arg = join(["`${mailer_name}'", $exp_arg], ', ')
 
   concat::fragment { "sendmail_mc-modify_mailer_flags-${title}":
     target  => 'sendmail.mc',

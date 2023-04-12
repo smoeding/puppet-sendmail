@@ -76,7 +76,6 @@ class sendmail::mc::privacy_flags (
   Boolean $restrictmailq     = false,
   Boolean $restrictqrun      = false,
 ) {
-
   $flags = [
     bool2str($authwarnings,      'authwarnings',      ''),
     bool2str($goaway,            'goaway',            ''),

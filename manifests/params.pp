@@ -4,7 +4,6 @@
 #
 #
 class sendmail::params {
-
   # Where (most of) the sendmail configuration files are kept
   $mail_settings_dir = '/etc/mail'
 
@@ -28,13 +27,12 @@ class sendmail::params {
 
   $sendmail_binary   = '/usr/sbin/sendmail'
 
-  $mailers = [ 'smtp', 'local' ]
+  $mailers = ['smtp', 'local']
 
   case $facts['os']['family'] {
-
     'Debian': {
       $package_manage = true
-      $auxiliary_packages = [ ]
+      $auxiliary_packages = []
 
       $sendmail_user    = 'smmta'
       $sendmail_group   = 'smmsp'
@@ -54,7 +52,7 @@ class sendmail::params {
 
     'RedHat': {
       $package_manage = true
-      $auxiliary_packages = [ 'sendmail-cf', ]
+      $auxiliary_packages = ['sendmail-cf',]
 
       $sendmail_user    = 'root'
       $sendmail_group   = 'root'

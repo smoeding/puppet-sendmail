@@ -11,7 +11,7 @@
 class sendmail::aliases::file (
   Optional[String] $content = undef,
   Optional[String] $source  = undef,
-){
+) {
   include sendmail::params
   include sendmail::aliases::newaliases
 

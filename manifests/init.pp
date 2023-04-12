@@ -182,7 +182,7 @@ class sendmail (
   Boolean                                 $enable_ipv6_daemon       = true,
   Hash[String,Data]                       $features                 = {},
   Array[String]                           $mailers                  = $sendmail::params::mailers,
-  Array[String]                           $local_host_names         = [ $facts['networking']['fqdn'] ],
+  Array[String]                           $local_host_names         = [$facts['networking']['fqdn']],
   Array[String]                           $relay_domains            = [],
   Array[String]                           $trusted_users            = [],
   Optional[Variant[String,Array[String]]] $trust_auth_mech          = undef,
@@ -218,7 +218,6 @@ class sendmail (
   Stdlib::Ensure::Service                 $service_ensure           = 'running',
   Boolean                                 $service_hasstatus        = true,
 ) inherits sendmail::params {
-
   anchor { 'sendmail::begin': }
 
   class { 'sendmail::package':

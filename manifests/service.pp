@@ -25,7 +25,6 @@ class sendmail::service (
   Stdlib::Ensure::Service $service_ensure    = 'running',
   Boolean                 $service_hasstatus = true,
 ) inherits sendmail::params {
-
   if $service_manage {
     service { 'sendmail':
       ensure    => $service_ensure,

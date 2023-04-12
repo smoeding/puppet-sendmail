@@ -43,7 +43,6 @@ class sendmail::domaintable (
   Optional[String]  $source  = undef,
   Hash[String,Data] $entries = {},
 ) {
-
   if ($content and $source) {
     fail('You cannot specify more than one of content, source, entries')
   }

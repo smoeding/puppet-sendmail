@@ -82,7 +82,6 @@ class sendmail::mc (
   Variant[String,Array[String]]               $trust_auth_mech       = [],
   Optional[String]                            $version_id            = undef,
 ) inherits sendmail::params {
-
   include sendmail::makeall
 
   # Order of fragments

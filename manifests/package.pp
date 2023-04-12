@@ -19,7 +19,6 @@ class sendmail::package (
   String        $package_ensure     = 'present',
   Boolean       $package_manage     = $sendmail::params::package_manage,
 ) inherits sendmail::params {
-
   if $package_manage {
     package { $sendmail::params::package_name:
       ensure => $package_ensure,

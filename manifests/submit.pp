@@ -59,7 +59,7 @@ class sendmail::submit (
     group   => $sendmail::params::sendmail_group,
     mode    => '0644',
     content => epp('sendmail/submit.m4', $params),
-    notify  => [ Class['sendmail::makeall'], Class['sendmail::service'], ],
+    notify  => [Class['sendmail::makeall'], Class['sendmail::service'],],
   }
 
   if ($facts['os']['family'] == 'FreeBSD') {

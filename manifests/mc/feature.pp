@@ -30,7 +30,7 @@ define sendmail::mc::feature (
   # Make sure arguments are really an array
   $args_array = $args ? {
     Array   => $args,
-    default => [ $args ],
+    default => [$args],
   }
 
   # Gracefully handle misspelled feature names
@@ -45,7 +45,7 @@ define sendmail::mc::feature (
     false => $args_array,
   }
 
-  $arg = join(concat([ "`${feature}'" ], $exp_arg), ', ')
+  $arg = join(concat(["`${feature}'"], $exp_arg), ', ')
 
   $order = $feature ? {
     'ldap_routing' => '19',

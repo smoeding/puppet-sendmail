@@ -112,7 +112,6 @@ class sendmail::nullclient (
   Optional[String]                       $server_ssl_options       = undef,
   Optional[String]                       $client_ssl_options       = undef,
 ) {
-
   unless ($enable_ipv4_msa or $enable_ipv6_msa) {
     fail('The MSA must be enabled for IPv4 or IPv6 or both')
   }
@@ -164,6 +163,6 @@ class sendmail::nullclient (
   }
 
   sendmail::mc::feature { 'nullclient':
-    args => [ $mail_hub ],
+    args => [$mail_hub],
   }
 }

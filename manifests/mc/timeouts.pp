@@ -119,7 +119,7 @@ class sendmail::mc::timeouts (
 
   if ($timeouts and !empty($timeouts)) {
     $params = {
-      'timeouts' => $timeouts.map |$key,$val| { "`confTO_${key}', `${val}'" }
+      'timeouts' => $timeouts.map |$key,$val| { "`confTO_${key}', `${val}'" },
     }
 
     concat::fragment { 'sendmail_mc-timeouts':
