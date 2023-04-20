@@ -11,20 +11,20 @@
 #     use_quotes => false,
 #   }
 #
-# @param macro_name The name of the macro that will be defined.  This will be
-#   the first argument of the m4 define builtin.  **Note**: The macro name
-#   should not be quoted as it will always be quoted in the template.
-#
 # @param expansion The expansion defined for the macro.
 #
 # @param use_quotes A boolean that indicates if the expansion should be
 #   quoted (using m4 quotes).  Valid options: `true` or `false`.
 #
+# @param macro_name The name of the macro that will be defined.  This will be
+#   the first argument of the m4 define builtin.  **Note**: The macro name
+#   should not be quoted as it will always be quoted in the template.
+#
 #
 define sendmail::mc::define (
-  String                  $macro_name = $name,
-  Boolean                 $use_quotes = true,
-  Variant[String,Integer] $expansion  = '',
+  Optional[Variant[String,Integer]] $expansion  = undef,
+  Boolean                           $use_quotes = true,
+  String                            $macro_name = $name,
 ) {
   case $macro_name {
     /^confLDAP/: {
@@ -45,7 +45,10 @@ define sendmail::mc::define (
   }
 
   # Add quotes to the expansion if needed
-  $exp = bool2str($use_quotes, "`${expansion}'", String($expansion))
+  $exp = ($expansion =~ Undef) ? {
+    true    => "`'",
+    default => bool2str($use_quotes, "`${expansion}'", String($expansion)),
+  }
 
   concat::fragment { "sendmail_mc-define-${title}":
     target  => 'sendmail.mc',
