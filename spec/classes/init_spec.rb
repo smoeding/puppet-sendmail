@@ -6,21 +6,18 @@ describe 'sendmail' do
       let(:facts) { facts }
 
       it {
-        is_expected.to contain_anchor('sendmail::begin')
-        is_expected.to contain_anchor('sendmail::config')
-        is_expected.to contain_anchor('sendmail::end')
-
         is_expected.to contain_class('sendmail')
         is_expected.to contain_class('sendmail::params')
 
         is_expected.to contain_class('sendmail::package')
-          .that_requires('Anchor[sendmail::begin]')
-          .that_comes_before('Anchor[sendmail::config]')
 
         is_expected.to contain_class('sendmail::local_host_names')
         is_expected.to contain_class('sendmail::relay_domains')
         is_expected.to contain_class('sendmail::trusted_users')
         is_expected.to contain_class('sendmail::mc')
+          .that_requires('Class[sendmail::package]')
+          .that_notifies('Class[sendmail::service]')
+
         is_expected.to contain_class('sendmail::submit').with(
           'msp_host'                 => '[127.0.0.1]',
           'msp_port'                 => 'MSA',
@@ -28,8 +25,6 @@ describe 'sendmail' do
         )
 
         is_expected.to contain_class('sendmail::service')
-          .that_requires('Anchor[sendmail::config]')
-          .that_comes_before('Anchor[sendmail::end]')
 
         is_expected.not_to contain_class('sendmail::mc::starttls')
       }
@@ -200,7 +195,6 @@ describe 'sendmail' do
 
       it {
         is_expected.to contain_class('sendmail::mc')
-          .that_comes_before('Anchor[sendmail::config]')
           .that_requires('Class[sendmail::package]')
           .that_notifies('Class[sendmail::service]')
       }
@@ -228,7 +222,6 @@ describe 'sendmail' do
 
       it {
         is_expected.to contain_class('sendmail::submit')
-          .that_comes_before('Anchor[sendmail::config]')
           .that_requires('Class[sendmail::package]')
           .that_notifies('Class[sendmail::service]')
       }

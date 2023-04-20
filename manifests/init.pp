@@ -218,14 +218,10 @@ class sendmail (
   Stdlib::Ensure::Service                 $service_ensure           = 'running',
   Boolean                                 $service_hasstatus        = true,
 ) inherits sendmail::params {
-  anchor { 'sendmail::begin': }
-
   class { 'sendmail::package':
     auxiliary_packages => $auxiliary_packages,
     package_ensure     => $package_ensure,
     package_manage     => $package_manage,
-    before             => Anchor['sendmail::config'],
-    require            => Anchor['sendmail::begin'],
   }
 
   class { 'sendmail::local_host_names':
@@ -256,7 +252,6 @@ class sendmail (
       mailers               => $mailers,
       trust_auth_mech       => $trust_auth_mech,
       version_id            => $version_id,
-      before                => Anchor['sendmail::config'],
       require               => Class['sendmail::package'],
       notify                => Class['sendmail::service'],
     }
@@ -295,7 +290,6 @@ class sendmail (
       msp_host                 => $msp_host,
       msp_port                 => $msp_port,
       enable_msp_trusted_users => $enable_msp_trusted_users,
-      before                   => Anchor['sendmail::config'],
       require                  => Class['sendmail::package'],
       notify                   => Class['sendmail::service'],
     }
@@ -307,17 +301,11 @@ class sendmail (
     }
   }
 
-  anchor { 'sendmail::config': }
-
   class { 'sendmail::service':
     service_name      => $service_name,
     service_enable    => $service_enable,
     service_manage    => $service_manage,
     service_ensure    => $service_ensure,
     service_hasstatus => $service_hasstatus,
-    require           => Anchor['sendmail::config'],
-    before            => Anchor['sendmail::end'],
   }
-
-  anchor { 'sendmail::end': }
 }
