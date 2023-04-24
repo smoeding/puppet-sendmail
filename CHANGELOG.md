@@ -1,3 +1,10 @@
+## 2023-04-24 - Release 3.3.0
+
+### Enhancements
+
+- Support Concat 8.x module.
+- Fix various puppet-lint issues.
+
 ## 2022-05-05 - Release 3.2.0
 
 ### Fixed
