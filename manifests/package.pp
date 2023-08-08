@@ -25,7 +25,7 @@ class sendmail::package (
     }
 
     unless empty($auxiliary_packages) {
-      ensure_packages($auxiliary_packages)
+      stdlib::ensure_packages($auxiliary_packages)
     }
   }
 }
