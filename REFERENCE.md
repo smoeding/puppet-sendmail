@@ -256,7 +256,7 @@ Data type: `Array[String]`
 An array of mailers to add to the configuration.  The
 default is `[ 'smtp', 'local' ]`.
 
-Default value: `$::sendmail::params::mailers`
+Default value: `$sendmail::params::mailers`
 
 ##### <a name="local_host_names"></a>`local_host_names`
 
@@ -265,7 +265,7 @@ Data type: `Array[String]`
 An array of hostnames that Sendmail considers for
 a local delivery.
 
-Default value: `[ $::fqdn ]`
+Default value: `[$facts['networking']['fqdn']]`
 
 ##### <a name="relay_domains"></a>`relay_domains`
 
@@ -521,7 +521,7 @@ Additional packages that will be installed by the
 Sendmail module.  Valid options: array of strings.  The default varies by
 operating system.
 
-Default value: `$::sendmail::params::auxiliary_packages`
+Default value: `$sendmail::params::auxiliary_packages`
 
 ##### <a name="package_ensure"></a>`package_ensure`
 
@@ -540,7 +540,7 @@ Data type: `Boolean`
 Configure whether Puppet should manage the Sendmail
 package(s).  Valid options: `true` or `false`.
 
-Default value: `$::sendmail::params::package_manage`
+Default value: `$sendmail::params::package_manage`
 
 ##### <a name="service_name"></a>`service_name`
 
@@ -548,7 +548,7 @@ Data type: `String`
 
 The service name to use on this operating system.
 
-Default value: `$::sendmail::params::service_name`
+Default value: `$sendmail::params::service_name`
 
 ##### <a name="service_enable"></a>`service_enable`
 
@@ -2698,9 +2698,26 @@ sendmail::mc::define { 'confBAR':
 
 The following parameters are available in the `sendmail::mc::define` defined type:
 
-* [`macro_name`](#macro_name)
 * [`expansion`](#expansion)
 * [`use_quotes`](#use_quotes)
+* [`macro_name`](#macro_name)
+
+##### <a name="expansion"></a>`expansion`
+
+Data type: `Optional[Variant[String,Integer]]`
+
+The expansion defined for the macro.
+
+Default value: ``undef``
+
+##### <a name="use_quotes"></a>`use_quotes`
+
+Data type: `Boolean`
+
+A boolean that indicates if the expansion should be
+quoted (using m4 quotes).  Valid options: `true` or `false`.
+
+Default value: ``true``
 
 ##### <a name="macro_name"></a>`macro_name`
 
@@ -2711,23 +2728,6 @@ the first argument of the m4 define builtin.  **Note**: The macro name
 should not be quoted as it will always be quoted in the template.
 
 Default value: `$name`
-
-##### <a name="expansion"></a>`expansion`
-
-Data type: `Variant[String,Integer]`
-
-The expansion defined for the macro.
-
-Default value: `''`
-
-##### <a name="use_quotes"></a>`use_quotes`
-
-Data type: `Boolean`
-
-A boolean that indicates if the expansion should be
-quoted (using m4 quotes).  Valid options: `true` or `false`.
-
-Default value: ``true``
 
 ### <a name="sendmailmcdomain"></a>`sendmail::mc::domain`
 
