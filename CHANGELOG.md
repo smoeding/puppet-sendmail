@@ -1,3 +1,16 @@
+## 2023-08-10 - Release 4.0.0
+
+### Breaking changes
+
+- Support for Puppet 6 has been dropped.
+- Stdlib version must be 9.0.0 or higher.
+
+### Enhancements
+
+- Support for Puppet 8 has been added.
+- Support for Concat 9.x has been added.
+- Support for Stdlib 9.x has been added.
+
 ## 2023-04-24 - Release 3.3.0
 
 ### Enhancements
