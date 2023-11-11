@@ -149,6 +149,21 @@ describe 'sendmail::mc::feature' do
       }
     end
 
+    context "on #{os} with feature ratecontrol and one undefined argument" do
+      let(:title) { 'ratecontrol' }
+      let(:params) do
+        { args: [:undef, 'terminate'] }
+      end
+
+      it {
+        is_expected.to contain_class('sendmail::mc::feature_section')
+
+        is_expected.to contain_concat__fragment('sendmail_mc-feature-ratecontrol')
+          .with_content(%r{^FEATURE\(`ratecontrol', , `terminate'\)dnl$})
+          .with_order('28')
+      }
+    end
+
     context "on #{os} with feature nullclient" do
       let(:title) { 'nullclient' }
 

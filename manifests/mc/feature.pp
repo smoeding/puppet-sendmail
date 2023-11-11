@@ -8,22 +8,28 @@
 #     args => [ 'hash /etc/mail/mailertable' ],
 #   }
 #
+# @example Enable the `ratecontrol` feature with an empty argument
+#   sendmail::mc::feature { 'ratecontrol':
+#     args => [ undef, 'terminate' ],
+#   }
+#
 # @param feature_name The name of the feature that will be used.  This will
 #   be the first argument of the `FEATURE()`.  **Note**: The feature name
 #   should not be quoted as it will always be quoted in the template.
 #
 # @param args The arguments used for the feature.  This can be a string (one
-#   argument) or and an array and it will be used for the following arguments
-#   of the `FEATURE()`.
+#   argument) or an array and it will be used for the following arguments of
+#   the `FEATURE()`. The array values can either be strings or a literal
+#   `undef` which will skip the value in the generated argument list.
 #
 # @param use_quotes A boolean that indicates if the arguments should be
 #   quoted (using m4 quotes).  Valid options: `true` or `false`.
 #
 #
 define sendmail::mc::feature (
-  String                        $feature_name = $name,
-  Variant[String,Array[String]] $args         = [],
-  Boolean                       $use_quotes   = true,
+  String                                  $feature_name = $name,
+  Variant[String,Array[Optional[String]]] $args         = [],
+  Boolean                                 $use_quotes   = true,
 ) {
   include sendmail::mc::feature_section
 
@@ -39,13 +45,16 @@ define sendmail::mc::feature (
     default  => $feature_name,
   }
 
-  # Add quotes to the args if needed
-  $exp_arg = $use_quotes ? {
-    true  => $args_array.map |$item| { "`${item}'" },
-    false => $args_array,
-  }
+  # Reduce array to a comma separated string argument
+  $arg = $args_array.reduce("`${feature}'") |$memo, $value| {
+    # Add quotes to the args if needed; skip undefined args
+    $item = $value ? {
+      Undef   => '',
+      default => bool2str($use_quotes, "`${value}'", $value)
+    }
 
-  $arg = join(concat(["`${feature}'"], $exp_arg), ', ')
+    "${memo}, ${item}"
+  }
 
   $order = $feature ? {
     'ldap_routing' => '19',
