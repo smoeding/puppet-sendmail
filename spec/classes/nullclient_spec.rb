@@ -10,50 +10,46 @@ describe 'sendmail::nullclient' do
 
       it {
         is_expected.to contain_class('sendmail::nullclient')
-        is_expected.to contain_class('sendmail').with(
-          'domain_name'              => nil,
-          'max_message_size'         => nil,
-          'dont_probe_interfaces'    => true,
-          'enable_ipv4_daemon'       => false,
-          'enable_ipv6_daemon'       => false,
-          'mailers'                  => [],
-          'trusted_users'            => [],
-          'enable_msp_trusted_users' => false,
-          'ca_cert_file'             => nil,
-          'ca_cert_path'             => nil,
-          'server_cert_file'         => nil,
-          'server_key_file'          => nil,
-          'client_cert_file'         => nil,
-          'client_key_file'          => nil,
-          'crl_file'                 => nil,
-          'dh_params'                => nil,
-          'tls_srv_options'          => nil,
-          'cipher_list'              => nil,
-          'server_ssl_options'       => nil,
-          'client_ssl_options'       => nil,
-        )
+        is_expected.to contain_class('sendmail')
+          .with_domain_name(nil)
+          .with_max_message_size(nil)
+          .with_dont_probe_interfaces(true)
+          .with_enable_ipv4_daemon(false)
+          .with_enable_ipv6_daemon(false)
+          .with_mailers([])
+          .with_trusted_users([])
+          .with_enable_msp_trusted_users(false)
+          .with_ca_cert_file(nil)
+          .with_ca_cert_path(nil)
+          .with_server_cert_file(nil)
+          .with_server_key_file(nil)
+          .with_client_cert_file(nil)
+          .with_client_key_file(nil)
+          .with_crl_file(nil)
+          .with_dh_params(nil)
+          .with_tls_srv_options(nil)
+          .with_cipher_list(nil)
+          .with_server_ssl_options(nil)
+          .with_client_ssl_options(nil)
 
         is_expected.to contain_sendmail__mc__feature('no_default_msa')
 
-        is_expected.to contain_sendmail__mc__daemon_options('MSA-v4').with(
-          'daemon_name' => 'MSA',
-          'family'      => 'inet',
-          'addr'        => '127.0.0.1',
-          'port'        => '587',
-          'modify'      => nil,
-        )
+        is_expected.to contain_sendmail__mc__daemon_options('MSA-v4')
+          .with_daemon_name('MSA')
+          .with_family('inet')
+          .with_addr('127.0.0.1')
+          .with_port('587')
+          .with_modify(nil)
 
-        is_expected.to contain_sendmail__mc__daemon_options('MSA-v6').with(
-          'daemon_name' => 'MSA',
-          'family'      => 'inet6',
-          'addr'        => '::1',
-          'port'        => '587',
-          'modify'      => nil,
-        )
+        is_expected.to contain_sendmail__mc__daemon_options('MSA-v6')
+          .with_daemon_name('MSA')
+          .with_family('inet6')
+          .with_addr('::1')
+          .with_port('587')
+          .with_modify(nil)
 
-        is_expected.to contain_sendmail__mc__feature('nullclient').with(
-          'args' => ['example.com'],
-        )
+        is_expected.to contain_sendmail__mc__feature('nullclient')
+          .with_args(['example.com'])
       }
     end
 

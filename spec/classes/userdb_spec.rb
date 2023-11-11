@@ -12,10 +12,9 @@ describe 'sendmail::userdb' do
 
       it {
         is_expected.to contain_class('sendmail::userdb')
-        is_expected.to contain_class('sendmail::userdb::file').with(
-          'content' => 'foo',
-          'source'  => nil,
-        )
+        is_expected.to contain_class('sendmail::userdb::file')
+          .with_content('foo')
+          .with_source(nil)
       }
     end
 
@@ -26,10 +25,9 @@ describe 'sendmail::userdb' do
 
       it {
         is_expected.to contain_class('sendmail::userdb')
-        is_expected.to contain_class('sendmail::userdb::file').with(
-          'content' => nil,
-          'source'  => 'foo',
-        )
+        is_expected.to contain_class('sendmail::userdb::file')
+          .with_content(nil)
+          .with_source('foo')
       }
     end
 

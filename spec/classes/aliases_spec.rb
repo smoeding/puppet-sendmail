@@ -10,10 +10,9 @@ describe 'sendmail::aliases' do
 
       it {
         is_expected.to contain_class('sendmail::aliases')
-        is_expected.to contain_class('sendmail::aliases::file').with(
-          'content' => 'foo',
-          'source'  => nil,
-        )
+        is_expected.to contain_class('sendmail::aliases::file')
+          .with_content('foo')
+          .with_source(nil)
       }
     end
 
@@ -25,10 +24,9 @@ describe 'sendmail::aliases' do
 
       it {
         is_expected.to contain_class('sendmail::aliases')
-        is_expected.to contain_class('sendmail::aliases::file').with(
-          'content' => nil,
-          'source'  => 'foo',
-        )
+        is_expected.to contain_class('sendmail::aliases::file')
+          .with_content(nil)
+          .with_source('foo')
       }
     end
 

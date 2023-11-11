@@ -12,10 +12,9 @@ describe 'sendmail::domaintable' do
 
       it {
         is_expected.to contain_class('sendmail::domaintable')
-        is_expected.to contain_class('sendmail::domaintable::file').with(
-          'content' => 'foo',
-          'source'  => nil,
-        )
+        is_expected.to contain_class('sendmail::domaintable::file')
+          .with_content('foo')
+          .with_source(nil)
       }
     end
 
@@ -27,10 +26,9 @@ describe 'sendmail::domaintable' do
 
       it {
         is_expected.to contain_class('sendmail::domaintable')
-        is_expected.to contain_class('sendmail::domaintable::file').with(
-          'content' => nil,
-          'source'  => 'foo',
-        )
+        is_expected.to contain_class('sendmail::domaintable::file')
+          .with_content(nil)
+          .with_source('foo')
       }
     end
 

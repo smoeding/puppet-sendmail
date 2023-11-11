@@ -11,34 +11,34 @@ describe 'sendmail::virtusertable::file' do
         case facts[:osfamily]
         when 'Debian'
           is_expected.to contain_class('sendmail::virtusertable::file')
-          is_expected.to contain_file('/etc/mail/virtusertable').with(
-            'ensure'  => 'file',
-            'owner'   => 'smmta',
-            'group'   => 'smmsp',
-            'mode'    => '0640',
-            'content' => nil,
-            'source'  => nil,
-          ).that_notifies('Class[sendmail::makeall]')
+          is_expected.to contain_file('/etc/mail/virtusertable')
+            .with_ensure('file')
+            .with_owner('smmta')
+            .with_group('smmsp')
+            .with_mode('0640')
+            .with_content(nil)
+            .with_source(nil)
+            .that_notifies('Class[sendmail::makeall]')
         when 'RedHat'
           is_expected.to contain_class('sendmail::virtusertable::file')
-          is_expected.to contain_file('/etc/mail/virtusertable').with(
-            'ensure'  => 'file',
-            'owner'   => 'root',
-            'group'   => 'root',
-            'mode'    => '0640',
-            'content' => nil,
-            'source'  => nil,
-          ).that_notifies('Class[sendmail::makeall]')
+          is_expected.to contain_file('/etc/mail/virtusertable')
+            .with_ensure('file')
+            .with_owner('root')
+            .with_group('root')
+            .with_mode('0640')
+            .with_content(nil)
+            .with_source(nil)
+            .that_notifies('Class[sendmail::makeall]')
         when 'FreeBSD'
           is_expected.to contain_class('sendmail::virtusertable::file')
-          is_expected.to contain_file('/etc/mail/virtusertable').with(
-            'ensure'  => 'file',
-            'owner'   => 'root',
-            'group'   => 'wheel',
-            'mode'    => '0640',
-            'content' => nil,
-            'source'  => nil,
-          ).that_notifies('Class[sendmail::makeall]')
+          is_expected.to contain_file('/etc/mail/virtusertable')
+            .with_ensure('file')
+            .with_owner('root')
+            .with_group('wheel')
+            .with_mode('0640')
+            .with_content(nil)
+            .with_source(nil)
+            .that_notifies('Class[sendmail::makeall]')
         end
       }
     end
@@ -51,11 +51,11 @@ describe 'sendmail::virtusertable::file' do
       end
 
       it {
-        is_expected.to contain_file('/etc/mail/virtusertable').with(
-          'ensure'  => 'file',
-          'content' => 'foo',
-          'source'  => nil,
-        ).that_notifies('Class[sendmail::makeall]')
+        is_expected.to contain_file('/etc/mail/virtusertable')
+          .with_ensure('file')
+          .with_content('foo')
+          .with_source(nil)
+          .that_notifies('Class[sendmail::makeall]')
       }
     end
 
@@ -67,11 +67,11 @@ describe 'sendmail::virtusertable::file' do
       end
 
       it {
-        is_expected.to contain_file('/etc/mail/virtusertable').with(
-          'ensure'  => 'file',
-          'content' => nil,
-          'source'  => 'foo',
-        ).that_notifies('Class[sendmail::makeall]')
+        is_expected.to contain_file('/etc/mail/virtusertable')
+          .with_ensure('file')
+          .with_content(nil)
+          .with_source('foo')
+          .that_notifies('Class[sendmail::makeall]')
       }
     end
   end

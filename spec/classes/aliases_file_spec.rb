@@ -10,25 +10,25 @@ describe 'sendmail::aliases::file' do
         when 'Debian', 'RedHat'
           is_expected.to contain_class('sendmail::aliases::file')
           is_expected.to contain_class('sendmail::aliases::newaliases')
-          is_expected.to contain_file('/etc/aliases').with(
-            'ensure'  => 'file',
-            'owner'   => 'root',
-            'group'   => 'root',
-            'mode'    => '0644',
-            'content' => nil,
-            'source'  => nil,
-          ).that_notifies('Class[sendmail::aliases::newaliases]')
+          is_expected.to contain_file('/etc/aliases')
+            .with_ensure('file')
+            .with_owner('root')
+            .with_group('root')
+            .with_mode('0644')
+            .with_content(nil)
+            .with_source(nil)
+            .that_notifies('Class[sendmail::aliases::newaliases]')
         when 'FreeBSD'
           is_expected.to contain_class('sendmail::aliases::file')
           is_expected.to contain_class('sendmail::aliases::newaliases')
-          is_expected.to contain_file('/etc/mail/aliases').with(
-            'ensure'  => 'file',
-            'owner'   => 'root',
-            'group'   => 'wheel',
-            'mode'    => '0644',
-            'content' => nil,
-            'source'  => nil,
-          ).that_notifies('Class[sendmail::aliases::newaliases]')
+          is_expected.to contain_file('/etc/mail/aliases')
+            .with_ensure('file')
+            .with_owner('root')
+            .with_group('wheel')
+            .with_mode('0644')
+            .with_content(nil)
+            .with_source(nil)
+            .that_notifies('Class[sendmail::aliases::newaliases]')
         end
       }
     end
@@ -42,17 +42,17 @@ describe 'sendmail::aliases::file' do
       it {
         case facts[:osfamily]
         when 'Debian', 'RedHat'
-          is_expected.to contain_file('/etc/aliases').with(
-            'ensure'  => 'file',
-            'content' => 'foo',
-            'source'  => nil,
-          ).that_notifies('Class[sendmail::aliases::newaliases]')
+          is_expected.to contain_file('/etc/aliases')
+            .with_ensure('file')
+            .with_content('foo')
+            .with_source(nil)
+            .that_notifies('Class[sendmail::aliases::newaliases]')
         when 'FreeBSD'
-          is_expected.to contain_file('/etc/mail/aliases').with(
-            'ensure'  => 'file',
-            'content' => 'foo',
-            'source'  => nil,
-          ).that_notifies('Class[sendmail::aliases::newaliases]')
+          is_expected.to contain_file('/etc/mail/aliases')
+            .with_ensure('file')
+            .with_content('foo')
+            .with_source(nil)
+            .that_notifies('Class[sendmail::aliases::newaliases]')
         end
       }
     end
@@ -66,17 +66,17 @@ describe 'sendmail::aliases::file' do
       it {
         case facts[:osfamily]
         when 'Debian', 'RedHat'
-          is_expected.to contain_file('/etc/aliases').with(
-            'ensure'  => 'file',
-            'content' => nil,
-            'source'  => 'foo',
-          ).that_notifies('Class[sendmail::aliases::newaliases]')
+          is_expected.to contain_file('/etc/aliases')
+            .with_ensure('file')
+            .with_content(nil)
+            .with_source('foo')
+            .that_notifies('Class[sendmail::aliases::newaliases]')
         when 'FreeBSD'
-          is_expected.to contain_file('/etc/mail/aliases').with(
-            'ensure'  => 'file',
-            'content' => nil,
-            'source'  => 'foo',
-          ).that_notifies('Class[sendmail::aliases::newaliases]')
+          is_expected.to contain_file('/etc/mail/aliases')
+            .with_ensure('file')
+            .with_content(nil)
+            .with_source('foo')
+            .that_notifies('Class[sendmail::aliases::newaliases]')
         end
       }
     end

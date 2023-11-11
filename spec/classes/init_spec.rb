@@ -18,11 +18,10 @@ describe 'sendmail' do
           .that_requires('Class[sendmail::package]')
           .that_notifies('Class[sendmail::service]')
 
-        is_expected.to contain_class('sendmail::submit').with(
-          'msp_host'                 => '[127.0.0.1]',
-          'msp_port'                 => 'MSA',
-          'enable_msp_trusted_users' => false,
-        )
+        is_expected.to contain_class('sendmail::submit')
+          .with_msp_host('[127.0.0.1]')
+          .with_msp_port('MSA')
+          .with_enable_msp_trusted_users(false)
 
         is_expected.to contain_class('sendmail::service')
 
