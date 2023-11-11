@@ -14,7 +14,7 @@ describe 'sendmail::authinfo' do
         is_expected.to contain_class('sendmail::authinfo')
         is_expected.to contain_class('sendmail::authinfo::file')
           .with_content('foo')
-          .with_source(nil)
+          .without_source
       }
     end
 
@@ -27,7 +27,7 @@ describe 'sendmail::authinfo' do
       it {
         is_expected.to contain_class('sendmail::authinfo')
         is_expected.to contain_class('sendmail::authinfo::file')
-          .with_content(nil)
+          .without_content
           .with_source('foo')
       }
     end

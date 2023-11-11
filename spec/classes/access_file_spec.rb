@@ -16,8 +16,8 @@ describe 'sendmail::access::file' do
             .with_owner('smmta')
             .with_group('smmsp')
             .with_mode('0640')
-            .with_content(nil)
-            .with_source(nil)
+            .without_content
+            .without_source
             .that_notifies('Class[sendmail::makeall]')
         when 'RedHat'
           is_expected.to contain_class('sendmail::access::file')
@@ -26,8 +26,8 @@ describe 'sendmail::access::file' do
             .with_owner('root')
             .with_group('root')
             .with_mode('0640')
-            .with_content(nil)
-            .with_source(nil)
+            .without_content
+            .without_source
             .that_notifies('Class[sendmail::makeall]')
         when 'FreeBSD'
           is_expected.to contain_class('sendmail::access::file')
@@ -36,8 +36,8 @@ describe 'sendmail::access::file' do
             .with_owner('root')
             .with_group('wheel')
             .with_mode('0640')
-            .with_content(nil)
-            .with_source(nil)
+            .without_content
+            .without_source
             .that_notifies('Class[sendmail::makeall]')
         end
       }
@@ -54,7 +54,7 @@ describe 'sendmail::access::file' do
         is_expected.to contain_file('/etc/mail/access')
           .with_ensure('file')
           .with_content('foo')
-          .with_source(nil)
+          .without_source
           .that_notifies('Class[sendmail::makeall]')
       }
     end
@@ -69,7 +69,7 @@ describe 'sendmail::access::file' do
       it {
         is_expected.to contain_file('/etc/mail/access')
           .with_ensure('file')
-          .with_content(nil)
+          .without_content
           .with_source('foo')
           .that_notifies('Class[sendmail::makeall]')
       }

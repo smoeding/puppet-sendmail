@@ -15,7 +15,7 @@ describe 'sendmail::access' do
         is_expected.to contain_class('sendmail::access')
         is_expected.to contain_class('sendmail::access::file')
           .with_content('foo')
-          .with_source(nil)
+          .without_source
       }
     end
 
@@ -29,7 +29,7 @@ describe 'sendmail::access' do
       it {
         is_expected.to contain_class('sendmail::access')
         is_expected.to contain_class('sendmail::access::file')
-          .with_content(nil)
+          .without_content
           .with_source('foo')
       }
     end

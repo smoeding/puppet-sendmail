@@ -14,7 +14,7 @@ describe 'sendmail::virtusertable' do
         is_expected.to contain_class('sendmail::virtusertable')
         is_expected.to contain_class('sendmail::virtusertable::file')
           .with_content('foo')
-          .with_source(nil)
+          .without_source
       }
     end
 
@@ -26,7 +26,7 @@ describe 'sendmail::virtusertable' do
       it {
         is_expected.to contain_class('sendmail::virtusertable')
         is_expected.to contain_class('sendmail::virtusertable::file')
-          .with_content(nil)
+          .without_content
           .with_source('foo')
       }
     end
