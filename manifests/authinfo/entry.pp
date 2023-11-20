@@ -95,7 +95,7 @@ define sendmail::authinfo::entry (
   $changes = $ensure ? {
     'present' => [
       "set key[. = '${key}'] '${key}'",
-      "set key[. = '${key}']/value '${value}'",
+      "set key[. = '${key}']/value \"${value}\"",
     ],
     'absent'  => "rm key[ . = '${key}']",
   }
