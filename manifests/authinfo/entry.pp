@@ -87,7 +87,7 @@ define sendmail::authinfo::entry (
   $real_values = $values.filter |$item| { length($item) > 2 }
 
   # Add quotes to each array element
-  $quoted_values = $real_values.map |$item| { "`${item}'" }
+  $quoted_values = $real_values.map |$item| { "\"${item}\"" }
 
   # Join to a single string
   $value = join($quoted_values, ' ')
