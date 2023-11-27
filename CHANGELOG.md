@@ -1,3 +1,13 @@
+## 2023-11-27 - Release 4.1.0
+
+### Fixed
+
+- A long standing bug where the generation of entries in the authinfo file used the wrong quotes has been fixed.
+
+### Enhancements
+
+- The defined type `sendmail::mc::feature` now accepts `undef` elements for the `args` array. They translate into empty parameters (e.g. two consecutive commas in the `m4` code).
+
 ## 2023-08-10 - Release 4.0.0
 
 ### Breaking changes
